@@ -12,12 +12,12 @@ module apb_slave_agent_bfm(apb_if intf);
   end
 
   //-------------------------------------------------------
-  //Slave driver bfm instantiation
+  //apb Slave driver bfm instantiation
   //-------------------------------------------------------
   apb_slave_driver_bfm apb_slave_drv_bfm_h ;
 
   //-------------------------------------------------------
-  //Slave monitor bfm instantiation
+  //apb Slave monitor bfm instantiation
   //-------------------------------------------------------
   apb_slave_monitor_bfm apb_slave_mon_bfm_h;
 

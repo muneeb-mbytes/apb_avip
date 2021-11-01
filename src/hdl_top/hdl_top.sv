@@ -28,7 +28,7 @@ import uvm_pkg::*;
   apb_if intf();
 
   //-------------------------------------------------------
-  // apb BFM Agent Instantiation
+  // apb slave BFM Agent Instantiation
   //-------------------------------------------------------
   apb_slave_agent_bfm apb_slave_agent_bfm_h(intf);
 

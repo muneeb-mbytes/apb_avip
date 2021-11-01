@@ -2,7 +2,7 @@
 `define APB_SLAVE_DRIVER_BFM_INCLUDED_
 //--------------------------------------------------------------------------------------------
 // Interface : apb_slave_driver_bfm
-//  Used as the HDL driver for SPI
+//  Used as the HDL driver for apb
 //  It connects with the HVL driver_proxy for driving the stimulus
 //
 // Parameters:
