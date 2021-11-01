@@ -7,8 +7,8 @@
 // Including APB interface and apb_Slave Agent BFM Files
 //-------------------------------------------------------
 module hdl_top;
-//import uvm_pkg::*;
-//`include "uvm_macros.svh"
+import uvm_pkg::*;
+`include "uvm_macros.svh"
   //-------------------------------------------------------
   // Clock Reset Initialization
   //-------------------------------------------------------
@@ -19,7 +19,7 @@ module hdl_top;
   // Display statement for HDL_TOP
   //-------------------------------------------------------
   initial begin
-    //`uvm_info(get_type_name(),("HDL_TOP"));
+    `uvm_info("UVM_INFO","HDL_TOP",UVM_LOW);
     $display("HDL TOP");
   end
 
