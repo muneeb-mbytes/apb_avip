@@ -10,7 +10,7 @@ class virtual_sequencer extends uvm_component;
 
   // Variable: master_seqr_h
   // Declaring master sequencer handle
-  master_sequencer master_seqr_h;
+  apb_master_sequencer master_seqr_h;
 
   // Variable: slave_seqr_h
   // Declaring slave sequencer handle
@@ -44,7 +44,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void virtual_sequencer::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  master_seqr_h = master_sequencer::type_id::create("master_seqr_h",this);
+  master_seqr_h = apb_master_sequencer::type_id::create("master_seqr_h",this);
   slave_seqr_h = slave_sequencer::type_id::create("slave_seqr_h",this);
 endfunction : build_phase
 

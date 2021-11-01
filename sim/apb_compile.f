@@ -18,7 +18,7 @@
 ../../src/hvl_top/env/apb_env_pkg.sv
 ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv
 ../../src/hvl_top/test/test_pkg.sv
-../../src/hdl_top/apb_interface/apb_if.sv
+../../src/hdl_top/apb_if/apb_if.sv
 ../../src/hdl_top/master_agent_bfm/master_driver_bfm.sv
 ../../src/hdl_top/master_agent_bfm/master_monitor_bfm.sv
 ../../src/hdl_top/master_agent_bfm/master_agent_bfm.sv

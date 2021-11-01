@@ -14,7 +14,7 @@ class env extends uvm_env;
 
   //Variable : apb_slave_agent_h
   //Declaring apb slave agent handle
-  apb_slave_agent apb_slave_agent_h;
+  slave_agent apb_slave_agent_h;
 
   //Variable : apb__scoreboard_h
   //Declaring apb scoreboard handle
@@ -22,11 +22,11 @@ class env extends uvm_env;
 
   //Variable : coverage_h
   //Declaring coverage handle
-  coverage coverage_h;
+  //coverage coverage_h;
 
   //Variable : apb_virtual_seqr_h
   //Declaring apb virtual seqr handle
-  apb_virtual_sequencer apb_virtual_seqr_h;
+  virtual_sequencer apb_virtual_seqr_h;
 
 
   //-------------------------------------------------------
@@ -59,10 +59,10 @@ endfunction : new
 function void env::build_phase(uvm_phase phase);
   super.build_phase(phase);
   apb_master_agent_h = apb_master_agent::type_id::create("apb_master_agent",this);
-  apb_slave_agent_h = apb_slave_agent::type_id::create("apb_slave_agent",this);
+  apb_slave_agent_h = slave_agent::type_id::create("apb_slave_agent",this);
   apb_scoreboard_h = apb_scoreboard::type_id::create("apb_scoreboard",this);
-  coverage_h = coverage::type_id::create("coverage",this);
-  apb_virtual_seqr_h = apb_virtual_sequencer::type_id::create("apb_virtual_sequencer",this);
+  //apb_coverage_h = coverage::type_id::create("coverage",this);
+  apb_virtual_seqr_h = virtual_sequencer::type_id::create("apb_virtual_sequencer",this);
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------

@@ -52,9 +52,9 @@ endfunction : new
 function void apb_master_monitor_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
-  `uvm_fatal("FATAL_APB_MASTER_MONITOR_PROXY_CANNOT_GET_apb_master_AGENT_CONFIG","cannot get() apb_master_agent_cfg_h from uvm_config_db");
-  end 
+  //if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
+  //`uvm_fatal("FATAL_APB_MASTER_MONITOR_PROXY_CANNOT_GET_apb_master_AGENT_CONFIG","cannot get() apb_master_agent_cfg_h from uvm_config_db");
+  //end 
   // creating monitor port
    apb_master_analysis_port=new("apb_master_analysis_port",this);
 endfunction : build_phase

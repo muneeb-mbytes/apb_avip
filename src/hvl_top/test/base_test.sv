@@ -46,7 +46,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void base_test::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  env_h = env::type::create("env",this);
+  env_h = env::type_id::create("env",this);
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------

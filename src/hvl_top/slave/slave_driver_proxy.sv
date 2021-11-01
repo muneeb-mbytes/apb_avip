@@ -56,9 +56,9 @@ function void slave_driver_proxy::build_phase(uvm_phase phase);
 //  if(!uvm_config_db #(slave_agent_config)::get(this,"","slave_agent_config",slave_agent_cfg_h))
 //		`uvm_fatal("CONFIG","cannot get() slave_agent_cfg_h")
   		
-  if(!uvm_config_db #(virtual slave_driver_bfm)::get(this,"","slave_driver_bfm",slave_drv_bfm_h)) begin
-    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get() slave_drv_bfm_h");
-  end
+  //if(!uvm_config_db #(virtual slave_driver_bfm)::get(this,"","slave_driver_bfm",slave_drv_bfm_h)) begin
+    //`uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get() slave_drv_bfm_h");
+  //end
 
   //  slave_spi_seq_item_conv_h = slave_spi_seq_item_converter::type_id::create("slave_spi_seq_item_conv_h");
 endfunction : build_phase
@@ -74,3 +74,5 @@ function void slave_driver_proxy::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
 //  slave_drv_bfm_h = slave_agent_cfg_h.slave_drv_bfm_h;
 endfunction : connect_phase
+
+`endif

@@ -11,7 +11,7 @@ interface apb_master_driver_bfm(apb_if drv_intf, apb_if.MON_MP mon_intf);
   //-------------------------------------------------------
   // Creating the handle for proxy driver
   //-------------------------------------------------------
-  import apb_slave_pkg::apb_master_driver_proxy;
+  import apb_master_pkg::apb_master_driver_proxy;
   apb_master_driver_proxy apb_master_drv_proxy;
 
   initial begin

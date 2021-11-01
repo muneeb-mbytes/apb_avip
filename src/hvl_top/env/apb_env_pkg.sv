@@ -16,7 +16,7 @@ package apb_env_pkg;
   //-------------------------------------------------------
   // Importing the required packages
   //-------------------------------------------------------
-  import apb_globals_pkg::*;
+  import apb_global_pkg::*;
   import apb_master_pkg::*;
   import apb_slave_pkg::*;
 

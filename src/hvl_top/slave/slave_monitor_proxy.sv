@@ -54,9 +54,9 @@ endfunction : new
 function void slave_monitor_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  if(!uvm_config_db#(virtual slave_monitor_bfm)::get(this,"","slave_monitor_bfm",slave_mon_bfm_h)) begin
-     `uvm_fatal("FATAL_SMP_MON_BFM",$sformatf("Couldn't get S_MON_BFM in Slave_Monitor_proxy"));  
-  end 
+  //if(!uvm_config_db#(virtual slave_monitor_bfm)::get(this,"","slave_monitor_bfm",slave_mon_bfm_h)) begin
+     //`uvm_fatal("FATAL_SMP_MON_BFM",$sformatf("Couldn't get S_MON_BFM in Slave_Monitor_proxy"));  
+  //end 
   //slave_analysis_port = new("slave_analysis_port",this);
 
   // MSHA: if(!uvm_config_db#(slave_agent_config)::get(this,"","slave_agent_config",slave_agent_cfg_h)) begin
@@ -64,3 +64,5 @@ function void slave_monitor_proxy::build_phase(uvm_phase phase);
   // MSHA: end
 
 endfunction : build_phase
+
+`endif

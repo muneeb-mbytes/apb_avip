@@ -17,7 +17,7 @@ module hvl_top;
   // calling run_test for simulation
   //-------------------------------------------------------
   initial begin
-    run_test(base_test);
+    run_test("base_test");
   end
 
 endmodule : hvl_top

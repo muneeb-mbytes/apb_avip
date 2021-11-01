@@ -1,12 +1,12 @@
-`ifndef apb_IF_INCLUDED_
-`define apb_IF_INCLUDED_
+`ifndef APB_IF_INCLUDED_
+`define APB_IF_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 // Interface : apb_if
 //  Declaration of pin level signals for apb interface
 //--------------------------------------------------------------------------------------------
 interface apb_if;
-  output reg  psel;
+  /*output reg  psel;
   output reg  penable;    
   output reg  pwrite;
   output reg [7:0] paddr;
@@ -28,6 +28,7 @@ interface apb_if;
   reg [7:0] sys_addr;
   reg [1:0]  sys_kind;
   reg [ 1 : 0 ]sel slave;
-  reg sys_active;     
+  reg sys_active;*/ 
+endinterface : apb_if
  
 `endif

@@ -5,7 +5,7 @@
 // Package: apb_apb_master_pkg
 //  Includes all the files related to apb apb_master
 //--------------------------------------------------------------------------------------------
-package apb_apb_master_pkg;
+package apb_master_pkg;
 
   //-------------------------------------------------------
   // Import uvm package
@@ -27,6 +27,6 @@ package apb_apb_master_pkg;
   `include "apb_master_monitor_proxy.sv"
   `include "apb_master_agent.sv"
   
-endpackage : apb_apb_master_pkg
+endpackage : apb_master_pkg
 
 `endif

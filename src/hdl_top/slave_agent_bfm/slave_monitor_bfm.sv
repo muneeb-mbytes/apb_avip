@@ -8,7 +8,8 @@
  
 interface apb_slave_monitor_bfm (apb_if intf);
   initial begin
-    `uvm_info(get_type_name(),("Slave Monitor BFM"));
+    //`uvm_info("-------",("Slave Monitor BFM"),UVM_LOW);
+    $display("SLAVE MONITOR BFM");
   end
 endinterface : apb_slave_monitor_bfm
 `endif

@@ -16,7 +16,7 @@ package apb_slave_seq_pkg;
   //-------------------------------------------------------
   // Including required apb slave seq files
   //-------------------------------------------------------
-  `include "slave_base_seq.sv"
+  //`include "slave_base_seq.sv"
 
 endpackage : apb_slave_seq_pkg
 

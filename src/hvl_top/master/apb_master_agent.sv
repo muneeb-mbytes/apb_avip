@@ -58,18 +58,18 @@ endfunction : new
 function void apb_master_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
-    `uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG","cannot get apb_master_agent_cfg_h from uvm_config_db");
-  end
+  //if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
+    //`uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG","cannot get apb_master_agent_cfg_h from uvm_config_db");
+  //end
 
   // Print the values of the apb_master_agent_config
   // Have a print method in apb_master_agent_config class and call it from here
   //`uvm_info(get_type_name(), $sformat("The apb_master_agent_config.apb_master_id =%d",apb_master_agent_cfg_h.apb_master_id),UVM_LOW);
   
-  if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
+  //if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h=apb_master_driver_proxy::type_id::create("apb_master_drv_proxy_h",this);
     apb_master_seqr_h=apb_master_sequencer::type_id::create("apb_master_seqr_h",this);
-  end
+  //end
 
   apb_master_mon_proxy_h=apb_master_monitor_proxy::type_id::create("apb_master_mon_proxy_h",this);
 endfunction : build_phase
@@ -82,12 +82,12 @@ endfunction : build_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_agent::connect_phase(uvm_phase phase);
-  if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
+  //if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     apb_master_seqr_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     //Connecting the ports
     apb_master_drv_proxy_h.seq_item_port.connect(apb_master_seqr_h.seq_item_export);
-  end
+  //end
   
   apb_master_mon_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
 

@@ -16,4 +16,4 @@ module apb_master_monitor_bfm (apb_if.MON_MP intf);
     $display("apb master Monitor BFM");
   end
 
-endmodule : master_monitor_bfm
+endmodule : apb_master_monitor_bfm

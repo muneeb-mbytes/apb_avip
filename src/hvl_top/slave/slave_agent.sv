@@ -10,7 +10,7 @@ class slave_agent extends uvm_agent;
 
   // Variable: slave_agent_cfg_h;
   // Handle for slave agent configuration
-  slave_agent_config slave_agent_cfg_h;
+  //slave_agent_config slave_agent_cfg_h;
 
   // Variable: slave_seqr_h;
   // Handle for slave sequencer
@@ -58,18 +58,18 @@ endfunction : new
 function void slave_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  if(!uvm_config_db #(slave_agent_config)::get(this,"","slave_agent_config",slave_agent_cfg_h)) begin
-   `uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the slave_agent_config from config_db"))
-  end
+  //if(!uvm_config_db #(slave_agent_config)::get(this,"","slave_agent_config",slave_agent_cfg_h)) begin
+   //`uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the slave_agent_config from config_db"))
+  //end
 
   // TODO(mshariff): Print the values of the slave_agent_config
   // Have a print method in master_agent_config class and call it from here
   //`uvm_info(get_type_name(), $sformatf("The slave_agent_config.slave_id = %0d", slave_agent_cfg_h.slave_id), UVM_LOW);
 
-   if(slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
+   //if(slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
      slave_drv_proxy_h = slave_driver_proxy::type_id::create("slave_drv_proxy_h",this);
      slave_seqr_h=slave_sequencer::type_id::create("slave_seqr_h",this);
-   end
+   //end
 
    slave_mon_proxy_h = slave_monitor_proxy::type_id::create("slave_mon_proxy_h",this);
 
@@ -88,18 +88,18 @@ endfunction : build_phase
 function void slave_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   
-  if(slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
-    slave_drv_proxy_h.slave_agent_cfg_h = slave_agent_cfg_h;
-    slave_seqr_h.slave_agent_cfg_h = slave_agent_cfg_h;
+  //if(slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
+    //slave_drv_proxy_h.slave_agent_cfg_h = slave_agent_cfg_h;
+    //slave_seqr_h.slave_agent_cfg_h = slave_agent_cfg_h;
     // MSHA: slave_cov_h.slave_agent_cfg_h = slave_agent_cfg_h;
     
     // Connecting the ports
     slave_drv_proxy_h.seq_item_port.connect(slave_seqr_h.seq_item_export);
     // TODO(mshariff): 
     // connect monitor port to coverage
-  end
+  //end
 
-  slave_mon_proxy_h.slave_agent_cfg_h = slave_agent_cfg_h;
+  //slave_mon_proxy_h.slave_agent_cfg_h = slave_agent_cfg_h;
 
 endfunction: connect_phase
 

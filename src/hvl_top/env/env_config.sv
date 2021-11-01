@@ -22,7 +22,7 @@ class env_config extends uvm_object;
 
   // Variable: master_agent_cfg_h
   // Handle for master agent configuration
-  master_agent_config master_agent_cfg_h;
+  apb_master_agent_config master_agent_cfg_h;
 
   // Variable: slave_agent_cfg_h
   // Dynamic array of slave agnet configuration handles
