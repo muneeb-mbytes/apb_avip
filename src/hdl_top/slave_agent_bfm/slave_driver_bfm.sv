@@ -1,4 +1,16 @@
-//-------------------------------------------------------
+`ifndef APB_SLAVE_DRIVER_BFM_INCLUDED_
+`define APB_SLAVE_DRIVER_BFM_INCLUDED_
+//--------------------------------------------------------------------------------------------
+// Interface : apb_slave_driver_bfm
+//  Used as the HDL driver for SPI
+//  It connects with the HVL driver_proxy for driving the stimulus
 //
-//Add Slave Driver Bfm
-//-------------------------------------------------------
+// Parameters:
+//  intf - apb Interface
+//--------------------------------------------------------------------------------------------
+interface apb_slave_driver_bfm(apb_if intf);
+  initial begin
+    `uvm_info(get_type_name(),("Slave Driver BFM"));
+  end
+endinterface : apb_slave_driver_bfm
+`endif
