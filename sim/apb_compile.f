@@ -22,8 +22,8 @@
 ../../src/hdl_top/master_agent_bfm/master_driver_bfm.sv
 ../../src/hdl_top/master_agent_bfm/master_monitor_bfm.sv
 ../../src/hdl_top/master_agent_bfm/master_agent_bfm.sv
-../../src/hdl_top/slave_agent_bfm/slave_driver_bfm.sv
-../../src/hdl_top/slave_agent_bfm/slave_monitor_bfm.sv
-../../src/hdl_top/slave_agent_bfm/slave_agent_bfm.sv
+../../src/hdl_top/slave_agent_bfm/apb_slave_driver_bfm.sv
+../../src/hdl_top/slave_agent_bfm/apb_slave_monitor_bfm.sv
+../../src/hdl_top/slave_agent_bfm/apb_slave_agent_bfm.sv
 ../../src/hdl_top/hdl_top.sv
 ../../src/hvl_top/hvl_top.sv 
