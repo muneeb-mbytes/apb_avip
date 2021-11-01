@@ -1,52 +1,54 @@
-`ifndef VIRTUAL_SEQUENCER_INCLUDED_
-`define VIRTUAL_SEQUENCER_INCLUDED_
+`ifndef APB_MASTER_VSEQUENCER_INCLUDED_
+`define APB_MASTER_VSEQUENCER_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: virtual_sequencer
-// Creates master and slave sequences here
+// Class: apb_master_vsequencer
+// <Description_here>
 //--------------------------------------------------------------------------------------------
-class virtual_sequencer extends uvm_component;
-  `uvm_component_utils(virtual_sequencer)
-
-  // Variable: master_seqr_h
-  // Declaring master sequencer handle
-  apb_master_sequencer master_seqr_h;
-
-  // Variable: slave_seqr_h
-  // Declaring slave sequencer handle
-  slave_sequencer  slave_seqr_h;
+class apb_master_vsequencer extends uvm_sequencer;
+  `uvm_component_utils(apb_master_vsequencer)
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "virtual_sequencer", uvm_component parent = null);
+  extern function new(string name = "apb_master_vsequencer", uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
+  extern virtual function void connect_phase(uvm_phase phase);
 
-endclass : virtual_sequencer
+endclass : apb_master_vsequencer
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
 //
 // Parameters:
-//  name - virtual_sequencer
+//  name - apb_master_vsequencer
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function virtual_sequencer::new(string name = "virtual_sequencer",uvm_component parent = null);
+function apb_master_vsequencer::new(string name = "apb_master_vsequencer",uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Function: build_phase
-// Builds the master and slave sequencers here.
+// <Description_here>
 //
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void virtual_sequencer::build_phase(uvm_phase phase);
+function void apb_master_vsequencer::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  master_seqr_h = apb_master_sequencer::type_id::create("master_seqr_h",this);
-  slave_seqr_h = slave_sequencer::type_id::create("slave_seqr_h",this);
 endfunction : build_phase
+
+//--------------------------------------------------------------------------------------------
+// Function: connect_phase
+// <Description_here>
+//
+// Parameters:
+//  phase - uvm phase
+//--------------------------------------------------------------------------------------------
+function void apb_master_vsequencer::connect_phase(uvm_phase phase);
+  super.connect_phase(phase);
+endfunction : connect_phase
 
 
 `endif

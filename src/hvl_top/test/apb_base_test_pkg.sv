@@ -1,12 +1,12 @@
-`ifndef TEST_PKG_INCLUDED_
-`define TEST_PKG_INCLUDED_
+`ifndef APB_BASE_TEST_PKG_INCLUDED_
+`define APB_BASE_TEST_PKG_INCLUDED_
 
 //-----------------------------------------------------------------------------------------
-// Package: Test
+// Package: apb base_test
 // Description:
 // Includes all the files written to run the simulation
 //--------------------------------------------------------------------------------------------
-package test_pkg;
+package apb_base_test_pkg;
 
   //-------------------------------------------------------
   // Import uvm package
@@ -18,18 +18,18 @@ package test_pkg;
   // Importing the required packages
   //-------------------------------------------------------
   import apb_global_pkg::*;
-  import apb_master_pkg::*;
-  import apb_slave_pkg::*;
+  //import apb_master_pkg::*;
+  //import apb_slave_pkg::*;
   import apb_env_pkg::*;
-  //import apb_master_seq_pkg::*;
-  //import apb_slave_seq_pkg::*;
-  //import apb_virtual_seq_pkg::*;
+  import apb_master_seq_pkg::*;
+  import apb_slave_seq_pkg::*;
+  import apb_virtual_seq_pkg::*;
   
   //-------------------------------------------------------
-  // Including the base test files
+  // Including the base_test files
   //-------------------------------------------------------
- `include "base_test.sv"
+ `include "apb_base_test.sv"
 
-endpackage : test_pkg
+endpackage : apb_base_test_pkg
 
 `endif

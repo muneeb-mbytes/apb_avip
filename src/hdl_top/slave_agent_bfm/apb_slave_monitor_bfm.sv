@@ -3,7 +3,7 @@
 //--------------------------------------------------------------------------------------------
 // Inteface       : apb Slave Monitor BFM
 // Description  : Connects the slave monitor bfm with the monitor proxy
-// to call the tasks and functions from monitor bfm to monitor proxy
+// to call the tasks and functions from apb monitor bfm to apb monitor proxy
 //--------------------------------------------------------------------------------------------
  
 interface apb_slave_monitor_bfm (apb_if intf);

@@ -14,7 +14,7 @@ package apb_master_pkg;
   import uvm_pkg::*;
  
   // Import apb_global_pkg 
-  import apb_global_pkg::*;
+  //import apb_global_pkg::*;
 
   //-------------------------------------------------------
   // Include all other files

@@ -6,7 +6,7 @@
 //  It connects with the HVL driver_proxy for driving the stimulus
 //
 // Parameters:
-//  intf - apb Interface
+//  intf - apb interface
 //--------------------------------------------------------------------------------------------
 interface apb_slave_driver_bfm(apb_if intf);
   initial begin

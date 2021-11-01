@@ -10,13 +10,14 @@ package apb_virtual_seq_pkg;
   //-------------------------------------------------------
   // Importing UVM Pkg
   //-------------------------------------------------------
+  `include "uvm_macros.svh"
   import uvm_pkg::*;
-  //import master_apb_pkg::*;
+  //`import master_apb_pkg::*;
 
   //-------------------------------------------------------
   // Including required apb master seq files
   //-------------------------------------------------------
-  //`include "master_base_seq.sv"
+  `include "apb_virtual_base_seq.sv"
 
 endpackage : apb_virtual_seq_pkg
 
