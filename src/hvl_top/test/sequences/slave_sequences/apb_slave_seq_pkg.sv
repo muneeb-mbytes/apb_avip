@@ -1,25 +1,23 @@
-`ifndef HVL_TOP_INCLUDED_
-`define HVL_TOP_INCLUDED_
+`ifndef APB_SLAVE_SEQ_PKG_INCLUDED_
+`define APB_SLAVE_SEQ_PKG_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Module : hvl_top
-// Starts the testbench components
+// Package : apb_slave_seq_pkg
+// Includes all the slave seq files declared
 //--------------------------------------------------------------------------------------------
-module hvl_top;
+package apb_slave_seq_pkg;
 
   //-------------------------------------------------------
-  // Package : Importing UVM Package and test Package
+  // Importing UVM Pkg
   //-------------------------------------------------------
   import uvm_pkg::*;
-  import test_pkg::*;
-  
-  //-------------------------------------------------------
-  // calling run_test for simulation
-  //-------------------------------------------------------
-  initial begin
-    run_test(base_test);
-  end
+  import apb_slave_pkg::*;
 
-endmodule : hvl_top
+  //-------------------------------------------------------
+  // Including required apb slave seq files
+  //-------------------------------------------------------
+  `include "slave_base_seq.sv"
+
+endpackage : apb_slave_seq_pkg
 
 `endif
