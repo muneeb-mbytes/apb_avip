@@ -29,6 +29,11 @@ module hdl_top;
   apb_if intf();
 
   //-------------------------------------------------------
+  // apb Master BFM Agent Instantiation
+  //-------------------------------------------------------
+  apb_master_agent_bfm apb_master_agent_bfm_h(intf); 
+  
+  //-------------------------------------------------------
   // apb slave BFM Agent Instantiation
   //-------------------------------------------------------
   apb_slave_agent_bfm apb_slave_agent_bfm_h(intf);

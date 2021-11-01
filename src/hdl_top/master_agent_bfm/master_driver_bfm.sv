@@ -6,7 +6,7 @@
 // Parameters:
 //  intf - apb Interface
 //--------------------------------------------------------------------------------------------
-interface apb_master_driver_bfm(apb_if drv_intf, apb_if.MON_MP mon_intf);
+interface apb_master_driver_bfm(apb_if intf);
 
   //-------------------------------------------------------
   // Creating the handle for proxy driver

@@ -4,7 +4,7 @@
 // Description  : Connects the master monitor bfm with the monitor proxy
 //--------------------------------------------------------------------------------------------
 
-module apb_master_monitor_bfm (apb_if.MON_MP intf);
+module apb_master_monitor_bfm (apb_if intf);
   
   //-------------------------------------------------------
   // Creating the handle for proxy driver
