@@ -8,25 +8,25 @@
 class apb_slave_agent extends uvm_agent;
   `uvm_component_utils(apb_slave_agent)
 
-  // Variable: apb_slave_agent_cfg_h;
-  // Handle for slave agent configuration
+  // Variable: slave_agent_cfg_h;
+  // Handle for apb_slave agent configuration
   //apb_slave_agent_config apb_slave_agent_cfg_h;
 
   // Variable: slave_seqr_h;
   // Handle for slave sequencer
-  slave_sequencer slave_seqr_h;
+  apb_slave_sequencer apb_slave_seqr_h;
 
   // Variable: slave_drv_proxy_h
   // Handle for slave driver proxy
-  slave_driver_proxy slave_drv_proxy_h;
+  apb_slave_driver_proxy apb_slave_drv_proxy_h;
 
   // Variable: slave_mon_proxy_h
   // Handle for slave monitor proxy
-  slave_monitor_proxy slave_mon_proxy_h;
+  apb_slave_monitor_proxy apb_slave_mon_proxy_h;
 
-  // MSHA: // Variable: slave_coverage
-  // MSHA: // Decalring a handle for slave_coverage
-  // MSHA: slave_coverage slave_cov_h;
+  // Variable: slave_coverage
+  // Decalring a handle for slave_coverage
+  //apb_slave_coverage apb_slave_cov_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -58,23 +58,26 @@ endfunction : new
 function void apb_slave_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  //if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config",apb_slave_agent_cfg_h)) begin
-   //`uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config from config_db"))
+  //if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config",
+    //                                               slave_agent_cfg_h)) begin
+   //`uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config 
+   //                                                          from config_db"))
   //end
 
   // TODO(mshariff): Print the values of the apb_slave_agent_config
   // Have a print method in master_agent_config class and call it from here
-  //`uvm_info(get_type_name(), $sformatf("The apb_slave_agent_config.slave_id = %0d", apb_slave_agent_cfg_h.slave_id), UVM_LOW);
+  //`uvm_info(get_type_name(), $sformatf("The apb_slave_agent_config.slave_id = %0d", 
+  //                                           slave_agent_cfg_h.slave_id), UVM_LOW);
 
    //if(apb_slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
-     slave_drv_proxy_h = slave_driver_proxy::type_id::create("slave_drv_proxy_h",this);
-     slave_seqr_h=slave_sequencer::type_id::create("slave_seqr_h",this);
+     apb_slave_drv_proxy_h = apb_slave_driver_proxy::type_id::create("apb_slave_drv_proxy_h",this);
+     apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
    //end
 
-   slave_mon_proxy_h = slave_monitor_proxy::type_id::create("slave_mon_proxy_h",this);
+   apb_slave_mon_proxy_h = apb_slave_monitor_proxy::type_id::create("apb_slave_mon_proxy_h",this);
 
   // MSHA: if(apb_slave_agent_cfg_h.has_coverage) begin
-  // MSHA:   slave_cov_h = slave_coverage::type_id::create("slave_cov_h",this);
+  //apb_slave_cov_h = apb_slave_coverage::type_id::create("apb_slave_cov_h",this);
   // MSHA: end
 endfunction : build_phase
 
@@ -88,18 +91,18 @@ endfunction : build_phase
 function void apb_slave_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   
-  //if(apb_slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
-    //slave_drv_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
-    //slave_seqr_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
-    // MSHA: slave_cov_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
+  //if(slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
+    //slave_drv_proxy_h.slave_agent_cfg_h = slave_agent_cfg_h;
+    //slave_seqr_h.slave_agent_cfg_h = slave_agent_cfg_h;
+    // MSHA: slave_cov_h.slave_agent_cfg_h = slave_agent_cfg_h;
     
     // Connecting the ports
-    slave_drv_proxy_h.seq_item_port.connect(slave_seqr_h.seq_item_export);
+    apb_slave_drv_proxy_h.seq_item_port.connect(apb_slave_seqr_h.seq_item_export);
     // TODO(mshariff): 
     // connect monitor port to coverage
   //end
 
-  //slave_mon_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
+  //apb_slave_mon_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
 
 endfunction: connect_phase
 

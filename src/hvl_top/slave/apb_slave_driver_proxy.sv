@@ -1,15 +1,15 @@
-`ifndef SLAVE_DRIVER_PROXY_INCLUDED_
-`define SLAVE_DRIVER_PROXY_INCLUDED_
+`ifndef APB_SLAVE_DRIVER_PROXY_INCLUDED_
+`define APB_SLAVE_DRIVER_PROXY_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-//  Class: slave_driver_proxy
+//  Class: apb_slave_driver_proxy
 //  This is the proxy driver on the HVL side
 //  It receives the transactions and converts them to task calls for the HDL driver
 //--------------------------------------------------------------------------------------------
-class slave_driver_proxy extends uvm_driver#(slave_tx);
-  `uvm_component_utils(slave_driver_proxy)
+class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
+  `uvm_component_utils(apb_slave_driver_proxy)
 
-  slave_tx tx;
+  apb_slave_tx apb_slave_tx_h;
 
   // Variable: slave_driver_bfm_h;
   // Handle for slave driver bfm
@@ -19,27 +19,27 @@ class slave_driver_proxy extends uvm_driver#(slave_tx);
 
   // Variable: slave_agent_cfg_h;
   // Handle for slave agent configuration
-  slave_agent_config slave_agent_cfg_h;
+  apb_slave_agent_config apb_slave_agent_cfg_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "slave_driver_proxy", uvm_component parent = null);
+  extern function new(string name = "apb_slave_driver_proxy", uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
 
 
-  endclass : slave_driver_proxy
+  endclass : apb_slave_driver_proxy
 
 //--------------------------------------------------------------------------------------------
 //  Construct: new
 //  Initializes memory for new object
 //
 //  Parameters:
-//  name - slave_driver_proxy
+//  name - apb_slave_driver_proxy
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function slave_driver_proxy::new(string name = "slave_driver_proxy", uvm_component parent = null);
+function apb_slave_driver_proxy::new(string name = "apb_slave_driver_proxy", uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
 
@@ -50,17 +50,20 @@ endfunction : new
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void slave_driver_proxy::build_phase(uvm_phase phase);
+function void apb_slave_driver_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-//  if(!uvm_config_db #(slave_agent_config)::get(this,"","slave_agent_config",slave_agent_cfg_h))
-//		`uvm_fatal("CONFIG","cannot get() slave_agent_cfg_h")
+//  if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config",
+  //                                               apb_slave_agent_cfg_h))
+//		`uvm_fatal("CONFIG","cannot get() apb_slave_agent_cfg_h")
   		
-  //if(!uvm_config_db #(virtual slave_driver_bfm)::get(this,"","slave_driver_bfm",slave_drv_bfm_h)) begin
+  //if(!uvm_config_db #(virtual slave_driver_bfm)::get(this,"","slave_driver_bfm",
+    //                                                      slave_drv_bfm_h)) begin
     //`uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get() slave_drv_bfm_h");
   //end
 
-  //  slave_spi_seq_item_conv_h = slave_spi_seq_item_converter::type_id::create("slave_spi_seq_item_conv_h");
+  //  slave_spi_seq_item_conv_h = slave_spi_seq_item_converter::type_id::create
+  //                                                    ("slave_spi_seq_item_conv_h");
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -70,9 +73,9 @@ endfunction : build_phase
 //  Parameters:
 //  phase - stores the current phase
 //--------------------------------------------------------------------------------------------
-function void slave_driver_proxy::connect_phase(uvm_phase phase);
+function void apb_slave_driver_proxy::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-//  slave_drv_bfm_h = slave_agent_cfg_h.slave_drv_bfm_h;
+//  slave_drv_bfm_h = apb_slave_agent_cfg_h.slave_drv_bfm_h;
 endfunction : connect_phase
 
 `endif

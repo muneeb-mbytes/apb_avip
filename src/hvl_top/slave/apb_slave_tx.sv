@@ -1,18 +1,18 @@
-`ifndef SLAVE_TX_INCLUDED_
-`define SLAVE_TX_INCLUDED_
+`ifndef APB_SLAVE_TX_INCLUDED_
+`define APB_SLAVE_TX_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: slave_tx
+// Class: apb_slave_tx
 // <Description_here>
 //--------------------------------------------------------------------------------------------
-class slave_tx extends uvm_sequence_item;
-  `uvm_object_utils(slave_tx)
+class apb_slave_tx extends uvm_sequence_item;
+  `uvm_object_utils(apb_slave_tx)
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "slave_tx");
-endclass : slave_tx
+  extern function new(string name = "apb_slave_tx");
+endclass : apb_slave_tx
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
@@ -20,7 +20,7 @@ endclass : slave_tx
 // Parameters:
 //  name - slave_tx
 //--------------------------------------------------------------------------------------------
-function slave_tx::new(string name = "slave_tx");
+function apb_slave_tx::new(string name = "apb_slave_tx");
   super.new(name);
 endfunction : new
 

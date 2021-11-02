@@ -1,33 +1,33 @@
-`ifndef SLAVE_SEQUENCER_INCLUDED_
-`define SLAVE_SEQUENCER_INCLUDED_
+`ifndef APB_SLAVE_SEQUENCER_INCLUDED_
+`define APB_SLAVE_SEQUENCER_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-//  Class: slave_sequencer
+//  Class: apb_slave_sequencer
 //  It send transactions to driver via tlm ports
 //--------------------------------------------------------------------------------------------
-class slave_sequencer extends uvm_sequencer#(slave_tx);
-  `uvm_component_utils(slave_sequencer)
+class apb_slave_sequencer extends uvm_sequencer#(apb_slave_tx);
+  `uvm_component_utils(apb_slave_sequencer)
   
     // Variable: slave_agent_cfg_h;
     // Handle for slave agent configuration
-     slave_agent_config slave_agent_cfg_h;
+     apb_slave_agent_config apb_slave_agent_cfg_h;
 
      //-------------------------------------------------------
      // Externally defined Tasks and Functions
      //-------------------------------------------------------
-     extern function new(string name = "slave_sequencer", uvm_component parent = null);
+     extern function new(string name = "apb_slave_sequencer", uvm_component parent = null);
   
-endclass : slave_sequencer
+endclass : apb_slave_sequencer
 
 //--------------------------------------------------------------------------------------------
 //  Construct: new
-//  slave_sequencer class object is initialized
+//  apb_slave_sequencer class object is initialized
 //
 //  Parameters:
-//  name - slave_sequencer
+//  name - apb_slave_sequencer
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function slave_sequencer::new(string name = "slave_sequencer", uvm_component parent = null);
+function apb_slave_sequencer::new(string name = "apb_slave_sequencer",uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
 
