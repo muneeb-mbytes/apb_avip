@@ -13,7 +13,7 @@ class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
 
   // Variable: slave_driver_bfm_h;
   // Handle for slave driver bfm
-  virtual slave_driver_bfm slave_drv_bfm_h;
+  virtual apb_slave_driver_bfm apb_slave_drv_bfm_h;
 
   //  slave_spi_seq_item_converter  slave_spi_seq_item_conv_h;
 
@@ -27,10 +27,11 @@ class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   extern function new(string name = "apb_slave_driver_proxy", uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
+  extern function void end_of_elaboration_phase(uvm_phase phase);
 
 
-  endclass : apb_slave_driver_proxy
-
+endclass : apb_slave_driver_proxy
+  
 //--------------------------------------------------------------------------------------------
 //  Construct: new
 //  Initializes memory for new object
@@ -57,10 +58,10 @@ function void apb_slave_driver_proxy::build_phase(uvm_phase phase);
   //                                               apb_slave_agent_cfg_h))
 //		`uvm_fatal("CONFIG","cannot get() apb_slave_agent_cfg_h")
   		
-  //if(!uvm_config_db #(virtual slave_driver_bfm)::get(this,"","slave_driver_bfm",
-    //                                                      slave_drv_bfm_h)) begin
-    //`uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get() slave_drv_bfm_h");
-  //end
+  if(!uvm_config_db #(virtual apb_slave_driver_bfm)::get(this,"","apb_slave_driver_bfm",
+                                                             apb_slave_drv_bfm_h)) begin
+    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get() apb_slave_drv_bfm_h");
+  end
 
   //  slave_spi_seq_item_conv_h = slave_spi_seq_item_converter::type_id::create
   //                                                    ("slave_spi_seq_item_conv_h");
@@ -75,7 +76,22 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 function void apb_slave_driver_proxy::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-//  slave_drv_bfm_h = apb_slave_agent_cfg_h.slave_drv_bfm_h;
+//  apb_slave_drv_bfm_h = apb_slave_agent_cfg_h.apb_slave_drv_bfm_h;
 endfunction : connect_phase
+
+
+//-------------------------------------------------------
+// Function: end_of_elaboration_phase
+//Description: connects driver_proxy and driver_bfm
+//
+// Parameters:
+//  phase - stores the current phase
+//-------------------------------------------------------
+function void apb_slave_driver_proxy::end_of_elaboration_phase(uvm_phase phase);
+  super.end_of_elaboration_phase(phase);
+  apb_slave_drv_bfm_h.apb_slave_drv_proxy_h = this;
+endfunction : end_of_elaboration_phase
+
+
 
 `endif

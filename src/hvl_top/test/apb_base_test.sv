@@ -106,7 +106,7 @@ function void apb_base_test::setup_apb_slave_agent_config();
     else begin
       apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active = uvm_active_passive_enum'(UVM_PASSIVE);
     end
-    uvm_config_db #(apb_slave_agent_config)::set(this,$sformatf("*apb_slave_agent*[%0d]",i),"apb_slave_agent_config", apb_env_cfg_h.apb_slave_agent_cfg_h[i]);
+    uvm_config_db #(apb_slave_agent_config)::set(this,$sformatf("*slave_agent*[%0d]",i),"apb_slave_agent_config", apb_env_cfg_h.apb_slave_agent_cfg_h[i]);
   end
 endfunction : setup_apb_slave_agent_config
 
