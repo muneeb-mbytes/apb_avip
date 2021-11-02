@@ -18,6 +18,10 @@ class apb_master_agent_config extends uvm_object;
   // this apb_master over SPI interface
   int no_of_slaves;
 
+  // Variable: has_coverage
+  // Used for enabling the master agent coverage
+  bit has_coverage;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

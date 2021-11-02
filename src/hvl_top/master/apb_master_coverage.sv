@@ -5,7 +5,7 @@
 // Class: apb_master_coverage
 // <Description_here>
 //--------------------------------------------------------------------------------------------
-class apb_master_coverage extends uvm_subscriber;
+class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   `uvm_component_utils(apb_master_coverage)
 
   //Creating handle for apb_master transacion coverage
@@ -15,7 +15,7 @@ class apb_master_coverage extends uvm_subscriber;
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_master_coverage", uvm_component parent = null);
-  extern virtual function void build_phase(uvm_phase phase);
+  //extern virtual function void build_phase(uvm_phase phase);
   //extern virtual function void connect_phase(uvm_phase phase);
   //extern virtual function void end_of_elaboration_phase(uvm_phase phase);
   //extern virtual function void start_of_simulation_phase(uvm_phase phase);

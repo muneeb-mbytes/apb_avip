@@ -26,7 +26,7 @@ class apb_env_config extends uvm_object;
 
   // Variable: slave_agent_cfg_h
   // Dynamic array of slave agnet configuration handles
-  slave_agent_config apb_slave_agent_cfg_h[];
+  apb_slave_agent_config apb_slave_agent_cfg_h[];
 
 //-------------------------------------------------------
 // Externally defined Tasks and Functions

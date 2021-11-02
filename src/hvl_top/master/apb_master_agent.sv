@@ -24,6 +24,10 @@ class apb_master_agent extends uvm_agent;
   //Variable: apb_master_mon_proxy_h
   //Declaring a handle for apb_master monitor proxy 
   apb_master_monitor_proxy apb_master_mon_proxy_h;
+
+  // Variable: master_coverage
+  // Decalring a handle for master_coverage
+  // apb_master_coverage apb_master_cov_h;
     
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -58,20 +62,24 @@ endfunction : new
 function void apb_master_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  //if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
-    //`uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG","cannot get apb_master_agent_cfg_h from uvm_config_db");
-  //end
+  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
+    `uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG","cannot get apb_master_agent_cfg_h from uvm_config_db");
+  end
 
   // Print the values of the apb_master_agent_config
   // Have a print method in apb_master_agent_config class and call it from here
   //`uvm_info(get_type_name(), $sformat("The apb_master_agent_config.apb_master_id =%d",apb_master_agent_cfg_h.apb_master_id),UVM_LOW);
   
-  //if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
+  if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h=apb_master_driver_proxy::type_id::create("apb_master_drv_proxy_h",this);
     apb_master_seqr_h=apb_master_sequencer::type_id::create("apb_master_seqr_h",this);
-  //end
+  end
 
   apb_master_mon_proxy_h=apb_master_monitor_proxy::type_id::create("apb_master_mon_proxy_h",this);
+
+//  if(apb_master_agent_cfg_h.has_coverage) begin
+//    apb_master_cov_h = apb_master_coverage::type_id::create("apb_master_cov_h",this);
+//  end
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -82,14 +90,21 @@ endfunction : build_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_agent::connect_phase(uvm_phase phase);
-  //if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
+  if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     apb_master_seqr_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
+    
     //Connecting the ports
     apb_master_drv_proxy_h.seq_item_port.connect(apb_master_seqr_h.seq_item_export);
-  //end
+  end
   
   apb_master_mon_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
+
+//  if(apb_master_agent_cfg_h.has_coverage) begin
+//    apb_master_cov_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
+    // TODO(mshariff): 
+    // connect monitor port to coverage
+//  end
 
 endfunction: connect_phase
 
