@@ -14,7 +14,7 @@ package apb_master_pkg;
   import uvm_pkg::*;
  
   // Import apb_global_pkg 
-  //import apb_global_pkg::*;
+  import apb_global_pkg::*;
 
   //-------------------------------------------------------
   // Include all other files
@@ -22,7 +22,6 @@ package apb_master_pkg;
   `include "apb_master_tx.sv"
   `include "apb_master_agent_config.sv"
   `include "apb_master_sequencer.sv"
-//`include "apb_master_sequence.sv"
   `include "apb_master_driver_proxy.sv"
   `include "apb_master_monitor_proxy.sv"
   `include "apb_master_agent.sv"

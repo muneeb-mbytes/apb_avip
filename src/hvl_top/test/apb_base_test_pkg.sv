@@ -18,8 +18,8 @@ package apb_base_test_pkg;
   // Importing the required packages
   //-------------------------------------------------------
   import apb_global_pkg::*;
-  //import apb_master_pkg::*;
-  //import apb_slave_pkg::*;
+  import apb_master_pkg::*;
+  import apb_slave_pkg::*;
   import apb_env_pkg::*;
   import apb_master_seq_pkg::*;
   import apb_slave_seq_pkg::*;

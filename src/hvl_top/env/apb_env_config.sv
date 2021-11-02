@@ -22,11 +22,11 @@ class apb_env_config extends uvm_object;
 
   // Variable: master_agent_cfg_h
   // Handle for master agent configuration
-  //apb_master_agent_config apb_master_agent_cfg_h;
+  apb_master_agent_config apb_master_agent_cfg_h;
 
   // Variable: slave_agent_cfg_h
   // Dynamic array of slave agnet configuration handles
-  //apb_slave_agent_config apb_slave_agent_cfg_h[];
+  slave_agent_config apb_slave_agent_cfg_h[];
 
 //-------------------------------------------------------
 // Externally defined Tasks and Functions

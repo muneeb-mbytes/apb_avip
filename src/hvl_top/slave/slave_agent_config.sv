@@ -9,6 +9,10 @@ class slave_agent_config extends uvm_object;
   
   `uvm_object_utils(slave_agent_config)
 
+  int slave_id;
+
+  uvm_active_passive_enum is_active;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
