@@ -7,9 +7,14 @@
 //--------------------------------------------------------------------------------------------
  
 interface apb_slave_monitor_bfm (apb_if intf);
+  //-------------------------------------------------------
+//creating handle for apb slave monitor proxy
+//-------------------------------------------------------
+import apb_slave_pkg::apb_slave_monitor_proxy;
+apb_slave_monitor_proxy apb_slave_mon_proxy_h;
+
   initial begin
-    //`uvm_info("-------",("Slave Monitor BFM"),UVM_LOW);
-    $display("SLAVE MONITOR BFM");
+    $display("APB SLAVE MONITOR BFM");
   end
 endinterface : apb_slave_monitor_bfm
 `endif
