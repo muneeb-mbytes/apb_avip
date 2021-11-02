@@ -32,32 +32,40 @@ function apb_master_tx::new(string name = "apb_master_tx");
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// do_copy method
+//  Function: do_copy
+//  Copy method is implemented using handle rhs
+//
+//  Parameters:
+//  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-
 function void apb_master_tx::do_copy (uvm_object rhs);
   apb_master_tx rhs_;
 
   if(!$cast(rhs_,rhs)) begin
-  `uvm_fatal("do_copy","cast of the rhs object failed")
+    `uvm_fatal("do_copy","cast of the rhs object failed")
   end
+  
   super.do_copy(rhs);
 //  cs= rhs_.cs;
 //  foreach(apb_master_out_slave_in[i])
 //  apb_master_out_slave_in[i]= rhs_.apb_master_out_slave_in[i];
 //  foreach(apb_master_in_slave_out[i])
 //  apb_master_in_slave_out[i]= rhs_.apb_master_in_slave_out[i];
+
 endfunction:do_copy
 
-
 //--------------------------------------------------------------------------------------------
-// do_compare method
+//  Function: do_compare
+//  Compare method is implemented using handle rhs
+//
+//  Parameters:
+//  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function bit apb_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
   apb_master_tx rhs_;
 
   if(!$cast(rhs_,rhs)) begin
-  `uvm_fatal("FATAL_APB_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
+    `uvm_fatal("FATAL_APB_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
   return 0;
   end
 
@@ -69,8 +77,10 @@ endfunction:do_compare
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
 // Print method can be added to display the data members values
+//
+//  Parameters:
+//  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-
 function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
 //  printer.print_field( "cs", cs , 2,UVM_DEC);

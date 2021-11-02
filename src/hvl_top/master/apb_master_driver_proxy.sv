@@ -26,14 +26,15 @@ class apb_master_driver_proxy extends uvm_driver #(apb_master_tx);
   extern function new(string name = "apb_master_driver_proxy", uvm_component parent);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
-  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-  extern virtual function void start_of_simulation_phase(uvm_phase phase);
+//  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
+//  extern virtual function void start_of_simulation_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
 
 endclass : apb_master_driver_proxy
 
 //--------------------------------------------------------------------------------------------
 //  Construct: new
+//  Initializes memory for new object
 //
 //  Parameters:
 //  name - apb_master_driver_proxy
@@ -45,21 +46,22 @@ endfunction : new
 
 //--------------------------------------------------------------------------------------------
 //  Function: build_phase
+//  Creates the required ports, gets the required configuration from confif_db
 //
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_driver_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  //if(!uvm_config_db #(virtual apb_master_driver_bfm)::get(this,"","apb_master_driver_bfm",apb_master_drv_bfm_h)) begin
-    //`uvm_fatal("FATAL_MDP_CANNOT_GET_APB_MASTER_DRIVER_BFM","cannot get() apb_master_drv_bfm_h");
-  //end
+  if(!uvm_config_db #(virtual apb_master_driver_bfm)::get(this,"","apb_master_driver_bfm",apb_master_drv_bfm_h)) begin
+    `uvm_fatal("FATAL_MDP_CANNOT_GET_APB_MASTER_DRIVER_BFM","cannot get() apb_master_drv_bfm_h");
+  end
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
 //  Function: connect_phase
+//  Connecting apb_master driver handle with apb_master agent config
 //  
-//
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
@@ -68,6 +70,7 @@ function void apb_master_driver_proxy::connect_phase(uvm_phase phase);
   //  apb_master_drv_bfm_h = apb_master_agent_cfg_h.apb_master_drv_bfm_h;
 endfunction : connect_phase
 
+/*
 //--------------------------------------------------------------------------------------------
 //  Function: end_of_elaboration_phase
 //  <Description_here>
@@ -89,10 +92,12 @@ endfunction  : end_of_elaboration_phase
 function void apb_master_driver_proxy::start_of_simulation_phase(uvm_phase phase);
   super.start_of_simulation_phase(phase);
 endfunction : start_of_simulation_phase
+*/
 
 //--------------------------------------------------------------------------------------------
 //  Task: run_phase
-//  <Description_here>
+//  Gets the sequence_item, converts them to struct compatible transactions
+// and sends them to the BFM to drive the data over the interface
 //
 //  Parameters:
 //  phase - uvm phase
