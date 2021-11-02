@@ -8,6 +8,23 @@
 class apb_scoreboard extends uvm_scoreboard;
   `uvm_component_utils(apb_scoreboard)
 
+  //Variable : apb_master_tx_h
+  //Declaring handle for apb_master_tx
+  //apb_master_tx apb_master_tx_h;
+
+  //Variable : apb_slave_tx_h
+  //Declaring handle for apb_slaver_tx
+  //apb_slave_tx apb_slave_tx_h;
+  
+  //Variable : apb_master_analysis_fifo
+  //Used to store the apb_master_data
+  uvm_tlm_analysis_fifo#(apb_master_tx) apb_master_analysis_fifo;
+
+  //Variable : apb_slave_analysis_fifo
+  //Used to store the apb_slave_data
+  uvm_tlm_analysis_fifo#(apb_slave_tx) apb_slave_analysis_fifo;
+
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -26,6 +43,8 @@ endclass : apb_scoreboard
 //--------------------------------------------------------------------------------------------
 function apb_scoreboard::new(string name = "apb_scoreboard",uvm_component parent = null);
   super.new(name, parent);
+  apb_master_analysis_fifo = new("apb_master_analysis_fifo",this);
+  apb_slave_analysis_fifo  = new("apb_slave_analysis_fifo",this);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------

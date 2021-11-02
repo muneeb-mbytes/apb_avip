@@ -69,6 +69,10 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 function void apb_env::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
+  apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_scoreboard_h.apb_master_analysis_fifo.analysis_export);
+  apb_slave_agent_h.apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h.apb_slave_analysis_fifo.analysis_export);
+  //apb_scoreboard_h.apb_master_analysis_fifo.connect(apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port);
+  //apb_scoreboard_h.apb_slave_analysis_fifo.connect(apb_slave_agent_h.apb_slave_mon_proxy_h.apb_slave_analysis_port);
 endfunction : connect_phase
 
 
