@@ -68,6 +68,7 @@ function void apb_base_test::setup_apb_env_config();
   apb_env_cfg_h.has_virtual_seqr  = 1;
   setup_apb_master_agent_config();
   setup_apb_slave_agent_config();
+  uvm_config_db#(apb_env_config)::set(this,"*","apb_env_config",apb_env_cfg_h);
 endfunction : setup_apb_env_config
 
 //--------------------------------------------------------------------------------------------
@@ -97,16 +98,16 @@ endfunction : setup_apb_master_agent_config
 function void apb_base_test::setup_apb_slave_agent_config();
   apb_env_cfg_h.apb_slave_agent_cfg_h = new[apb_env_cfg_h.no_of_slaves];
   foreach(apb_env_cfg_h.apb_slave_agent_cfg_h[i]) begin
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i] =
-    apb_slave_agent_config::type_id::create($sformatf("apb_slave_agent_config[%0d]",i));
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i] = apb_slave_agent_config::type_id::create($sformatf("apb_slave_agent_config[%0d]",i));
     apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_id = i;
+    $display(i);
     if(SLAVE_AGENT_ACTIVE === 1) begin
       apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active = uvm_active_passive_enum'(UVM_ACTIVE);
     end
     else begin
       apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active = uvm_active_passive_enum'(UVM_PASSIVE);
     end
-    uvm_config_db #(apb_slave_agent_config)::set(this,$sformatf("*slave_agent*[%0d]",i),"apb_slave_agent_config", apb_env_cfg_h.apb_slave_agent_cfg_h[i]);
+    uvm_config_db #(apb_slave_agent_config)::set(this,$sformatf("*slave_agent_h[%0d]*",i),"apb_slave_agent_config",apb_env_cfg_h.apb_slave_agent_cfg_h[i]);
   end
 endfunction : setup_apb_slave_agent_config
 

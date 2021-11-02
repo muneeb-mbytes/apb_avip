@@ -6,13 +6,13 @@
 // Parameters:
 //  intf - apb Interface
 //--------------------------------------------------------------------------------------------
-interface apb_master_driver_bfm(apb_if intf);
+interface apb_master_driver_bfm();
 
   //-------------------------------------------------------
   // Creating the handle for proxy driver
   //-------------------------------------------------------
   import apb_master_pkg::apb_master_driver_proxy;
-  apb_master_driver_proxy apb_master_drv_proxy;
+  apb_master_driver_proxy apb_master_drv_proxy_h;
 
   initial begin
     $display("APB Master Driver BFM");

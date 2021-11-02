@@ -14,7 +14,7 @@ class apb_env extends uvm_env;
 
   //Variable : apb_slave_agent_h
   //Declaring apb slave agent handle
-  apb_slave_agent apb_slave_agent_h;
+  apb_slave_agent apb_slave_agent_h[];
 
   //Variable : apb__scoreboard_h
   //Declaring apb scoreboard handle
@@ -23,7 +23,10 @@ class apb_env extends uvm_env;
   //Variable : apb_virtual_seqr_h
   //Declaring apb virtual seqr handle
   apb_virtual_sequencer apb_virtual_seqr_h;
-
+  
+  //Variable : apb_env_cfg_h
+  //Declaring handle for apb_env_config_object
+  apb_env_config apb_env_cfg_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -54,10 +57,26 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_env::build_phase(uvm_phase phase);
   super.build_phase(phase);
+  if(!uvm_config_db #(apb_env_config)::get(this,"","apb_env_config",apb_env_cfg_h)) begin
+   `uvm_fatal("FATAL_ENV_CONFIG", $sformatf("Couldn't get the env_config from config_db"))
+  end
   apb_master_agent_h = apb_master_agent::type_id::create("apb_master_agent",this);
-  apb_slave_agent_h = apb_slave_agent::type_id::create("apb_slave_agent",this);
-  apb_scoreboard_h = apb_scoreboard::type_id::create("apb_scoreboard",this);
-  apb_virtual_seqr_h = apb_virtual_sequencer::type_id::create("apb_virtual_sequencer",this);
+  
+  apb_slave_agent_h = new[apb_env_cfg_h.no_of_slaves];
+  foreach(apb_slave_agent_h[i]) begin
+    apb_slave_agent_h[i] = apb_slave_agent::type_id::create($sformatf("apb_slave_agent_h[%0d]",i),this);
+  end
+
+  if(apb_env_cfg_h.has_virtual_seqr) begin
+    apb_virtual_seqr_h = apb_virtual_sequencer::type_id::create("apb_virtual_seqr_h",this);
+  end
+
+  if(apb_env_cfg_h.has_scoreboard) begin
+    apb_scoreboard_h = apb_scoreboard::type_id::create("apb_scoreboard_h",this);
+  end
+  //apb_slave_agent_h = apb_slave_agent::type_id::create("apb_slave_agent",this);
+  //apb_scoreboard_h = apb_scoreboard::type_id::create("apb_scoreboard",this);
+  //apb_virtual_seqr_h = apb_virtual_sequencer::type_id::create("apb_virtual_sequencer",this);
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -70,9 +89,9 @@ endfunction : build_phase
 function void apb_env::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_scoreboard_h.apb_master_analysis_fifo.analysis_export);
-  apb_slave_agent_h.apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h.apb_slave_analysis_fifo.analysis_export);
-  //apb_scoreboard_h.apb_master_analysis_fifo.connect(apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port);
-  //apb_scoreboard_h.apb_slave_analysis_fifo.connect(apb_slave_agent_h.apb_slave_mon_proxy_h.apb_slave_analysis_port);
+  foreach(apb_slave_agent_h[i]) begin
+    apb_slave_agent_h[i].apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h.apb_slave_analysis_fifo.analysis_export);
+  end
 endfunction : connect_phase
 
 

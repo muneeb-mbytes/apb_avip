@@ -8,7 +8,7 @@
 // Parameters:
 //  intf - apb interface
 //--------------------------------------------------------------------------------------------
-interface apb_slave_driver_bfm(apb_if intf);
+interface apb_slave_driver_bfm();
 //-------------------------------------------------------
 //creating handle for apb slave driver proxy
 //-------------------------------------------------------

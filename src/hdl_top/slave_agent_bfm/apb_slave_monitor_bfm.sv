@@ -6,7 +6,7 @@
 // to call the tasks and functions from apb monitor bfm to apb monitor proxy
 //--------------------------------------------------------------------------------------------
  
-interface apb_slave_monitor_bfm (apb_if intf);
+interface apb_slave_monitor_bfm ();
   //-------------------------------------------------------
 //creating handle for apb slave monitor proxy
 //-------------------------------------------------------

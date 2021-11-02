@@ -15,12 +15,12 @@ end
   //-------------------------------------------------------
   //apb slave driver bfm instantiation
   //-------------------------------------------------------
-  apb_slave_driver_bfm apb_slave_drv_bfm_h(intf);
+  apb_slave_driver_bfm apb_slave_drv_bfm_h();
 
   //-------------------------------------------------------
   //apb slave monitor bfm instantiation
   //-------------------------------------------------------
-  apb_slave_monitor_bfm apb_slave_mon_bfm_h(intf);
+  apb_slave_monitor_bfm apb_slave_mon_bfm_h();
   initial begin
    uvm_config_db#(virtual apb_slave_driver_bfm)::set(null,"*", "apb_slave_driver_bfm", apb_slave_drv_bfm_h); 
    uvm_config_db #(virtual apb_slave_monitor_bfm)::set(null,"*", "apb_slave_monitor_bfm", apb_slave_mon_bfm_h); 

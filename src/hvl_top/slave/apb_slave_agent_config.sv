@@ -9,10 +9,12 @@ class apb_slave_agent_config extends uvm_object;
   
   `uvm_object_utils(apb_slave_agent_config)
   
-  //variable: slave_id
+  //Variable: slave_id
+  //Gives the slave id
   int slave_id;
   
   //variable: is_active
+  //Used to declare whether the agent is active or passive
   uvm_active_passive_enum is_active;
   
   //-------------------------------------------------------

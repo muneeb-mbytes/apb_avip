@@ -18,12 +18,12 @@ module apb_master_agent_bfm(apb_if intf);
   //-------------------------------------------------------
   //master driver bfm instantiation
   //-------------------------------------------------------
-  apb_master_driver_bfm apb_master_drv_bfm_h (intf);
+  apb_master_driver_bfm apb_master_drv_bfm_h ();
 
   //-------------------------------------------------------
   //master monitor bfm instantiation
   //-------------------------------------------------------
-  apb_master_monitor_bfm apb_master_mon_bfm_h (intf);
+  apb_master_monitor_bfm apb_master_mon_bfm_h ();
 
   //-------------------------------------------------------
   //setting the virtualhandle of BFMs into config_db

@@ -57,7 +57,6 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_slave_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
-
   if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config",apb_slave_agent_cfg_h)) begin
    `uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config from config_db"))
   end
