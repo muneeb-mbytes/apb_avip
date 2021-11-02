@@ -9,8 +9,12 @@
 //  intf - apb interface
 //--------------------------------------------------------------------------------------------
 interface apb_slave_driver_bfm(apb_if intf);
+//-------------------------------------------------------
+//creating handle for apb slave driver proxy
+//-------------------------------------------------------
+import apb_slave_pkg::apb_slave_driver_proxy;
+apb_slave_driver_proxy apb_slave_drv_proxy_h;
   initial begin
-    //`uvm_info("----",("Slave Driver BFM"));
     $display("Slave Driver BFM");
   end
 endinterface : apb_slave_driver_bfm
