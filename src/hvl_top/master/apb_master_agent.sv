@@ -4,7 +4,7 @@
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_agent
 // This agent is a configurable with respect to configuration which can create active and passive components
-// It contains testbench components like sequencer,driver_proxy and monitor_proxy for SPI
+// It contains testbench components like sequencer,driver_proxy and monitor_proxy for APB
 //--------------------------------------------------------------------------------------------
 class apb_master_agent extends uvm_agent;
   `uvm_component_utils(apb_master_agent)
@@ -35,14 +35,12 @@ class apb_master_agent extends uvm_agent;
   extern function new(string name = "apb_master_agent", uvm_component parent);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
-  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-  extern virtual function void start_of_simulation_phase(uvm_phase phase);
-  extern virtual task run_phase(uvm_phase phase);
 
 endclass : apb_master_agent
 
 //--------------------------------------------------------------------------------------------
 //  Construct: new
+//  Initializes memory for new object
 //
 //  Parameters:
 //  name - instance name of the apb_master_agent
@@ -107,47 +105,6 @@ function void apb_master_agent::connect_phase(uvm_phase phase);
 //  end
 
 endfunction: connect_phase
-
-//--------------------------------------------------------------------------------------------
-// Function: end_of_elaboration_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-function void apb_master_agent::end_of_elaboration_phase(uvm_phase phase);
-  super.end_of_elaboration_phase(phase);
-endfunction  : end_of_elaboration_phase
-
-//--------------------------------------------------------------------------------------------
-// Function: start_of_simulation_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-function void apb_master_agent::start_of_simulation_phase(uvm_phase phase);
-  super.start_of_simulation_phase(phase);
-endfunction : start_of_simulation_phase
-
-//--------------------------------------------------------------------------------------------
-// Task: run_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-task apb_master_agent::run_phase(uvm_phase phase);
-
-  phase.raise_objection(this, "apb_master_agent");
-
-  super.run_phase(phase);
-
-  // ...
-
-  phase.drop_objection(this);
-
-endtask : run_phase
 
 `endif
 

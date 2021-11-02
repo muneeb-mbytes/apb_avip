@@ -25,15 +25,16 @@ class apb_master_monitor_proxy extends uvm_component;
   extern function new(string name = "apb_master_monitor_proxy", uvm_component parent);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
-  extern virtual task run_phase(uvm_phase phase);
-  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-  extern virtual function void start_of_simulation_phase(uvm_phase phase);
+//  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
+//  extern virtual function void start_of_simulation_phase(uvm_phase phase);
+//  extern virtual task run_phase(uvm_phase phase);
 
 endclass : apb_master_monitor_proxy
 
 //--------------------------------------------------------------------------------------------
 //  Construct: new
-//
+//  Initializes memory for new object
+
 //  Parameters:
 //  name - apb_master_monitor_proxy
 //  parent - parent under which this component is created
@@ -52,9 +53,9 @@ endfunction : new
 function void apb_master_monitor_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  //if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
-  //`uvm_fatal("FATAL_APB_MASTER_MONITOR_PROXY_CANNOT_GET_apb_master_AGENT_CONFIG","cannot get() apb_master_agent_cfg_h from uvm_config_db");
-  //end 
+  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
+    `uvm_fatal("FATAL_APB_MASTER_MONITOR_PROXY_CANNOT_GET_apb_master_AGENT_CONFIG","cannot get() apb_master_agent_cfg_h from uvm_config_db");
+  end 
   // creating monitor port
    apb_master_analysis_port=new("apb_master_analysis_port",this);
 endfunction : build_phase
@@ -67,10 +68,10 @@ endfunction : build_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_monitor_proxy::connect_phase(uvm_phase phase);
-
- 
+  super.connect_phase(phase);
 endfunction : connect_phase
 
+/*
 //--------------------------------------------------------------------------------------------
 //  Function: end_of_elaboration_phase
 //  <Description_here>
@@ -111,6 +112,7 @@ task apb_master_monitor_proxy::run_phase(uvm_phase phase);
   phase.drop_objection(this);
 
 endtask : run_phase
+*/
 
 `endif
 
