@@ -8,7 +8,10 @@
 //--------------------------------------------------------------------------------------------
 module apb_master_agent_bfm(apb_if intf);
   
-  initial begin
+ import uvm_pkg::*;
+`include "uvm_macros.svh"
+
+ initial begin
     $display("APB Master Agent BFM");
   end
 
@@ -22,6 +25,13 @@ module apb_master_agent_bfm(apb_if intf);
   //-------------------------------------------------------
   apb_master_monitor_bfm apb_master_mon_bfm_h (intf);
 
+  //-------------------------------------------------------
+  //setting the virtualhandle of BFMs into config_db
+  //-------------------------------------------------------
+  initial begin
+    uvm_config_db#(virtual apb_master_driver_bfm)::set(null,"*","apb_master_driver_bfm",apb_master_drv_bfm_h);
+    uvm_config_db#(virtual apb_master_monitor_bfm)::set(null,"*","apb_master_monitor_bfm",apb_master_mon_bfm_h);
+  end
 endmodule : apb_master_agent_bfm
 
 `endif
