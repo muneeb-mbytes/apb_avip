@@ -20,7 +20,7 @@ package apb_slave_pkg;
   // Include all other files
   //-------------------------------------------------------
   `include "apb_slave_tx.sv"
-  //`include "slave_spi_seq_item_converter.sv"
+  `include "apb_slave_seq_item_converter.sv"
   `include "apb_slave_agent_config.sv"
   `include "apb_slave_sequencer.sv"
 // `include "slave_sequence.sv"
