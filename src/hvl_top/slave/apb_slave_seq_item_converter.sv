@@ -6,17 +6,32 @@
 // Description:
 // class converting seq_item transactions into struct data items and viceversa
 //--------------------------------------------------------------------------------------------
-/*
-class apb_slave_seq_item_converter;
+
+class apb_slave_seq_item_converter extends uvm_object;
+  `uvm_object_utils(apb_slave_seq_item_converter)
+
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern static function void from_class(input apb_slave_tx input_conv_h,output spi_transfer_char_s output_conv);
-  extern static function void to_class(input spi_transfer_char_s input_conv, output slave_tx output_conv_h);
+  extern function new(string name = "apb_slave_seq_item_converter");
+  //extern static function void from_class(input apb_slave_tx input_conv_h,output spi_transfer_char_s output_conv);
+  //extern static function void to_class(input spi_transfer_char_s input_conv, output slave_tx output_conv_h);
   
 endclass : apb_slave_seq_item_converter
 
+
+//-------------------------------------------------------
+// Constructor: new
+//
+// parameters:
+// name: apb_slave_seq_item_converter
+//-------------------------------------------------------
+function apb_slave_seq_item_converter::new(string name = "apb_slave_seq_item_converter");
+  super.new(name);
+endfunction : new
+
+/*
 //--------------------------------------------------------------------------------------------
 // function: from_class
 // converting seq_item transactions into struct data items
@@ -31,6 +46,7 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
     //output_conv_h.no_of_bits_transfer = input_conv_h.no_of_bits_transfer;
   end
 endfunction : from_class
+
 
 //--------------------------------------------------------------------------------------------
 // function:to_class
