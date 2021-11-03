@@ -74,15 +74,12 @@ function void apb_env::build_phase(uvm_phase phase);
   if(apb_env_cfg_h.has_scoreboard) begin
     apb_scoreboard_h = apb_scoreboard::type_id::create("apb_scoreboard_h",this);
   end
-  //apb_slave_agent_h = apb_slave_agent::type_id::create("apb_slave_agent",this);
-  //apb_scoreboard_h = apb_scoreboard::type_id::create("apb_scoreboard",this);
-  //apb_virtual_seqr_h = apb_virtual_sequencer::type_id::create("apb_virtual_sequencer",this);
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
 // Function: connect_phase
-// Connects the mon and sb 
-//
+// Connects the master agent monitor's analysis_port with scoreboard's analysis_fifo 
+// Connects the slave agent monitor's analysis_port with scoreboard's analysis_fifo 
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------

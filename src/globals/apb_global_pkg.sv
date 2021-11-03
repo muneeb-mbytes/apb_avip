@@ -19,6 +19,17 @@ package apb_global_pkg;
   //Used to set the slave agent either active or passive
   parameter SLAVE_AGENT_ACTIVE = 1;
 
+  //Parameter : ADDRESS_LENGTH
+  //Used to set the address length to the address bus
+  //Maximum Value is 32
+  parameter ADDRESS_LENGTH = 32;
+
+  //Parameter : DATA_LENGTH
+  //Used to set the data length 
+  //Maximum Value is 32
+  parameter DATA_LENGTH = 32;
+
+
 
 endpackage : apb_global_pkg
 

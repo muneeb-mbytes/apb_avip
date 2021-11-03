@@ -10,12 +10,41 @@
 class apb_master_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_master_tx)
 
+  //Varibale : paddr
+  //Address selected in apb_slave
+  rand bit [ADDRESS_LENGTH-1:0]paddr;
+
+  //Variable : pprot
+  //Used for different access
+  rand bit [2:0]pprot;
+
+  //Variable : psel
+  //Used to select the slave
+  rand bit [NO_OF_SLAVES-1:0]psel;
+
+  //Variable : penable
+  //Used to write data when penable is high
+  rand bit penable;
+
+  //Varibale : pwrite
+  //Write when pwrite is 1 and read is 0
+  rand bit pwrite;
+
+  //Variable : pwdata
+  //Used to store the wdata
+  rand bit [DATA_LENGTH-1:0]pwdata;
+
+  //Variable : pstrob
+  //Used to transfer the data to pwdata bus
+  rand bit [DATA_LENGTH-1:0]pstrob;
+
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_master_tx");
   extern function void do_copy(uvm_object rhs);
-  extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+  //extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function void do_print(uvm_printer printer);
 
 endclass : apb_master_tx
@@ -39,18 +68,19 @@ endfunction : new
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_copy (uvm_object rhs);
-  apb_master_tx rhs_;
+  apb_master_tx apb_master_tx_copy_obj;
 
-  if(!$cast(rhs_,rhs)) begin
+  if(!$cast(apb_master_tx_copy_obj,rhs)) begin
     `uvm_fatal("do_copy","cast of the rhs object failed")
   end
-  
   super.do_copy(rhs);
-//  cs= rhs_.cs;
-//  foreach(apb_master_out_slave_in[i])
-//  apb_master_out_slave_in[i]= rhs_.apb_master_out_slave_in[i];
-//  foreach(apb_master_in_slave_out[i])
-//  apb_master_in_slave_out[i]= rhs_.apb_master_in_slave_out[i];
+  paddr   = apb_master_tx_copy_obj.paddr;
+  psel    = apb_master_tx_copy_obj.psel;
+  pwrite  = apb_master_tx_copy_obj.pwrite;
+  penable = apb_master_tx_copy_obj.penable;
+  pwdata  = apb_master_tx_copy_obj.pwdata;
+  //pprot   = apb_master_tx_copy_obj.pprot;
+  //pstrob  = apb_master_tx_copy_obj.pstrob;
 
 endfunction:do_copy
 
@@ -61,18 +91,18 @@ endfunction:do_copy
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function bit apb_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
-  apb_master_tx rhs_;
-
-  if(!$cast(rhs_,rhs)) begin
-    `uvm_fatal("FATAL_APB_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
-  return 0;
-  end
-
-//  return super.do_compare(rhs,comparer) &&
-//  apb_master_out_slave_in== rhs_.apb_master_out_slave_in &&
-//  apb_master_in_slave_out== rhs_.apb_master_in_slave_out;
-endfunction:do_compare
+//function bit apb_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
+//  apb_master_tx apb_master_tx_compare_obj;
+//
+//  if(!$cast(apb_master_tx_compare_obj,rhs)) begin
+//    `uvm_fatal("FATAL_APB_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
+//  return 0;
+//  end
+//
+////  return super.do_compare(rhs,comparer) &&
+////  apb_master_out_slave_in== rhs_.apb_master_out_slave_in &&
+////  apb_master_in_slave_out== rhs_.apb_master_in_slave_out;
+//endfunction:do_compare
 
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
@@ -83,11 +113,13 @@ endfunction:do_compare
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-//  printer.print_field( "cs", cs , 2,UVM_DEC);
-//  foreach(apb_master_out_slave_in[i])
-//    printer.print_field($sformatf("apb_master_out_slave_in[%0d]",i),this.apb_master_out_slave_in[i],8,UVM_HEX);
-//  foreach(apb_master_in_slave_out[i])
-//    printer.print_field($sformatf("apb_master_in_slave_out[%0d]",i),this.apb_master_in_slave_out[i],8,UVM_HEX);
+  printer.print_field("paddr",paddr,$bits(paddr),UVM_DEC);
+  printer.print_field("psel",psel,1,UVM_DEC);
+  printer.print_field("penable",penable,1,UVM_DEC);
+  printer.print_field("pwrite",pwrite,1,UVM_DEC);
+  printer.print_field("pwdata",pwdata,$bits(pwdata),UVM_DEC);
+  //printer.print_field("pprot",pprot,ADDR_LENGTH,UVM_DEC);
+  //printer.print_field("pstrob",pstrob,ADDR_LENGTH,UVM_DEC);
 
 endfunction : do_print
 

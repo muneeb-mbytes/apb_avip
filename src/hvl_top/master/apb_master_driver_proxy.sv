@@ -12,8 +12,12 @@
 class apb_master_driver_proxy extends uvm_driver #(apb_master_tx);
   `uvm_component_utils(apb_master_driver_proxy)
   
-  //apb_master_tx tx;
-
+  //Variable : tx_h
+  //Declaring handle for apb master transaction
+  apb_master_tx apb_master_tx_h;
+  
+  //Variable : apb_master_drv_bfm_h
+  //Declaring handle for apb driver bfm
   virtual apb_master_driver_bfm apb_master_drv_bfm_h;
    
   // Variable: apb_master_agent_cfg_h
@@ -109,6 +113,7 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   // ...
+
 
   phase.drop_objection(this);
 
