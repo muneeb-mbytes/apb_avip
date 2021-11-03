@@ -26,7 +26,7 @@ class apb_slave_agent extends uvm_agent;
 
   // Variable: slave_coverage
   // Decalring a handle for slave_coverage
-  //apb_slave_coverage apb_slave_cov_h;
+  apb_slave_coverage apb_slave_cov_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -73,9 +73,9 @@ function void apb_slave_agent::build_phase(uvm_phase phase);
 
    apb_slave_mon_proxy_h = apb_slave_monitor_proxy::type_id::create("apb_slave_mon_proxy_h",this);
 
-  // MSHA: if(apb_slave_agent_cfg_h.has_coverage) begin
-  //apb_slave_cov_h = apb_slave_coverage::type_id::create("apb_slave_cov_h",this);
-  // MSHA: end
+  if(apb_slave_agent_cfg_h.has_coverage) begin
+    apb_slave_cov_h = apb_slave_coverage::type_id::create("apb_slave_cov_h",this);
+  end
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------

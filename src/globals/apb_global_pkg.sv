@@ -19,6 +19,14 @@ package apb_global_pkg;
   //Used to set the slave agent either active or passive
   parameter SLAVE_AGENT_ACTIVE = 1;
 
+  //Parameter : MASTER_HAS_COVERAGE
+  //Used to set the coverage if we need it in master
+  parameter MASTER_HAS_COVERAGE = 1;
+
+  //Parameter : SLAVE_HAS_COVERAGE
+  //Used to set the coverage if we need it in slave
+  parameter SLAVE_HAS_COVERAGE = 1;
+
   //Parameter : ADDRESS_LENGTH
   //Used to set the address length to the address bus
   //Maximum Value is 32

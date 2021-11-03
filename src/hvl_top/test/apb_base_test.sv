@@ -69,6 +69,7 @@ function void apb_base_test::setup_apb_env_config();
   setup_apb_master_agent_config();
   setup_apb_slave_agent_config();
   uvm_config_db#(apb_env_config)::set(this,"*","apb_env_config",apb_env_cfg_h);
+  `uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_apb_env_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
 endfunction : setup_apb_env_config
 
 //--------------------------------------------------------------------------------------------
@@ -78,6 +79,7 @@ endfunction : setup_apb_env_config
 // Sets apb master agent config into configdb 
 //--------------------------------------------------------------------------------------------
 function void apb_base_test::setup_apb_master_agent_config();
+  `uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_apb_master_agent_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
   apb_env_cfg_h.apb_master_agent_cfg_h = apb_master_agent_config::type_id::create("apb_master_agent_config");
   if(MASTER_AGENT_ACTIVE === 1) begin
     apb_env_cfg_h.apb_master_agent_cfg_h.is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
@@ -86,6 +88,7 @@ function void apb_base_test::setup_apb_master_agent_config();
     apb_env_cfg_h.apb_master_agent_cfg_h.is_active    = uvm_active_passive_enum'(UVM_PASSIVE);
   end
   apb_env_cfg_h.apb_master_agent_cfg_h.no_of_slaves   = NO_OF_SLAVES;
+  apb_env_cfg_h.apb_master_agent_cfg_h.has_coverage   = MASTER_HAS_COVERAGE;
 
   uvm_config_db#(apb_master_agent_config)::set(this,"*master_agent*","apb_master_agent_config",apb_env_cfg_h.apb_master_agent_cfg_h);
 
@@ -96,16 +99,18 @@ endfunction : setup_apb_master_agent_config
 // It calls the master agent config setup and slave agent config steup functions
 //--------------------------------------------------------------------------------------------
 function void apb_base_test::setup_apb_slave_agent_config();
+  `uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_slave_agent_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
   apb_env_cfg_h.apb_slave_agent_cfg_h = new[apb_env_cfg_h.no_of_slaves];
   foreach(apb_env_cfg_h.apb_slave_agent_cfg_h[i]) begin
     apb_env_cfg_h.apb_slave_agent_cfg_h[i] = apb_slave_agent_config::type_id::create($sformatf("apb_slave_agent_config[%0d]",i));
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_id = i;
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_id     = i;
     if(SLAVE_AGENT_ACTIVE === 1) begin
-      apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active = uvm_active_passive_enum'(UVM_ACTIVE);
+      apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active  = uvm_active_passive_enum'(UVM_ACTIVE);
     end
     else begin
-      apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active = uvm_active_passive_enum'(UVM_PASSIVE);
+      apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active  = uvm_active_passive_enum'(UVM_PASSIVE);
     end
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].has_coverage = SLAVE_HAS_COVERAGE; 
     uvm_config_db #(apb_slave_agent_config)::set(this,$sformatf("*slave_agent_h[%0d]*",i),"apb_slave_agent_config",apb_env_cfg_h.apb_slave_agent_cfg_h[i]);
   end
 endfunction : setup_apb_slave_agent_config
@@ -124,7 +129,7 @@ endfunction : connect_phase
 
 //--------------------------------------------------------------------------------------------
 // Function: end_of_elaboration_phase
-// <Description_here>
+// Used to print topology
 //
 // Parameters:
 //  phase - uvm phase

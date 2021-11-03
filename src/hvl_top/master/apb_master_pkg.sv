@@ -25,7 +25,7 @@ package apb_master_pkg;
   `include "apb_master_seq_item_converter.sv"
   `include "apb_master_driver_proxy.sv"
   `include "apb_master_monitor_proxy.sv"
-  //`include "apb_master_coverage.sv"
+  `include "apb_master_coverage.sv"
   `include "apb_master_agent.sv"
   
 endpackage : apb_master_pkg

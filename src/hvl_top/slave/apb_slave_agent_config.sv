@@ -13,9 +13,13 @@ class apb_slave_agent_config extends uvm_object;
   //Gives the slave id
   int slave_id;
   
-  //variable: is_active
+  //Variable: is_active
   //Used to declare whether the agent is active or passive
   uvm_active_passive_enum is_active;
+
+  //Variable : has_coverage
+  //Used to set whether we need to create coverage or not
+  bit has_coverage;
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -42,10 +46,9 @@ endfunction : new
 function void apb_slave_agent_config::do_print(uvm_printer printer);
   super.do_print(printer);
 
-//printer.print_field("is_active",is_active);
   printer.print_field ("is_active",is_active,1, UVM_DEC);
   printer.print_field ("slave_id",slave_id,2, UVM_DEC);
-//  printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
+  printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
   
 endfunction : do_print
 

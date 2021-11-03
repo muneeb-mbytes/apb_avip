@@ -10,10 +10,10 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
 
   //creating handle for slave transaction coverage
 
-  apb_slave_tx apb_slave_tx_h;
+  //apb_slave_tx apb_slave_tx_h;
 
   extern function new(string name = "apb_slave_coverage", uvm_component parent = null);
-  extern virtual function void write(apb_slave_tx apb_slave_tx_h);
+  extern virtual function void write(apb_slave_tx t);
 
 endclass : apb_slave_coverage
 
@@ -30,8 +30,8 @@ endfunction : new
 //-------------------------------------------------------
 // 
 //-------------------------------------------------------
-function void apb_slave_coverage::write(apb_slave_tx apb_slave_tx_h);
-  $display("apb slave coverage");
+function void apb_slave_coverage::write(apb_slave_tx t);
+  `uvm_info(get_type_name(),"APB SLAVE COVERAGE",UVM_LOW);
 endfunction: write
 
 `endif

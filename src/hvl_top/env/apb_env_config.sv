@@ -32,7 +32,7 @@ class apb_env_config extends uvm_object;
 // Externally defined Tasks and Functions
 //-------------------------------------------------------
   extern function new(string name = "apb_env_config");
-  //extern function void do_print(uvm_printer printer);
+  extern function void do_print(uvm_printer printer);
 
 endclass : apb_env_config
 
@@ -49,15 +49,18 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
 // Print method can be added to display the data members values
-//--------------------------------------------------------------------------------------------
-//function void apb_env_config::do_print(uvm_printer printer);
-//  super.do_print(printer);
-//  
-//  printer.print_field ("has_scoreboard",has_scoreboard,1, UVM_DEC);
-//  printer.print_field ("has_virtual_sqr",has_virtual_seqr,1, UVM_DEC);
-//  printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_HEX);
 //
-//endfunction : do_print
+// Parameters :
+// printer - uvm_printer
+//--------------------------------------------------------------------------------------------
+function void apb_env_config::do_print(uvm_printer printer);
+  super.do_print(printer);
+  
+  printer.print_field ("has_scoreboard",has_scoreboard,1, UVM_DEC);
+  printer.print_field ("has_virtual_sqr",has_virtual_seqr,1, UVM_DEC);
+  printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_HEX);
+
+endfunction : do_print
 
 `endif
 

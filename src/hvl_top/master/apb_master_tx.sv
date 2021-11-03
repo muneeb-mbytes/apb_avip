@@ -38,6 +38,18 @@ class apb_master_tx extends uvm_sequence_item;
   //Used to transfer the data to pwdata bus
   rand bit [DATA_LENGTH-1:0]pstrob;
 
+  //Variable : pslverr
+  //Goes high when a transfer fails
+  bit pslverr;
+
+  //Variable : pready
+  //Used to extend the transfer
+  bit pready;
+
+  //Variable : prdata
+  //Used to store the rdata from the slave
+  bit prdata;
+
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -65,7 +77,7 @@ endfunction : new
 //  Copy method is implemented using handle rhs
 //
 //  Parameters:
-//  phase - uvm phase
+//  rhs - uvm_object
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_copy (uvm_object rhs);
   apb_master_tx apb_master_tx_copy_obj;
@@ -79,8 +91,11 @@ function void apb_master_tx::do_copy (uvm_object rhs);
   pwrite  = apb_master_tx_copy_obj.pwrite;
   penable = apb_master_tx_copy_obj.penable;
   pwdata  = apb_master_tx_copy_obj.pwdata;
-  //pprot   = apb_master_tx_copy_obj.pprot;
-  //pstrob  = apb_master_tx_copy_obj.pstrob;
+  pready  = apb_master_tx_copy_obj.pready;
+  prdata  = apb_master_tx_copy_obj.prdata;
+  pslverr = apb_master_tx_copy_obj.pslverr;
+  pprot   = apb_master_tx_copy_obj.pprot;
+  pstrob  = apb_master_tx_copy_obj.pstrob;
 
 endfunction:do_copy
 
@@ -109,7 +124,7 @@ endfunction:do_copy
 // Print method can be added to display the data members values
 //
 //  Parameters:
-//  phase - uvm phase
+//  printer - uvm_printer
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
@@ -118,8 +133,11 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field("penable",penable,1,UVM_DEC);
   printer.print_field("pwrite",pwrite,1,UVM_DEC);
   printer.print_field("pwdata",pwdata,$bits(pwdata),UVM_DEC);
-  //printer.print_field("pprot",pprot,ADDR_LENGTH,UVM_DEC);
-  //printer.print_field("pstrob",pstrob,ADDR_LENGTH,UVM_DEC);
+  printer.print_field("pready",pready,1,UVM_DEC);
+  printer.print_field("prdata",prdata,$bits(prdata),UVM_DEC);
+  printer.print_field("pprot",pprot,$bits(pprot),UVM_DEC);
+  printer.print_field("pstrob",pstrob,$bits(pstrob),UVM_DEC);
+  printer.print_field("pslverr",pslverr,$bits(pslverr),UVM_DEC);
 
 endfunction : do_print
 

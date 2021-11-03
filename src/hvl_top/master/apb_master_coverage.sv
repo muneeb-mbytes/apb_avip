@@ -14,19 +14,20 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   apb_master_agent_config apb_master_agent_cfg_h;
   
   //Creating handle for apb_master transacion coverage
-  apb_master_tx apb_master_tx_cov_data;
+  //apb_master_tx apb_master_tx_cov_data;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_master_coverage", uvm_component parent = null);
+  extern function void write(apb_master_tx t);
   //extern virtual function void build_phase(uvm_phase phase);
   //extern virtual function void connect_phase(uvm_phase phase);
   //extern virtual function void end_of_elaboration_phase(uvm_phase phase);
   //extern virtual function void start_of_simulation_phase(uvm_phase phase);
   //extern virtual task run_phase(uvm_phase phase);
   //extern virtual function void write(apb_master_tx apb_master_tx_cov_data);
-  extern virtual function report_phase(uvm_phase phase);
+  //extern virtual function report_phase(uvm_phase phase);
 
 endclass : apb_master_coverage
 
@@ -41,6 +42,18 @@ endclass : apb_master_coverage
 function apb_master_coverage::new(string name = "apb_master_coverage", uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
+
+//--------------------------------------------------------------------------------------------
+// Function: write
+// Overriding the write method declared in the parent class
+//
+// Parameters:
+//  t - apb_master_tx
+//--------------------------------------------------------------------------------------------
+function void apb_master_coverage::write(apb_master_tx t);
+  `uvm_info(get_type_name(),"APB_MASTER_COVERAGE",UVM_LOW);
+endfunction : write
+
 
 //--------------------------------------------------------------------------------------------
 // Function: build_phase
@@ -119,9 +132,9 @@ endtask : run_phase
 // Function: report_phase
 // Used for reporting the coverage instance percentage values
 //--------------------------------------------------------------------------------------------
-function apb_master_coverage::report_phase(uvm_phase phase);
+//function apb_master_coverage::report_phase(uvm_phase phase);
 //  `uvm_info(get_type_name(), $sformat("APB Master Agent Coverage = %0.2f %%", apb_master_cg.get_inst_coverage()), UVM_NONE);
-endfunction: report_phase
+//endfunction: report_phase
 
 `endif
 

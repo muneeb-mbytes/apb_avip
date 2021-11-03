@@ -13,8 +13,10 @@ package apb_slave_pkg;
   `include "uvm_macros.svh"
   import uvm_pkg::*;
 
- // // Import spi_globals_pkg 
- // import spi_globals_pkg::*;
+  //-------------------------------------------------------
+  // Importing apb Global Package
+  //-------------------------------------------------------
+  import apb_global_pkg::*;
 
   //-------------------------------------------------------
   // Include all other files
@@ -23,10 +25,9 @@ package apb_slave_pkg;
   `include "apb_slave_seq_item_converter.sv"
   `include "apb_slave_agent_config.sv"
   `include "apb_slave_sequencer.sv"
-// `include "slave_sequence.sv"
   `include "apb_slave_driver_proxy.sv"
   `include "apb_slave_monitor_proxy.sv"
-  //`include "apb_slave_coverage.sv"
+  `include "apb_slave_coverage.sv"
   `include "apb_slave_agent.sv"
   
 endpackage : apb_slave_pkg
