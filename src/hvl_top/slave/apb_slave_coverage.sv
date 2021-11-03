@@ -11,6 +11,10 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   //creating handle for slave transaction coverage
 
   //apb_slave_tx apb_slave_tx_h;
+  // Variable: slave_agent_cfg_h;
+  // Handle for apb_slave agent configuration
+  apb_slave_agent_config apb_slave_agent_cfg_h;
+
 
   extern function new(string name = "apb_slave_coverage", uvm_component parent = null);
   extern virtual function void write(apb_slave_tx t);

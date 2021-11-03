@@ -88,18 +88,19 @@ endfunction : build_phase
 function void apb_slave_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   
-  //if(slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
-    //slave_drv_proxy_h.slave_agent_cfg_h = slave_agent_cfg_h;
-    //slave_seqr_h.slave_agent_cfg_h = slave_agent_cfg_h;
-    // MSHA: slave_cov_h.slave_agent_cfg_h = slave_agent_cfg_h;
+  if(apb_slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
+    apb_slave_drv_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
+    apb_slave_seqr_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
+    apb_slave_cov_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
     
     // Connecting the ports
     apb_slave_drv_proxy_h.seq_item_port.connect(apb_slave_seqr_h.seq_item_export);
     // TODO(mshariff): 
     // connect monitor port to coverage
-  //end
+    //apb_slave_cov_h.apb_slave_cov_ap_h.connect(apb_slave)
+  end
 
-  //apb_slave_mon_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
+   apb_slave_mon_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
 
 endfunction: connect_phase
 
