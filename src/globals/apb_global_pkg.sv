@@ -37,7 +37,16 @@ package apb_global_pkg;
   //Maximum Value is 32
   parameter DATA_LENGTH = 32;
 
+//--------------------------------------------------------------------------------------------
+// Struct: apb_transfer_char_s
+//  This struct datatype consists of all signals which are used for seq item conversion
+//--------------------------------------------------------------------------------------------
+typedef struct {
 
+  bit penable;
+  bit pwrite;
+
+} apb_transfer_char_s;
 
 endpackage : apb_global_pkg
 

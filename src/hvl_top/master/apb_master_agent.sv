@@ -66,7 +66,7 @@ function void apb_master_agent::build_phase(uvm_phase phase);
 
   // Print the values of the apb_master_agent_config
   // Have a print method in apb_master_agent_config class and call it from here
-  //`uvm_info(get_type_name(), $sformat("The apb_master_agent_config.apb_master_id =%d",apb_master_agent_cfg_h.apb_master_id),UVM_LOW);
+  `uvm_info(get_type_name(), $sformatf("The apb_master_agent_config \n %s", apb_master_agent_cfg_h.sprint),UVM_LOW);
   
   if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h=apb_master_driver_proxy::type_id::create("apb_master_drv_proxy_h",this);
@@ -98,11 +98,12 @@ function void apb_master_agent::connect_phase(uvm_phase phase);
   
   apb_master_mon_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
 
-//  if(apb_master_agent_cfg_h.has_coverage) begin
-//    apb_master_cov_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
+  if(apb_master_agent_cfg_h.has_coverage) begin
+    apb_master_cov_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     // TODO(mshariff): 
     // connect monitor port to coverage
-//  end
+    apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_master_cov_h.apb_master_analysis_export);
+  end
 
 endfunction: connect_phase
 

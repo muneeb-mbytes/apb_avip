@@ -50,7 +50,6 @@ class apb_master_tx extends uvm_sequence_item;
   //Used to store the rdata from the slave
   bit prdata;
 
-
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

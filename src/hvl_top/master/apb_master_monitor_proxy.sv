@@ -16,6 +16,7 @@ class apb_master_monitor_proxy extends uvm_component;
   // Declaring handle for apb_master agent config class 
   apb_master_agent_config apb_master_agent_cfg_h;
     
+  // Variable: apb_master_analysis_port
   //declaring analysis port for the monitor port
   uvm_analysis_port #(apb_master_tx)apb_master_analysis_port;
   
@@ -41,6 +42,7 @@ endclass : apb_master_monitor_proxy
 //--------------------------------------------------------------------------------------------
 function apb_master_monitor_proxy::new(string name = "apb_master_monitor_proxy",uvm_component parent);
   super.new(name, parent);
+  apb_master_analysis_port=new("apb_master_analysis_port",this);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
@@ -54,10 +56,9 @@ function void apb_master_monitor_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
   if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
-    `uvm_fatal("FATAL_APB_MASTER_MONITOR_PROXY_CANNOT_GET_apb_master_AGENT_CONFIG","cannot get() apb_master_agent_cfg_h from uvm_config_db");
+    `uvm_fatal("FATAL_APB_MASTER_MONITOR_PROXY_CANNOT_GET_APB_MASTER_AGENT_CONFIG","cannot get() apb_master_agent_cfg_h from uvm_config_db");
   end 
-  // creating monitor port
-   apb_master_analysis_port=new("apb_master_analysis_port",this);
+  
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------

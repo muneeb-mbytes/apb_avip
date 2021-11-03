@@ -48,8 +48,9 @@ endfunction : new
 function void apb_master_agent_config::do_print(uvm_printer printer);
   super.do_print(printer);
 
-//  printer.print_field ("is_active",is_active,1, UVM_DEC);
-//  printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_DEC)
+  printer.print_field ("is_active", is_active, $bits(is_active), UVM_DEC);
+  printer.print_field ("has_coverage", has_coverage, $bits(has_coverage), UVM_DEC);
+  printer.print_field ("no_of_slaves", no_of_slaves, $bits(no_of_slaves), UVM_DEC);
 
 endfunction : do_print
 
