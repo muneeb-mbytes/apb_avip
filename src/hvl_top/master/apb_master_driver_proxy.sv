@@ -3,7 +3,6 @@
     
 //--------------------------------------------------------------------------------------------
 //  Class: apb_master_driver_proxy
-//  Description of the class
 //  Driver is written by extending uvm_driver,uvm_driver is inherited from uvm_component, 
 //  Methods and TLM port (seq_item_port) are defined for communication between sequencer and driver,
 //  uvm_driver is a parameterized class and it is parameterized with the type of the request 
@@ -30,7 +29,7 @@ class apb_master_driver_proxy extends uvm_driver #(apb_master_tx);
   extern function new(string name = "apb_master_driver_proxy", uvm_component parent);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
-//  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
+  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
 //  extern virtual function void start_of_simulation_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
 
@@ -71,19 +70,19 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_driver_proxy::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-  //  apb_master_drv_bfm_h = apb_master_agent_cfg_h.apb_master_drv_bfm_h;
+  // apb_master_drv_bfm_h = apb_master_agent_cfg_h.apb_master_drv_bfm_h;
 endfunction : connect_phase
 
-/*
 //--------------------------------------------------------------------------------------------
 //  Function: end_of_elaboration_phase
-//  <Description_here>
+//  Pointing handle of driver proxy in HDL BFM to this proxy method in HVL part
 //
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_driver_proxy::end_of_elaboration_phase(uvm_phase phase);
   super.end_of_elaboration_phase(phase);
+  apb_master_drv_bfm_h.apb_master_drv_proxy_h = this;
 endfunction  : end_of_elaboration_phase
 
 //--------------------------------------------------------------------------------------------
@@ -93,10 +92,9 @@ endfunction  : end_of_elaboration_phase
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void apb_master_driver_proxy::start_of_simulation_phase(uvm_phase phase);
-  super.start_of_simulation_phase(phase);
-endfunction : start_of_simulation_phase
-*/
+//function void apb_master_driver_proxy::start_of_simulation_phase(uvm_phase phase);
+//  super.start_of_simulation_phase(phase);
+//endfunction : start_of_simulation_phase
 
 //--------------------------------------------------------------------------------------------
 //  Task: run_phase

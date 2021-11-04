@@ -20,7 +20,7 @@ endclass : apb_master_sequencer
  
 //--------------------------------------------------------------------------------------------
 // Construct: new
-// initializes the apb_master sequencer class component
+// Initializes the apb_master sequencer class component
 //
 // Parameters:
 // name - apb_master_sequencer

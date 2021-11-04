@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_coverage
-// <Description_here>
+// This class is used to include covergroups and bins required for functional coverage
 //--------------------------------------------------------------------------------------------
 class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   `uvm_component_utils(apb_master_coverage)
@@ -23,13 +23,12 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_master_coverage", uvm_component parent = null);
-  extern function void write(apb_master_tx t);
   //extern virtual function void build_phase(uvm_phase phase);
   //extern virtual function void connect_phase(uvm_phase phase);
   //extern virtual function void end_of_elaboration_phase(uvm_phase phase);
   //extern virtual function void start_of_simulation_phase(uvm_phase phase);
   //extern virtual task run_phase(uvm_phase phase);
-  //extern virtual function void write(apb_master_tx apb_master_tx_cov_data);
+  extern function void write(apb_master_tx t);
   //extern virtual function report_phase(uvm_phase phase);
 
 endclass : apb_master_coverage
@@ -46,18 +45,6 @@ function apb_master_coverage::new(string name = "apb_master_coverage", uvm_compo
   super.new(name, parent);
   apb_master_analysis_export = new("apb_master_analysis_export",this);
 endfunction : new
-
-//--------------------------------------------------------------------------------------------
-// Function: write
-// Overriding the write method declared in the parent class
-//
-// Parameters:
-//  t - apb_master_tx
-//--------------------------------------------------------------------------------------------
-function void apb_master_coverage::write(apb_master_tx t);
-  `uvm_info(get_type_name(),"APB_MASTER_COVERAGE",UVM_LOW);
-endfunction : write
-
 
 //--------------------------------------------------------------------------------------------
 // Function: build_phase
@@ -125,12 +112,17 @@ endtask : run_phase
 
 //--------------------------------------------------------------------------------------------
 // Function: write
-// // TODO(mshariff): Add comments
+// Overriding the write method declared in the parent class
+//
+// Parameters:
+//  t - apb_master_tx
 //--------------------------------------------------------------------------------------------
-//function void apb_master_coverage::write(apb_master_tx apb_master_tx_cov_data);
+function void apb_master_coverage::write(apb_master_tx t);
+  `uvm_info(get_type_name(),"APB_MASTER_COVERAGE",UVM_LOW);
   // TODO(mshariff): 
   // cg.sample(master_agent_cfg_h, master_tx_cov_data);     
-//endfunction: write
+
+endfunction : write
 
 //--------------------------------------------------------------------------------------------
 // Function: report_phase

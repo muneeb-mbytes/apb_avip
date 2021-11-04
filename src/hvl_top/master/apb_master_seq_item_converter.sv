@@ -23,7 +23,8 @@ endclass : apb_master_seq_item_converter
 // Parameters:
 //  name - apb_master_tx, apb_transfer_char_s
 //--------------------------------------------------------------------------------------------
-function void apb_master_seq_item_converter::from_class(input apb_master_tx input_conv_h, output apb_transfer_char_s output_conv_h);
+function void apb_master_seq_item_converter::from_class(input apb_master_tx input_conv_h, 
+                                                        output apb_transfer_char_s output_conv_h);
   `uvm_info("apb_master_seq_item_conv","apb_from_class",UVM_LOW);
   
 endfunction: from_class 
@@ -35,7 +36,8 @@ endfunction: from_class
 // Parameters:
 //  name - apb_master_tx, apb_transfer_char_s
 //--------------------------------------------------------------------------------------------
-function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s input_conv_h, output apb_master_tx output_conv_h);
+function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s input_conv_h, 
+                                                      output apb_master_tx output_conv_h);
   `uvm_info("apb_master_seq_item_conv","apb_to_class",UVM_LOW);
     
 endfunction: to_class

@@ -3,9 +3,8 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_tx.
-// Description of the class.
-// This class holds the data items required to drive stimulus to dut
-// and also holds methods that manipulatethose data items
+// This class holds the data items required to drive stimulus to dut 
+// and also holds methods that manipulate those data items
 //--------------------------------------------------------------------------------------------
 class apb_master_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_master_tx)
@@ -55,7 +54,7 @@ class apb_master_tx extends uvm_sequence_item;
   //-------------------------------------------------------
   extern function new(string name = "apb_master_tx");
   extern function void do_copy(uvm_object rhs);
-  //extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+  extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function void do_print(uvm_printer printer);
 
 endclass : apb_master_tx
@@ -95,7 +94,6 @@ function void apb_master_tx::do_copy (uvm_object rhs);
   pslverr = apb_master_tx_copy_obj.pslverr;
   pprot   = apb_master_tx_copy_obj.pprot;
   pstrob  = apb_master_tx_copy_obj.pstrob;
-
 endfunction:do_copy
 
 //--------------------------------------------------------------------------------------------
@@ -105,18 +103,26 @@ endfunction:do_copy
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-//function bit apb_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
-//  apb_master_tx apb_master_tx_compare_obj;
-//
-//  if(!$cast(apb_master_tx_compare_obj,rhs)) begin
-//    `uvm_fatal("FATAL_APB_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
-//  return 0;
-//  end
-//
-////  return super.do_compare(rhs,comparer) &&
-////  apb_master_out_slave_in== rhs_.apb_master_out_slave_in &&
-////  apb_master_in_slave_out== rhs_.apb_master_in_slave_out;
-//endfunction:do_compare
+function bit apb_master_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
+  apb_master_tx apb_master_tx_compare_obj;
+
+  if(!$cast(apb_master_tx_compare_obj,rhs)) begin
+    `uvm_fatal("FATAL_APB_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
+  return 0;
+  end
+
+  return super.do_compare(apb_master_tx_compare_obj, comparer) &&
+  paddr   == apb_master_tx_compare_obj.paddr &&
+  psel    == apb_master_tx_compare_obj.psel &&
+  pwrite  == apb_master_tx_compare_obj.pwrite &&
+  penable == apb_master_tx_compare_obj.penable &&
+  pwdata  == apb_master_tx_compare_obj.pwdata &&
+  pready  == apb_master_tx_compare_obj.pready &&
+  prdata  == apb_master_tx_compare_obj.prdata &&
+  pslverr == apb_master_tx_compare_obj.pslverr &&
+  pprot   == apb_master_tx_compare_obj.pprot &&
+  pstrob  == apb_master_tx_compare_obj.pstrob;
+endfunction:do_compare
 
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
@@ -127,16 +133,16 @@ endfunction:do_copy
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-  printer.print_field("paddr",paddr,$bits(paddr),UVM_DEC);
-  printer.print_field("psel",psel,1,UVM_DEC);
-  printer.print_field("penable",penable,1,UVM_DEC);
-  printer.print_field("pwrite",pwrite,1,UVM_DEC);
-  printer.print_field("pwdata",pwdata,$bits(pwdata),UVM_DEC);
-  printer.print_field("pready",pready,1,UVM_DEC);
-  printer.print_field("prdata",prdata,$bits(prdata),UVM_DEC);
-  printer.print_field("pprot",pprot,$bits(pprot),UVM_DEC);
-  printer.print_field("pstrob",pstrob,$bits(pstrob),UVM_DEC);
-  printer.print_field("pslverr",pslverr,$bits(pslverr),UVM_DEC);
+  printer.print_field ("paddr",    paddr,    $bits(paddr),   UVM_DEC);
+  printer.print_field ("psel",     psel,     $bits(psel),    UVM_DEC);
+  printer.print_field ("penable",  penable,  $bits(penable), UVM_DEC);
+  printer.print_field ("pwrite",   pwrite,   $bits(pwrite),  UVM_DEC);
+  printer.print_field ("pwdata",   pwdata,   $bits(pwdata),  UVM_DEC);
+  printer.print_field ("pready",   pready,   $bits(pready),  UVM_DEC);
+  printer.print_field ("prdata",   prdata,   $bits(prdata),  UVM_DEC);
+  printer.print_field ("pprot",    pprot,    $bits(pprot),   UVM_DEC);
+  printer.print_field ("pstrob",   pstrob,   $bits(pstrob),  UVM_DEC);
+  printer.print_field ("pslverr",  pslverr,  $bits(pslverr), UVM_DEC);
 
 endfunction : do_print
 

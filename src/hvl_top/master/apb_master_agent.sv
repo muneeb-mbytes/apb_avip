@@ -64,8 +64,8 @@ function void apb_master_agent::build_phase(uvm_phase phase);
     `uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG","cannot get apb_master_agent_cfg_h from uvm_config_db");
   end
 
-  // Print the values of the apb_master_agent_config
-  // Have a print method in apb_master_agent_config class and call it from here
+  // Printing the values of the apb_master_agent_config
+  // Print method is declared in apb_master_agent_config class and calling it from here
   `uvm_info(get_type_name(), $sformatf("The apb_master_agent_config \n %s", apb_master_agent_cfg_h.sprint),UVM_LOW);
   
   if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
@@ -92,7 +92,7 @@ function void apb_master_agent::connect_phase(uvm_phase phase);
     apb_master_drv_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     apb_master_seqr_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     
-    //Connecting the ports
+    // Connecting driver_proxy port to sequencer export
     apb_master_drv_proxy_h.seq_item_port.connect(apb_master_seqr_h.seq_item_export);
   end
   
@@ -100,8 +100,8 @@ function void apb_master_agent::connect_phase(uvm_phase phase);
 
   if(apb_master_agent_cfg_h.has_coverage) begin
     apb_master_cov_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
-    // TODO(mshariff): 
-    // connect monitor port to coverage
+  
+    // Connecting monitor_proxy port to coverage export
     apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_master_cov_h.apb_master_analysis_export);
   end
 
