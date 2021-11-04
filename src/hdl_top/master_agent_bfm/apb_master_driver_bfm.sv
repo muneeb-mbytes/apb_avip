@@ -8,6 +8,9 @@
 //--------------------------------------------------------------------------------------------
 interface apb_master_driver_bfm();
 
+   import uvm_pkg::*;
+  `include "uvm_macros.svh"
+  
   //-------------------------------------------------------
   // Creating the handle for proxy driver
   //-------------------------------------------------------
@@ -15,7 +18,7 @@ interface apb_master_driver_bfm();
   apb_master_driver_proxy apb_master_drv_proxy_h;
 
   initial begin
-    $display("APB Master Driver BFM");
+     `uvm_info("apb master driver bfm",$sformatf("APB MASTER DRIVER BFM"),UVM_LOW);
   end
 
 endinterface : apb_master_driver_bfm

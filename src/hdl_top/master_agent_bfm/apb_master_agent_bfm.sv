@@ -12,7 +12,7 @@ module apb_master_agent_bfm(apb_if intf);
 `include "uvm_macros.svh"
 
  initial begin
-    $display("APB Master Agent BFM");
+       `uvm_info("apb master agent bfm",$sformatf("APB MASTER AGENT BFM"),UVM_LOW);
   end
 
   //-------------------------------------------------------

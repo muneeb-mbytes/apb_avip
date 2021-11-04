@@ -5,7 +5,10 @@
 //--------------------------------------------------------------------------------------------
 
 interface apb_master_monitor_bfm();
-  
+
+   import uvm_pkg::*;
+   `include "uvm_macros.svh"
+
   //-------------------------------------------------------
   // Creating the handle for proxy driver
   //-------------------------------------------------------
@@ -13,7 +16,8 @@ interface apb_master_monitor_bfm();
   apb_master_monitor_proxy apb_master_mon_proxy_h;
 
   initial begin
-    $display("apb master Monitor BFM");
+    `uvm_info("apb master monitor bfm",$sformatf("APB MASTER MONITOR BFM"),UVM_LOW);
+
   end
 
 endinterface : apb_master_monitor_bfm
