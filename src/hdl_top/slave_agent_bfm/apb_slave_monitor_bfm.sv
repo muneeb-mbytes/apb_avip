@@ -8,13 +8,22 @@
  
 interface apb_slave_monitor_bfm ();
   //-------------------------------------------------------
-//creating handle for apb slave monitor proxy
-//-------------------------------------------------------
-import apb_slave_pkg::apb_slave_monitor_proxy;
-apb_slave_monitor_proxy apb_slave_mon_proxy_h;
+  // importing uvm_pkg file
+  //-------------------------------------------------------
+  
+  import uvm_pkg::*;
+  `include "uvm_macros.svh"
+  //-------------------------------------------------------
+  //creating handle for apb slave monitor proxy
+ //-------------------------------------------------------
+ 
+ import apb_slave_pkg::apb_slave_monitor_proxy;
+ apb_slave_monitor_proxy apb_slave_mon_proxy_h;
+ 
+ initial begin
+   `uvm_info("apb slave monitor bfm",$sformatf("APB SLAVE MONITOR BFM"),UVM_LOW);
+ end
 
-  initial begin
-    $display("APB SLAVE MONITOR BFM");
-  end
 endinterface : apb_slave_monitor_bfm
+
 `endif

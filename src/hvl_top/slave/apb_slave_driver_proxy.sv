@@ -9,6 +9,8 @@
 class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   `uvm_component_utils(apb_slave_driver_proxy)
 
+  //Variable : tx_h
+  //Declaring handle for apb slave transaction
   apb_slave_tx apb_slave_tx_h;
 
   // Variable: slave_driver_bfm_h;
@@ -53,11 +55,6 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_slave_driver_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
-
-//  if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config",
-  //                                               apb_slave_agent_cfg_h))
-//		`uvm_fatal("CONFIG","cannot get() apb_slave_agent_cfg_h")
-  		
   if(!uvm_config_db #(virtual apb_slave_driver_bfm)::get(this,"","apb_slave_driver_bfm",
                                                              apb_slave_drv_bfm_h)) begin
     `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get() apb_slave_drv_bfm_h");

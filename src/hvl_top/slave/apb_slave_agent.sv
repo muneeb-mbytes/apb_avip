@@ -8,24 +8,24 @@
 class apb_slave_agent extends uvm_agent;
   `uvm_component_utils(apb_slave_agent)
 
-  // Variable: slave_agent_cfg_h;
+  // Variable: apb_slave_agent_cfg_h;
   // Handle for apb_slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
 
-  // Variable: slave_seqr_h;
-  // Handle for slave sequencer
+  // Variable: apb_slave_seqr_h;
+  // Handle for  apb slave sequencer
   apb_slave_sequencer apb_slave_seqr_h;
 
-  // Variable: slave_drv_proxy_h
-  // Handle for slave driver proxy
+  // Variable: apb_slave_drv_proxy_h
+  // Handle for apb slave driver proxy
   apb_slave_driver_proxy apb_slave_drv_proxy_h;
 
-  // Variable: slave_mon_proxy_h
-  // Handle for slave monitor proxy
+  // Variable: apb_slave_mon_proxy_h
+  // Handle for  apb slave monitor proxy
   apb_slave_monitor_proxy apb_slave_mon_proxy_h;
 
-  // Variable: slave_coverage
-  // Decalring a handle for slave_coverage
+  // Variable: apb_slave_coverage
+  // Decalring a handle for apb slave_coverage
   apb_slave_coverage apb_slave_cov_h;
 
   //-------------------------------------------------------
@@ -95,10 +95,11 @@ function void apb_slave_agent::connect_phase(uvm_phase phase);
     
     // Connecting the ports
     apb_slave_drv_proxy_h.seq_item_port.connect(apb_slave_seqr_h.seq_item_export);
-    // TODO(mshariff): 
-    // connect monitor port to coverage
-    //apb_slave_cov_h.apb_slave_cov_ap_h.connect(apb_slave)
+    
+    // Connecting monitor_proxy port to coverage export
+    apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_slave_cov_h.apb_slave_analysis_export);
   end
+
 
    apb_slave_mon_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
 

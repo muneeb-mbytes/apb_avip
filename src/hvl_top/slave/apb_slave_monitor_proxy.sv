@@ -11,9 +11,10 @@ class apb_slave_monitor_proxy extends uvm_monitor;
   //-------------------------------------------------------
   // Package : Importing SPI Global Package 
   //-------------------------------------------------------
-//  import spi_globals_pkg::*;
+  //  import spi_globals_pkg::*;
 
   `uvm_component_utils(apb_slave_monitor_proxy)
+
   //Declaring Monitor Analysis Import
   uvm_analysis_port #(apb_slave_tx) apb_slave_analysis_port;
   
