@@ -1,5 +1,5 @@
-`ifndef SPI_ENV_PKG_INCLUDED_
-`define SPI_ENV_PKG_INCLUDED_
+`ifndef APB_ENV_PKG_INCLUDED_
+`define APB_ENV_PKG_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 // Package: apb_env_pkg
