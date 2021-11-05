@@ -5,7 +5,7 @@
 // Class: apb_virtual_sequencer
 // Creates master and slave sequences here
 //--------------------------------------------------------------------------------------------
-class apb_virtual_sequencer extends uvm_component;
+class apb_virtual_sequencer extends uvm_sequencer#(uvm_sequence_item);
   `uvm_component_utils(apb_virtual_sequencer)
 
   // Variable: master_seqr_h
