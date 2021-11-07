@@ -8,7 +8,7 @@
 class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   `uvm_component_utils(apb_slave_coverage)
 
-  // Variable: slave_agent_cfg_h;
+  // Variable: apb_slave_agent_cfg_h;
   // Handle for apb_slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
 

@@ -21,8 +21,8 @@ class apb_slave_monitor_proxy extends uvm_monitor;
   //Declaring Virtual Monitor BFM Handle
   virtual apb_slave_monitor_bfm apb_slave_mon_bfm_h;
     
-  // Variable: slave_agent_cfg_h;
-  // Handle for slave agent configuration
+  // Variable: apb_slave_agent_cfg_h;
+  // Handle for  apb slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
 
   //-------------------------------------------------------

@@ -9,18 +9,18 @@
 class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   `uvm_component_utils(apb_slave_driver_proxy)
 
-  //Variable : tx_h
+  //Variable : apb_slave_tx_h
   //Declaring handle for apb slave transaction
   apb_slave_tx apb_slave_tx_h;
 
-  // Variable: slave_driver_bfm_h;
-  // Handle for slave driver bfm
+  // Variable: apb_slave_driver_bfm_h;
+  // Handle for apb_slave driver bfm
   virtual apb_slave_driver_bfm apb_slave_drv_bfm_h;
 
   //  slave_spi_seq_item_converter  slave_spi_seq_item_conv_h;
 
-  // Variable: slave_agent_cfg_h;
-  // Handle for slave agent configuration
+  // Variable: apb_slave_agent_cfg_h;
+  // Handle for apb_slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
 
   //-------------------------------------------------------
