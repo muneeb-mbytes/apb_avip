@@ -1,3 +1,6 @@
+`ifndef APB_MASTER_DRIVER_BFM_INCLUDED_
+`define APB_MASTER_DRIVER_BFM_INCLUDED_
+
 //--------------------------------------------------------------------------------------------
 // Interface : apb_master_driver_bfm
 //  Used as the HDL driver for apb
@@ -7,7 +10,9 @@
 //  intf - apb Interface
 //--------------------------------------------------------------------------------------------
 interface apb_master_driver_bfm();
-
+   //-------------------------------------------------------
+   //Importing uvm package file
+   //-------------------------------------------------------
    import uvm_pkg::*;
   `include "uvm_macros.svh"
   
@@ -22,3 +27,5 @@ interface apb_master_driver_bfm();
   end
 
 endinterface : apb_master_driver_bfm
+
+`endif

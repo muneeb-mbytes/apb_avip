@@ -1,5 +1,5 @@
 `ifndef APB_SLAVE_MONITOR_BFM_INCLUDED_
-`define APB_SLAVE_MONITOR_BFM_INCLUDED_I
+`define APB_SLAVE_MONITOR_BFM_INCLUDED_
 //--------------------------------------------------------------------------------------------
 // Inteface       : apb Slave Monitor BFM
 // Description  : Connects the slave monitor bfm with the monitor proxy
