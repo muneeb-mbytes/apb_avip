@@ -54,6 +54,7 @@ class apb_slave_tx extends uvm_sequence_item;
   //-------------------------------------------------------
   extern function new(string name = "apb_slave_tx");
   extern function void do_copy(uvm_object rhs);
+  extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function void do_print(uvm_printer printer);
 endclass : apb_slave_tx
 
@@ -66,6 +67,7 @@ endclass : apb_slave_tx
 function apb_slave_tx::new(string name = "apb_slave_tx");
   super.new(name);
 endfunction : new
+
 
 //--------------------------------------------------------------------------------------------
 //  Function: do_copy
@@ -93,6 +95,36 @@ function void apb_slave_tx::do_copy (uvm_object rhs);
   pstrob  = apb_slave_tx_copy_obj.pstrob;
 
 endfunction:do_copy
+
+
+//--------------------------------------------------------------------------------------------
+//  Function: do_compare
+//  Compare method is implemented using handle rhs
+//
+//  Parameters:
+//  phase - uvm phase
+//--------------------------------------------------------------------------------------------
+function bit apb_slave_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
+  apb_slave_tx apb_slave_tx_compare_obj;
+
+  if(!$cast(apb_slave_tx_compare_obj,rhs)) begin
+    `uvm_fatal("FATAL_APB_SLAVE_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
+  return 0;
+  end
+
+  return super.do_compare(apb_slave_tx_compare_obj, comparer) &&
+  paddr   == apb_slave_tx_compare_obj.paddr &&
+  psel    == apb_slave_tx_compare_obj.psel &&
+  pwrite  == apb_slave_tx_compare_obj.pwrite &&
+  penable == apb_slave_tx_compare_obj.penable &&
+  pwdata  == apb_slave_tx_compare_obj.pwdata &&
+  pready  == apb_slave_tx_compare_obj.pready &&
+  prdata  == apb_slave_tx_compare_obj.prdata &&
+  pslverr == apb_slave_tx_compare_obj.pslverr &&
+  pprot   == apb_slave_tx_compare_obj.pprot &&
+  pstrob  == apb_slave_tx_compare_obj.pstrob;
+endfunction:do_compare
+
 
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
