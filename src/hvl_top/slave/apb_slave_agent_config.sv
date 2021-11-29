@@ -7,16 +7,16 @@
 //--------------------------------------------------------------------------------------------
 class apb_slave_agent_config extends uvm_object;
   
-  `uvm_object_utils(apb_slave_agent_config)
+  `uvm_object_utils(apb_slave_agent_config) 
+  
+  //Variable: is_active
+  //Used to declare whether the agent is active or passive
+  uvm_active_passive_enum is_active = UVM_ACTIVE;
   
   //Variable: slave_id
   //Gives the slave id
   int slave_id;
   
-  //Variable: is_active
-  //Used to declare whether the agent is active or passive
-  uvm_active_passive_enum is_active;
-
   //Variable : has_coverage
   //Used to set whether we need to create coverage or not
   bit has_coverage;
