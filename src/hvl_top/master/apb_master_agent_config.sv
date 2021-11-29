@@ -21,6 +21,11 @@ class apb_master_agent_config extends uvm_object;
   // Used for enabling the master agent coverage
   bit has_coverage;
 
+  //variablemaster_mem
+  //memory decleration for master to store the data of each slave
+  bit [DATA_WIDTH-1:0]master_mem[NO_OF_SLAVES*ADDRESS_WIDTH-1:0];
+
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

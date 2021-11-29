@@ -1,0 +1,240 @@
+QuestaSim vlog 10.6c Compiler 2017.07 Jul 25 2017
+Start time: 00:41:03 on Nov 30,2021
+vlog -sv "+acc" "+cover" "+fcover" -l apb_compile.log -f ../apb_compile.f 
+-- Compiling package apb_global_pkg
+-- Compiling package apb_master_pkg
+** Note: (vlog-2286) ../../src/hvl_top/master/apb_master_pkg.sv(13): Using implicit +incdir+/tools/mentor/questasim_10.6c/questasim/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Importing package apb_global_pkg
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(40): Field/method name (paddr) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(41): Field/method name (pprot) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(42): Field/method name (psel) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(45): Field/method name (pwdata) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(46): Field/method name (pstrobe) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(46): Field/method name (pstrobe) not in 'input_conv_h'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(47): Field/method name (pslverr) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(48): Field/method name (pready) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(49): Field/method name (prdata) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(66): Field/method name (paddr) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(67): Field/method name (pprot) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(68): Field/method name (psel) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(71): Field/method name (pwdata) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(72): Field/method name (pstrobe) not in 'output_conv_h'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(72): Field/method name (pstrobe) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(73): Field/method name (pslverr) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(74): Field/method name (pready) not in 'input_conv'.
+** Error (suppressible): ../../src/hvl_top/master//apb_master_seq_item_converter.sv(75): (vlog-7027) The name ('imput_conv.prdata') was not found in the current scope.  Please verify the spelling of the name 'imput_conv.prdata'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(89): Field/method name (paddr) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(93): Field/method name (pwdata) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(97): Field/method name (prdata) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(101): Field/method name (pprot) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(105): Field/method name (psel) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(117): Field/method name (pstrobe) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(120): Field/method name (pslverr) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(123): Field/method name (pready) not in 'apb_st'.
+** Error: ../../src/hvl_top/master//apb_master_seq_item_converter.sv(90): (vlog-2730) Undefined variable: 'paddr'.
+** Error: ../../src/hvl_top/master//apb_master_seq_item_converter.sv(94): (vlog-2730) Undefined variable: 'pwdata'.
+** Error: ../../src/hvl_top/master//apb_master_seq_item_converter.sv(98): (vlog-2730) Undefined variable: 'prdata'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(102): Field/method name (pprot) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(106): Field/method name (psel) not in 'apb_st'.
+** Error (suppressible): ../../src/hvl_top/master//apb_master_seq_item_converter.sv(109): (vlog-13293) FOREACH can not be applied on single width scalar dimension.
+** Error (suppressible): ../../src/hvl_top/master//apb_master_seq_item_converter.sv(113): (vlog-13293) FOREACH can not be applied on single width scalar dimension.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(118): Field/method name (pstrobe) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(121): Field/method name (pslverr) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/master//apb_master_seq_item_converter.sv(124): Field/method name (pready) not in 'apb_st'.
+-- Compiling package apb_slave_pkg
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(44): Field/method name (paddr) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(45): Field/method name (pprot) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(46): Field/method name (psel) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(49): Field/method name (pwdata) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(50): Field/method name (pstrobe) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(50): Field/method name (pstrobe) not in 'input_conv_h'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(51): Field/method name (pslverr) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(52): Field/method name (pready) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(53): Field/method name (prdata) not in 'output_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(69): Field/method name (paddr) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(70): Field/method name (pprot) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(71): Field/method name (psel) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(74): Field/method name (pwdata) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(75): Field/method name (pstrobe) not in 'output_conv_h'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(75): Field/method name (pstrobe) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(76): Field/method name (pslverr) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(77): Field/method name (pready) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(78): Field/method name (prdata) not in 'input_conv'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(91): Field/method name (paddr) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(95): Field/method name (pwdata) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(99): Field/method name (prdata) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(103): Field/method name (pprot) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(107): Field/method name (psel) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(119): Field/method name (pstrobe) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(122): Field/method name (pslverr) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(125): Field/method name (pready) not in 'apb_st'.
+** Error: ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(92): (vlog-2730) Undefined variable: 'paddr'.
+** Error: ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(96): (vlog-2730) Undefined variable: 'pwdata'.
+** Error: ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(100): (vlog-2730) Undefined variable: 'prdata'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(104): Field/method name (pprot) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(108): Field/method name (psel) not in 'apb_st'.
+** Error (suppressible): ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(111): (vlog-13293) FOREACH can not be applied on single width scalar dimension.
+** Error (suppressible): ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(115): (vlog-13293) FOREACH can not be applied on single width scalar dimension.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(120): Field/method name (pstrobe) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(123): Field/method name (pslverr) not in 'apb_st'.
+** Error (suppressible): (vlog-13276) ../../src/hvl_top/slave/apb_slave_seq_item_converter.sv(126): Field/method name (pready) not in 'apb_st'.
+-- Compiling package apb_master_seq_pkg
+-- Compiling package apb_slave_seq_pkg
+-- Compiling package apb_env_pkg
+** Error: ../../src/hvl_top/env/apb_env_pkg.sv(20): (vlog-13006) Could not find the package (apb_master_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: ../../src/hvl_top/env/apb_env_pkg.sv(21): (vlog-13006) Could not find the package (apb_slave_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/env/apb_env_config.sv(25): Invalid type 'apb_master_agent_config'. Please check the type of the variable 'apb_master_agent_cfg_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/env/apb_env_config.sv(29): Invalid type 'apb_slave_agent_config'. Please check the type of the variable 'apb_slave_agent_cfg_h'.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/env/apb_env_config.sv(29): near "[": syntax error, unexpected '[', expecting function or task or "SystemVerilog keyword 'pure'".
+-- Compiling package apb_virtual_seq_pkg
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv(16): (vlog-13006) Could not find the package (apb_master_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv(17): (vlog-13006) Could not find the package (apb_slave_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv(24)
+** while parsing macro expansion: 'uvm_declare_p_sequencer' starting at ../../src/hvl_top/test/virtual_sequences//apb_virtual_base_seq.sv(12)
+** at ../../src/hvl_top/test/virtual_sequences//apb_virtual_base_seq.sv(12): Invalid type 'apb_virtual_sequencer'. Please check the type of the variable 'p_sequencer'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv(24)
+** at ../../src/hvl_top/test/virtual_sequences//apb_virtual_base_seq.sv(16): Invalid type 'apb_master_vsequencer'. Please check the type of the variable 'apb_master_vseqr_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv(24)
+** at ../../src/hvl_top/test/virtual_sequences//apb_virtual_base_seq.sv(20): Invalid type 'apb_slave_vsequencer'. Please check the type of the variable 'apb_slave_vseqr_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv(24)
+** at ../../src/hvl_top/test/virtual_sequences//apb_virtual_base_seq.sv(50): (vlog-2730) Undefined variable: 'apb_slave_vseqr_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/virtual_sequences/apb_virtual_seq_pkg.sv(24)
+** at ../../src/hvl_top/test/virtual_sequences//apb_virtual_base_seq.sv(51): (vlog-2730) Undefined variable: 'apb_master_vseqr_h'.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/env/apb_env_config.sv(29): near "]": syntax error, unexpected ']', expecting class.
+-- Compiling package apb_base_test_pkg
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/test/apb_base_test_pkg.sv(21): (vlog-13006) Could not find the package (apb_master_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/test/apb_base_test_pkg.sv(22): (vlog-13006) Could not find the package (apb_slave_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+-- Importing package apb_master_seq_pkg
+-- Importing package apb_slave_seq_pkg
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** at ../../src/hvl_top/test/apb_base_test_pkg.sv(26): (vlog-13006) Could not find the package (apb_virtual_seq_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(15): Invalid type 'apb_env'. Please check the type of the variable 'apb_env_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(19): Invalid type 'apb_env_config'. Please check the type of the variable 'apb_env_cfg_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(57): (vlog-2730) Undefined variable: 'apb_env_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(57): (vlog-2164) Class or package 'apb_env' not found.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(57): (vlog-2730) Undefined variable: 'apb_env'.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(57): near "::": syntax error, unexpected ::, expecting ';'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(65): (vlog-2730) Undefined variable: 'apb_env_cfg_h'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(65): (vlog-2164) Class or package 'apb_env_config' not found.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(65): Identifier 'apb_env_config' is not directly visible.
+   Found multiple Declaration of 'apb_env_config' through wildcard imports from these packages : apb_env_pkg, apb_env_pkg
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(65): Illegal to use typedef "apb_env_config" as a variable.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(65): near "::": syntax error, unexpected ::, expecting ';'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(71): Identifier 'apb_env_config' is not directly visible.
+   Found multiple Declaration of 'apb_env_config' through wildcard imports from these packages : apb_env_pkg, apb_env_pkg
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(71): Illegal to use typedef "apb_env_config" as a variable.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(83): (vlog-2164) Class or package 'apb_master_agent_config' not found.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(83): (vlog-2730) Undefined variable: 'apb_master_agent_config'.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(83): near "::": syntax error, unexpected ::, expecting ';'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(105): (vlog-2164) Class or package 'apb_slave_agent_config' not found.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(105): (vlog-2730) Undefined variable: 'apb_slave_agent_config'.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(26)
+** while parsing file included at ../../src/hvl_top/test/apb_base_test_pkg.sv(31)
+** at ../../src/hvl_top/test/apb_base_test.sv(105): near "::": syntax error, unexpected ::, expecting ';'.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(27)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_master_vsequencer.sv(8): near "uvm_sequencer": syntax error, unexpected IDENTIFIER.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(27)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_master_vsequencer.sv(8): Error in class extension specification.
+-- Compiling interface apb_if
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(28)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_slave_vsequencer.sv(8): near "uvm_sequencer": syntax error, unexpected IDENTIFIER.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(28)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_slave_vsequencer.sv(8): Error in class extension specification.
+-- Compiling interface apb_master_driver_bfm
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(28)
+** at ../../src/hdl_top/master_agent_bfm/apb_master_driver_bfm.sv(29): (vlog-13006) Could not find the package (apb_master_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Warning: (vlog-13184) ../../src/hdl_top/master_agent_bfm/apb_master_driver_bfm.sv(38): The Verilog preprocessor found an `endif directive matched to an `if directive in a different file: ../../src/hvl_top/env/virtual_sequencer//apb_slave_vsequencer.sv(8)
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(29)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_virtual_sequencer.sv(8): near "uvm_sequencer": syntax error, unexpected IDENTIFIER.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(29)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_virtual_sequencer.sv(8): Error in class extension specification.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(29)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_virtual_sequencer.sv(8): near "#": syntax error, unexpected '#', expecting class.
+-- Compiling module apb_master_agent_bfm
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(29)
+** at ../../src/hdl_top/master_agent_bfm/apb_master_agent_bfm.sv(9): (vlog-2730) Undefined variable: 'intf'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(29)
+** at ../../src/hdl_top/master_agent_bfm/apb_master_agent_bfm.sv(37): Illegal use of 'automatic' for variable declaration (intf).
+** Error: ../../src/hdl_top/master_agent_bfm/apb_master_agent_bfm.sv(9): (vlog-13294) Identifier must be declared with a port mode: intf.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(29)
+** at ../../src/hvl_top/env/virtual_sequencer//apb_virtual_sequencer.sv(8): near "(": syntax error, unexpected '(', expecting class.
+-- Compiling interface apb_slave_driver_bfm
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(29)
+** at ../../src/hdl_top/slave_agent_bfm/apb_slave_driver_bfm.sv(21): (vlog-13006) Could not find the package (apb_slave_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(30)
+** at ../../src/hvl_top/env/apb_scoreboard.sv(8): near "uvm_scoreboard": syntax error, unexpected IDENTIFIER.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(30)
+** at ../../src/hvl_top/env/apb_scoreboard.sv(8): Error in class extension specification.
+-- Compiling interface apb_slave_monitor_bfm
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(30)
+** at ../../src/hdl_top/slave_agent_bfm/apb_slave_monitor_bfm.sv(27): (vlog-13006) Could not find the package (apb_slave_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Warning: (vlog-13184) ../../src/hdl_top/slave_agent_bfm/apb_slave_monitor_bfm.sv(36): The Verilog preprocessor found an `endif directive matched to an `if directive in a different file: ../../src/hvl_top/env/apb_scoreboard.sv(8)
+** Error: (vlog-13069) ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(31)
+** at ../../src/hvl_top/env/apb_env.sv(8): near "uvm_env": syntax error, unexpected IDENTIFIER.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(31)
+** at ../../src/hvl_top/env/apb_env.sv(8): Error in class extension specification.
+-- Compiling module apb_slave_agent_bfm
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(31)
+** at ../../src/hvl_top/env/apb_env.sv(15): (vlog-2730) Undefined variable: 'intf'.
+** Error: ** while parsing file included at ../../src/hvl_top/env/apb_env_pkg.sv(31)
+** at ../../src/hdl_top/slave_agent_bfm/apb_slave_agent_bfm.sv(40): Illegal use of 'automatic' for variable declaration (intf).
+** Error: ../../src/hvl_top/env/apb_env.sv(15): (vlog-13294) Identifier must be declared with a port mode: intf.
+** Warning: (vlog-13184) ../../src/hdl_top/slave_agent_bfm/apb_slave_agent_bfm.sv(42): The Verilog preprocessor found an `endif directive matched to an `if directive in a different file: ../../src/hvl_top/env/apb_env.sv(8)
+** Error: (vlog-13069) ../../src/hvl_top/env/apb_env_pkg.sv(33): near "endpackage": syntax error, unexpected "SystemVerilog keyword 'endpackage'", expecting class.
+-- Compiling module hdl_top
+** Error: ../../src/hdl_top/hdl_top.sv(34): Illegal use of 'automatic' for variable declaration (intf).
+-- Compiling module hvl_top
+** Error: ../../src/hvl_top/hvl_top.sv(14): (vlog-13006) Could not find the package (apb_base_test_pkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: End of source encountered before `endif directive closing region starting at file '../../src/hvl_top/env/apb_env.sv' line 1.
+End time: 00:41:04 on Nov 30,2021, Elapsed time: 0:00:01
+Errors: 132, Warnings: 3
