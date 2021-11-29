@@ -29,23 +29,13 @@ class apb_master_tx extends uvm_sequence_item;
   // Write when pwrite is 1 and read is 0
   rand bit pwrite;
 
-<<<<<<< HEAD
-  // Variable : pwdata
-  // Used to store the wdata
-  rand bit [DATA_LENGTH-1:0] pwdata;
-
-  // Variable : pstrb
-  // Used to transfer the data to pwdata bus
-  rand bit [DATA_LENGTH-1:0] pstrb;
-=======
   //Variable : pwdata
   //Used to store the wdata
   rand bit [DATA_WIDTH-1:0]pwdata;
 
   //Variable : pstrob
   //Used to transfer the data to pwdata bus
-  rand bit [DATA_WIDTH-1:0]pstrob;
->>>>>>> 515b623aef13b2eae33aba02cd4bf979d0ef7097
+  rand bit [DATA_WIDTH-1:0]pstrb;
 
   // Variable : pready
   // Used to extend the transfer

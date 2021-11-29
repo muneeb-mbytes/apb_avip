@@ -39,7 +39,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_slave_cfg_converter::from_class(input apb_slave_agent_config input_conv_h,
                                                   output apb_transfer_cfg_s  output_conv);
- 
+output_conv.paddr = input_conv_h.paddr;  
 endfunction:from_class
 
 //---------------------------------------------------------------------------------------------
@@ -50,6 +50,7 @@ function void apb_slave_cfg_converter::do_print(uvm_printer printer);
   
   apb_transfer_cfg_s apb_st;
   super.do_print(printer);
+  printer.print_field( "paddr", apb_st.paddr , $bits(apb_st.paddr),UVM_DEC);
 
 
 endfunction:do_print
