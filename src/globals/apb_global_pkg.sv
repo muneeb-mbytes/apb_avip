@@ -9,7 +9,7 @@ package apb_global_pkg;
 
   //Parameter : NO_OF_SLAVES
   //Used to set number of slaves required
-  parameter int NO_OF_SLAVES = 1;
+  parameter int NO_OF_SLAVES = 16;
 
   //Parameter : MASTER_AGENT_ACTIVE
   //Used to set the master agent either active or passive
@@ -30,12 +30,35 @@ package apb_global_pkg;
   //Parameter : ADDRESS_LENGTH
   //Used to set the address length to the address bus
   //Maximum Value is 32
-  parameter ADDRESS_LENGTH = 32;
+  parameter int ADDRESS_LENGTH = 32;
 
-  //Parameter : DATA_LENGTH
-  //Used to set the data length 
+  //Parameter : DATA_WIDTH
+  //Used to set the data width 
   //Maximum Value is 32
-  parameter DATA_LENGTH = 32;
+  parameter int DATA_WIDTH = 64;
+
+  //-------------------------------------------------------
+  // enum : operation_stages
+  //-------------------------------------------------------
+  typedef enum bit[1:0] {
+    IDLE_STATE = 2'b00,
+    SETUP_STATE = 2'b01,
+    ACCESS_STATE = 2'b10 } operation_states_e;
+
+
+/*
+  //parameter : IDLE_STATE
+  //Used to indicate no transfer(PSELx & PENABLE=0)
+  parameter IDLE_STATE = 00;
+
+  //parameter : SETUP_STATE
+  //Used to indicate transfer(PSELx=1,PENABEL=0)
+  parameter SETUP_STATE = 01;
+  
+  //parameter : ACCESS_STATE
+  //Used to indicate repitetion of transfers
+  parameter ACCESS_STATE = 10;
+*/
 
 //--------------------------------------------------------------------------------------------
 // Struct: apb_transfer_char_s
@@ -45,8 +68,16 @@ typedef struct {
 
   bit penable;
   bit pwrite;
-
+  bit [2:0]pprot;
+  bit pselx;
+  bit [(DATA_WIDTH/8)-1:0]pstrb;
+  bit pslverr;
+  bit pready;
+  bit [DATA_WIDTH-1:0]prdata;
+  bit [ADDRESS_LENGTH-1:0]paddr;
+  bit [DATA_WIDTH-1:0]pwdata;
 } apb_transfer_char_s;
+
 
 endpackage : apb_global_pkg
 
