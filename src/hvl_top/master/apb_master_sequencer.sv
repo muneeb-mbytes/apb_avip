@@ -2,7 +2,7 @@
 `define APB_MASTER_SEQUENCER_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-//  Class: apb_master_sequencer
+// Class: apb_master_sequencer
 //--------------------------------------------------------------------------------------------
 class apb_master_sequencer extends uvm_sequencer #(apb_master_tx);
   `uvm_component_utils(apb_master_sequencer)
