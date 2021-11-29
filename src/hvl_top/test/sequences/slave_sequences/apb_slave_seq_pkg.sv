@@ -12,12 +12,13 @@ package apb_slave_seq_pkg;
   //-------------------------------------------------------
   `include "uvm_macros.svh"
   import uvm_pkg::*;
-  //import apb_slave_pkg::*;
+  import apb_slave_pkg::*;
 
   //-------------------------------------------------------
   // Including required apb slave seq files
   //-------------------------------------------------------
   `include "apb_slave_base_seq.sv"
+  `include "apb_slave_vd_vws_seq.sv"
 
 endpackage : apb_slave_seq_pkg
 

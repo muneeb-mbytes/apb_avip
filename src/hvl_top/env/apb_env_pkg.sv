@@ -24,8 +24,8 @@ package apb_env_pkg;
   // Including the required files
   //-------------------------------------------------------
   `include "apb_env_config.sv"
-  `include "apb_master_vsequencer.sv"
-  `include "apb_slave_vsequencer.sv"
+  //`include "apb_master_vsequencer.sv"
+  //`include "apb_slave_vsequencer.sv"
   `include "apb_virtual_sequencer.sv"
   `include "apb_scoreboard.sv"
   `include "apb_env.sv"

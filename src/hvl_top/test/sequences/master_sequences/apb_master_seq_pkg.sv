@@ -11,13 +11,15 @@ package apb_master_seq_pkg;
   // Importing UVM Pkg
   //-------------------------------------------------------
   `include "uvm_macros.svh"
+  import apb_global_pkg::*;
   import uvm_pkg::*;
-  //import apb_master_pkg::*;
+  import apb_master_pkg::*;
 
   //-------------------------------------------------------
   // Including required apb master seq files
   //-------------------------------------------------------
   `include "apb_master_base_seq.sv"
+  `include "apb_master_vd_vws_seq.sv"
 
 endpackage : apb_master_seq_pkg
 

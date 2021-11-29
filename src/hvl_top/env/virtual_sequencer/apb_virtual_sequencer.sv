@@ -10,11 +10,13 @@ class apb_virtual_sequencer extends uvm_sequencer#(uvm_sequence_item);
 
   // Variable: master_seqr_h
   // Declaring master sequencer handle
-  apb_master_vsequencer apb_master_vseqr_h;
+  //apb_master_vsequencer apb_master_vseqr_h;
+  apb_master_sequencer apb_master_seqr_h;
 
   // Variable: slave_seqr_h
   // Declaring slave sequencer handle
-  apb_slave_vsequencer  apb_slave_vseqr_h;
+  //apb_slave_vsequencer  apb_slave_vseqr_h;
+  apb_slave_sequencer apb_slave_seqr_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -44,8 +46,8 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_virtual_sequencer::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  apb_master_vseqr_h = apb_master_vsequencer::type_id::create("apb_master_vseqr_h",this);
-  apb_slave_vseqr_h = apb_slave_vsequencer::type_id::create("apb_slave_vseqr_h",this);
+  apb_master_seqr_h = apb_master_sequencer::type_id::create("apb_master_seqr_h",this);
+  apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
 endfunction : build_phase
 
 
