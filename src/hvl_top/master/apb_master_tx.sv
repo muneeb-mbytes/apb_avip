@@ -31,11 +31,11 @@ class apb_master_tx extends uvm_sequence_item;
 
   //Variable : pwdata
   //Used to store the wdata
-  rand bit [DATA_LENGTH-1:0]pwdata;
+  rand bit [DATA_WIDTH-1:0]pwdata;
 
   //Variable : pstrob
   //Used to transfer the data to pwdata bus
-  rand bit [DATA_LENGTH-1:0]pstrob;
+  rand bit [DATA_WIDTH-1:0]pstrob;
 
   //Variable : pslverr
   //Goes high when a transfer fails
