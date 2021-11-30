@@ -41,7 +41,7 @@ package apb_global_pkg;
   parameter int MAX_ADDR_RANGE = 32;
 
   //parameter : min_addr_range
-  parameter int MIN_ADDR_RANGE = 32;
+  parameter int MIN_ADDR_RANGE = 0;
 
   //-------------------------------------------------------
   // enum : operation_stages
