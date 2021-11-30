@@ -11,7 +11,7 @@ class apb_master_tx extends uvm_sequence_item;
 
   // Variable : paddr
   // Address selected in apb_slave
-  rand bit [ADDRESS_LENGTH-1:0] paddr;
+  rand bit [ADDRESS_WIDTH-1:0]paddr;
 
   // Variable : pprot
   // Used for different access
@@ -19,7 +19,7 @@ class apb_master_tx extends uvm_sequence_item;
 
   // Variable : pselx
   // Used to select the slave
-  rand bit [NO_OF_SLAVES-1:0] pselx;
+  rand bit [NO_OF_SLAVES-1:0]pselx;
 
   // Variable : penable
   // Used to write data when penable is high
@@ -62,7 +62,7 @@ class apb_master_tx extends uvm_sequence_item;
   //-------------------------------------------------------
   // pselx inside (16'd0, 16'd1, 16'd2, 16'd4 and so on), instead we can use onehot encoding
   // $onehot0(pselx) will select  
-  constraint pselx_c { $onehot0(pselx) == 1;}
+  //constraint pselx_c { $onehot0(pselx) == 1;}
 
 endclass : apb_master_tx
 
