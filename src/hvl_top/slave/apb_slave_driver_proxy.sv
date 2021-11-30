@@ -30,6 +30,8 @@ class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
   extern function void end_of_elaboration_phase(uvm_phase phase);
+  //extern virtual task run_phase(uvm_phase phase);
+
 
 
 endclass : apb_slave_driver_proxy
@@ -88,7 +90,22 @@ function void apb_slave_driver_proxy::end_of_elaboration_phase(uvm_phase phase);
   super.end_of_elaboration_phase(phase);
   apb_slave_drv_bfm_h.apb_slave_drv_proxy_h = this;
 endfunction : end_of_elaboration_phase
-
-
-
+//--------------------------------------------------------------------------------------------
+// Task: run_phase
+// Gets the sequence_item, converts them to struct compatible transactions
+// and sends them to the BFM to drive the data over the interface
+//
+// Parameters:
+//  phase - uvm phase
+//--------------------------------------------------------------------------------------------
+/*task apb_slave_driver_proxy::run_phase(uvm_phase phase);
+  super.run_phase(phase);
+  forever begin
+    apb_transfer_char_s struct_packet;
+    //apb_transfer_cfg_s struct_cfg;
+  /  seq_item_port.get_next_item(req);
+    seq_item_port.item_done(req);
+  end
+endtask : apb_slave_driver_proxy
+*/
 `endif
