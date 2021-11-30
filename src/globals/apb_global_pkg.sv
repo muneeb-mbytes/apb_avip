@@ -27,10 +27,10 @@ package apb_global_pkg;
   //Used to set the coverage if we need it in slave
   parameter SLAVE_HAS_COVERAGE = 1;
 
-  //Parameter : ADDRESS_LENGTH
-  //Used to set the address length to the address bus
+  //Parameter : ADDRESS_WIDTH
+  //Used to set the address width to the address bus
   //Maximum Value is 32
-  parameter int ADDRESS_LENGTH = 32;
+  parameter int ADDRESS_WIDTH = 32;
 
   //Parameter : DATA_WIDTH
   //Used to set the data width 
@@ -79,7 +79,7 @@ typedef struct {
   bit pslverr;
   bit pready;
   bit [DATA_WIDTH-1:0]prdata;
-  bit [ADDRESS_LENGTH-1:0]paddr;
+  bit [ADDRESS_WIDTH-1:0]paddr;
   bit [DATA_WIDTH-1:0]pwdata;
 } apb_transfer_char_s;
 

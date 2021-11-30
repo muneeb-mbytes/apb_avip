@@ -10,7 +10,7 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Varibale : paddr
   //Address selected in apb_slave
-  bit [ADDRESS_LENGTH-1:0]paddr;
+  bit [ADDRESS_WIDTH-1:0]paddr;
 
   //Variable : pprot
   //Used for different access
