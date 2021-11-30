@@ -35,13 +35,15 @@ package apb_global_pkg;
   //Parameter : DATA_WIDTH
   //Used to set the data width 
   //Maximum Value is 32
-  parameter int DATA_WIDTH = 64;
+  parameter int DATA_WIDTH = 32;
 
   //parameter : max_addr_range
   parameter int MAX_ADDR_RANGE = 32;
 
   //parameter : min_addr_range
-  parameter int MIN_ADDR_RANGE = 32;
+  parameter int MIN_ADDR_RANGE = 0;
+
+  
 
   //-------------------------------------------------------
   // enum : operation_stages
@@ -49,7 +51,19 @@ package apb_global_pkg;
   typedef enum bit[1:0] {
     IDLE_STATE = 2'b00,
     SETUP_STATE = 2'b01,
-    ACCESS_STATE = 2'b10 } operation_states_e;
+    ACCESS_STATE = 2'b10 
+  } operation_states_e;
+
+  typedef enum bit {
+    WRITE = 1,
+    READ  = 0 
+  } tx_type_e;
+
+  typedef enum bit [3:1] {
+    SLAVE_1 = 3'b001,
+    SLAVE_2 = 3'b010,
+    SLAVE_3 = 3'b100
+  } slave_no_e;
 
 /*
   //parameter : IDLE_STATE

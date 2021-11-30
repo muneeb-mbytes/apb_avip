@@ -11,7 +11,7 @@ class apb_master_tx extends uvm_sequence_item;
 
   // Variable : paddr
   // Address selected in apb_slave
-  rand bit [ADDRESS_WIDTH-1:0]paddr;
+  rand bit [ADDRESS_WIDTH-1:0] paddr;
 
   // Variable : pprot
   // Used for different access
@@ -19,7 +19,7 @@ class apb_master_tx extends uvm_sequence_item;
 
   // Variable : pselx
   // Used to select the slave
-  rand bit [NO_OF_SLAVES-1:0]pselx;
+  rand bit [NO_OF_SLAVES-1:0] pselx;
 
   // Variable : penable
   // Used to write data when penable is high
@@ -29,13 +29,13 @@ class apb_master_tx extends uvm_sequence_item;
   // Write when pwrite is 1 and read is 0
   rand bit pwrite;
 
-  //Variable : pwdata
-  //Used to store the wdata
-  rand bit [DATA_WIDTH-1:0]pwdata;
+  // Variable : pwdata
+  // Used to store the wdata
+  rand bit [DATA_WIDTH-1:0] pwdata;
 
-  //Variable : pstrob
-  //Used to transfer the data to pwdata bus
-  rand bit [DATA_WIDTH-1:0]pstrb;
+  // Variable : pstrob
+  // Used to transfer the data to pwdata bus
+  rand bit [DATA_WIDTH-1:0] pstrb;
 
   // Variable : pready
   // Used to extend the transfer
@@ -43,7 +43,7 @@ class apb_master_tx extends uvm_sequence_item;
 
   // Variable : prdata
   // Used to store the rdata from the slave
-  bit prdata;
+  bit [DATA_WIDTH-1:0] prdata;
 
   // Variable : pslverr
   // Goes high when a transfer fails
@@ -52,18 +52,22 @@ class apb_master_tx extends uvm_sequence_item;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "apb_master_tx");
-  extern function void do_copy(uvm_object rhs);
-  extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
-  extern function void do_print(uvm_printer printer);
+  extern function new   (string name = "apb_master_tx");
+  extern function void  do_copy(uvm_object rhs);
+  extern function bit   do_compare(uvm_object rhs, uvm_comparer comparer);
+  extern function void  do_print(uvm_printer printer);
 
   //-------------------------------------------------------
   // Constraints defined on variables pselx,
   //-------------------------------------------------------
   // pselx inside (16'd0, 16'd1, 16'd2, 16'd4 and so on), instead we can use onehot encoding
-  // $onehot0(pselx) will select  
-  //constraint pselx_c { $onehot0(pselx) == 1;}
+  // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
+  constraint pselx_c  { $onehot0(pselx) == 1; }
 
+  constraint paddr_c  { paddr inside {[MIN_ADDR_RANGE:MAX_ADDR_RANGE]}; }
+  //use below for inline constraints
+ // constraint pwdata_c { pwdata WRITE | READ }
+  
 endclass : apb_master_tx
 
 //--------------------------------------------------------------------------------------------

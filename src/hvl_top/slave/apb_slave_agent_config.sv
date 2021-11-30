@@ -21,9 +21,9 @@ class apb_slave_agent_config extends uvm_object;
   //Used to set whether we need to create coverage or not
   bit has_coverage;
 
-  //variable : slave_mem
+  //variable : slave_memory
   //Declaration of slave_memory to store the data from master
-  bit [DATA_WIDTH-1:0]slave_mem[ADDRESS_WIDTH-1:0];
+  bit [DATA_WIDTH-1:0] slave_memory [ADDRESS_WIDTH-1:0];
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
