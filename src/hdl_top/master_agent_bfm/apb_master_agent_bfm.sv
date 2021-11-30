@@ -3,7 +3,6 @@
 
 //--------------------------------------------------------------------------------------------
 // Module      : APB Master Agent BFM
-// 
 // Description : Instantiates driver and monitor
 //--------------------------------------------------------------------------------------------
 module apb_master_agent_bfm(apb_if intf);

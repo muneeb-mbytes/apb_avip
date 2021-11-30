@@ -30,7 +30,7 @@ interface apb_master_driver_bfm(input presetn,pclk,paddr,
   apb_master_driver_proxy apb_master_drv_proxy_h;
 
   initial begin
-     `uvm_info("apb master driver bfm",$sformatf("APB MASTER DRIVER BFM"),UVM_LOW);
+    `uvm_info("apb master driver bfm",$sformatf("APB MASTER DRIVER BFM"),UVM_LOW)
   end
 
   //-------------------------------------------------------
@@ -39,16 +39,15 @@ interface apb_master_driver_bfm(input presetn,pclk,paddr,
   //-------------------------------------------------------
   task wait_for_presetn();
     @(posedge presetn);
-    `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH);
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)
 
     @(negedge presetn);
-    `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH);
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
   
   endtask: wait_for_presetn
 
-
   //-------------------------------------------------------
-  // task: Drive_idle_state
+  // task: drive_idle_state
   // this task drives the apb interface to idle state
   //
   // parameter: 
@@ -58,19 +57,19 @@ interface apb_master_driver_bfm(input presetn,pclk,paddr,
   //-------------------------------------------------------
   task drive_idle_state(bit pselx, bit penable, bit paddr);
     @(posedge pclk);
-    `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the idle state"),UVM_HIGH);endinterface
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the idle state"),UVM_HIGH)
     pselx <= 0;
     penable <= 0;
     paddr <= 0;
   endtask: drive_idle_state
-
 
   //-------------------------------------------------------
   // task: drive_setup_state
   //-------------------------------------------------------
   task drive_setup_state(bit pselx, bit penable, bit paddr, bit pready);
     @(posedge pclk);
-    `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);endinterface
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH)
+
     pselx <= 1;
     penable <= 0;
     paddr <= $urandom;
@@ -82,7 +81,8 @@ interface apb_master_driver_bfm(input presetn,pclk,paddr,
   //-------------------------------------------------------
   task drive_access_state(bit pselx, bit penable, bit paddr, bit pready, bit pwdata);
     @(posedge pclk);
-    `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);endinterface
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH)
+
     pselx <= 1;
     penable <= 1;
     paddr <= $urandom;
@@ -91,12 +91,8 @@ interface apb_master_driver_bfm(input presetn,pclk,paddr,
     //@(posedge pclk);
     //pready <= 0;
     //end
-    
     pready <= 1;
   endtask: drive_access_state
-
-
-
 
 endinterface : apb_master_driver_bfm
 
