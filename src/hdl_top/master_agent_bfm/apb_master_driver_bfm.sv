@@ -1,6 +1,7 @@
 `ifndef APB_MASTER_DRIVER_BFM_INCLUDED_
 `define APB_MASTER_DRIVER_BFM_INCLUDED_
 
+import apb_global_pkg::*;
 //--------------------------------------------------------------------------------------------
 // Interface : apb_master_driver_bfm
 //  Used as the HDL driver for apb
@@ -9,9 +10,20 @@
 // Parameters:
 //  intf - apb Interface
 //--------------------------------------------------------------------------------------------
-interface apb_master_driver_bfm(input presetn,pclk,paddr,
-                                  pselx,pprot,penable,pwrite,pwdata,pstrb, 
-                                  output reg pslverr,pready,prdata);
+interface apb_master_driver_bfm (input  bit   pclk,
+                                 input  bit   presetn,
+                                 input  bit   pready,
+                                 input  bit   pslverr,
+                                 input  logic [DATA_WIDTH-1:0] prdata,
+                                 output logic pprot,
+                                 output logic penable,
+                                 output logic pwrite,
+                                 output logic [ADDRESS_WIDTH-1:0] paddr,
+                                 output logic [NO_OF_SLAVES-1:0] pselx,
+                                 output logic [DATA_WIDTH-1:0] pwdata,
+                                 output logic [(DATA_WIDTH/8)-1:0] pstrb
+                                );
+
    //-------------------------------------------------------
    //Importing uvm package file
    //-------------------------------------------------------

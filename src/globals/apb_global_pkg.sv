@@ -82,17 +82,16 @@ package apb_global_pkg;
 //  This struct datatype consists of all signals which are used for seq item conversion
 //--------------------------------------------------------------------------------------------
 typedef struct {
-
   bit penable;
   bit pwrite;
   bit [2:0]pprot;
   bit pselx;
-  bit [(DATA_WIDTH/8)-1:0]pstrb;
+  bit [(DATA_WIDTH/8)-1:0] pstrb;
   bit pslverr;
   bit pready;
-  bit [DATA_WIDTH-1:0]prdata;
-  bit [ADDRESS_WIDTH-1:0]paddr;
-  bit [DATA_WIDTH-1:0]pwdata;
+  bit [DATA_WIDTH-1:0] prdata;
+  bit [ADDRESS_WIDTH-1:0] paddr;
+  bit [DATA_WIDTH-1:0] pwdata;
 } apb_transfer_char_s;
 
 

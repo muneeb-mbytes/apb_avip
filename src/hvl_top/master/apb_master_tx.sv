@@ -35,7 +35,7 @@ class apb_master_tx extends uvm_sequence_item;
 
   // Variable : pstrob
   // Used to transfer the data to pwdata bus
-  rand bit [DATA_WIDTH-1:0] pstrb;
+  rand bit [(DATA_WIDTH/8)-1:0] pstrb;              
 
   // Variable : pready
   // Used to extend the transfer
@@ -48,6 +48,8 @@ class apb_master_tx extends uvm_sequence_item;
   // Variable : pslverr
   // Goes high when a transfer fails
   bit pslverr;
+
+
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
