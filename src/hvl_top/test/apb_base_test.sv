@@ -159,9 +159,9 @@ endfunction : start_of_simulation_phase
 //--------------------------------------------------------------------------------------------
 task apb_base_test::run_phase(uvm_phase phase);
 
-  super.run_phase(phase);
-  phase.raise_objection(this, "apb_base_test");
+  phase.raise_objection(this);
 
+  super.run_phase(phase);
 
   // Work here
   // ...
