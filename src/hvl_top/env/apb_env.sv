@@ -86,6 +86,9 @@ endfunction : build_phase
 function void apb_env::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   apb_virtual_seqr_h.apb_master_seqr_h = apb_master_agent_h.apb_master_seqr_h;
+  foreach(apb_slave_agent_h[i]) begin
+    apb_virtual_seqr_h.apb_slave_seqr_h = apb_slave_agent_h[i].apb_slave_seqr_h;
+  end
   apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_scoreboard_h.apb_master_analysis_fifo.analysis_export);
   foreach(apb_slave_agent_h[i]) begin
     apb_slave_agent_h[i].apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h.apb_slave_analysis_fifo.analysis_export);

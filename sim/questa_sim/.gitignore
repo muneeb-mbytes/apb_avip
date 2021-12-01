@@ -1,0 +1,6 @@
+*_test*
+*.log
+*.do
+*work
+*cov*
+
