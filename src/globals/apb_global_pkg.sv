@@ -96,7 +96,7 @@ typedef struct {
 
 typedef struct{
    bit [ADDRESS_WIDTH-1:0] paddr;
- }apb_transfer_cfg_s;
+}apb_transfer_cfg_s;
 
 
 

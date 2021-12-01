@@ -116,11 +116,11 @@ task apb_master_monitor_proxy::run_phase(uvm_phase phase);
   apb_master_mon_bfm_h.wait_for_presetn();
   apb_master_mon_bfm_h.wait_for_idle_state();
 
-  super.run_phase(phase);
+  //super.run_phase(phase);
 
   forever begin
     apb_transfer_char_s       struct_data_packet;
-    apb_master_agent_config   struct_cfg_packet; 
+    apb_transfer_cfg_s   struct_cfg_packet; 
     apb_master_tx             apb_master_clone_packet;
     
     apb_master_mon_bfm_h.wait_for_transfer_start();
@@ -136,7 +136,7 @@ task apb_master_monitor_proxy::run_phase(uvm_phase phase);
     $cast(apb_master_clone_packet, apb_master_packet.clone());
     `uvm_info(get_type_name(),$sformatf("Sending packet via analysis_port : , \n %s",
                                         apb_master_clone_packet.sprint()),UVM_HIGH)
-    master_analysis_port.write(apb_master_clone_packet);
+    apb_master_analysis_port.write(apb_master_clone_packet);
   end
 
 endtask : run_phase

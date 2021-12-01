@@ -85,7 +85,7 @@ interface apb_master_monitor_bfm (input bit pclk,
   endtask: wait_for_transfer_start
 
 //  task sample_data(output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_pkt);
-  task sample_data(output apb_transfer_char_s apb_data_packet);
+  task sample_data(output apb_transfer_char_s apb_data_packet,input apb_transfer_cfg_s apb_cfg_packet);
     forever begin
       if(penable == 1) begin
         apb_data_packet.prdata = prdata;
