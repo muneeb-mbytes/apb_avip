@@ -32,7 +32,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 task apb_virtual_vd_vws_seq::body();
   super.body();
-  `uvm_info(get_type_name(),$sformatf("APB_VIRTUAL_VD_VWS_SEQ"),UVM_LOW);
+  //`uvm_info(get_type_name(),$sformatf("APB_VIRTUAL_VD_VWS_SEQ"),UVM_LOW);
   apb_master_vd_vws_seq_h = apb_master_vd_vws_seq::type_id::create("apb_master_vd_vws_seq_h");
   apb_slave_vd_vws_seq_h = apb_slave_vd_vws_seq::type_id::create("apb_slave_vd_vws_seq_h");
   //fork

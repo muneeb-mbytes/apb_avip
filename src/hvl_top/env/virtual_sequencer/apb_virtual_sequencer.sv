@@ -46,8 +46,8 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_virtual_sequencer::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  apb_master_seqr_h = apb_master_sequencer::type_id::create("apb_master_seqr_h",this);
-  apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
+  //apb_master_seqr_h = apb_master_sequencer::type_id::create("apb_master_seqr_h",this);
+  //apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
 endfunction : build_phase
 
 

@@ -108,15 +108,15 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
 
   super.run_phase(phase);
   phase.raise_objection(this, "apb_master_driver_proxy");
- `uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_1"),UVM_LOW);
+  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_1"),UVM_LOW);
 
 
   // ...
-  //seq_item_port.get_next_item(req);
-   `uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_2"),UVM_LOW);
+  seq_item_port.get_next_item(req);
+  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_2"),UVM_LOW);
 
-  //seq_item_port.item_done();
- `uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_3"),UVM_LOW);
+  seq_item_port.item_done();
+  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_3"),UVM_LOW);
 
   phase.drop_objection(this);
 

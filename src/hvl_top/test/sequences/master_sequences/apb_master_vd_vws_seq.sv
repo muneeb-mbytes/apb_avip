@@ -29,10 +29,10 @@ endfunction : new
 //
 //--------------------------------------------------------------------------------------------
 task apb_master_vd_vws_seq::body();
-  `uvm_info(get_type_name(),$sformatf("APB_MASTER_VD_VWS_SEQ"),UVM_LOW);
+  //`uvm_info(get_type_name(),$sformatf("APB_MASTER_VD_VWS_SEQ"),UVM_LOW);
   req = apb_master_tx::type_id::create("req");
-  //start_item(req);
-  `uvm_info(get_type_name(),"REQ_MASTER",UVM_LOW);
+  start_item(req);
+  //`uvm_info(get_type_name(),"REQ_MASTER",UVM_LOW);
     if(!req.randomize()) 
       /*with {req.paddr inside {[0:8]};
                               req.pwdata inside {[0:8]};
@@ -42,7 +42,7 @@ task apb_master_vd_vws_seq::body();
       `uvm_error(get_type_name(),"Randomisation failed");
     end
     req.print();
-  //finish_item(req);
+  finish_item(req);
 endtask : body
 
 `endif
