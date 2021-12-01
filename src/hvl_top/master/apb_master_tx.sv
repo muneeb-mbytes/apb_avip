@@ -67,7 +67,7 @@ class apb_master_tx extends uvm_sequence_item;
   constraint pselx_c  { $onehot0(pselx) == 1; }
 
   constraint paddr_c  { paddr inside {[MIN_ADDR_RANGE:MAX_ADDR_RANGE]}; }
-  //use below for inline constraints
+  //TODO(saha): use below for inline constraints
  // constraint pwdata_c { pwdata WRITE | READ }
   
 endclass : apb_master_tx

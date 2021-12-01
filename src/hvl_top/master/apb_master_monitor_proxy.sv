@@ -8,7 +8,7 @@
 //  converts the signal level activity to transaction level,monitor samples DUT signals but does not drive them.
 //  Monitor should have analysis port (TLM port) and virtual interface handle that points to DUT signal
 //--------------------------------------------------------------------------------------------
-class apb_master_monitor_proxy extends uvm_component; 
+class apb_master_monitor_proxy extends uvm_monitor; 
   `uvm_component_utils(apb_master_monitor_proxy)
   
   //Variable : apb_master_mon_bfm_h
@@ -107,12 +107,37 @@ endfunction  : end_of_elaboration_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_master_monitor_proxy::run_phase(uvm_phase phase);
+  apb_master_tx apb_master_packet;
 
+  `uvm_info(get_type_name(), $sformatf("Inside the master_monitor_proxy"), UVM_LOW);
+
+  apb_master_packet = apb_master_tx::type_id::create("master_packet");
+  
+  apb_master_mon_bfm_h.wait_for_presetn();
+  apb_master_mon_bfm_h.wait_for_idle_state();
 
   super.run_phase(phase);
 
-  // ...
+  forever begin
+    apb_transfer_char_s       struct_data_packet;
+    apb_master_agent_config   struct_cfg_packet; 
+    apb_master_tx             apb_master_clone_packet;
+    
+    apb_master_mon_bfm_h.wait_for_transfer_start();
+    
+    apb_master_seq_item_converter::from_class(apb_master_agent_cfg_h, struct_cfg_packet);
+    apb_master_mon_bfm_h.sample_data(struct_data_packet, struct_cfg_packet);
+    apb_master_seq_item_converter::to_class(struct_data_packet, apb_master_packet);
 
+    `uvm_info(get_type_name(),$sformatf("Received packet from MONITOR BFM : , \n %s",
+                                        apb_master_packet.sprint()),UVM_HIGH)
+
+    // Clone and publish the cloned item to the subscribers
+    $cast(apb_master_clone_packet, apb_master_packet.clone());
+    `uvm_info(get_type_name(),$sformatf("Sending packet via analysis_port : , \n %s",
+                                        apb_master_clone_packet.sprint()),UVM_HIGH)
+    master_analysis_port.write(apb_master_clone_packet);
+  end
 
 endtask : run_phase
 
