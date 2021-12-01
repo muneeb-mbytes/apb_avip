@@ -8,7 +8,19 @@
 // Parameters:
 //  intf - apb interface
 //--------------------------------------------------------------------------------------------
-interface apb_slave_driver_bfm();
+import apb_global_pkg::*;
+interface apb_slave_driver_bfm(input bit pclk,
+                               input bit presetn,
+                               input bit [2:0]pprot,
+                               input bit pslverr,
+                               input bit pready,
+                               input logic penable,
+                               input logic pwrite,
+                               input logic [ADDRESS_WIDTH-1:0] paddr,
+                               input logic [NO_OF_SLAVES-1:0] pselx,
+                               input logic [DATA_WIDTH-1:0] pwdata,
+                               input logic [(DATA_WIDTH/8)-1:0] pstrb, 
+                               input logic [DATA_WIDTH-1:0] prdata);
   //-------------------------------------------------------
   // importing uvm_pkg file
   //-------------------------------------------------------

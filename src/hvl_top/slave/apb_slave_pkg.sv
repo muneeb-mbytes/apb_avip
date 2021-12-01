@@ -29,6 +29,7 @@ package apb_slave_pkg;
   `include "apb_slave_monitor_proxy.sv"
   `include "apb_slave_coverage.sv"
   `include "apb_slave_agent.sv"
+  `include "apb_slave_cfg_converter.sv"
   
 endpackage : apb_slave_pkg
 

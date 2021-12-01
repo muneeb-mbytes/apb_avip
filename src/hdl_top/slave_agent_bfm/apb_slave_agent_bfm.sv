@@ -19,12 +19,35 @@ module apb_slave_agent_bfm(apb_if intf);
   //-------------------------------------------------------
   //apb slave driver bfm instantiation
   //-------------------------------------------------------
-  apb_slave_driver_bfm apb_slave_drv_bfm_h();
+  apb_slave_driver_bfm apb_slave_drv_bfm_h(.pclk(intf.pclk),
+                                           .presetn(intf.presetn),
+                                           .pselx(intf.pselx),
+                                           .penable(intf.penable),
+                                           .pprot(intf.pprot),
+                                           .paddr(intf.paddr),
+                                           .pwrite(intf.pwrite),
+                                           .pwdata(intf.pwdata),
+                                           .pstrb(intf.pstrb),
+                                           .pslverr(intf.pslverr),
+                                           .pready(intf.pready),
+                                           .prdata(intf.prdata));
 
   //-------------------------------------------------------
   //apb slave monitor bfm instantiation
   //-------------------------------------------------------
-  apb_slave_monitor_bfm apb_slave_mon_bfm_h();
+  apb_slave_monitor_bfm apb_slave_mon_bfm_h(.pclk(intf.pclk),
+                                            .presetn(intf.presetn),
+                                            .pselx(intf.pselx),
+                                            .penable(intf.penable),
+                                            .pprot(intf.pprot),
+                                            .paddr(intf.paddr),
+                                            .pwrite(intf.pwrite),
+                                            .pwdata(intf.pwdata),
+                                            .pstrb(intf.pstrb),
+                                            .pslverr(intf.pslverr),
+                                            .pready(intf.pready),
+                                            .prdata(intf.prdata)
+);
   initial begin
    uvm_config_db#(virtual apb_slave_driver_bfm)::set(null,"*", "apb_slave_driver_bfm", apb_slave_drv_bfm_h); 
    uvm_config_db #(virtual apb_slave_monitor_bfm)::set(null,"*", "apb_slave_monitor_bfm", apb_slave_mon_bfm_h); 
