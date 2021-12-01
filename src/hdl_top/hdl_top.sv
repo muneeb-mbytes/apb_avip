@@ -28,7 +28,7 @@ import uvm_pkg::*;
   always #10 pclk = !pclk;
   initial begin
     #40 presetn = 0;
-    #100 presetn = 1;
+    #60 presetn = 1;
   end
 
   //-------------------------------------------------------

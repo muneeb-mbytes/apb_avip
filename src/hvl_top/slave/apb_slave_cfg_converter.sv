@@ -35,7 +35,7 @@ endfunction : new
 
 //-------------------------------------------------------------------------------------------
 // function: from_class
-// converting apb_master_cfg configurations into structure configutrations
+// converting apb_slave_cfg configurations into structure configutrations
 //--------------------------------------------------------------------------------------------
 function void apb_slave_cfg_converter::from_class(input apb_slave_agent_config input_conv_h,
                                                   output apb_transfer_cfg_s  output_conv);

@@ -22,9 +22,10 @@ package apb_slave_pkg;
   // Include all other files
   //-------------------------------------------------------
   `include "apb_slave_tx.sv"
-  `include "apb_slave_seq_item_converter.sv"
   `include "apb_slave_agent_config.sv"
-  `include "apb_slave_sequencer.sv"
+  `include "apb_slave_seq_item_converter.sv"
+  `include "apb_slave_cfg_converter.sv"
+    `include "apb_slave_sequencer.sv"
   `include "apb_slave_driver_proxy.sv"
   `include "apb_slave_monitor_proxy.sv"
   `include "apb_slave_coverage.sv"

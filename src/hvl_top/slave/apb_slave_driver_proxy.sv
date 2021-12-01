@@ -99,13 +99,44 @@ endfunction : end_of_elaboration_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_slave_driver_proxy::run_phase(uvm_phase phase);
+
+
+
+   bit pselx,penable;
+
   super.run_phase(phase);
+  //phase.raise_objection(this, "apb_slave_driver_proxy");
+  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_1"),UVM_LOW);
+  
+  //wait for system reset
+  apb_slave_drv_bfm_h.wait_for_presetn();
+
   forever begin
-    //apb_transfer_char_s struct_packet;
-    //apb_transfer_cfg_s struct_cfg;
+    apb_transfer_char_s struct_packet;
+    apb_transfer_cfg_s struct_cfg;
+
     seq_item_port.get_next_item(req);
-    seq_item_port.item_done();
+  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_2"),UVM_LOW);
+
+  //Converting transaction to struct data_packet
+  apb_slave_seq_item_converter::from_class(req, struct_packet); 
+  //Converting configurations to struct cfg_packet
+  apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg);
+
+
+  apb_slave_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
+  
+  
+  //Drive the idel state for APB interface
+  //apb_slave_drv_bfm_h.drive_idle_state();
+
+  //drive to setup state for APB interface
+  //apb_slave_drv_bfm_h.drive_setup_state();
+  
+
+  apb_slave_seq_item_converter::to_class(struct_packet, req);
+  seq_item_port.item_done();
   end
-endtask : run_phase
+  endtask : run_phase
 
 `endif
