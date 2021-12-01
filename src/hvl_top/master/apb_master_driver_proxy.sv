@@ -32,7 +32,8 @@ class apb_master_driver_proxy extends uvm_driver #(apb_master_tx);
   extern virtual function void end_of_elaboration_phase(uvm_phase phase);
 //  extern virtual function void start_of_simulation_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
-
+  //extern virtual task drive_access_state(inout apb_transfer_char_s struct_packet, input apb_transfer_cfg_s struct_cfg);
+  //extern virtual task drive_to_bfm();
 endclass : apb_master_driver_proxy
 
 //--------------------------------------------------------------------------------------------
@@ -105,14 +106,54 @@ endfunction  : end_of_elaboration_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_master_driver_proxy::run_phase(uvm_phase phase);
-  
-  super.run_phase(phase);
-  forever begin
-    seq_item_port.get_next_item(req);
+  bit pselx,penable;
 
-    seq_item_port.item_done();
+  super.run_phase(phase);
+  //phase.raise_objection(this, "apb_master_driver_proxy");
+  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_1"),UVM_LOW);
+  
+  //wait for system reset
+  apb_master_drv_bfm_h.wait_for_presetn();
+
+  forever begin
+    apb_transfer_char_s struct_packet;
+    apb_transfer_cfg_s struct_cfg;
+
+    seq_item_port.get_next_item(req);
+  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_2"),UVM_LOW);
+
+  //Converting transaction to struct data_packet
+  apb_master_seq_item_converter::from_class(req, struct_packet); 
+  //Converting configurations to struct cfg_packet
+  apb_master_cfg_converter::from_class(apb_master_agent_cfg_h, struct_cfg);
+
+
+  apb_master_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
+  
+  
+  //Drive the idel state for APB interface
+  //apb_master_drv_bfm_h.drive_idle_state();
+
+  //drive to setup state for APB interface
+  //apb_master_drv_bfm_h.drive_setup_state();
+  
+
+  apb_master_seq_item_converter::to_class(struct_packet, req);
+  seq_item_port.item_done();
+
   end
 endtask : run_phase
+
+//-------------------------------------------------------
+//Task: drive to bfm
+//This task converts the transaction data packet to struct type 
+//and send it to the master driver bfm
+//-------------------------------------------------------
+//task apb_master_driver_proxy::drive_to_bfm(inout apb_transfer_char_s packet,
+//                                           input abp_transfer_cfg_s  packet1);
+//  apb_master_drv_bfm_h.drive_access_state(packet,packet1);
+//  `uvm_info(get_type_name(),$sformatf("after struct packet: , \n %p",packet1),UVM_LOW);
+//endtask:drive_to_bfm
 
 `endif
 

@@ -90,9 +90,14 @@ typedef struct {
   bit pslverr;
   bit pready;
   bit [DATA_WIDTH-1:0] prdata;
-  bit [ADDRESS_WIDTH-1:0] paddr;
+  bit [ADDRESS_WIDTH-1:0]paddr; 
   bit [DATA_WIDTH-1:0] pwdata;
 } apb_transfer_char_s;
+
+typedef struct{
+   bit [ADDRESS_WIDTH-1:0] paddr;
+ }apb_transfer_cfg_s;
+
 
 
 endpackage : apb_global_pkg

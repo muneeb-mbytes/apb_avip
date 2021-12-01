@@ -34,7 +34,7 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
-  bit [DATA_WIDTH-1:0]pstrb;
+  bit [DATA_WIDTH/8-1:0]pstrb;
 
   //Variable : pslverr
   //Goes high when a transfer fails
@@ -46,7 +46,10 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : prdata
   //Used to store the rdata from the slave
-  rand bit prdata;
+
+  bit [DATA_WIDTH-1:0]prdata;
+
+
 
 
   //-------------------------------------------------------

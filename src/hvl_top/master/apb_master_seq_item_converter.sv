@@ -12,7 +12,7 @@ class apb_master_seq_item_converter extends uvm_object;
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_master_seq_item_converter");
-  extern static function void from_class(input apb_master_tx input_conv_h, output apb_transfer_char_s output_conv);
+  extern static function void from_class(input apb_master_tx input_conv, output apb_transfer_char_s output_conv);
   extern static function void to_class(input apb_transfer_char_s input_conv, output apb_master_tx
   output_conv_h);
   extern function void do_print(uvm_printer printer);
@@ -35,16 +35,17 @@ endfunction: new
 // Parameters:
 // name - apb_master_tx, apb_transfer_char_s
 //--------------------------------------------------------------------------------------------
-function void apb_master_seq_item_converter::from_class(input apb_master_tx input_conv_h, 
+function void apb_master_seq_item_converter::from_class(input apb_master_tx input_conv, 
                                                         output apb_transfer_char_s output_conv);
-  output_conv.pprot = input_conv_h.pprot;
-  output_conv.pselx = input_conv_h.pselx;
-  output_conv.pwrite = input_conv_h.pwrite;
-  output_conv.pwdata = input_conv_h.pwdata;
-  output_conv.pstrb = input_conv_h.pstrb;
-  output_conv.pslverr = input_conv_h.pslverr;
-  output_conv.pready = input_conv_h.pready;
-  output_conv.prdata = input_conv_h.prdata;
+  output_conv.pprot = input_conv.pprot;
+  output_conv.pselx = input_conv.pselx;
+  output_conv.pwrite = input_conv.pwrite;
+  output_conv.paddr = input_conv.paddr;
+  output_conv.pwdata = input_conv.pwdata;
+  output_conv.pstrb = input_conv.pstrb;
+  output_conv.pslverr = input_conv.pslverr;
+  output_conv.pready = input_conv.pready;
+  output_conv.prdata = input_conv.prdata;
 
   `uvm_info("apb_master_seq_item_conv","apb_from_class",UVM_LOW);
   
@@ -64,6 +65,7 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
   output_conv_h.pprot = input_conv.pprot;
   output_conv_h.pselx = input_conv.pselx;
   output_conv_h.pwrite = input_conv.pwrite;
+  output_conv_h.paddr = input_conv.paddr;
   output_conv_h.pwdata = input_conv.pwdata;
   output_conv_h.pstrb = input_conv.pstrb;
   output_conv_h.pslverr = input_conv.pslverr;

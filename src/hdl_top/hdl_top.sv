@@ -23,10 +23,18 @@ import uvm_pkg::*;
     $display("HDL TOP");
   end
 
+  bit pclk=0;
+  bit presetn=1;
+  always #10 pclk = !pclk;
+  initial begin
+    #40 presetn = 0;
+    #100 presetn = 1;
+  end
+
   //-------------------------------------------------------
   // apb Interface Instantiation
   //-------------------------------------------------------
-  apb_if intf();
+  apb_if intf(pclk,presetn);
 
   //-------------------------------------------------------
   // apb Master BFM Agent Instantiation
