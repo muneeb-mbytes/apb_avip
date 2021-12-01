@@ -96,13 +96,13 @@ task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
   //super.run_phase(phase);
 
   forever begin
-    apb_transfer_char_s       struct_data_packet;
+    apb_transfer_char_s  struct_data_packet;
     apb_transfer_cfg_s   struct_cfg_packet; 
-    apb_slave_tx             apb_slave_clone_packet;
+    apb_slave_tx         apb_slave_clone_packet;
     
     apb_slave_mon_bfm_h.wait_for_transfer_start();
     
-    //apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg_packet);
+    apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg_packet);
     apb_slave_mon_bfm_h.sample_data(struct_data_packet, struct_cfg_packet);
     apb_slave_seq_item_converter::to_class(struct_data_packet, apb_slave_packet);
 

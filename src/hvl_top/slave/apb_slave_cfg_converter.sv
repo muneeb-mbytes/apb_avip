@@ -15,8 +15,7 @@ class apb_slave_cfg_converter extends uvm_object;
   extern function new(string name = "apb_slave_cfg_converter");
 
   
-  extern static function void from_class(input apb_slave_agent_config input_conv_h,
-                                        output apb_transfer_cfg_s  output_conv);
+  extern static function void from_class(input apb_slave_agent_config input_conv_h, output apb_transfer_cfg_s output_conv);
   //extern static function void to_class(input apb_transfer_cfg_s input_conv,output apb_master_tx
   //output_conv_h);
   extern function void do_print(uvm_printer printer);
@@ -37,8 +36,7 @@ endfunction : new
 // function: from_class
 // converting apb_master_cfg configurations into structure configutrations
 //--------------------------------------------------------------------------------------------
-function void apb_slave_cfg_converter::from_class(input apb_slave_agent_config input_conv_h,
-                                                  output apb_transfer_cfg_s  output_conv);
+function void apb_slave_cfg_converter::from_class(input apb_slave_agent_config input_conv_h, output apb_transfer_cfg_s output_conv);
 output_conv.paddr = input_conv_h.paddr;  
 endfunction:from_class
 
