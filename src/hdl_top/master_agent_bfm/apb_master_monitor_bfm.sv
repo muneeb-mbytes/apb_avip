@@ -11,7 +11,7 @@ import apb_global_pkg::*;
 
 interface apb_master_monitor_bfm (input bit pclk,
                                   input bit presetn,
-                                  input bit pprot,
+                                  input bit [2:0]pprot,
                                   input bit pslverr,
                                   input bit pready,
                                   input logic penable,

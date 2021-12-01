@@ -14,7 +14,7 @@ class apb_master_cfg_converter extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "apb_master_cfg_converter");
 
-  extern static function void from_class(input apb_master_agent_config input_conv_h,
+  extern static function void from_class(input apb_master_agent_config input_conv,
                                         output apb_transfer_cfg_s  output_conv);
   //extern static function void to_class(input apb_transfer_cfg_s input_conv,output apb_master_tx
   //output_conv_h);
@@ -36,9 +36,9 @@ endfunction : new
 // function: from_class
 // converting apb_master_cfg configurations into structure configutrations
 //--------------------------------------------------------------------------------------------
-function void apb_master_cfg_converter::from_class(input apb_master_agent_config input_conv_h,
-                                                  output apb_transfer_cfg_s  output_conv);
-output_conv.paddr = input_conv_h.paddr; 
+function void apb_master_cfg_converter::from_class(input apb_master_agent_config input_conv,
+                                                  output apb_transfer_cfg_s output_conv);
+  output_conv.paddr = input_conv.paddr; 
 endfunction:from_class
 
 //---------------------------------------------------------------------------------------------

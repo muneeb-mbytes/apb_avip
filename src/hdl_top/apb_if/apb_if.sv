@@ -5,17 +5,20 @@
 // Interface : apb_if
 //  Declaration of pin level signals for apb interface
 //--------------------------------------------------------------------------------------------
-interface apb_if;
-  /*logic  psel;
+import apb_global_pkg::*;
+
+interface apb_if(input pclk, input presetn);
+  logic  [NO_OF_SLAVES-1:0]pselx;
   logic  penable;    
   logic  pwrite;
-  logic [7:0] paddr;
-  logic [7:0] pwdata;                     	
-  logic clk;   
-  logic rst;
-  logic [20:0] system_bus;      
-  logic [7:0] prdata;
-  
+  logic [ADDRESS_WIDTH-1:0] paddr;
+  logic [DATA_WIDTH-1:0] pwdata;                     	
+  logic [(DATA_WIDTH/8)-1:0] pstrb;                     	
+  logic [2:0]pprot; 
+  logic [DATA_WIDTH-1:0] prdata;
+  logic pready;
+  logic pslverr;
+  /*
   parameter IDLE = 2'd0, SETUP = 2'd1, ACCESS  = 2'd2;
   parameter READ= 2'd0, WRITE=2'd1;
   

@@ -19,12 +19,37 @@ module apb_master_agent_bfm(apb_if intf);
   //-------------------------------------------------------
   //master driver bfm instantiation
   //-------------------------------------------------------
-  apb_master_driver_bfm apb_master_drv_bfm_h ();
+  apb_master_driver_bfm apb_master_drv_bfm_h (.pclk(intf.pclk),
+                                              .presetn(intf.presetn),
+                                              .pselx(intf.pselx),
+                                              .penable(intf.penable),
+                                              .pprot(intf.pprot),
+                                              .paddr(intf.paddr),
+                                              .pwrite(intf.pwrite),
+                                              .pwdata(intf.pwdata),
+                                              .pstrb(intf.pstrb),
+                                              .pslverr(intf.pslverr),
+                                              .pready(intf.pready),
+                                              .prdata(intf.prdata)
+                                              );
 
   //-------------------------------------------------------
   //master monitor bfm instantiation
   //-------------------------------------------------------
-  apb_master_monitor_bfm apb_master_mon_bfm_h ();
+  apb_master_monitor_bfm apb_master_mon_bfm_h (.pclk(intf.pclk),
+                                              .presetn(intf.presetn),
+                                              .pselx(intf.pselx),
+                                              .paddr(intf.paddr),
+                                              .pwrite(intf.pwrite),
+                                              .pwdata(intf.pwdata),
+                                              .pstrb(intf.pstrb),
+                                              .pslverr(intf.pslverr),
+                                              .pready(intf.pready),
+                                              .prdata(intf.prdata),
+                                              .penable(intf.penable),
+                                              .pprot(intf.pprot)
+                                              );
+
 
   //-------------------------------------------------------
   //setting the virtualhandle of BFMs into config_db

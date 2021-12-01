@@ -23,7 +23,9 @@ class apb_master_agent_config extends uvm_object;
 
   // Variable: master_memory
   // Memory decleration for master to store the data of each slave
-  bit [DATA_WIDTH-1:0] master_memory [NO_OF_SLAVES*ADDRESS_WIDTH-1:0];
+  bit [DATA_WIDTH-1:0]master_memory[NO_OF_SLAVES*ADDRESS_WIDTH-1:0];
+
+  bit [ADDRESS_WIDTH-1:0]paddr;
 
   // Variable: tx_type
   // Used for declaring whether write or read is done
