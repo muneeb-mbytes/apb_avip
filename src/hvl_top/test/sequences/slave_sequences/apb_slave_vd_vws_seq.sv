@@ -31,13 +31,13 @@ endfunction : new
 task apb_slave_vd_vws_seq::body();
   `uvm_info(get_type_name(),$sformatf("APB_SLAVE_VD_VWS_SEQ"),UVM_LOW);
   req = apb_slave_tx::type_id::create("req");
-  //start_item(req);
+  start_item(req);
   `uvm_info(get_type_name(),"REQ_SLAVE",UVM_LOW);
     if(!req.randomize()) begin
       `uvm_fatal(get_type_name(),"Randomisation failed");
     end
     req.print();
-  //finish_item(req);
+  finish_item(req);
 endtask : body
 `endif
 

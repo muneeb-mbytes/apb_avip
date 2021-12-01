@@ -108,13 +108,11 @@ endfunction  : end_of_elaboration_phase
 //--------------------------------------------------------------------------------------------
 task apb_master_monitor_proxy::run_phase(uvm_phase phase);
 
-  phase.raise_objection(this, "apb_master_monitor_proxy");
 
   super.run_phase(phase);
 
   // ...
 
-  phase.drop_objection(this);
 
 endtask : run_phase
 

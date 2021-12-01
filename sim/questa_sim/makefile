@@ -113,6 +113,7 @@ simulate:
 	-assertdebug \
 	+UVM_TESTNAME=$(test) \
 	+UVM_VERBOSITY=$(uvm_verbosity) \
+	+UVM_OBJECTION_TRACE \
 	+define+$(apb_type) \
 	-l $(test_folder)/$(test).log \
 	-sva \

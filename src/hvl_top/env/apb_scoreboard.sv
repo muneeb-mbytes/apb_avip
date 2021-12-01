@@ -67,14 +67,10 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 task apb_scoreboard::run_phase(uvm_phase phase);
 
-  phase.raise_objection(this, "apb_scoreboard");
-
   super.run_phase(phase);
 
   // Work here
   // ...
-
-  phase.drop_objection(this);
 
 endtask : run_phase
 
