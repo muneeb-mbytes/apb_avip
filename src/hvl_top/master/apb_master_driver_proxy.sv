@@ -105,13 +105,13 @@ endfunction  : end_of_elaboration_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_master_driver_proxy::run_phase(uvm_phase phase);
-
+  
   super.run_phase(phase);
+  forever begin
+    seq_item_port.get_next_item(req);
 
-  seq_item_port.get_next_item(req);
-
-  seq_item_port.item_done();
-
+    seq_item_port.item_done();
+  end
 endtask : run_phase
 
 `endif
