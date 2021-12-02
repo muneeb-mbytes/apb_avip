@@ -14,13 +14,13 @@ endfunction : new
 task apb_slave_8b_seq::body();
   `uvm_info(get_type_name(),$sformatf("APB_SLAVE_8B_SEQ"),UVM_LOW);
   req=apb_slave_tx::type_id::create("req");
-  //start_item(req);
+  start_item(req);
   if(!req.randomize())
   begin
     `uvm_error(get_type_name(),"randomization failed");
   end
   req.print();
-  //finish_item(req);
+  finish_item(req);
 endtask : body
 
 `endif

@@ -39,6 +39,7 @@ task apb_master_8b_seq::body();
   if(!req.randomize()) begin
     `uvm_fatal("APB","Rand failed")
   end
+  req.print();
   finish_item(req);
 endtask : body
 
