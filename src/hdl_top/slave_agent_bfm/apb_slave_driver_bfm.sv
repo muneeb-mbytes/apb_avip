@@ -21,6 +21,10 @@ interface apb_slave_driver_bfm(input bit pclk,
                                input logic [DATA_WIDTH-1:0] pwdata,
                                input logic [(DATA_WIDTH/8)-1:0] pstrb, 
                                output logic [DATA_WIDTH-1:0] prdata);
+
+//-------------------------------------------------------
+//importing uvm packages
+//-------------------------------------------------------
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
@@ -47,7 +51,10 @@ end
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
   
   endtask: wait_for_presetn
-
+//-------------------------------------------------------
+//task: drive to bfm
+//
+//-------------------------------------------------------
 
    task drive_to_bfm(inout apb_transfer_char_s data_packet,
                           input apb_transfer_cfg_s cfg_pkt);
@@ -139,6 +146,10 @@ end
     //pready <= data_packet.pready;
   endtask: wait_for_access_state
 
+//-------------------------------------------------------
+//task: transfer_data
+//
+//-------------------------------------------------------
   task transfer_data(apb_transfer_char_s data_packet);
     if(pwrite == 1'b1) begin
       data_packet.pwdata<=pwdata;
@@ -149,7 +160,10 @@ end
       end_of_transfer = 1'b1;
     end
   endtask :transfer_data
-
+//-------------------------------------------------------
+//task: drive_wait_state
+//
+//-------------------------------------------------------
   task drive_wait_state(apb_transfer_char_s data_packet, bit penable);
     data_packet.paddr<=paddr;
     data_packet.pwrite<=pwrite;
