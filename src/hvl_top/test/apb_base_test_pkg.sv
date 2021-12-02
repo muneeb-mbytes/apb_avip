@@ -28,9 +28,10 @@ package apb_base_test_pkg;
   //-------------------------------------------------------
   // Including the base_test files
   //-------------------------------------------------------
- `include "apb_base_test.sv"
- `include "apb_vd_vws_test.sv"
- `include "apb_8b_test.sv"
+  `include "apb_base_test.sv"
+  `include "apb_vd_vws_test.sv"
+  `include "apb_8b_test.sv"
+  `include "apb_16b_test.sv"
 
 endpackage : apb_base_test_pkg
 
