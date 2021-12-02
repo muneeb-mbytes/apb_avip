@@ -20,6 +20,10 @@ class apb_slave_agent_config extends uvm_object;
   //Variable : has_coverage
   //Used to set whether we need to create coverage or not
   bit has_coverage;
+  
+  // Variable: slave_no
+  // Used to indicate the slave number
+  slave_no_e slave_no;
 
   //variable : slave_memory
   //Declaration of slave_memory to store the data from master

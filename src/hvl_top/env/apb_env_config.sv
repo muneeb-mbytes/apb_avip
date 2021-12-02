@@ -28,9 +28,9 @@ class apb_env_config extends uvm_object;
   // Dynamic array of slave agnet configuration handles
   apb_slave_agent_config apb_slave_agent_cfg_h[];
 
-//-------------------------------------------------------
-// Externally defined Tasks and Functions
-//-------------------------------------------------------
+  //-------------------------------------------------------
+  // Externally defined Tasks and Functions
+  //-------------------------------------------------------
   extern function new(string name = "apb_env_config");
   extern function void do_print(uvm_printer printer);
 
@@ -38,6 +38,7 @@ endclass : apb_env_config
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
+// Initialization of new memory
 //
 // Parameters:
 //  name - apb_env_config

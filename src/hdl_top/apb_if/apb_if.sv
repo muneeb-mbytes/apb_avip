@@ -3,35 +3,53 @@
 
 //--------------------------------------------------------------------------------------------
 // Interface : apb_if
-//  Declaration of pin level signals for apb interface
+// Declaration of pin level signals for apb interface
 //--------------------------------------------------------------------------------------------
 import apb_global_pkg::*;
 
-interface apb_if(input pclk, input presetn);
-  logic  [NO_OF_SLAVES-1:0]pselx;
-  logic  penable;    
-  logic  pwrite;
-  logic [ADDRESS_WIDTH-1:0] paddr;
-  logic [DATA_WIDTH-1:0] pwdata;                     	
-  logic [(DATA_WIDTH/8)-1:0] pstrb;                     	
-  logic [2:0]pprot; 
-  logic [DATA_WIDTH-1:0] prdata;
-  logic pready;
-  logic pslverr;
-  /*
-  parameter IDLE = 2'd0, SETUP = 2'd1, ACCESS  = 2'd2;
-  parameter READ= 2'd0, WRITE=2'd1;
+interface apb_if (input pclk, input presetn);
   
-  logic [1:0] state; 
-  logic [7:0] pwdata1;
-  logic [7:0] paddr1;
-  logic penable1;
+  // Variable : penable
+  // Used to write data when penable is high
+  logic penable;    
+  
+  // Variable : pwrite
+  // Write when pwrite is 1 and read is 0
+  logic pwrite;
+  
+  // Variable : pready
+  // Used to extend the transfer
+  logic pready;
+  
+  // Variable : pslverr
+  // Goes high when a transfer fails
+  logic pslverr;
+  
+  // Variable : pprot
+  // Used for different access
+  logic [2:0] pprot; 
+  
+  // Variable : pselx
+  // Used to select the slave
+  logic [NO_OF_SLAVES-1:0] pselx;
+  
+  // Variable : paddr
+  // Address selected in apb_slave
+  logic [ADDRESS_WIDTH-1:0] paddr;
+  
+  // Variable : pwdata
+  // Used to store the wdata
+  logic [DATA_WIDTH-1:0] pwdata;                     	
+  
+  // Variable : pstrb
+  // Used to transfer the data to pwdata bus
+  logic [(DATA_WIDTH/8)-1:0] pstrb;                     	
+  
+  // Variable : prdata
+  // Used to store the rdata from the slave
+  logic [DATA_WIDTH-1:0] prdata;
 
-  logic [7:0] sys_data;
-  logic [7:0] sys_addr;
-  logic [1:0]  sys_kind;
-  logic [ 1 : 0 ]sel slave;
-  logic sys_active;*/ 
 endinterface : apb_if
  
 `endif
+

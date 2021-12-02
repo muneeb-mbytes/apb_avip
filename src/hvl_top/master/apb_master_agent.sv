@@ -60,13 +60,16 @@ endfunction : new
 function void apb_master_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config",apb_master_agent_cfg_h)) begin
-    `uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG","cannot get apb_master_agent_cfg_h from uvm_config_db");
+  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config"
+                                                            ,apb_master_agent_cfg_h)) begin
+    `uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG",
+               "cannot get apb_master_agent_cfg_h from uvm_config_db");
   end
 
   // Printing the values of the apb_master_agent_config
   // Print method is declared in apb_master_agent_config class and calling it from here
-  `uvm_info(get_type_name(), $sformatf("The apb_master_agent_config \n %s", apb_master_agent_cfg_h.sprint),UVM_LOW);
+  `uvm_info(get_type_name(), $sformatf("The apb_master_agent_config \n %s", 
+                                       apb_master_agent_cfg_h.sprint),UVM_LOW);
   
   if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h=apb_master_driver_proxy::type_id::create("apb_master_drv_proxy_h",this);

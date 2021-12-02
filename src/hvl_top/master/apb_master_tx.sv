@@ -33,7 +33,7 @@ class apb_master_tx extends uvm_sequence_item;
   // Used to store the wdata
   rand bit [DATA_WIDTH-1:0] pwdata;
 
-  // Variable : pstrob
+  // Variable : pstrb
   // Used to transfer the data to pwdata bus
   rand bit [(DATA_WIDTH/8)-1:0] pstrb;              
 
@@ -48,8 +48,6 @@ class apb_master_tx extends uvm_sequence_item;
   // Variable : pslverr
   // Goes high when a transfer fails
   bit pslverr;
-
-
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -68,7 +66,7 @@ class apb_master_tx extends uvm_sequence_item;
 
   constraint paddr_c  { paddr inside {[MIN_ADDR_RANGE:MAX_ADDR_RANGE]}; }
   //TODO(saha): use below for inline constraints
- // constraint pwdata_c { pwdata WRITE | READ }
+  // constraint pwdata_c { pwdata WRITE | READ }
   
 endclass : apb_master_tx
 
@@ -82,7 +80,6 @@ endclass : apb_master_tx
 function apb_master_tx::new(string name = "apb_master_tx");
   super.new(name);
 endfunction : new
-
 
 //--------------------------------------------------------------------------------------------
 // Function: do_copy

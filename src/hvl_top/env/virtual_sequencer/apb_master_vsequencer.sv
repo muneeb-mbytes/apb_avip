@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_vsequencer
-// <Description_here>
+// This class contains the handle of actual sequencer pointing towards them
 //--------------------------------------------------------------------------------------------
 class apb_master_vsequencer extends uvm_sequencer;
   `uvm_component_utils(apb_master_vsequencer)
@@ -49,7 +49,6 @@ endfunction : build_phase
 function void apb_master_vsequencer::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
-
 
 `endif
 

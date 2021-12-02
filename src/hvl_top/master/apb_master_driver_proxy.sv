@@ -3,19 +3,19 @@
     
 //--------------------------------------------------------------------------------------------
 //  Class: apb_master_driver_proxy
-//  Driver is written by extending uvm_driver,uvm_driver is inherited from uvm_component, 
-//  Methods and TLM port (seq_item_port) are defined for communication between sequencer and driver,
-//  uvm_driver is a parameterized class and it is parameterized with the type of the request 
-//  sequence_item and the type of the response sequence_item 
+//    Driver is written by extending uvm_driver,uvm_driver is inherited from uvm_component, 
+//    Methods and TLM port (seq_item_port) are defined for communication between sequencer and driver,
+//    uvm_driver is a parameterized class and it is parameterized with the type of the request 
+//    sequence_item and the type of the response sequence_item 
 //--------------------------------------------------------------------------------------------
 class apb_master_driver_proxy extends uvm_driver #(apb_master_tx);
   `uvm_component_utils(apb_master_driver_proxy)
   
-  //Variable : tx_h
+  //Variable: tx_h
   //Declaring handle for apb master transaction
   apb_master_tx apb_master_tx_h;
   
-  //Variable : apb_master_drv_bfm_h
+  //Variable: apb_master_drv_bfm_h
   //Declaring handle for apb driver bfm
   virtual apb_master_driver_bfm apb_master_drv_bfm_h;
    
@@ -57,7 +57,8 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_master_driver_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  if(!uvm_config_db #(virtual apb_master_driver_bfm)::get(this,"","apb_master_driver_bfm",apb_master_drv_bfm_h)) begin
+  if(!uvm_config_db #(virtual apb_master_driver_bfm)::get(this,"","apb_master_driver_bfm"
+                                                          ,apb_master_drv_bfm_h)) begin
     `uvm_fatal("FATAL_MDP_CANNOT_GET_APB_MASTER_DRIVER_BFM","cannot get() apb_master_drv_bfm_h");
   end
 endfunction : build_phase
@@ -127,16 +128,13 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
   //Converting configurations to struct cfg_packet
   apb_master_cfg_converter::from_class(apb_master_agent_cfg_h, struct_cfg);
 
-
   apb_master_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
-  
   
   //Drive the idel state for APB interface
   //apb_master_drv_bfm_h.drive_idle_state();
 
   //drive to setup state for APB interface
   //apb_master_drv_bfm_h.drive_setup_state();
-  
 
   apb_master_seq_item_converter::to_class(struct_packet, req);
   seq_item_port.item_done();
