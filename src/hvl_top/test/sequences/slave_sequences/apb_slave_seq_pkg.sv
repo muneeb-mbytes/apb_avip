@@ -20,6 +20,7 @@ package apb_slave_seq_pkg;
   `include "apb_slave_base_seq.sv"
   `include "apb_slave_vd_vws_seq.sv"
   `include "apb_slave_8b_seq.sv"
+  `include "apb_slave_16b_seq.sv"
 
 endpackage : apb_slave_seq_pkg
 
