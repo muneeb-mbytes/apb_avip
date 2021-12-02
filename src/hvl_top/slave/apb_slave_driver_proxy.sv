@@ -32,8 +32,6 @@ class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   extern function void end_of_elaboration_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
 
-
-
 endclass : apb_slave_driver_proxy
   
 //--------------------------------------------------------------------------------------------
@@ -99,18 +97,12 @@ endfunction : end_of_elaboration_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_slave_driver_proxy::run_phase(uvm_phase phase);
-
-
-
-   bit pselx,penable;
-
-  super.run_phase(phase);
+  
+  //super.run_phase(phase);
   //phase.raise_objection(this, "apb_slave_driver_proxy");
   //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_1"),UVM_LOW);
-  
   //wait for system reset
   apb_slave_drv_bfm_h.wait_for_presetn();
-
   forever begin
     apb_transfer_char_s struct_packet;
     apb_transfer_cfg_s struct_cfg;

@@ -34,14 +34,14 @@ task apb_virtual_vd_vws_seq::body();
   super.body();
   apb_master_vd_vws_seq_h = apb_master_vd_vws_seq::type_id::create("apb_master_vd_vws_seq_h");
   apb_slave_vd_vws_seq_h = apb_slave_vd_vws_seq::type_id::create("apb_slave_vd_vws_seq_h");
-  //fork
-    //forever begin
-      //apb_slave_vd_vws_seq_h.start(p_sequencer.apb_slave_seqr_h);
-    //end
-  //join_none
+  fork
+    forever begin
+      apb_slave_vd_vws_seq_h.start(p_sequencer.apb_slave_seqr_h);
+    end
+  join_none
   repeat(3) begin
     apb_master_vd_vws_seq_h.start(p_sequencer.apb_master_seqr_h);
-    apb_slave_vd_vws_seq_h.start(p_sequencer.apb_slave_seqr_h);
+    //apb_slave_vd_vws_seq_h.start(p_sequencer.apb_slave_seqr_h);
   end
 endtask : body
 

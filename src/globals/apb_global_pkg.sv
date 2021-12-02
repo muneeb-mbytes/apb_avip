@@ -9,7 +9,7 @@ package apb_global_pkg;
 
   //Parameter : NO_OF_SLAVES
   //Used to set number of slaves required
-  parameter int NO_OF_SLAVES = 3;
+  parameter int NO_OF_SLAVES = 1;
 
   //Parameter : MASTER_AGENT_ACTIVE
   //Used to set the master agent either active or passive
@@ -85,7 +85,7 @@ typedef struct {
   bit penable;
   bit pwrite;
   bit [2:0]pprot;
-  bit pselx;
+  bit [NO_OF_SLAVES-1:0]pselx;
   bit [(DATA_WIDTH/8)-1:0] pstrb;
   bit pslverr;
   bit pready;

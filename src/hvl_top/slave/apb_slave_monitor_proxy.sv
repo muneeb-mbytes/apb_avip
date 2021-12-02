@@ -31,6 +31,7 @@ class apb_slave_monitor_proxy extends uvm_monitor;
   extern function new(string name = "apb_slave_monitor_proxy", uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
   extern function void end_of_elaboration_phase(uvm_phase phase);
+  extern virtual task run_phase(uvm_phase phase);
 
 endclass : apb_slave_monitor_proxy
                                                           
@@ -60,13 +61,6 @@ function void apb_slave_monitor_proxy::build_phase(uvm_phase phase);
   if(!uvm_config_db#(virtual apb_slave_monitor_bfm)::get(this,"","apb_slave_monitor_bfm",apb_slave_mon_bfm_h)) begin
      `uvm_fatal("FATAL_SMP_MON_BFM",$sformatf("Couldn't get S_MON_BFM in apb_slave_monitor_proxy"));  
   end 
-  //slave_analysis_port = new("slave_analysis_port",this);
-
-  // MSHA: if(!uvm_config_db#(apb_slave_agent_config)::get(this,"","apb_slave_agent_config",
-    //                                                            apb_slave_agent_cfg_h)) begin
-  // MSHA:   `uvm_fatal("FATAL_S_AGENT_CFG",$sformatf("Couldn't get S_AGENT_CFG in 
-  //                                                              apb_slave_monitor_proxy"));
-  // MSHA: end
 
 endfunction : build_phase
 
@@ -82,6 +76,47 @@ function void apb_slave_monitor_proxy::end_of_elaboration_phase(uvm_phase phase)
   super.end_of_elaboration_phase(phase);
   apb_slave_mon_bfm_h.apb_slave_mon_proxy_h = this;
 endfunction : end_of_elaboration_phase
+//--------------------------------------------------------------------------------------------
+//  Task: run_phase
+//  <Description_here>
+//
+//  Parameters:
+//  phase - uvm phase
+//--------------------------------------------------------------------------------------------
+task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
+  apb_slave_tx apb_slave_packet;
+
+  `uvm_info(get_type_name(), $sformatf("Inside the slave_monitor_proxy"), UVM_LOW);
+
+  apb_slave_packet = apb_slave_tx::type_id::create("slave_packet");
+  
+  apb_slave_mon_bfm_h.wait_for_presetn();
+  apb_slave_mon_bfm_h.wait_for_idle_state();
+
+  //super.run_phase(phase);
+
+  forever begin
+    apb_transfer_char_s  struct_data_packet;
+    apb_transfer_cfg_s   struct_cfg_packet; 
+    apb_slave_tx         apb_slave_clone_packet;
+    
+    apb_slave_mon_bfm_h.wait_for_transfer_start();
+    
+    apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg_packet);
+    apb_slave_mon_bfm_h.sample_data(struct_data_packet, struct_cfg_packet);
+    apb_slave_seq_item_converter::to_class(struct_data_packet, apb_slave_packet);
+
+    `uvm_info(get_type_name(),$sformatf("Received packet from MONITOR BFM : , \n %s",
+                                        apb_slave_packet.sprint()),UVM_HIGH)
+
+    // Clone and publish the cloned item to the subscribers
+    $cast(apb_slave_clone_packet, apb_slave_packet.clone());
+    `uvm_info(get_type_name(),$sformatf("Sending packet via analysis_port : , \n %s",
+                                        apb_slave_clone_packet.sprint()),UVM_HIGH)
+    apb_slave_analysis_port.write(apb_slave_clone_packet);
+  end
+
+endtask : run_phase
 
 
 `endif
