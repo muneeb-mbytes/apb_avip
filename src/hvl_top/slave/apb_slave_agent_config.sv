@@ -29,6 +29,8 @@ class apb_slave_agent_config extends uvm_object;
   //Declaration of slave_memory to store the data from master
   bit [DATA_WIDTH-1:0] slave_memory [ADDRESS_WIDTH-1:0];
   
+  //variable:paddr
+  //used to indicate the slave address
   bit [ADDRESS_WIDTH-1:0]paddr;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions

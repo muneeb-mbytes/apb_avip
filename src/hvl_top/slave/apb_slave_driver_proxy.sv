@@ -112,10 +112,11 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
 
   //Converting transaction to struct data_packet
   apb_slave_seq_item_converter::from_class(req, struct_packet); 
+
   //Converting configurations to struct cfg_packet
   apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg);
 
-
+  //drive the converted data packets to the slave driver bfm
   apb_slave_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
   
   
@@ -125,7 +126,7 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
   //drive to setup state for APB interface
   //apb_slave_drv_bfm_h.drive_setup_state();
   
-
+  //converting the struct data items into transcations 
   apb_slave_seq_item_converter::to_class(struct_packet, req);
   seq_item_port.item_done();
   end

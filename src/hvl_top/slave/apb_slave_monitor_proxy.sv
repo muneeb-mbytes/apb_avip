@@ -1,5 +1,6 @@
 `ifndef APB_SLAVE_MONITOR_PROXY_INCLUDED_
 `define APB_SLAVE_MONITOR_PROXY_INCLUDED_
+
 //--------------------------------------------------------------------------------------------
 // Class: apb_slave_monitor_proxy
 // This is the HVL slave monitor proxy
@@ -11,6 +12,7 @@ class apb_slave_monitor_proxy extends uvm_monitor;
   //-------------------------------------------------------
   // Package : Importing SPI Global Package 
   //-------------------------------------------------------
+
   //  import spi_globals_pkg::*;
 
   `uvm_component_utils(apb_slave_monitor_proxy)
@@ -76,23 +78,25 @@ function void apb_slave_monitor_proxy::end_of_elaboration_phase(uvm_phase phase)
   super.end_of_elaboration_phase(phase);
   apb_slave_mon_bfm_h.apb_slave_mon_proxy_h = this;
 endfunction : end_of_elaboration_phase
+
 //--------------------------------------------------------------------------------------------
 //  Task: run_phase
-//  <Description_here>
-//
+// calls the tasks defined in slave  monitor bfm 
+// receives data packet from slave monitor bfm
+// and converts into the transaction objects
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
   apb_slave_tx apb_slave_packet;
-
+  
   `uvm_info(get_type_name(), $sformatf("Inside the slave_monitor_proxy"), UVM_LOW);
-
+  
   apb_slave_packet = apb_slave_tx::type_id::create("slave_packet");
   
   apb_slave_mon_bfm_h.wait_for_presetn();
   apb_slave_mon_bfm_h.wait_for_idle_state();
-
+  
   //super.run_phase(phase);
 
   forever begin

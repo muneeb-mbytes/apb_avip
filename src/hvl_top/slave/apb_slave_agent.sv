@@ -25,7 +25,7 @@ class apb_slave_agent extends uvm_agent;
   apb_slave_monitor_proxy apb_slave_mon_proxy_h;
 
   // Variable: apb_slave_coverage
-  // Decalring a handle for apb slave_coverage
+  // Decalring a handle for apb slave coverage
   apb_slave_coverage apb_slave_cov_h;
 
   //-------------------------------------------------------

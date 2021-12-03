@@ -7,7 +7,7 @@
 //--------------------------------------------------------------------------------------------
 class apb_slave_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_slave_tx)
-
+  
   //Varibale : paddr
   //Address selected in apb_slave
   bit [ADDRESS_WIDTH-1:0]paddr;
@@ -48,9 +48,6 @@ class apb_slave_tx extends uvm_sequence_item;
   //Used to store the rdata from the slave
 
   bit [DATA_WIDTH-1:0]prdata;
-
-
-
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -99,7 +96,6 @@ function void apb_slave_tx::do_copy (uvm_object rhs);
 
 endfunction:do_copy
 
-
 //--------------------------------------------------------------------------------------------
 //  Function: do_compare
 //  Compare method is implemented using handle rhs
@@ -127,7 +123,6 @@ function bit apb_slave_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   pprot   == apb_slave_tx_compare_obj.pprot &&
   pstrb  == apb_slave_tx_compare_obj.pstrb;
 endfunction:do_compare
-
 
 //--------------------------------------------------------------------------------------------
 // Function: do_print method

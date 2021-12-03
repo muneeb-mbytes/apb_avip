@@ -24,7 +24,8 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
  
   //-------------------------------------------------------
   // Covergroup 
-  // Covergroup consists of the various coverpoints based on the no. of the variables used to improve the coverage.
+  // Covergroup consists of the various coverpoints
+  // based on the number of the variables used to improve the coverage.
   //-------------------------------------------------------
   covergroup apb_slave_covergroup with function sample (apb_slave_agent_config cfg, apb_slave_tx packet);
   option.per_instance = 1;
@@ -34,7 +35,7 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
     option.comment = "read and write conditon based on pwrite"
     bins read = {0};
     bins write = {1};
-    }
+  }
   PENABLE_CP:coverpoint penable {
     option.commemt = "setup and access based on the enable"
     bins setup  = {0};
@@ -52,32 +53,35 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   }
 
   PWDATA_CP: coverpoint pwdata {
-  option.comment = "write data range"
-  bins wdata = {[31:8]};
+    option.comment = "write data range"
+    bins wdata = {[31:8]};
   }
- PRDATA_CP : coverpoint prdata {
- option.comment = "read data range "  
- bins pread = {[31:8]};
- }
+  PRDATA_CP : coverpoint prdata {
+    option.comment = "read data range "  
+    bins pread = {[31:8]};
+  }
 
   PSLVERR_CP:coverpoint pslverr {
     option.comment = "error signal at the end of transfer"
     bins err = {1};
     bins ok = {0};
-    }
+  }
+
   PSTROB_CP :  coverpoint pstrob {
-  option.comment = "error signal at the end of transfer"
-  bins strob = {[3:0]};
+    option.comment = "error signal at the end of transfer"
+    bins strob = {[3:0]};
   }
 //cross coverage 
-PADDR_X_PWDATA_: cross PADDR_CP,PWDATA_CP;
-PSEL_X_PENABLE_: cross PSEL_CP,PENABLE_CP;
-PADDR_X_PRDATA_: cross PADDR_CP,PRDATA_CP;
+  PADDR_X_PWDATA_: cross PADDR_CP,PWDATA_CP;
+  PSEL_X_PENABLE_: cross PSEL_CP,PENABLE_CP;
+  PADDR_X_PRDATA_: cross PADDR_CP,PRDATA_CP;
 
-  endgroup : apb_slave_covergroup
-
-  extern function new(string name = "apb_slave_coverage", uvm_component parent = null);
-  extern virtual function void write(apb_slave_tx t);
+endgroup : apb_slave_covergroup
+//-------------------------------------------------------
+//Externally defined tasks and functions
+//-------------------------------------------------------
+ extern function new(string name = "apb_slave_coverage", uvm_component parent = null);
+ extern virtual function void write(apb_slave_tx t);
 
 endclass : apb_slave_coverage
 
@@ -93,7 +97,9 @@ function apb_slave_coverage::new(string name = "apb_slave_coverage",uvm_componen
 endfunction : new
 
 //-------------------------------------------------------
-// 
+//Constructor: write
+//Parameters:
+//Creates the write method
 //-------------------------------------------------------
 function void apb_slave_coverage::write(apb_slave_tx t);
   `uvm_info(get_type_name(),"APB SLAVE COVERAGE",UVM_LOW);
