@@ -1,19 +1,20 @@
 `ifndef APB_MASTER_MONITOR_BFM_INCLUDED_
 `define APB_MASTER_MONITOR_BFM_INCLUDED_
 
-//--------------------------------------------------------------------------------------------
-// Interface       : master Monitor BFM
-// 
-// Description  : Connects the master monitor bfm with the monitor proxy
-//--------------------------------------------------------------------------------------------
-
+//-------------------------------------------------------
+// Importing apb global package
+//-------------------------------------------------------
 import apb_global_pkg::*;
 
+//--------------------------------------------------------------------------------------------
+// Interface: apb_master_monitor_bfm
+// Connects the master monitor bfm with the monitor proxy
+//--------------------------------------------------------------------------------------------
 interface apb_master_monitor_bfm (input bit pclk,
                                   input bit presetn,
-                                  input bit [2:0]pprot,
                                   input bit pslverr,
                                   input bit pready,
+                                  input bit [2:0]pprot,
                                   input logic penable,
                                   input logic pwrite,
                                   input logic [ADDRESS_WIDTH-1:0] paddr,
@@ -23,19 +24,19 @@ interface apb_master_monitor_bfm (input bit pclk,
                                   input logic [DATA_WIDTH-1:0] prdata
                                 );
 
-   //-------------------------------------------------------
-   //Importing uvm package file
-   //-------------------------------------------------------
-   import uvm_pkg::*;
-   `include "uvm_macros.svh"
+  //-------------------------------------------------------
+  // Importing uvm package file
+  //-------------------------------------------------------
+  import uvm_pkg::*;
+  `include "uvm_macros.svh"
 
   //-------------------------------------------------------
   // Creating the handle for proxy driver
   //-------------------------------------------------------
   import apb_master_pkg::apb_master_monitor_proxy;
 
-  // Variable: apb_master_mon_proxy_h
-  // Declaring handle for apb_master_monitor_proxy  
+  //Variable: apb_master_mon_proxy_h
+  //Declaring handle for apb_master_monitor_proxy  
   apb_master_monitor_proxy apb_master_mon_proxy_h;
 
   initial begin
@@ -49,6 +50,7 @@ interface apb_master_monitor_bfm (input bit pclk,
   task wait_for_presetn();
     @(posedge presetn);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)
+    
     @(negedge presetn);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
   endtask: wait_for_presetn
@@ -84,8 +86,9 @@ interface apb_master_monitor_bfm (input bit pclk,
    `uvm_info("MASTER_MONITOR_BFM",$sformatf("waiting for the transfer to start"),UVM_HIGH)
   endtask: wait_for_transfer_start
 
-//  task sample_data(output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_pkt);
-  task sample_data(output apb_transfer_char_s apb_data_packet,input apb_transfer_cfg_s apb_cfg_packet);
+  //task sample_data(output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_pkt);
+  task sample_data(output apb_transfer_char_s apb_data_packet,
+                   input apb_transfer_cfg_s apb_cfg_packet);
     forever begin
       if(penable == 1) begin
         apb_data_packet.prdata = prdata;
@@ -97,3 +100,4 @@ interface apb_master_monitor_bfm (input bit pclk,
 endinterface : apb_master_monitor_bfm
 
 `endif
+

@@ -97,6 +97,5 @@ function void apb_env::connect_phase(uvm_phase phase);
   end
 endfunction : connect_phase
 
-
 `endif
 

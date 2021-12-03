@@ -6,18 +6,19 @@
 // Description : Instantiates driver and monitor
 //--------------------------------------------------------------------------------------------
 module apb_master_agent_bfm(apb_if intf);
- //-------------------------------------------------------
- //Importing uvm package file
- //-------------------------------------------------------
- import uvm_pkg::*;
-`include "uvm_macros.svh"
-
- initial begin
-       `uvm_info("apb master agent bfm",$sformatf("APB MASTER AGENT BFM"),UVM_LOW);
-  end
 
   //-------------------------------------------------------
-  //master driver bfm instantiation
+  // Importing uvm package file
+  //-------------------------------------------------------
+  import uvm_pkg::*;
+  `include "uvm_macros.svh"
+  
+  initial begin
+    `uvm_info("apb master agent bfm",$sformatf("APB MASTER AGENT BFM"),UVM_LOW);
+  end
+  
+  //-------------------------------------------------------
+  // master driver bfm instantiation
   //-------------------------------------------------------
   apb_master_driver_bfm apb_master_drv_bfm_h (.pclk(intf.pclk),
                                               .presetn(intf.presetn),
@@ -58,6 +59,8 @@ module apb_master_agent_bfm(apb_if intf);
     uvm_config_db#(virtual apb_master_driver_bfm)::set(null,"*","apb_master_driver_bfm",apb_master_drv_bfm_h);
     uvm_config_db#(virtual apb_master_monitor_bfm)::set(null,"*","apb_master_monitor_bfm",apb_master_mon_bfm_h);
   end
+
 endmodule : apb_master_agent_bfm
 
 `endif
+

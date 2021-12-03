@@ -36,6 +36,7 @@ endclass : apb_scoreboard
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
+// Initialization of new memory
 //
 // Parameters:
 //  name - apb_scoreboard

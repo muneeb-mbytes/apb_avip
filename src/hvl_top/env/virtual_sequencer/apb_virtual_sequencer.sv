@@ -50,6 +50,5 @@ function void apb_virtual_sequencer::build_phase(uvm_phase phase);
   //apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
 endfunction : build_phase
 
-
 `endif
 

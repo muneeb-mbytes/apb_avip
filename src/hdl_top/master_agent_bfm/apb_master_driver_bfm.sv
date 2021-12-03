@@ -24,68 +24,70 @@ interface apb_master_driver_bfm (input  bit   pclk,
                                  output logic [(DATA_WIDTH/8)-1:0] pstrb
                                 );
 
-   //-------------------------------------------------------
-   //Importing uvm package file
-   //-------------------------------------------------------
-   import uvm_pkg::*;
-   `include "uvm_macros.svh"
+  //-------------------------------------------------------
+  // Importing uvm package file
+  //-------------------------------------------------------
+  import uvm_pkg::*;
+  `include "uvm_macros.svh"
   
   //-------------------------------------------------------
-  // Creating the handle for proxy driver
+  // Importing the master package file
   //-------------------------------------------------------
   import apb_master_pkg::apb_master_driver_proxy;
   
-  //
+  //Variable: end_of_transfer
+  //Used to indicate the end of transfer of the packet
   bit end_of_transfer;
-  //-------------------------------------------------------
-  // variable: apb_master_drv_proxy_h
-  // creating the handle for the proxy_driver
-  //-------------------------------------------------------
+  
+  //Variable: apb_master_drv_proxy_h
+  //Creating the handle for the proxy_driver
   apb_master_driver_proxy apb_master_drv_proxy_h;
-
+ 
   initial begin
     `uvm_info("apb master driver bfm",$sformatf("APB MASTER DRIVER BFM"),UVM_LOW)
   end
-
+ 
   //-------------------------------------------------------
-  // task: wait_for_presetn
-  // waiting for the system reset to be active low
+  // Task: wait_for_presetn
+  // Waiting for the system reset to be active low
   //-------------------------------------------------------
   task wait_for_presetn();
     @(negedge presetn);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)
-
+ 
     @(posedge presetn);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
-  
   endtask: wait_for_presetn
-
-
-   task drive_to_bfm(inout apb_transfer_char_s data_packet,
-                          input apb_transfer_cfg_s cfg_pkt);
-    @(posedge pclk);
-    `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
-
-    drive_idle_state();
-
-    drive_setup_state(data_packet.paddr);
-
-    drive_access_state(data_packet);
-    /*
-    pselx <= data_packet.pselx;
-    penable <= data_packet.penable;
-    paddr <= data_packet.paddr;
-    pwdata <= data_packet.pwdata;
-    pready <= data_packet.pready;
-    */
-    endtask: drive_to_bfm
+  
   //-------------------------------------------------------
-  // task: drive_idle_state
-  // this task drives the apb interface to idle state
+  // Task: drive_to_bfm
+  // This task will drive the data from bfm to proxy using converters
   //
-  // pselx - this signal selects the slave
-  // penable - enable signal
-  // paddr - address signal
+  // Parameters:
+  // data_packet  - handle for apb_transfer_char_s
+  // cfg_pkt      - handle for apb_transfer_cfg_s
+  //-------------------------------------------------------
+  task drive_to_bfm(inout apb_transfer_char_s data_packet, input apb_transfer_cfg_s cfg_pkt);
+   @(posedge pclk);
+   `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
+
+   drive_idle_state();
+
+   drive_setup_state(data_packet.paddr);
+
+   drive_access_state(data_packet);
+   /*
+   pselx <= data_packet.pselx;
+   penable <= data_packet.penable;
+   paddr <= data_packet.paddr;
+   pwdata <= data_packet.pwdata;
+   pready <= data_packet.pready;
+   */
+   endtask: drive_to_bfm
+
+  //-------------------------------------------------------
+  // Task: drive_idle_state
+  // This task drives the apb interface to idle state
   //-------------------------------------------------------
   task drive_idle_state();
     @(posedge pclk);
@@ -95,7 +97,11 @@ interface apb_master_driver_bfm (input  bit   pclk,
   endtask: drive_idle_state
 
   //-------------------------------------------------------
-  // task: drive_setup_state
+  // Task: drive_setup_state
+  // This task defines the setup phase where signals are set to drive
+  //
+  // Parameters:
+  // paddr - address signal
   //-------------------------------------------------------
   task drive_setup_state(bit paddr);
     @(posedge pclk);
@@ -108,7 +114,11 @@ interface apb_master_driver_bfm (input  bit   pclk,
   endtask: drive_setup_state
 
   //-------------------------------------------------------
-  // task: drive_access_state
+  // Task: drive_access_state
+  // This task defines the accessing of data signals from master to slave or viceverse
+  //
+  // Parameters:
+  // data_packet - handle for apb_transfer_char_s
   //-------------------------------------------------------
   task drive_access_state(input apb_transfer_char_s data_packet);
     @(posedge pclk);
@@ -124,10 +134,10 @@ interface apb_master_driver_bfm (input  bit   pclk,
     end
     else begin
       //Wait State
-      drive_wait_state(data_packet,penable);
+      drive_wait_state(data_packet, penable);
     end
     
-    end_of_transfer_check(paddr,pready,penable);
+    end_of_transfer_check(paddr, pready, penable);
     //repeat(delay-1) begin
     //@(posedge pclk);
     //pready <= 0;
@@ -135,6 +145,13 @@ interface apb_master_driver_bfm (input  bit   pclk,
     //pready <= data_packet.pready;
   endtask: drive_access_state
 
+  //-------------------------------------------------------
+  // Task: drive_access_state
+  // This task defines the accessing of data signals from master to slave or viceverse
+  //
+  // Parameters:
+  // data_packet - handle for apb_transfer_char_s
+  //-------------------------------------------------------
   task transfer_data(apb_transfer_char_s data_packet);
     if(pwrite == 1'b1) begin
       pwdata <= data_packet.pwdata;
@@ -146,6 +163,13 @@ interface apb_master_driver_bfm (input  bit   pclk,
     end
   endtask :transfer_data
 
+  //-------------------------------------------------------
+  // Task: drive_wait_state
+  // In this task, signals are waiting for pready to set to high to transfer the data_packet
+  //
+  // Parameters:
+  // data_packet - handle for apb_transfer_char_s
+  //-------------------------------------------------------
   task drive_wait_state(apb_transfer_char_s data_packet, bit penable);
     paddr <= data_packet.paddr;
     pwrite <= data_packet.pwrite;
@@ -161,7 +185,16 @@ interface apb_master_driver_bfm (input  bit   pclk,
     end
   endtask : drive_wait_state
 
-  task end_of_transfer_check(input bit paddr,input bit pready, input bit penable);
+  //-------------------------------------------------------
+  // Task: end_of_transfer_check
+  // This task performs the transfer check at the end of the each state
+  //
+  // Parameter:
+  // paddr    - address signal
+  // pready   - ready signal
+  // penable  - enable signal
+  //-------------------------------------------------------
+  task end_of_transfer_check(input bit paddr, input bit pready, input bit penable);
     if(end_of_transfer && pready) begin
       drive_setup_state(paddr);
     end
@@ -173,3 +206,4 @@ interface apb_master_driver_bfm (input  bit   pclk,
 endinterface : apb_master_driver_bfm
 
 `endif
+
