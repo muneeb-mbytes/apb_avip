@@ -61,7 +61,6 @@ function void apb_slave_agent::build_phase(uvm_phase phase);
    `uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config from config_db"))
   end
 
-  // TODO(mshariff): Print the values of the apb_slave_agent_config
   // Have a print method in master_agent_config class and call it from here
   //`uvm_info(get_type_name(), $sformatf("The apb_slave_agent_config.slave_id = %0d", 
   //                                           slave_agent_cfg_h.slave_id), UVM_LOW);
@@ -80,8 +79,7 @@ endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
 //  Function: connect_phase 
-//  Description_here: it connects the components using TLM ports
-//
+//  it connects the components using TLM ports
 //  Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
