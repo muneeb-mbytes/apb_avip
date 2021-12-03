@@ -31,50 +31,50 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   option.per_instance = 1;
 
   //cheking the signal coverage
-  PWRITE_CP:coverpoint    pwrite {
-    option.comment = "read and write conditon based on pwrite"
+  PWRITE_CP:coverpoint tx_cov.pwrite {
+    option.comment = "read and write conditon based on pwrite";
     bins read = {0};
     bins write = {1};
   }
-  PENABLE_CP:coverpoint penable {
-    option.commemt = "setup and access based on the enable"
+  PENABLE_CP:coverpoint tx_cov.penable {
+    option.comment = "setup and access based on the enable";
     bins setup  = {0};
     bins access = {1};
   }
 
-  PSELX_CP: coverpoint pselx {
-  option.comment = "no.of slaves used "
-  bins NO_OF_SLAVES[] = {[15:0]};
+  PSELX_CP: coverpoint tx_cov.pselx {
+    option.comment = "no.of slaves used ";
+    bins NO_OF_SLAVES[] = {[15:0]};
   }
 
-  PADDR_CP : coverpoint paddr {
-    option.comment = "address range"
+  PADDR_CP : coverpoint tx_cov.paddr {
+    option.comment = "address range";
     bins addr = {[31:8]};
   }
 
-  PWDATA_CP: coverpoint pwdata {
-    option.comment = "write data range"
+  PWDATA_CP: coverpoint tx_cov.pwdata {
+    option.comment = "write data range";
     bins wdata = {[31:8]};
   }
-  PRDATA_CP : coverpoint prdata {
-    option.comment = "read data range "  
+  PRDATA_CP : coverpoint tx_cov.prdata {
+    option.comment = "read data range ";  
     bins pread = {[31:8]};
   }
 
-  PSLVERR_CP:coverpoint pslverr {
-    option.comment = "error signal at the end of transfer"
+  PSLVERR_CP:coverpoint tx_cov.pslverr {
+    option.comment = "error signal at the end of transfer";
     bins err = {1};
     bins ok = {0};
   }
 
-  PSTROB_CP :  coverpoint pstrob {
-    option.comment = "error signal at the end of transfer"
-    bins strob = {[3:0]};
+  PSTRB_CP :  coverpoint tx_cov.pstrb {
+    option.comment = "error signal at the end of transfer";
+    bins strb = {[3:0]};
   }
 //cross coverage 
-  PADDR_X_PWDATA_: cross PADDR_CP,PWDATA_CP;
-  PSEL_X_PENABLE_: cross PSEL_CP,PENABLE_CP;
-  PADDR_X_PRDATA_: cross PADDR_CP,PRDATA_CP;
+  //PADDR_X_PWDATA_: cross PADDR_CP,PWDATA_CP;
+  //PSEL_X_PENABLE_: cross PSEL_CP,PENABLE_CP;
+  //PADDR_X_PRDATA_: cross PADDR_CP,PRDATA_CP;
 
 endgroup : apb_slave_covergroup
 //-------------------------------------------------------
