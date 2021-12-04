@@ -3,10 +3,10 @@
     
 //--------------------------------------------------------------------------------------------
 //  Class: apb_master_driver_proxy
-//    Driver is written by extending uvm_driver,uvm_driver is inherited from uvm_component, 
-//    Methods and TLM port (seq_item_port) are defined for communication between sequencer and driver,
-//    uvm_driver is a parameterized class and it is parameterized with the type of the request 
-//    sequence_item and the type of the response sequence_item 
+//  Driver is written by extending uvm_driver,uvm_driver is inherited from uvm_component, 
+//  Methods and TLM port (seq_item_port) are defined for communication between sequencer and driver,
+//  uvm_driver is a parameterized class and it is parameterized with the type of the request 
+//  sequence_item and the type of the response sequence_item 
 //--------------------------------------------------------------------------------------------
 class apb_master_driver_proxy extends uvm_driver #(apb_master_tx);
   `uvm_component_utils(apb_master_driver_proxy)
@@ -30,10 +30,7 @@ class apb_master_driver_proxy extends uvm_driver #(apb_master_tx);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
   extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-//  extern virtual function void start_of_simulation_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
-  //extern virtual task drive_access_state(inout apb_transfer_char_s struct_packet, input apb_transfer_cfg_s struct_cfg);
-  //extern virtual task drive_to_bfm();
 endclass : apb_master_driver_proxy
 
 //--------------------------------------------------------------------------------------------
@@ -72,7 +69,6 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_driver_proxy::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-  // apb_master_drv_bfm_h = apb_master_agent_cfg_h.apb_master_drv_bfm_h;
 endfunction : connect_phase
 
 //--------------------------------------------------------------------------------------------
@@ -88,30 +84,14 @@ function void apb_master_driver_proxy::end_of_elaboration_phase(uvm_phase phase)
 endfunction  : end_of_elaboration_phase
 
 //--------------------------------------------------------------------------------------------
-//  Function: start_of_simulation_phase
-//  <Description_here>
-//
-//  Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-//function void apb_master_driver_proxy::start_of_simulation_phase(uvm_phase phase);
-//  super.start_of_simulation_phase(phase);
-//endfunction : start_of_simulation_phase
-
-//--------------------------------------------------------------------------------------------
-//  Task: run_phase
-//  Gets the sequence_item, converts them to struct compatible transactions
+// Task: run_phase
+// Gets the sequence_item, converts them to struct compatible transactions
 // and sends them to the BFM to drive the data over the interface
 //
-//  Parameters:
-//  phase - uvm phase
+// Parameters:
+// phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_master_driver_proxy::run_phase(uvm_phase phase);
-  bit pselx,penable;
-
-  super.run_phase(phase);
-  //phase.raise_objection(this, "apb_master_driver_proxy");
-  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_1"),UVM_LOW);
   
   //wait for system reset
   apb_master_drv_bfm_h.wait_for_presetn();
@@ -121,37 +101,32 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
     apb_transfer_cfg_s struct_cfg;
 
     seq_item_port.get_next_item(req);
-  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_2"),UVM_LOW);
 
-  //Converting transaction to struct data_packet
-  apb_master_seq_item_converter::from_class(req, struct_packet); 
-  //Converting configurations to struct cfg_packet
-  apb_master_cfg_converter::from_class(apb_master_agent_cfg_h, struct_cfg);
-
-  apb_master_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
+    //Printing the req item
+    req.print();
   
-  //Drive the idel state for APB interface
-  //apb_master_drv_bfm_h.drive_idle_state();
+    //Printing master agent config
+    //`uvm_info(get_type_name(),$sformatf("\n apb_master_agent_config()\n%s",apb_master_agent_cfg_h.print),UVM_LOW);
 
-  //drive to setup state for APB interface
-  //apb_master_drv_bfm_h.drive_setup_state();
+    //Converting transaction to struct data_packet
+    apb_master_seq_item_converter::from_class(req, struct_packet); 
+  
+    //Converting configurations to struct cfg_packet
+    apb_master_cfg_converter::from_class(apb_master_agent_cfg_h, struct_cfg);
 
-  apb_master_seq_item_converter::to_class(struct_packet, req);
-  seq_item_port.item_done();
+    apb_master_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
+  
+    //Drive the idel state for APB interface
+    //apb_master_drv_bfm_h.drive_idle_state();
+
+    //drive to setup state for APB interface
+    //apb_master_drv_bfm_h.drive_setup_state();
+
+    apb_master_seq_item_converter::to_class(struct_packet, req);
+    seq_item_port.item_done();
 
   end
 endtask : run_phase
-
-//-------------------------------------------------------
-//Task: drive to bfm
-//This task converts the transaction data packet to struct type 
-//and send it to the master driver bfm
-//-------------------------------------------------------
-//task apb_master_driver_proxy::drive_to_bfm(inout apb_transfer_char_s packet,
-//                                           input abp_transfer_cfg_s  packet1);
-//  apb_master_drv_bfm_h.drive_access_state(packet,packet1);
-//  `uvm_info(get_type_name(),$sformatf("after struct packet: , \n %p",packet1),UVM_LOW);
-//endtask:drive_to_bfm
 
 `endif
 

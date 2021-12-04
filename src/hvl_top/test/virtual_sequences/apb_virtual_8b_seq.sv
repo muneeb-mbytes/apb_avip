@@ -3,12 +3,18 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_virtual_8b_seq
-// <Description_here>
+// Creates and starts the master and slave vd_vws sequnences of variable data and variable 
+// wait states.
 //--------------------------------------------------------------------------------------------
-
 class apb_virtual_8b_seq extends apb_virtual_base_seq;
   `uvm_object_utils(apb_virtual_8b_seq)
+
+  //Variable : apb_master_8b_seq_h
+  //Instatiation of apb_master_8b_seq
   apb_master_8b_seq apb_master_8b_seq_h;
+
+  //Variable : apb_slave_8b_seq_h
+  //Instantiation of apb_master_8b_seq
   apb_slave_8b_seq apb_slave_8b_seq_h;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -30,19 +36,18 @@ function apb_virtual_8b_seq::new(string name ="apb_virtual_8b_seq");
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Construct - body
+// Task - body
+// Creates and starts the 8bit data of master and slave sequences
 //--------------------------------------------------------------------------------------------
-
 task apb_virtual_8b_seq::body();
   super.body();
   apb_master_8b_seq_h=apb_master_8b_seq::type_id::create("apb_master_8b_seq_h");
   apb_slave_8b_seq_h=apb_slave_8b_seq::type_id::create("apb_slave_8b_seq_h");
   fork
   forever begin
-  apb_slave_8b_seq_h.start(p_sequencer.apb_slave_seqr_h);
+    apb_slave_8b_seq_h.start(p_sequencer.apb_slave_seqr_h);
   end
   join_none
-   
   repeat(1) begin
     apb_master_8b_seq_h.start(p_sequencer.apb_master_seqr_h);
   end

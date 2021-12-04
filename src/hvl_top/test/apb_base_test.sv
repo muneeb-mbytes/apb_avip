@@ -26,9 +26,7 @@ class apb_base_test extends uvm_test;
   extern virtual function void setup_apb_env_config();
   extern virtual function void setup_apb_master_agent_config();
   extern virtual function void setup_apb_slave_agent_config();
-  extern virtual function void connect_phase(uvm_phase phase);
   extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-  extern virtual function void start_of_simulation_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
 
 endclass : apb_base_test
@@ -69,7 +67,7 @@ function void apb_base_test::setup_apb_env_config();
   setup_apb_master_agent_config();
   setup_apb_slave_agent_config();
   uvm_config_db#(apb_env_config)::set(this,"*","apb_env_config",apb_env_cfg_h);
-  `uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_apb_env_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
+  //`uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_apb_env_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
 endfunction : setup_apb_env_config
 
 //--------------------------------------------------------------------------------------------
@@ -79,7 +77,7 @@ endfunction : setup_apb_env_config
 // Sets apb master agent config into configdb 
 //--------------------------------------------------------------------------------------------
 function void apb_base_test::setup_apb_master_agent_config();
-  `uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_apb_master_agent_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
+  //`uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_apb_master_agent_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
   apb_env_cfg_h.apb_master_agent_cfg_h = apb_master_agent_config::type_id::create("apb_master_agent_config");
   if(MASTER_AGENT_ACTIVE === 1) begin
     apb_env_cfg_h.apb_master_agent_cfg_h.is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
@@ -99,7 +97,7 @@ endfunction : setup_apb_master_agent_config
 // It calls the master agent config setup and slave agent config steup functions
 //--------------------------------------------------------------------------------------------
 function void apb_base_test::setup_apb_slave_agent_config();
-  `uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_slave_agent_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
+  //`uvm_info(get_type_name(),$sformatf("\n APB_BASE_TEST--setup_slave_agent_config()--APB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
   apb_env_cfg_h.apb_slave_agent_cfg_h = new[apb_env_cfg_h.no_of_slaves];
   foreach(apb_env_cfg_h.apb_slave_agent_cfg_h[i]) begin
     apb_env_cfg_h.apb_slave_agent_cfg_h[i] = apb_slave_agent_config::type_id::create($sformatf("apb_slave_agent_config[%0d]",i));
@@ -117,17 +115,6 @@ endfunction : setup_apb_slave_agent_config
 
 
 //--------------------------------------------------------------------------------------------
-// Function: connect_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-function void apb_base_test::connect_phase(uvm_phase phase);
-  super.connect_phase(phase);
-endfunction : connect_phase
-
-//--------------------------------------------------------------------------------------------
 // Function: end_of_elaboration_phase
 // Used to print topology
 //
@@ -139,20 +126,10 @@ function void apb_base_test::end_of_elaboration_phase(uvm_phase phase);
   uvm_top.print_topology();
 endfunction  : end_of_elaboration_phase
 
-//--------------------------------------------------------------------------------------------
-// Function: start_of_simulation_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-function void apb_base_test::start_of_simulation_phase(uvm_phase phase);
-  super.start_of_simulation_phase(phase);
-endfunction : start_of_simulation_phase
 
 //--------------------------------------------------------------------------------------------
 // Task: run_phase
-// <Description_here>
+// Used to give 100ns delay to complete the run_phase.
 //
 // Parameters:
 //  phase - uvm phase
@@ -162,9 +139,6 @@ task apb_base_test::run_phase(uvm_phase phase);
   phase.raise_objection(this);
 
   super.run_phase(phase);
-
-  // Work here
-  // ...
 
   #100;
   phase.drop_objection(this);

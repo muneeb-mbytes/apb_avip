@@ -17,8 +17,6 @@ class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   // Handle for apb_slave driver bfm
   virtual apb_slave_driver_bfm apb_slave_drv_bfm_h;
 
-  //  slave_spi_seq_item_converter  slave_spi_seq_item_conv_h;
-
   // Variable: apb_slave_agent_cfg_h;
   // Handle for apb_slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
@@ -60,8 +58,6 @@ function void apb_slave_driver_proxy::build_phase(uvm_phase phase);
     `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get() apb_slave_drv_bfm_h");
   end
 
-  //  slave_spi_seq_item_conv_h = slave_spi_seq_item_converter::type_id::create
-  //                                                    ("slave_spi_seq_item_conv_h");
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -73,7 +69,6 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 function void apb_slave_driver_proxy::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-//  apb_slave_drv_bfm_h = apb_slave_agent_cfg_h.apb_slave_drv_bfm_h;
 endfunction : connect_phase
 
 
@@ -88,6 +83,7 @@ function void apb_slave_driver_proxy::end_of_elaboration_phase(uvm_phase phase);
   super.end_of_elaboration_phase(phase);
   apb_slave_drv_bfm_h.apb_slave_drv_proxy_h = this;
 endfunction : end_of_elaboration_phase
+
 //--------------------------------------------------------------------------------------------
 // Task: run_phase
 // Gets the sequence_item, converts them to struct compatible transactions
@@ -98,9 +94,6 @@ endfunction : end_of_elaboration_phase
 //--------------------------------------------------------------------------------------------
 task apb_slave_driver_proxy::run_phase(uvm_phase phase);
   
-  //super.run_phase(phase);
-  //phase.raise_objection(this, "apb_slave_driver_proxy");
-  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_1"),UVM_LOW);
   //wait for system reset
   apb_slave_drv_bfm_h.wait_for_presetn();
   forever begin
@@ -108,27 +101,32 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
     apb_transfer_cfg_s struct_cfg;
 
     seq_item_port.get_next_item(req);
-  //`uvm_info(get_type_name(),$sformatf("APB_DRV_PROXY_2"),UVM_LOW);
 
-  //Converting transaction to struct data_packet
-  apb_slave_seq_item_converter::from_class(req, struct_packet); 
+    //Printing the req item
+    req.print();
+  
+    //Printing master agent config
+    //`uvm_info(get_type_name(),$sformatf("\n apb_master_agent_config()\n%s",apb_master_agent_cfg_h.sprint),UVM_LOW);
 
-  //Converting configurations to struct cfg_packet
-  apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg);
+    //Converting transaction to struct data_packet
+    apb_slave_seq_item_converter::from_class(req, struct_packet); 
 
-  //drive the converted data packets to the slave driver bfm
-  apb_slave_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
+    //Converting configurations to struct cfg_packet
+    apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg);
+
+    //drive the converted data packets to the slave driver bfm
+    apb_slave_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
   
   
-  //Drive the idel state for APB interface
-  //apb_slave_drv_bfm_h.drive_idle_state();
+    //Drive the idel state for APB interface
+    //apb_slave_drv_bfm_h.drive_idle_state();
 
-  //drive to setup state for APB interface
-  //apb_slave_drv_bfm_h.drive_setup_state();
+    //drive to setup state for APB interface
+    //apb_slave_drv_bfm_h.drive_setup_state();
   
-  //converting the struct data items into transcations 
-  apb_slave_seq_item_converter::to_class(struct_packet, req);
-  seq_item_port.item_done();
+    //converting the struct data items into transcations 
+    apb_slave_seq_item_converter::to_class(struct_packet, req);
+    seq_item_port.item_done();
   end
   endtask : run_phase
 

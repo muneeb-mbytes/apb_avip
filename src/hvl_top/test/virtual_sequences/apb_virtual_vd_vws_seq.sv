@@ -3,13 +3,20 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_virtual_vd_vws_seq
-// <Description_here>
+// Creates and starts the master and slave vd_vws sequnences of variable data and variable 
+// wait states.
 //--------------------------------------------------------------------------------------------
 class apb_virtual_vd_vws_seq extends apb_virtual_base_seq;
   `uvm_object_utils(apb_virtual_vd_vws_seq)
   
+  //Variable : apb_master_vd_vws_seq_h
+  //Instantiation of apb_master_vd_vws_seq sequence
   apb_master_vd_vws_seq apb_master_vd_vws_seq_h;
+
+  //Variable : apb_slave_vd_vws_seq_h
+  //Instantiation of apb_slave_vd_vws_seq sequence
   apb_slave_vd_vws_seq apb_slave_vd_vws_seq_h;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -28,7 +35,9 @@ function apb_virtual_vd_vws_seq::new(string name = "apb_virtual_vd_vws_seq");
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// 
+// Task : body
+// Creates and starts the variable_data and variable_wait_states of master and 
+// slave sequences
 //--------------------------------------------------------------------------------------------
 task apb_virtual_vd_vws_seq::body();
   super.body();
@@ -41,7 +50,6 @@ task apb_virtual_vd_vws_seq::body();
   join_none
   repeat(3) begin
     apb_master_vd_vws_seq_h.start(p_sequencer.apb_master_seqr_h);
-    //apb_slave_vd_vws_seq_h.start(p_sequencer.apb_slave_seqr_h);
   end
 endtask : body
 
