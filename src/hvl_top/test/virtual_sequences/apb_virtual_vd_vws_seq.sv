@@ -48,7 +48,7 @@ task apb_virtual_vd_vws_seq::body();
       apb_slave_vd_vws_seq_h.start(p_sequencer.apb_slave_seqr_h);
     end
   join_none
-  repeat(3) begin
+  repeat(1) begin
     apb_master_vd_vws_seq_h.start(p_sequencer.apb_master_seqr_h);
   end
 endtask : body

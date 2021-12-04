@@ -3,7 +3,6 @@
 
 //--------------------------------------------------------------------------------------------
 // class : apb_slave_seq_item_converter
-// Description:
 // class converting seq_item transactions into struct data items and viceversa
 //--------------------------------------------------------------------------------------------
 
@@ -47,7 +46,7 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
   output_conv.pslverr = input_conv_h.pslverr;
   output_conv.pready = input_conv_h.pready;
   output_conv.prdata = input_conv_h.prdata;
-  `uvm_info("apb_slave_seq_item_conv","apb_from_class",UVM_LOW);
+  //`uvm_info("apb_slave_seq_item_conv","apb_from_class",UVM_LOW);
   
 endfunction: from_class 
 
@@ -70,7 +69,7 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   output_conv_h.pslverr = input_conv.pslverr;
   output_conv_h.pready = input_conv.pready;
   output_conv_h.prdata = input_conv.prdata;
-`uvm_info("apb_slave_seq_item_conv","apb_to_class",UVM_LOW);
+  //`uvm_info("apb_slave_seq_item_conv","apb_to_class",UVM_LOW);
     
 endfunction: to_class
 

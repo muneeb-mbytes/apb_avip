@@ -47,7 +47,7 @@ function void apb_master_seq_item_converter::from_class(input apb_master_tx inpu
   output_conv.pready = input_conv.pready;
   output_conv.prdata = input_conv.prdata;
 
-  `uvm_info("apb_master_seq_item_conv","apb_from_class",UVM_LOW);
+  //`uvm_info("apb_master_seq_item_conv","apb_from_class",UVM_LOW);
   
 endfunction: from_class 
 
@@ -72,7 +72,7 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
   output_conv_h.pready = input_conv.pready;
   output_conv_h.prdata = input_conv.prdata;
   
-  `uvm_info("apb_master_seq_item_conv","apb_to_class",UVM_LOW);
+  //`uvm_info("apb_master_seq_item_conv","apb_to_class",UVM_LOW);
     
 endfunction: to_class
 

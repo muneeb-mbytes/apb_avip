@@ -57,9 +57,9 @@ endfunction : new
 function void apb_env_config::do_print(uvm_printer printer);
   super.do_print(printer);
   
-  printer.print_field ("has_scoreboard",has_scoreboard,1, UVM_DEC);
-  printer.print_field ("has_virtual_sqr",has_virtual_seqr,1, UVM_DEC);
-  printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_HEX);
+  printer.print_field ("has_scoreboard",    has_scoreboard,     $bits(has_scoreboard),    UVM_DEC);
+  printer.print_field ("has_virtual_seqr",  has_virtual_seqr,   $bits(has_virtual_seqr),  UVM_DEC);
+  printer.print_field ("no_of_slaves",      no_of_slaves,       $bits(no_of_slaves),        UVM_DEC);
 
 endfunction : do_print
 
