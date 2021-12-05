@@ -8,25 +8,19 @@
 class apb_slave_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_slave_tx)
   
-  //Varibale : paddr
-  //Address selected in apb_slave
-  bit [ADDRESS_WIDTH-1:0]paddr;
 
-  //Variable : pprot
-  //Used for different access
-  bit [2:0]pprot;
 
   //Variable : pselx
   //Used to select the slave
-  bit [NO_OF_SLAVES-1:0]pselx;
+  //bit [NO_OF_SLAVES-1:0]pselx;
 
   //Variable : penable
   //Used to write data when penable is high
-  bit penable;
+  //bit penable;
 
   //Varibale : pwrite
   //Write when pwrite is 1 and read is 0
-  bit pwrite;
+  //bit pwrite;
 
   //Variable : pwdata
   //Used to store the wdata
@@ -34,7 +28,7 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
-  bit [DATA_WIDTH/8-1:0]pstrb;
+  //bit [DATA_WIDTH/8-1:0]pstrb;
 
   //Variable : pslverr
   //Goes high when a transfer fails
@@ -86,16 +80,16 @@ function void apb_slave_tx::do_copy (uvm_object rhs);
     `uvm_fatal("do_copy","cast of the rhs object failed")
   end
   super.do_copy(rhs);
-  paddr   = apb_slave_tx_copy_obj.paddr;
-  pselx    = apb_slave_tx_copy_obj.pselx;
-  pwrite  = apb_slave_tx_copy_obj.pwrite;
-  penable = apb_slave_tx_copy_obj.penable;
+  //paddr   = apb_slave_tx_copy_obj.paddr;
+  //pselx    = apb_slave_tx_copy_obj.pselx;
+  //pwrite  = apb_slave_tx_copy_obj.pwrite;
+  //penable = apb_slave_tx_copy_obj.penable;
   pwdata  = apb_slave_tx_copy_obj.pwdata;
   pready  = apb_slave_tx_copy_obj.pready;
   prdata  = apb_slave_tx_copy_obj.prdata;
   pslverr = apb_slave_tx_copy_obj.pslverr;
-  pprot   = apb_slave_tx_copy_obj.pprot;
-  pstrb  = apb_slave_tx_copy_obj.pstrb;
+  //pprot   = apb_slave_tx_copy_obj.pprot;
+  //pstrb  = apb_slave_tx_copy_obj.pstrb;
 
 endfunction:do_copy
 
@@ -115,16 +109,16 @@ function bit apb_slave_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   end
 
   return super.do_compare(apb_slave_tx_compare_obj, comparer) &&
-  paddr   == apb_slave_tx_compare_obj.paddr &&
-  pselx    == apb_slave_tx_compare_obj.pselx &&
-  pwrite  == apb_slave_tx_compare_obj.pwrite &&
-  penable == apb_slave_tx_compare_obj.penable &&
+  //paddr   == apb_slave_tx_compare_obj.paddr &&
+  //pselx    == apb_slave_tx_compare_obj.pselx &&
+  //pwrite  == apb_slave_tx_compare_obj.pwrite &&
+  //penable == apb_slave_tx_compare_obj.penable &&
   pwdata  == apb_slave_tx_compare_obj.pwdata &&
   pready  == apb_slave_tx_compare_obj.pready &&
   prdata  == apb_slave_tx_compare_obj.prdata &&
-  pslverr == apb_slave_tx_compare_obj.pslverr &&
-  pprot   == apb_slave_tx_compare_obj.pprot &&
-  pstrb  == apb_slave_tx_compare_obj.pstrb;
+  pslverr == apb_slave_tx_compare_obj.pslverr ;
+  //pprot   == apb_slave_tx_compare_obj.pprot &&
+  //pstrb  == apb_slave_tx_compare_obj.pstrb;
 endfunction:do_compare
 
 //--------------------------------------------------------------------------------------------
@@ -136,15 +130,15 @@ endfunction:do_compare
 //--------------------------------------------------------------------------------------------
 function void apb_slave_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-  printer.print_field("paddr",paddr,$bits(paddr),UVM_DEC);
-  printer.print_field("pselx",pselx,1,UVM_DEC);
-  printer.print_field("penable",penable,1,UVM_DEC);
-  printer.print_field("pwrite",pwrite,1,UVM_DEC);
+  //printer.print_field("paddr",paddr,$bits(paddr),UVM_DEC);
+  //printer.print_field("pselx",pselx,1,UVM_DEC);
+  //printer.print_field("penable",penable,1,UVM_DEC);
+  //printer.print_field("pwrite",pwrite,1,UVM_DEC);
   printer.print_field("pwdata",pwdata,$bits(pwdata),UVM_DEC);
   printer.print_field("pready",pready,1,UVM_DEC);
   printer.print_field("prdata",prdata,$bits(prdata),UVM_DEC);
-  printer.print_field("pprot",pprot,$bits(pprot),UVM_DEC);
-  printer.print_field("pstrb",pstrb,$bits(pstrb),UVM_DEC);
+  //printer.print_field("pprot",pprot,$bits(pprot),UVM_DEC);
+  //printer.print_field("pstrb",pstrb,$bits(pstrb),UVM_DEC);
   printer.print_field("pslverr",pslverr,$bits(pslverr),UVM_DEC);
 
 endfunction : do_print
