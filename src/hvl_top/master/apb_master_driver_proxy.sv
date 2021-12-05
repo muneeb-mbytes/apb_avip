@@ -122,8 +122,10 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
 
     //drive to setup state for APB interface
     //apb_master_drv_bfm_h.drive_setup_state();
-
+    
+    //Converting struct to transaction
     apb_master_seq_item_converter::to_class(struct_packet, req);
+    
     seq_item_port.item_done();
 
   end
