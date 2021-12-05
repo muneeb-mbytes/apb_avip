@@ -96,6 +96,7 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
   
   //wait for system reset
   apb_slave_drv_bfm_h.wait_for_presetn();
+
   forever begin
     apb_transfer_char_s struct_packet;
     apb_transfer_cfg_s struct_cfg;
@@ -127,6 +128,7 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
   
     //converting the struct data items into transcations 
     apb_slave_seq_item_converter::to_class(struct_packet, req);
+  
     seq_item_port.item_done();
   end
   endtask : run_phase
