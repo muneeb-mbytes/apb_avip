@@ -32,10 +32,13 @@ class apb_slave_agent_config extends uvm_object;
    
   bit [63:0]max_address;
 
+  bit [63:0]min_address;
+  
+  slave_max_addr_e slave_max_addr_h;
   //Variable: paddr
   //Used to indicate the slave address
-  bit [ADDRESS_WIDTH-1:0] paddr;
-
+  //bit [DATA_WIDTH-1:0]paddr[max_address:min_address];
+  bit [DATA_WIDTH-1:0]paddr;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

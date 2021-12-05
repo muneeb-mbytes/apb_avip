@@ -33,7 +33,7 @@ class apb_master_agent_config extends uvm_object;
   
   //Declaring address ranges for 16 slaves
   // ommitting 7 address locations for memory gap between each slave
-  bit [DATA_WIDTH-1:0] slave_1  [63:0]; 
+  /*bit [DATA_WIDTH-1:0] slave_1  [63:0]; 
   bit [DATA_WIDTH-1:0] slave_2  [133:70];
   bit [DATA_WIDTH-1:0] slave_3  [203:140];
   bit [DATA_WIDTH-1:0] slave_4  [273:210];
@@ -48,7 +48,7 @@ class apb_master_agent_config extends uvm_object;
   bit [DATA_WIDTH-1:0] slave_13 [903:840];
   bit [DATA_WIDTH-1:0] slave_14 [973:910];
   bit [DATA_WIDTH-1:0] slave_15 [1043:980];
-  bit [DATA_WIDTH-1:0] slave_16 [1113:1050];
+  bit [DATA_WIDTH-1:0] slave_16 [1113:1050];*/
 
   //Max_Address_range
   //Declaring enum of max address ranges of slaves
@@ -58,12 +58,16 @@ class apb_master_agent_config extends uvm_object;
     //3 = 203,
   //}max_address_range_e;
 
-  bit [DATA_WIDTH-1:0]master_memory[1050:0];
+  bit [DATA_WIDTH-1:0]master_max_array[int];
+  bit [DATA_WIDTH-1:0]master_min_array[int];
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_master_agent_config");
   extern function void do_print(uvm_printer printer);
+  extern task mem_mapping_max(int i, bit [238:0]value);
+  extern task mem_mapping_min(int i, bit [238:0]value);
 
 endclass : apb_master_agent_config
 
@@ -94,5 +98,12 @@ function void apb_master_agent_config::do_print(uvm_printer printer);
 
 endfunction : do_print
 
+task apb_master_agent_config::mem_mapping_max(int i, bit [238:0]value);
+  master_max_array[i] = value;
+endtask : mem_mapping_max
+
+task apb_master_agent_config::mem_mapping_min(int i, bit [238:0]value);
+  master_min_array[i] = value;
+endtask : mem_mapping_min
 `endif
 
