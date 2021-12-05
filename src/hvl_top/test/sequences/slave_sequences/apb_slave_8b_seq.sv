@@ -37,7 +37,7 @@ task apb_slave_8b_seq::body();
   begin
     `uvm_error(get_type_name(),"randomization failed");
   end
-  //req.print();
+  req.print();
   finish_item(req);
 endtask : body
 

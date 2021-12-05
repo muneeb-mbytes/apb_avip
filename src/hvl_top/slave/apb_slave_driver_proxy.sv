@@ -104,7 +104,7 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
 
     //Printing the req item
     //req.print();
-    `uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
+    //`uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
   
     //Printing master agent config
     `uvm_info(get_type_name(),$sformatf("\n apb_slave_agent_config\n%s",apb_slave_agent_cfg_h.sprint),UVM_LOW);

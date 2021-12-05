@@ -43,14 +43,15 @@ task apb_virtual_8b_seq::body();
   super.body();
   apb_master_8b_seq_h=apb_master_8b_seq::type_id::create("apb_master_8b_seq_h");
   apb_slave_8b_seq_h=apb_slave_8b_seq::type_id::create("apb_slave_8b_seq_h");
-  fork
+   fork
     forever begin
       apb_slave_8b_seq_h.start(p_sequencer.apb_slave_seqr_h);
     end
   join_none
-  repeat(1) begin
+
+  repeat(2) begin
     apb_master_8b_seq_h.start(p_sequencer.apb_master_seqr_h);
   end
-endtask : body
+ endtask : body
 
 `endif

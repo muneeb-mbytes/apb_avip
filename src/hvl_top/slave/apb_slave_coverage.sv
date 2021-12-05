@@ -29,7 +29,7 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   //-------------------------------------------------------
   covergroup apb_slave_covergroup with function sample (apb_slave_agent_config cfg, apb_slave_tx packet);
   option.per_instance = 1;
-
+/*
   //cheking the signal coverage
   PWRITE_CP:coverpoint tx_cov.pwrite {
     option.comment = "read and write conditon based on pwrite";
@@ -51,7 +51,7 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
     option.comment = "address range";
     bins addr = {[31:8]};
   }
-
+*/
   PWDATA_CP: coverpoint tx_cov.pwdata {
     option.comment = "write data range";
     bins wdata = {[31:8]};
@@ -67,11 +67,11 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
     bins ok = {0};
   }
 
-  PSTRB_CP :  coverpoint tx_cov.pstrb {
-    option.comment = "error signal at the end of transfer";
-    bins strb = {[3:0]};
-  }
-//cross coverage 
+ //  PSTRB_CP :  coverpoint tx_cov.pstrb {
+ //   option.comment = "error signal at the end of transfer";
+ // bins strb = {[3:0]};
+ // }
+ //cross coverage 
   //PADDR_X_PWDATA_: cross PADDR_CP,PWDATA_CP;
   //PSEL_X_PENABLE_: cross PSEL_CP,PENABLE_CP;
   //PADDR_X_PRDATA_: cross PADDR_CP,PRDATA_CP;
