@@ -44,7 +44,7 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
   output_conv.pwdata = input_conv_h.pwdata;
   output_conv.pstrb = input_conv_h.pstrb;
   output_conv.pslverr = input_conv_h.pslverr;
-  output_conv.pready = input_conv_h.pready;
+  //output_conv.pready = input_conv_h.pready;
   output_conv.prdata = input_conv_h.prdata;
   //`uvm_info("apb_slave_seq_item_conv","apb_from_class",UVM_LOW);
   
@@ -67,7 +67,7 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   output_conv_h.pwdata = input_conv.pwdata;
   output_conv_h.pstrb = input_conv.pstrb;
   output_conv_h.pslverr = input_conv.pslverr;
-  output_conv_h.pready = input_conv.pready;
+  //output_conv_h.pready = input_conv.pready;
   output_conv_h.prdata = input_conv.prdata;
   //`uvm_info("apb_slave_seq_item_conv","apb_to_class",UVM_LOW);
     
@@ -88,7 +88,7 @@ function void apb_slave_seq_item_converter::do_print(uvm_printer printer);
     printer.print_field("pwrite",apb_st.pwrite,1,UVM_BIN);
     printer.print_field("pstrb",apb_st.pstrb,DATA_WIDTH/8,UVM_BIN);
     printer.print_field("pslverr",apb_st.pslverr,1,UVM_BIN);
-    printer.print_field("pready",apb_st.pready,1,UVM_BIN);
+    //printer.print_field("pready",apb_st.pready,1,UVM_BIN);
 endfunction: do_print
 `endif
 

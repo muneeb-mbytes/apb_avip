@@ -46,8 +46,11 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : prdata
   //Used to store the rdata from the slave
-
   bit [DATA_WIDTH-1:0]prdata;
+
+  //Variable : no_of_wait_states
+  //Used to decide the number of wait states
+  rand int no_of_wait_states;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions

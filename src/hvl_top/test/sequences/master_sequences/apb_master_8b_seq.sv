@@ -21,7 +21,6 @@ endclass : apb_master_8b_seq
 // Parameters:
 //  name - apb_master_8b_seq
 //--------------------------------------------------------------------------------------------
-
 function apb_master_8b_seq::new(string name="apb_master_8b_seq");
   super.new(name);
 endfunction : new

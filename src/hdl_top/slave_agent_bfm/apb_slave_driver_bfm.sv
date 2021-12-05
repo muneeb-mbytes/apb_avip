@@ -87,7 +87,7 @@ end
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the idle state"),UVM_HIGH)
     data_packet.pselx <= pselx;
-    data_packet.penable <= penable;
+    //data_packet.penable <= penable;
 
   endtask: wait_for_idle_state
 
@@ -98,7 +98,7 @@ end
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH)
     data_packet.pselx<= pselx;
-    data_packet.penable <= penable;
+    //data_packet.penable <= penable;
     //paddr <= $urandom;
     //pready <= 0;
   endtask: wait_for_setup_state
@@ -110,10 +110,10 @@ end
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
     data_packet.pselx = pselx;
-    data_packet.penable = penable;
+    //data_packet.penable = penable;
     data_packet.pstrb <= pstrb;
     data_packet.pprot <= pprot;
-  while(data_packet.pselx != '0 && data_packet.penable == 1) begin
+  while(data_packet.pselx != '0 && penable == 1) begin
     data_packet.paddr <= paddr;
     data_packet.pwrite <= pwrite;
     if(pwrite == 1) begin
@@ -129,7 +129,7 @@ end
     //penable <= 1'b1;
     data_packet.paddr<=paddr;
     data_packet.pwrite<=pwrite;
-    pready = data_packet.pready;
+    //pready = data_packet.pready;
     if(pready == 1'b1) begin
       transfer_data(data_packet);
     end
@@ -167,7 +167,7 @@ end
   task drive_wait_state(apb_transfer_char_s data_packet, bit penable);
     data_packet.paddr<=paddr;
     data_packet.pwrite<=pwrite;
-    pready=data_packet.pready;
+    //pready=data_packet.pready;
   while(penable) begin
     if(!pready) begin
       `uvm_info("SLAVE_DRIVER_BFM","WAIT_STATE_DETECTED",UVM_LOW);

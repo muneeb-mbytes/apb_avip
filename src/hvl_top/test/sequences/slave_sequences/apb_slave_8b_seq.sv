@@ -30,7 +30,6 @@ endfunction : new
 // Creates the req of type slave transaction and randomises the req.
 //--------------------------------------------------------------------------------------------
 task apb_slave_8b_seq::body();
-  //super.body();
   req=apb_slave_tx::type_id::create("req");
   start_item(req);
   if(!req.randomize())

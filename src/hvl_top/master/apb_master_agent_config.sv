@@ -27,18 +27,10 @@ class apb_master_agent_config extends uvm_object;
 
   bit [ADDRESS_WIDTH-1:0]paddr;
 
-  //Variable: tx_type
-  //Used for declaring whether write or read is done
-  tx_type_e tx_type;
-
   //Variable: slave_no
   //Used to indicate the slave number
-  slave_no_e slave_no;
+  //slave_no_e slave_no;
 
-  //Variable: oper_phases;
-  //Used for different phase operations
-  operation_states_e oper_phases;
- 
   bit [DATA_WIDTH-1:0] slave_1  [63:0]; // ommitting 7 address locations for memory gap between each slave
   bit [DATA_WIDTH-1:0] slave_2  [133:70];
   bit [DATA_WIDTH-1:0] slave_3  [203:140];

@@ -19,11 +19,11 @@ class apb_master_tx extends uvm_sequence_item;
 
   //Variable : pselx
   //Used to select the slave
-  rand bit [NO_OF_SLAVES-1:0] pselx;
+  bit [NO_OF_SLAVES-1:0] pselx;
 
   //Variable : penable
   //Used to write data when penable is high
-  rand bit penable;
+  bit penable;
 
   //Variable : pwrite
   //Write when pwrite is 1 and read is 0
@@ -64,7 +64,7 @@ class apb_master_tx extends uvm_sequence_item;
   // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
   constraint pselx_c  { $onehot0(pselx) == 1; }
 
-  constraint paddr_c  { paddr inside {[MIN_ADDR_RANGE:MAX_ADDR_RANGE]}; }
+  constraint paddr_c  { paddr inside {[0:7]}; }
   //TODO(saha): use below for inline constraints
   // constraint pwdata_c { pwdata WRITE | READ }
   

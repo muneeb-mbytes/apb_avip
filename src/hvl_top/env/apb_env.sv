@@ -88,6 +88,7 @@ function void apb_env::connect_phase(uvm_phase phase);
   if(apb_env_cfg_h.has_virtual_seqr) begin
     apb_virtual_seqr_h.apb_master_seqr_h = apb_master_agent_h.apb_master_seqr_h;
     foreach(apb_slave_agent_h[i]) begin
+      `uvm_info(get_type_name(),"APB_ENV",UVM_LOW);
       apb_virtual_seqr_h.apb_slave_seqr_h = apb_slave_agent_h[i].apb_slave_seqr_h;
     end
   end

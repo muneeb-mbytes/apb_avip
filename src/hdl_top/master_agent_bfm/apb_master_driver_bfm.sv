@@ -109,7 +109,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
 
     pselx[0] <= 1'b1;
     penable <= 1'b0;
-    paddr <= $urandom;
+    //paddr <= $urandom;
     //pready <= 0;
   endtask: drive_setup_state
 
@@ -128,7 +128,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
     penable <= 1'b1;
     paddr <= data_packet.paddr;
     pwrite <= data_packet.pwrite;
-    data_packet.pready = pready;
+    //data_packet.pready = pready;
     if(pready == 1'b1) begin
       transfer_data(data_packet);
     end
@@ -173,7 +173,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
   task drive_wait_state(apb_transfer_char_s data_packet, bit penable);
     paddr <= data_packet.paddr;
     pwrite <= data_packet.pwrite;
-    data_packet.pready = pready;
+    //data_packet.pready = pready;
     while(penable) begin
       if(!pready) begin
         `uvm_info("MASTER_DRIVER_BFM","WAIT_STATE_DETECTED",UVM_LOW);

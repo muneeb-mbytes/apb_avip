@@ -85,7 +85,7 @@ function void apb_base_test::setup_apb_master_agent_config();
     apb_env_cfg_h.apb_master_agent_cfg_h.is_active    = uvm_active_passive_enum'(UVM_PASSIVE);
   end
   apb_env_cfg_h.apb_master_agent_cfg_h.no_of_slaves   = NO_OF_SLAVES;
-  apb_env_cfg_h.apb_master_agent_cfg_h.has_coverage   = MASTER_HAS_COVERAGE;
+  apb_env_cfg_h.apb_master_agent_cfg_h.has_coverage   = 1;
 
   uvm_config_db#(apb_master_agent_config)::set(this,"*master_agent*","apb_master_agent_config",apb_env_cfg_h.apb_master_agent_cfg_h);
 
@@ -107,7 +107,7 @@ function void apb_base_test::setup_apb_slave_agent_config();
     else begin
       apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active  = uvm_active_passive_enum'(UVM_PASSIVE);
     end
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i].has_coverage = SLAVE_HAS_COVERAGE; 
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].has_coverage = 1; 
     uvm_config_db #(apb_slave_agent_config)::set(this,$sformatf("*slave_agent_h[%0d]*",i),"apb_slave_agent_config",apb_env_cfg_h.apb_slave_agent_cfg_h[i]);
   //`uvm_info(get_type_name(),$sformatf("\nAPB_SLAVE_CONFIG[i]\n%s",i,apb_env_cfg_h.apb_slave_agent_cfg_h.sprint),UVM_LOW);
   end
