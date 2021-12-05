@@ -6,7 +6,9 @@
 // This class holds the data items required to drive stimulus to dut 
 // and also holds methods that manipulate those data items
 //--------------------------------------------------------------------------------------------
-class apb_master_tx extends uvm_sequence_item;
+//import apb_global_pkg::*;
+
+ class apb_master_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_master_tx)
 
   //Variable : paddr
@@ -28,6 +30,8 @@ class apb_master_tx extends uvm_sequence_item;
   //Variable : pwrite
   //Write when pwrite is 1 and read is 0
   rand bit pwrite;
+  //rand tx_type_e type_e;
+  
 
   //Variable : pwdata
   //Used to store the wdata
@@ -158,7 +162,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field ("pready",  pready,  $bits(pready),  UVM_DEC);
   printer.print_field ("prdata",  prdata,  $bits(prdata),  UVM_DEC);
   printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
-
+//printer.print_string("type_e",this.type_e);
 endfunction : do_print
 
 `endif

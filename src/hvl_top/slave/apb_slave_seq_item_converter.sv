@@ -47,7 +47,7 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
   //output_conv.pready = input_conv_h.pready;
   output_conv.prdata = input_conv_h.prdata;
   //`uvm_info("apb_slave_seq_item_conv","apb_from_class",UVM_LOW);
-  
+  output_conv.no_of_wait_states = input_conv_h.no_of_wait_states;
 endfunction: from_class 
 
 //--------------------------------------------------------------------------------------------
@@ -70,6 +70,7 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   //output_conv_h.pready = input_conv.pready;
   output_conv_h.prdata = input_conv.prdata;
   //`uvm_info("apb_slave_seq_item_conv","apb_to_class",UVM_LOW);
+  output_conv_h.no_of_wait_states = input_conv.no_of_wait_states;
     
 endfunction: to_class
 
@@ -89,6 +90,7 @@ function void apb_slave_seq_item_converter::do_print(uvm_printer printer);
     //printer.print_field("pstrb",apb_st.pstrb,DATA_WIDTH/8,UVM_BIN);
     printer.print_field("pslverr",apb_st.pslverr,1,UVM_BIN);
     //printer.print_field("pready",apb_st.pready,1,UVM_BIN);
+    printer.print_field("no_of_wait_states",apb_st.no_of_wait_states,UVM_DEC);
 endfunction: do_print
 `endif
 
