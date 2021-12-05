@@ -156,6 +156,7 @@ package apb_global_pkg;
   // Enum : slave_max_address
   // Used to declare the slave max address range for 
   // respective slave
+  // 3 bits are given as memory gap bwtween eaxh slave
   //-------------------------------------------------------
   typedef enum bit[237:0] {
     S0 = 238'd12,
