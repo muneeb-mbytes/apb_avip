@@ -27,11 +27,10 @@ class apb_slave_agent_config extends uvm_object;
 
   //Variable : slave_memory
   //Declaration of slave_memory to store the data from master
-  //bit [DATA_WIDTH-1:0] slave_memory [ADDRESS_WIDTH-1:0];
+  bit [DATA_WIDTH-1:0]slave_memory[ADDRESS_WIDTH-1:0];
   //bit [63:0] address_range_low;
-  
- 
-  //bit [63:0] address_range_high;
+   
+  bit [63:0]max_address;
 
   //Variable: paddr
   //Used to indicate the slave address
@@ -65,6 +64,7 @@ function void apb_slave_agent_config::do_print(uvm_printer printer);
   printer.print_field ("is_active"    ,is_active,     $bits(is_active),     UVM_DEC);
   printer.print_field ("slave_id"     ,slave_id,      $bits(slave_id),      UVM_DEC);
   printer.print_field ("has_coverage" ,has_coverage,  $bits(has_coverage),  UVM_DEC);
+  printer.print_field ("max_address" ,max_address,  $bits(max_address),  UVM_DEC);
   
 endfunction : do_print
 

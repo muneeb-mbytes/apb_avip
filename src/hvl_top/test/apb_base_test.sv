@@ -101,6 +101,7 @@ function void apb_base_test::setup_apb_slave_agent_config();
   foreach(apb_env_cfg_h.apb_slave_agent_cfg_h[i]) begin
     apb_env_cfg_h.apb_slave_agent_cfg_h[i] = apb_slave_agent_config::type_id::create($sformatf("apb_slave_agent_config[%0d]",i));
     apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_id     = i;
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].max_address  = {"S",i};
     if(SLAVE_AGENT_ACTIVE === 1) begin
       apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active  = uvm_active_passive_enum'(UVM_ACTIVE);
     end

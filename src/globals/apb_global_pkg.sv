@@ -151,6 +151,29 @@ package apb_global_pkg;
     bit [ADDRESS_WIDTH-1:0]paddr;
   }apb_transfer_cfg_s;
 
+  //-------------------------------------------------------
+  // Enum : slave_min_address
+  // Used to declare the slave number by assigning the 
+  // value for encoding
+  //-------------------------------------------------------
+  typedef enum bit [16:1] {
+    S0 = 16'd1,
+    S1 = 16'd2,
+    S2 = 16'd4
+    /*SLAVE_4 = 16'd8,
+    SLAVE_5 = 16'd16,
+    SLAVE_6 = 16'd32,
+    SLAVE_7 = 16'd64,
+    SLAVE_8 = 16'd128,
+    SLAVE_9 = 16'd256,
+    SLAVE_10 = 16'd512,
+    SLAVE_11 = 16'd1024,
+    SLAVE_12 = 16'd2048,
+    SLAVE_13 = 16'd4096,
+    SLAVE_14 = 16'd8192,
+    SLAVE_15 = 16'd16384,
+    SLAVE_16 = 16'd32768*/
+  }slave_max_addr;
 endpackage : apb_global_pkg
 
 `endif

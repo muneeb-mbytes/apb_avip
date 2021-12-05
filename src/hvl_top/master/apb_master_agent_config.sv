@@ -30,8 +30,10 @@ class apb_master_agent_config extends uvm_object;
   //Variable: slave_no
   //Used to indicate the slave number
   //slave_no_e slave_no;
-
-  bit [DATA_WIDTH-1:0] slave_1  [63:0]; // ommitting 7 address locations for memory gap between each slave
+  
+  //Declaring address ranges for 16 slaves
+  // ommitting 7 address locations for memory gap between each slave
+  bit [DATA_WIDTH-1:0] slave_1  [63:0]; 
   bit [DATA_WIDTH-1:0] slave_2  [133:70];
   bit [DATA_WIDTH-1:0] slave_3  [203:140];
   bit [DATA_WIDTH-1:0] slave_4  [273:210];
@@ -48,6 +50,15 @@ class apb_master_agent_config extends uvm_object;
   bit [DATA_WIDTH-1:0] slave_15 [1043:980];
   bit [DATA_WIDTH-1:0] slave_16 [1113:1050];
 
+  //Max_Address_range
+  //Declaring enum of max address ranges of slaves
+  //typedef enum bit [1050:0]{
+    //1 = 63,
+    //2 = 133,
+    //3 = 203,
+  //}max_address_range_e;
+
+  bit [DATA_WIDTH-1:0]master_memory[1050:0];
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
