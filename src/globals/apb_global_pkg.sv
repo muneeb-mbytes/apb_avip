@@ -140,6 +140,7 @@ package apb_global_pkg;
     bit [DATA_WIDTH-1:0] prdata;
     bit [ADDRESS_WIDTH-1:0] paddr; 
     bit [DATA_WIDTH-1:0] pwdata;
+    int no_of_wait_states;
   }apb_transfer_char_s;
   
   //-------------------------------------------------------
