@@ -9,44 +9,44 @@
 class apb_master_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_master_tx)
 
-  // Variable : paddr
-  // Address selected in apb_slave
+  //Variable : paddr
+  //Address selected in apb_slave
   rand bit [ADDRESS_WIDTH-1:0] paddr;
 
-  // Variable : pprot
-  // Used for different access
+  //Variable : pprot
+  //Used for different access
   rand bit [2:0] pprot;
 
-  // Variable : pselx
-  // Used to select the slave
+  //Variable : pselx
+  //Used to select the slave
   rand bit [NO_OF_SLAVES-1:0] pselx;
 
-  // Variable : penable
-  // Used to write data when penable is high
+  //Variable : penable
+  //Used to write data when penable is high
   rand bit penable;
 
-  // Variable : pwrite
-  // Write when pwrite is 1 and read is 0
+  //Variable : pwrite
+  //Write when pwrite is 1 and read is 0
   rand bit pwrite;
 
-  // Variable : pwdata
-  // Used to store the wdata
+  //Variable : pwdata
+  //Used to store the wdata
   rand bit [DATA_WIDTH-1:0] pwdata;
 
-  // Variable : pstrb
-  // Used to transfer the data to pwdata bus
+  //Variable : pstrb
+  //Used to transfer the data to pwdata bus
   rand bit [(DATA_WIDTH/8)-1:0] pstrb;              
 
-  // Variable : pready
-  // Used to extend the transfer
+  //Variable : pready
+  //Used to extend the transfer
   bit pready;
 
-  // Variable : prdata
-  // Used to store the rdata from the slave
+  //Variable : prdata
+  //Used to store the rdata from the slave
   bit [DATA_WIDTH-1:0] prdata;
 
-  // Variable : pslverr
-  // Goes high when a transfer fails
+  //Variable : pslverr
+  //Goes high when a transfer fails
   bit pslverr;
 
   //-------------------------------------------------------

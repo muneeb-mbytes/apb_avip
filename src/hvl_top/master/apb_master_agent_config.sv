@@ -9,35 +9,52 @@
 class apb_master_agent_config extends uvm_object;
   `uvm_object_utils(apb_master_agent_config)
 
-  // Variable: is_active
-  // Used for creating the agent in either passive or active mode
+  //Variable: is_active
+  //Used for creating the agent in either passive or active mode
   uvm_active_passive_enum is_active = UVM_ACTIVE;  
 
-  // Variable: no_of_slaves
-  // Used for specifying the number of slaves connected to this apb_master over APB interface
+  //Variable: no_of_slaves
+  //Used for specifying the number of slaves connected to this apb_master over APB interface
   int no_of_slaves;
 
-  // Variable: has_coverage
-  // Used for enabling the master agent coverage
+  //Variable: has_coverage
+  //Used for enabling the master agent coverage
   bit has_coverage;
 
-  // Variable: master_memory
-  // Memory decleration for master to store the data of each slave
-  bit [DATA_WIDTH-1:0]master_memory[NO_OF_SLAVES*ADDRESS_WIDTH-1:0];
+  //Variable: master_memory
+  //Memory decleration for master to store the data of each slave
+  //bit [DATA_WIDTH-1:0]master_memory[NO_OF_SLAVES*ADDRESS_WIDTH-1:0];
 
   bit [ADDRESS_WIDTH-1:0]paddr;
 
-  // Variable: tx_type
-  // Used for declaring whether write or read is done
+  //Variable: tx_type
+  //Used for declaring whether write or read is done
   tx_type_e tx_type;
 
-  // Variable: slave_no
-  // Used to indicate the slave number
+  //Variable: slave_no
+  //Used to indicate the slave number
   slave_no_e slave_no;
 
-  // Variable: oper_phases;
-  // Used for different phase operations
+  //Variable: oper_phases;
+  //Used for different phase operations
   operation_states_e oper_phases;
+ 
+  bit [DATA_WIDTH-1:0] slave_1  [63:0]; // ommitting 7 address locations for memory gap between each slave
+  bit [DATA_WIDTH-1:0] slave_2  [133:70];
+  bit [DATA_WIDTH-1:0] slave_3  [203:140];
+  bit [DATA_WIDTH-1:0] slave_4  [273:210];
+  bit [DATA_WIDTH-1:0] slave_5  [343:280];
+  bit [DATA_WIDTH-1:0] slave_6  [413:350];
+  bit [DATA_WIDTH-1:0] slave_7  [483:420];
+  bit [DATA_WIDTH-1:0] slave_8  [553:490];
+  bit [DATA_WIDTH-1:0] slave_9  [623:560];
+  bit [DATA_WIDTH-1:0] slave_10 [693:630];
+  bit [DATA_WIDTH-1:0] slave_11 [763:700];
+  bit [DATA_WIDTH-1:0] slave_12 [833:770];
+  bit [DATA_WIDTH-1:0] slave_13 [903:840];
+  bit [DATA_WIDTH-1:0] slave_14 [973:910];
+  bit [DATA_WIDTH-1:0] slave_15 [1043:980];
+  bit [DATA_WIDTH-1:0] slave_16 [1113:1050];
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
