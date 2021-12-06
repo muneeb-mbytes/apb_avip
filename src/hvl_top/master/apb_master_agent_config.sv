@@ -50,15 +50,16 @@ class apb_master_agent_config extends uvm_object;
   bit [DATA_WIDTH-1:0] slave_15 [1043:980];
   bit [DATA_WIDTH-1:0] slave_16 [1113:1050];*/
 
-  //Max_Address_range
-  //Declaring enum of max address ranges of slaves
-  //typedef enum bit [1050:0]{
-    //1 = 63,
-    //2 = 133,
-    //3 = 203,
-  //}max_address_range_e;
+  //Variable : master_memory
+  //Used to store all the data from the slaves
+  bit [DATA_WIDTH-1:0]master_memory[289:0];
 
+  //Variable : master_max_assry
+  //An associative array used to store the max address ranges of every slave
   bit [DATA_WIDTH-1:0]master_max_array[int];
+
+  //Variable : master_min_array
+  //An associative array used to store the min address ranges of every slave
   bit [DATA_WIDTH-1:0]master_min_array[int];
 
   //-------------------------------------------------------
@@ -66,8 +67,8 @@ class apb_master_agent_config extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "apb_master_agent_config");
   extern function void do_print(uvm_printer printer);
-  extern task mem_mapping_max(int i, bit [238:0]value);
-  extern task mem_mapping_min(int i, bit [238:0]value);
+  extern function void mem_mapping_max(int i, bit [238:0]value);
+  extern function void mem_mapping_min(int i, bit [238:0]value);
 
 endclass : apb_master_agent_config
 
@@ -95,15 +96,24 @@ function void apb_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("is_active",     is_active,    $bits(is_active),     UVM_DEC);
   printer.print_field ("has_coverage",  has_coverage, $bits(has_coverage),  UVM_DEC);
   printer.print_field ("no_of_slaves",  no_of_slaves, $bits(no_of_slaves),  UVM_DEC);
+  foreach(master_max_array[i]) begin
+    printer.print_field("master_max_array_index",i,$bits(i),UVM_DEC);
+    printer.print_field("master_max_array_value",master_max_array[i],$bits(master_max_array[i]),UVM_DEC);
+  end
+  foreach(master_min_array[i]) begin
+    printer.print_field("master_min_array_index",i,$bits(i),UVM_DEC);
+    printer.print_field("master_min_array_value",master_min_array[i],$bits(master_min_array[i]),UVM_DEC);
+  end
 
 endfunction : do_print
 
-task apb_master_agent_config::mem_mapping_max(int i, bit [238:0]value);
+function void apb_master_agent_config::mem_mapping_max(int i, bit [238:0]value);
   master_max_array[i] = value;
-endtask : mem_mapping_max
+endfunction : mem_mapping_max
 
-task apb_master_agent_config::mem_mapping_min(int i, bit [238:0]value);
+function void apb_master_agent_config::mem_mapping_min(int i, bit [238:0]value);
   master_min_array[i] = value;
-endtask : mem_mapping_min
+endfunction : mem_mapping_min
+
 `endif
 

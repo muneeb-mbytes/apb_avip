@@ -37,6 +37,14 @@ package apb_global_pkg;
   //Maximum Value is 32
   parameter int DATA_WIDTH = 32;
 
+  //Parameter : SLAVE_MEMORY_SIZE
+  //Sets the memory size of the slave in KB
+  parameter int SLAVE_MEMORY_SIZE = 12;
+
+  //Parameter : SLAVE_MEMORY_GAP
+  //Sets the memory gap size of the slave
+  parameter int SLAVE_MEMORY_GAP = 2;
+
   //Parameter : transfer_size
   //Used to declare the size of bits will be transferred
   //Maximum value is 32bits
@@ -156,6 +164,7 @@ package apb_global_pkg;
   // Enum : slave_max_address
   // Used to declare the slave max address range for 
   // respective slave
+  // 3 bits are given as memory gap bwtween eaxh slave
   //-------------------------------------------------------
   typedef enum bit[237:0] {
     S0 = 238'd12,
