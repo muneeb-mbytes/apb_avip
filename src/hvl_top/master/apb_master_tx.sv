@@ -53,6 +53,10 @@
   //Goes high when a transfer fails
   bit pslverr;
 
+  //variable : transfer_size
+  //<TODO>
+  rand transfer_size_e transfer_size;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
