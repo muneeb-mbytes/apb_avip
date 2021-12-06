@@ -44,7 +44,8 @@ function void apb_master_seq_item_converter::from_class(input apb_master_tx inpu
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pprot = \n %b",output_conv.pprot),UVM_LOW);
 
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pselx = \n %b",output_conv.pselx),UVM_LOW);
-  output_conv.pselx = input_conv.pselx;
+  //output_conv.pselx = input_conv.pselx;
+  $cast(output_conv.pselx,input_conv.pselx);
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pselx = \n %b",output_conv.pselx),UVM_LOW);
 
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pwrite = \n %p",output_conv.pwrite),UVM_LOW);
@@ -91,10 +92,14 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
    `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pprot = \n %p",output_conv_h.pprot),UVM_LOW);
  
    `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pselx = \n %p",output_conv_h.pselx),UVM_LOW);
-   output_conv_h.pselx = input_conv.pselx;
+   $cast(output_conv_h.pselx,input_conv.pselx);
+   //output_conv_h.pselx = input_conv.pselx;
    `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pselx = \n %p",output_conv_h.pselx),UVM_LOW);
 
    //output_conv_h.tx_type.value = input_conv.pwrite;
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize paddr = \n %p",output_conv_h.paddr),UVM_LOW);
+  $cast(output_conv_h.tx_type,input_conv.pwrite);
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize paddr = \n %p",output_conv_h.paddr),UVM_LOW);
   
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize paddr = \n %p",output_conv_h.paddr),UVM_LOW);
   output_conv_h.paddr = input_conv.paddr;
@@ -131,8 +136,8 @@ function void apb_master_seq_item_converter::do_print(uvm_printer printer);
     printer.print_field($sformatf("pwdata"),apb_st.pwdata,DATA_WIDTH,UVM_DEC);
     printer.print_field($sformatf("prdata"),apb_st.prdata,DATA_WIDTH,UVM_DEC);
     printer.print_field("pprot",apb_st.pprot,2,UVM_BIN);
-    printer.print_field("pselx",apb_st.pselx,NO_OF_SLAVES,UVM_BIN);
-    //printer.print_field("pwrite",apb_st.tx_type,1,UVM_BIN);
+    printer.print_field("pselx",apb_st.pselx,$bits(apb_st.pselx),UVM_BIN);
+    printer.print_field("pwrite",apb_st.pwrite,1,UVM_BIN);
     printer.print_field("pstrb",apb_st.pstrb,DATA_WIDTH/8,UVM_BIN);
     printer.print_field("pslverr",apb_st.pslverr,1,UVM_BIN);
     //printer.print_field("pready",apb_st.pready,1,UVM_BIN);

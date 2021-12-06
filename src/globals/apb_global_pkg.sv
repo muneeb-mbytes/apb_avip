@@ -9,7 +9,7 @@ package apb_global_pkg;
 
   //Parameter : NO_OF_SLAVES
   //Used to set number of slaves required
-  parameter int NO_OF_SLAVES = 4;
+  parameter int NO_OF_SLAVES = 13;
 
   //Parameter : MASTER_AGENT_ACTIVE
   //Used to set the master agent either active or passive
@@ -115,24 +115,24 @@ package apb_global_pkg;
   // Enum : slave_no_e
   // Used to declare the slave number by assigning the value for encoding
   //-------------------------------------------------------
-  //typedef enum bit [16:1] {
-  //  SLAVE_1 = 16'd1,
-  //  SLAVE_2 = 16'd2,
-  //  SLAVE_3 = 16'd4,
-  //  SLAVE_4 = 16'd8,
-  //  SLAVE_5 = 16'd16,
-  //  SLAVE_6 = 16'd32,
-  //  SLAVE_7 = 16'd64,
-  //  SLAVE_8 = 16'd128,
-  //  SLAVE_9 = 16'd256,
-  //  SLAVE_10 = 16'd512,
-  //  SLAVE_11 = 16'd1024,
-  //  SLAVE_12 = 16'd2048,
-  //  SLAVE_13 = 16'd4096,
-  //  SLAVE_14 = 16'd8192,
-  //  SLAVE_15 = 16'd16384,
-  //  SLAVE_16 = 16'd32768
-  //}slave_no_e;
+  typedef enum bit [15:0] {
+    SLAVE_0 = 16'd1,
+    SLAVE_1 = 16'd2,
+    SLAVE_2 = 16'd4,
+    SLAVE_3 = 16'd8,
+    SLAVE_4 = 16'd16,
+    SLAVE_5 = 16'd32,
+    SLAVE_6 = 16'd64,
+    SLAVE_7 = 16'd128,
+    SLAVE_8 = 16'd256,
+    SLAVE_9 = 16'd512,
+    SLAVE_10 = 16'd1024,
+    SLAVE_11 = 16'd2048,
+    SLAVE_12 = 16'd4096,
+    SLAVE_13 = 16'd8192,
+    SLAVE_14 = 16'd16384,
+    SLAVE_15 = 16'd32768
+  }slave_no_e;
 
   //-------------------------------------------------------
   // Struct : apb_transfer_char_s
