@@ -37,6 +37,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_master_cfg_converter::from_class(input apb_master_agent_config input_conv_h, output apb_transfer_cfg_s output_conv);
   output_conv.paddr = input_conv_h.paddr; 
+  `uvm_info("apb_master_cfg_converter",$sformatf("after randomizing addr = \n %p",output_conv.paddr),UVM_LOW);
 endfunction:from_class
 
 //---------------------------------------------------------------------------------------------
