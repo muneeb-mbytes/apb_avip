@@ -31,7 +31,6 @@
   //Write when pwrite is 1 and read is 0
   //rand bit pwrite;
   rand tx_type_e tx_type;
-  
 
   //Variable : pwdata
   //Used to store the wdata
