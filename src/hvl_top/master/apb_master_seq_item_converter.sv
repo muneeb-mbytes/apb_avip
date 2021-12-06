@@ -38,7 +38,6 @@ endfunction: new
 function void apb_master_seq_item_converter::from_class(input apb_master_tx input_conv, 
                                                         output apb_transfer_char_s output_conv);
   
-  $cast(output_conv.pwrite,input_conv.tx_type);                                                      
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("----------------------------------------------------------------------"),UVM_LOW);
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pprot = \n %b",output_conv.pprot),UVM_LOW);
   output_conv.pprot = input_conv.pprot;
