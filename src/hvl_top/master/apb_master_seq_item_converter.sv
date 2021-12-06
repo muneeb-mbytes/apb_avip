@@ -51,11 +51,11 @@ function void apb_master_seq_item_converter::from_class(input apb_master_tx inpu
    `uvm_info("apb_master_seq_item_conv_class",
     $sformatf("After randomize pselx = \n %p",output_conv.pselx),UVM_LOW);
 
-     `uvm_info("apb_master_seq_item_conv_class",
-    $sformatf("Before randomize pwrite = \n %p",output_conv.pwrite),UVM_LOW);
- output_conv.pwrite = input_conv.pwrite;
-  `uvm_info("apb_master_seq_item_conv_class",
-    $sformatf("After randomizing pwrite = \n %p",output_conv.pwrite),UVM_LOW);
+   //  `uvm_info("apb_master_seq_item_conv_class",
+//    $sformatf("Before randomize pwrite = \n %p",output_conv.pwrite),UVM_LOW);
+ //output_conv.pwrite = input_conv.pwrite;
+  //`uvm_info("apb_master_seq_item_conv_class",
+    //$sformatf("After randomizing pwrite = \n %p",output_conv.pwrite),UVM_LOW);
 
      `uvm_info("apb_master_seq_item_conv_class",
     $sformatf("before writnig addr = \n %p",output_conv.paddr),UVM_LOW);
