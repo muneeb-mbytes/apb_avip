@@ -41,14 +41,27 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
   // output_conv.pprot = input_conv_h.pprot;
   //output_conv.pselx = input_conv_h.pselx;
   //output_conv.pwrite = input_conv_h.pwrite;
-  output_conv.pwdata = input_conv_h.pwdata;
-  //output_conv.pstrb = input_conv_h.pstrb;
-  output_conv.pslverr = input_conv_h.pslverr;
+  //output_conv.pstrb = input_conv_h.pstrb;  
   //output_conv.pready = input_conv_h.pready;
+ 
+ `uvm_info("apb_seq_item_conv_from_class",$sformatf("----------------------------------------"),UVM_LOW);
+ 
+ `uvm_info("apb_slave_seq_item_conv_class",$sformatf("Before ramdomizing pwdata = \n %p",output_conv.pwdata),UVM_LOW);
+  output_conv.pwdata = input_conv_h.pwdata;
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pwdata = \n %p",output_conv.pwdata),UVM_LOW); 
+    
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("Before ramdomizing pslverr = \n %p",output_conv.pslverr),UVM_LOW);
+  output_conv.pslverr = input_conv_h.pslverr;
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pslverr = \n %p",output_conv.pslverr),UVM_LOW);
+  
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("Before ramdomizing prdata = \n %p",output_conv.prdata),UVM_LOW);
   output_conv.prdata = input_conv_h.prdata;
-  //`uvm_info("apb_slave_seq_item_conv","apb_from_class",UVM_LOW);
-  output_conv.no_of_wait_states = input_conv_h.no_of_wait_states;
-endfunction: from_class 
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing prdata = \n %p",output_conv.prdata),UVM_LOW);
+ 
+   output_conv.no_of_wait_states = input_conv_h.no_of_wait_states;
+ `uvm_info("apb_seq_item_conv_from_class",$sformatf("----------------------------------------"),UVM_LOW);
+
+ endfunction: from_class 
 
 //--------------------------------------------------------------------------------------------
 // Function: to_class
@@ -64,14 +77,27 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   //output_conv_h.pprot = input_conv.pprot;
   //output_conv_h.pselx = input_conv.pselx;
   //output_conv_h.pwrite = input_conv.pwrite;
-  output_conv_h.pwdata = input_conv.pwdata;
   //output_conv_h.pstrb = input_conv.pstrb;
-  output_conv_h.pslverr = input_conv.pslverr;
   //output_conv_h.pready = input_conv.pready;
+  
+  `uvm_info("apb_seq_item_conv_to_class",$sformatf("---------------------------------"),UVM_LOW);
+
+  `uvm_info("apb_seq_item_conv_class",$sformatf("Before randomizing the pwdata = \n %p",output_conv_h.pwdata),UVM_LOW);
+  output_conv_h.pwdata = input_conv.pwdata;
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pwdata = \n %p",output_conv_h.pwdata),UVM_LOW);
+
+  `uvm_info("apb_seq_item_conv_class",$sformatf("Before randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_LOW);
+  output_conv_h.pslverr = input_conv.pslverr;
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_LOW);
+
+  `uvm_info("apb_seq_item_conv_class",$sformatf("Before randomizing the prdata = \n %p",output_conv_h.prdata),UVM_LOW);
   output_conv_h.prdata = input_conv.prdata;
-  //`uvm_info("apb_slave_seq_item_conv","apb_to_class",UVM_LOW);
+ `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the prdata = \n %p",output_conv_h.prdata),UVM_LOW);
+  
   output_conv_h.no_of_wait_states = input_conv.no_of_wait_states;
-    
+
+ `uvm_info("apb_seq_item_conv_class_to_class",$sformatf("----------------------------------------"),UVM_LOW);
+
 endfunction: to_class
 
 //-------------------------------------------------------
@@ -84,13 +110,15 @@ function void apb_slave_seq_item_converter::do_print(uvm_printer printer);
   
     printer.print_field($sformatf("pwdata"),apb_st.pwdata,DATA_WIDTH,UVM_DEC);
     printer.print_field($sformatf("prdata"),apb_st.prdata,DATA_WIDTH,UVM_DEC);
+    printer.print_field("pslverr",apb_st.pslverr,1,UVM_BIN);
+    printer.print_field("no_of_wait_states",apb_st.no_of_wait_states,UVM_DEC);
+
     //printer.print_field("pprot",apb_st.pprot,2,UVM_BIN);
     //printer.print_field("pselx",apb_st.pselx,NO_OF_SLAVES,UVM_BIN);
     //printer.print_field("pwrite",apb_st.pwrite,1,UVM_BIN);
     //printer.print_field("pstrb",apb_st.pstrb,DATA_WIDTH/8,UVM_BIN);
-    printer.print_field("pslverr",apb_st.pslverr,1,UVM_BIN);
     //printer.print_field("pready",apb_st.pready,1,UVM_BIN);
-    printer.print_field("no_of_wait_states",apb_st.no_of_wait_states,UVM_DEC);
-endfunction: do_print
+  
+  endfunction: do_print
 `endif
 
