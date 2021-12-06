@@ -38,6 +38,7 @@ endfunction: new
 function void apb_master_seq_item_converter::from_class(input apb_master_tx input_conv, 
                                                         output apb_transfer_char_s output_conv);
   
+  $cast(output_conv.pwrite,input_conv.tx_type);                                                      
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("----------------------------------------------------------------------"),UVM_LOW);
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pprot = \n %b",output_conv.pprot),UVM_LOW);
   output_conv.pprot = input_conv.pprot;
@@ -61,8 +62,7 @@ function void apb_master_seq_item_converter::from_class(input apb_master_tx inpu
 
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pstrb = \n %p",output_conv.pstrb),UVM_LOW);
   output_conv.pstrb = input_conv.pstrb;
-  `uvm_info("apb_master_seq_item_conv_class",
-    $sformatf("After randomize pstrb = \n %p",output_conv.pstrb),UVM_LOW);
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pstrb = \n %p",output_conv.pstrb),UVM_LOW);
 
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pslverr = \n %p",output_conv.pslverr),UVM_LOW);
   output_conv.pslverr = input_conv.pslverr;
@@ -73,9 +73,7 @@ function void apb_master_seq_item_converter::from_class(input apb_master_tx inpu
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize prdata = \n %p",output_conv.prdata),UVM_LOW);
 
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("----------------------------------------------------------------------"),UVM_LOW);
-
-  //`uvm_info("apb_master_seq_item_conv","apb_from_class",UVM_LOW);
-  
+ 
 endfunction: from_class 
 
 //--------------------------------------------------------------------------------------------
@@ -89,17 +87,37 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
                                                       output apb_master_tx output_conv_h);
   output_conv_h = new();
 
-  output_conv_h.pprot = input_conv.pprot;
-  output_conv_h.pselx = input_conv.pselx;
-  //output_conv_h.tx_type.value = input_conv.pwrite;
-  output_conv_h.paddr = input_conv.paddr;
-  output_conv_h.pwdata = input_conv.pwdata;
-  output_conv_h.pstrb = input_conv.pstrb;
-  output_conv_h.pslverr = input_conv.pslverr;
-  //output_conv_h.pready = input_conv.pready;
-  output_conv_h.prdata = input_conv.prdata;
+   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pprot = \n %p",output_conv_h.pprot),UVM_LOW);
+   output_conv_h.pprot = input_conv.pprot;
+   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pprot = \n %p",output_conv_h.pprot),UVM_LOW);
+ 
+   `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pselx = \n %p",output_conv_h.pselx),UVM_LOW);
+   output_conv_h.pselx = input_conv.pselx;
+   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pselx = \n %p",output_conv_h.pselx),UVM_LOW);
+
+   //output_conv_h.tx_type.value = input_conv.pwrite;
   
-  //`uvm_info("apb_master_seq_item_conv","apb_to_class",UVM_LOW);
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize paddr = \n %p",output_conv_h.paddr),UVM_LOW);
+  output_conv_h.paddr = input_conv.paddr;
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize paddr = \n %p",output_conv_h.paddr),UVM_LOW);
+
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pwdata = \n %p",output_conv_h.pwdata),UVM_LOW);  
+  output_conv_h.pwdata = input_conv.pwdata;
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pwdata = \n %p",output_conv_h.pwdata),UVM_LOW);
+
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pstrb = \n %p",output_conv_h.pstrb),UVM_LOW); 
+    output_conv_h.pstrb = input_conv.pstrb;
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pwdta = \n %p",output_conv_h.pstrb),UVM_LOW);
+ 
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize pslverr = \n %p",output_conv_h.pslverr),UVM_LOW);
+  output_conv_h.pslverr = input_conv.pslverr;
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pslverr = \n %p",output_conv_h.pslverr),UVM_LOW);  
+
+  `uvm_info("apb_master_seq_item_conv_class",$sformatf("Before randomize prdata = \n %p",output_conv_h.prdata),UVM_LOW);  
+  output_conv_h.prdata = input_conv.prdata;
+   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize prdata = \n %p",output_conv_h.prdata),UVM_LOW);
+
+  `uvm_info("apb_master_seq_item_conv",$sformatf("------------------------------------------------"),UVM_LOW);
     
 endfunction: to_class
 

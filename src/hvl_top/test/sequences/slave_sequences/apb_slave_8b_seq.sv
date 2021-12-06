@@ -32,7 +32,7 @@ endfunction : new
 task apb_slave_8b_seq::body();
   req=apb_slave_tx::type_id::create("req");
   start_item(req);
-  if(!req.randomize())
+  if(!req.randomize() with {req.transfer_size == WORD;})
   begin
     `uvm_error(get_type_name(),"randomization failed");
   end
