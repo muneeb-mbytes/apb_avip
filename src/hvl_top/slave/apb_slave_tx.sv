@@ -8,8 +8,6 @@
 class apb_slave_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_slave_tx)
   
-
-
   //Variable : pselx
   //Used to select the slave
   //bit [NO_OF_SLAVES-1:0]pselx;
@@ -44,12 +42,12 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : no_of_wait_states
   //Used to decide the number of wait states
-  rand int no_of_wait_states;
   
   //variable : transfer_size
   //<TODO>
   rand transfer_size_e transfer_size;
 
+  rand bit [2:0]no_of_wait_states;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions

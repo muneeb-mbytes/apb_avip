@@ -29,8 +29,8 @@
 
   //Variable : pwrite
   //Write when pwrite is 1 and read is 0
-  rand bit pwrite;
-  //rand tx_type_e type_e;
+  //rand bit pwrite;
+  rand tx_type_e tx_type;
   
 
   //Variable : pwdata
@@ -108,7 +108,7 @@ function void apb_master_tx::do_copy (uvm_object rhs);
   pprot   = apb_master_tx_copy_obj.pprot;
   pselx   = apb_master_tx_copy_obj.pselx;
   penable = apb_master_tx_copy_obj.penable;
-  pwrite  = apb_master_tx_copy_obj.pwrite;
+  //pwrite  = apb_master_tx_copy_obj.pwrite;
   pwdata  = apb_master_tx_copy_obj.pwdata;
   pstrb   = apb_master_tx_copy_obj.pstrb;
   pready  = apb_master_tx_copy_obj.pready;
@@ -137,7 +137,7 @@ function bit apb_master_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   pprot   == apb_master_tx_compare_obj.pprot &&
   pselx   == apb_master_tx_compare_obj.pselx &&
   penable == apb_master_tx_compare_obj.penable &&
-  pwrite  == apb_master_tx_compare_obj.pwrite &&
+  //pwrite  == apb_master_tx_compare_obj.pwrite &&
   pwdata  == apb_master_tx_compare_obj.pwdata &&
   pstrb   == apb_master_tx_compare_obj.pstrb &&
   pready  == apb_master_tx_compare_obj.pready &&
@@ -160,13 +160,13 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field ("pprot",   pprot,   $bits(pprot),   UVM_DEC);
   printer.print_field ("pselx",   pselx,   $bits(pselx),   UVM_DEC);
   printer.print_field ("penable", penable, $bits(penable), UVM_DEC);
-  printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
+  //printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
   printer.print_field ("pwdata",  pwdata,  $bits(pwdata),  UVM_DEC);
   printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_DEC);
   printer.print_field ("pready",  pready,  $bits(pready),  UVM_DEC);
   printer.print_field ("prdata",  prdata,  $bits(prdata),  UVM_DEC);
   printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
-//printer.print_string("type_e",this.type_e);
+  printer.print_string("tx_type",tx_type.name());
 endfunction : do_print
 
 `endif
