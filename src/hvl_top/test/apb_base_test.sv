@@ -94,14 +94,14 @@ function void apb_base_test::setup_apb_master_agent_config();
   `uvm_info(get_type_name(),$sformatf("\nAPB_MASTER_CONFIG\n%s",apb_env_cfg_h.apb_master_agent_cfg_h.sprint),UVM_LOW);
   for(int i =0; i<NO_OF_SLAVES; i++) begin
     if(i == 0) begin
-      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_max(i,11);
+      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_max(i,SLAVE_MEMORY_SIZE - 1);
       apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_min(i, 0);
       local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_array[i];
       local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_array[i];
     end
     else begin
-      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_max(i,local_max_address + 14);
-      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_min(i,local_min_address + 14);
+      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_max(i,local_max_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
+      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_min(i,local_min_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
       local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_array[i];
       local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_array[i];
     end
