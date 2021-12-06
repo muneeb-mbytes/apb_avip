@@ -77,8 +77,8 @@ endfunction : setup_apb_env_config
 // Sets apb master agent config into configdb 
 //--------------------------------------------------------------------------------------------
 function void apb_base_test::setup_apb_master_agent_config();
-  bit [300:0]local_min_address;
-  bit [300:0]local_max_address;
+  bit [11:0]local_min_address;
+  bit [11:0]local_max_address;
   apb_env_cfg_h.apb_master_agent_cfg_h = apb_master_agent_config::type_id::create("apb_master_agent_config");
   if(MASTER_AGENT_ACTIVE === 1) begin
     apb_env_cfg_h.apb_master_agent_cfg_h.is_active    = uvm_active_passive_enum'(UVM_ACTIVE);

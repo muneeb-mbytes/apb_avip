@@ -67,8 +67,8 @@ class apb_master_agent_config extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "apb_master_agent_config");
   extern function void do_print(uvm_printer printer);
-  extern function void mem_mapping_max(int i, bit [238:0]value);
-  extern function void mem_mapping_min(int i, bit [238:0]value);
+  extern function void mem_mapping_max(int i, bit [11:0]value);
+  extern function void mem_mapping_min(int i, bit [11:0]value);
 
 endclass : apb_master_agent_config
 
@@ -107,11 +107,11 @@ function void apb_master_agent_config::do_print(uvm_printer printer);
 
 endfunction : do_print
 
-function void apb_master_agent_config::mem_mapping_max(int i, bit [238:0]value);
+function void apb_master_agent_config::mem_mapping_max(int i, bit [11:0]value);
   master_max_array[i] = value;
 endfunction : mem_mapping_max
 
-function void apb_master_agent_config::mem_mapping_min(int i, bit [238:0]value);
+function void apb_master_agent_config::mem_mapping_min(int i, bit [11:0]value);
   master_min_array[i] = value;
 endfunction : mem_mapping_min
 
