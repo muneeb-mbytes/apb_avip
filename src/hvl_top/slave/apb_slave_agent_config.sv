@@ -23,13 +23,13 @@ class apb_slave_agent_config extends uvm_object;
   
   //Variable: slave_no
   //Used to indicate the slave number
-  slave_no_e slave_no;
+  //slave_no_e slave_no;
 
   //bit [63:0] address_range_low;
    
-  bit [300:0]max_address;
+  bit [11:0]max_address;
 
-  bit [300:0]min_address;
+  bit [11:0]min_address;
   
   //Variable : slave_memory
   //Declaration of slave_memory to store the data from master
