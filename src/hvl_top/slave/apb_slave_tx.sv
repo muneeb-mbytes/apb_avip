@@ -45,6 +45,11 @@ class apb_slave_tx extends uvm_sequence_item;
   //Variable : no_of_wait_states
   //Used to decide the number of wait states
   rand int no_of_wait_states;
+  
+  //variable : transfer_size
+  //<TODO>
+  rand transfer_size_e transfer_size;
+
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
