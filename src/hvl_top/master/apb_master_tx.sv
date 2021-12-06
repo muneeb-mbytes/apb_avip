@@ -13,15 +13,15 @@
 
   //Variable : paddr
   //Address selected in apb_slave
-  rand bit [ADDRESS_WIDTH-1:0] paddr;
+  rand bit [ADDRESS_WIDTH-1:0]paddr;
 
   //Variable : pprot
   //Used for different access
-  rand bit [2:0] pprot;
+  rand bit [2:0]pprot;
 
   //Variable : pselx
   //Used to select the slave
-  bit [NO_OF_SLAVES-1:0] pselx;
+  rand slave_no_e pselx;
 
   //Variable : penable
   //Used to write data when penable is high
@@ -32,13 +32,17 @@
   //rand bit pwrite;
   rand tx_type_e tx_type;
 
+  //variable : transfer_size
+  //Used to dcide the transfer size of the pwdata
+  rand transfer_size_e transfer_size;
+
   //Variable : pwdata
   //Used to store the wdata
-  rand bit [DATA_WIDTH-1:0] pwdata;
+  rand bit [DATA_WIDTH-1:0]pwdata;
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
-  rand bit [(DATA_WIDTH/8)-1:0] pstrb;              
+  rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
 
   //Variable : pready
   //Used to extend the transfer
@@ -46,15 +50,11 @@
 
   //Variable : prdata
   //Used to store the rdata from the slave
-  bit [DATA_WIDTH-1:0] prdata;
+  bit [DATA_WIDTH-1:0]prdata;
 
   //Variable : pslverr
   //Goes high when a transfer fails
   bit pslverr;
-
-  //variable : transfer_size
-  //<TODO>
-  rand transfer_size_e transfer_size;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -71,10 +71,55 @@
   // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
   constraint pselx_c  { $onehot0(pselx) == 1; }
 
-  constraint paddr_c  { paddr inside {[0:7]}; }
+  constraint pselx_c3 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
+
+  constraint paddr_c_1 {if(pselx == SLAVE_0)
+                          //paddr>=0 && paddr <12;
+                          paddr inside {[0:11]};
+                        else if(pselx == SLAVE_1)
+                          paddr>= 14 && paddr < 26;
+                        else if(pselx == SLAVE_2)
+                          paddr>= 28 && paddr < 40;
+                        else if(pselx == SLAVE_3)
+                          paddr>= 42 && paddr <= 53;
+                        else if(pselx == SLAVE_4)
+                          paddr>= 56 && paddr <= 67;
+                        else if(pselx == SLAVE_5)
+                          paddr>= 70 && paddr <= 81;
+                        else if(pselx == SLAVE_6)
+                          paddr>= 84 && paddr <= 95;
+                        else if(pselx == SLAVE_7)
+                          paddr>= 98 && paddr <= 109;
+                        else if(pselx == SLAVE_8)
+                          paddr>= 112 && paddr < 124;
+                        else if(pselx == SLAVE_9)
+                          paddr>= 126 && paddr <= 137;
+                        else if(pselx == SLAVE_10)
+                          paddr>= 140 && paddr <= 151;
+                        else if(pselx == SLAVE_11)
+                          paddr>= 154 && paddr <= 165;
+                        else if(pselx == SLAVE_12)
+                          paddr>= 168 && paddr <= 179;
+                        else if(pselx == SLAVE_13)
+                          paddr>= 182 && paddr <= 193;
+                        else if(pselx == SLAVE_14)
+                          paddr>= 196 && paddr <= 207;
+                        else if(pselx == SLAVE_15)
+                          paddr>= 210 && paddr <= 221;
+                        }
+
   //TODO(saha): use below for inline constraints
   // constraint pwdata_c { pwdata WRITE | READ }
-  
+ 
+  //This constraint is used to decide the pwdata size based om transfer size
+  /*constraint transfer_size_c {if(transfer_size == BYTE)
+                                pwdata inside {[7:0]};
+                              else if(transfer_size == WORD)
+                                pwdata inside {[15:8]};
+                              else if(transfer_size == WORD_AND_BYTE)
+                                pwdata inside {[23:16]};
+                              else 
+                                pwdata inside {[31:24]};}*/
 endclass : apb_master_tx
 
 //--------------------------------------------------------------------------------------------
@@ -157,7 +202,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   
   printer.print_field ("paddr",   paddr,   $bits(paddr),   UVM_DEC);
   printer.print_field ("pprot",   pprot,   $bits(pprot),   UVM_DEC);
-  printer.print_field ("pselx",   pselx,   $bits(pselx),   UVM_DEC);
+  printer.print_string ("pselx",   pselx.name());
   printer.print_field ("penable", penable, $bits(penable), UVM_DEC);
   //printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
   printer.print_field ("pwdata",  pwdata,  $bits(pwdata),  UVM_DEC);
@@ -167,6 +212,11 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
   printer.print_string("tx_type",tx_type.name());
 endfunction : do_print
+
+//function bit apb_master_tx::slave_select();
+  //`uvm_info(get_type_name(),"SLAVE_SELECT",UVM_LOW);
+  //return '0;
+//endfunction : slave_select
 
 `endif
 
