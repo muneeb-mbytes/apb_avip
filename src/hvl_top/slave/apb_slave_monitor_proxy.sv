@@ -94,7 +94,7 @@ task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
   
   apb_slave_packet = apb_slave_tx::type_id::create("slave_packet");
   
-  apb_slave_mon_bfm_h.wait_for_presetn();
+  apb_slave_mon_bfm_h.wait_for_preset_n();
   apb_slave_mon_bfm_h.wait_for_idle_state();
   
   //super.run_phase(phase);

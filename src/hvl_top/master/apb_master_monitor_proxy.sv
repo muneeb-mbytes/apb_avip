@@ -112,7 +112,7 @@ task apb_master_monitor_proxy::run_phase(uvm_phase phase);
 
   apb_master_packet = apb_master_tx::type_id::create("master_packet");
   
-  apb_master_mon_bfm_h.wait_for_presetn();
+  apb_master_mon_bfm_h.wait_for_preset_n();
   apb_master_mon_bfm_h.wait_for_idle_state();
 
   //super.run_phase(phase);

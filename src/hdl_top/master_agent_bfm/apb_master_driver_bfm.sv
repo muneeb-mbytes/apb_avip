@@ -11,7 +11,7 @@ import apb_global_pkg::*;
 //  intf - apb Interface
 //--------------------------------------------------------------------------------------------
 interface apb_master_driver_bfm (input  bit   pclk,
-                                 input  bit   presetn,
+                                 input  bit   preset_n,
                                  input  bit   pready,
                                  input  bit   pslverr,
                                  input  logic [DATA_WIDTH-1:0] prdata,
@@ -48,16 +48,16 @@ interface apb_master_driver_bfm (input  bit   pclk,
   end
  
   //-------------------------------------------------------
-  // Task: wait_for_presetn
+  // Task: wait_for_preset_n
   // Waiting for the system reset to be active low
   //-------------------------------------------------------
-  task wait_for_presetn();
-    @(negedge presetn);
+  task wait_for_preset_n();
+    @(negedge preset_n);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)
  
-    @(posedge presetn);
+    @(posedge preset_n);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
-  endtask: wait_for_presetn
+  endtask: wait_for_preset_n
   
   //-------------------------------------------------------
   // Task: drive_to_bfm

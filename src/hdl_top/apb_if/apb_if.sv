@@ -7,7 +7,7 @@
 //--------------------------------------------------------------------------------------------
 import apb_global_pkg::*;
 
-interface apb_if (input pclk, input presetn);
+interface apb_if (input pclk, input preset_n);
   
   // Variable : penable
   // Used to write data when penable is high

@@ -19,7 +19,7 @@ module apb_slave_agent_bfm(apb_if intf);
   //slave driver bfm instantiation
   //-------------------------------------------------------
   apb_slave_driver_bfm apb_slave_drv_bfm_h(.pclk(intf.pclk),
-                                           .presetn(intf.presetn),
+                                           .preset_n(intf.preset_n),
                                            .pselx(intf.pselx),
                                            .penable(intf.penable),
                                            .pprot(intf.pprot),
@@ -35,7 +35,7 @@ module apb_slave_agent_bfm(apb_if intf);
   //slave monitor bfm instantiation
   //-------------------------------------------------------
   apb_slave_monitor_bfm apb_slave_mon_bfm_h (.pclk(intf.pclk),
-                                              .presetn(intf.presetn),
+                                              .preset_n(intf.preset_n),
                                               .pselx(intf.pselx),
                                               .paddr(intf.paddr),
                                               .pwrite(intf.pwrite),

@@ -23,18 +23,42 @@ import uvm_pkg::*;
     $display("HDL TOP");
   end
 
-  bit pclk=0;
-  bit presetn=1;
-  always #10 pclk = !pclk;
+  //Variable : pclk
+  //Declaration of system clock
+  bit pclk;
+
+  //Variable : preset_n
+  //Declaration of system reset
+  bit preset_n;
+
+  //-------------------------------------------------------
+  //Generation of system clock at frequency rate of 20ns
+  //-------------------------------------------------------
   initial begin
-    #40 presetn = 0;
-    #60 presetn = 1;
+    pclk = 1'b0;
+    forever #10 pclk =!pclk;
+  end
+
+  //-------------------------------------------------------
+  //Generation of system preset_n
+  //system reset can be asserted asynchronously
+  //system reset de-assertion is synchronous.
+  //-------------------------------------------------------
+  initial begin
+    preset_n = 1'b1;
+    
+    #25 preset_n = 1'b0;
+
+    repeat(2) begin
+      @(posedge pclk);
+    end
+    preset_n = 1'b1;
   end
 
   //-------------------------------------------------------
   // apb Interface Instantiation
   //-------------------------------------------------------
-  apb_if intf(pclk,presetn);
+  apb_if intf(pclk,preset_n);
 
   //-------------------------------------------------------
   // apb Master BFM Agent Instantiation
