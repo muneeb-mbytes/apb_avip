@@ -21,7 +21,7 @@ module apb_master_agent_bfm(apb_if intf);
   // master driver bfm instantiation
   //-------------------------------------------------------
   apb_master_driver_bfm apb_master_drv_bfm_h (.pclk(intf.pclk),
-                                              .presetn(intf.presetn),
+                                              .preset_n(intf.preset_n),
                                               .pselx(intf.pselx),
                                               .penable(intf.penable),
                                               .pprot(intf.pprot),
@@ -38,7 +38,7 @@ module apb_master_agent_bfm(apb_if intf);
   //master monitor bfm instantiation
   //-------------------------------------------------------
   apb_master_monitor_bfm apb_master_mon_bfm_h (.pclk(intf.pclk),
-                                              .presetn(intf.presetn),
+                                              .preset_n(intf.preset_n),
                                               .pselx(intf.pselx),
                                               .paddr(intf.paddr),
                                               .pwrite(intf.pwrite),

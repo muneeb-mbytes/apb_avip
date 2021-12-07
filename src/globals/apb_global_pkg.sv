@@ -9,7 +9,7 @@ package apb_global_pkg;
 
   //Parameter : NO_OF_SLAVES
   //Used to set number of slaves required
-  parameter int NO_OF_SLAVES = 16;
+  parameter int NO_OF_SLAVES = 4;
 
   //Parameter : MASTER_AGENT_ACTIVE
   //Used to set the master agent either active or passive

@@ -7,7 +7,7 @@
 //--------------------------------------------------------------------------------------------
 import apb_global_pkg::*; 
 interface apb_slave_monitor_bfm (input bit pclk,
-                                 input bit presetn,
+                                 input bit preset_n,
                                  input bit [2:0]pprot,
                                  input bit pslverr,
                                  input bit pready,
@@ -35,15 +35,15 @@ interface apb_slave_monitor_bfm (input bit pclk,
    `uvm_info("apb slave monitor bfm",$sformatf("APB SLAVE MONITOR BFM"),UVM_LOW);
  end
   //-------------------------------------------------------
-  // Task: wait_for_presetn
+  // Task: wait_for_preset_n
   // Waiting for the system reset to be active low
   //-------------------------------------------------------
-  task wait_for_presetn();
-    @(posedge presetn);
+  task wait_for_preset_n();
+    @(posedge preset_n);
     `uvm_info("slave_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)
-    @(negedge presetn);
+    @(negedge preset_n);
     `uvm_info("slave_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
-  endtask: wait_for_presetn
+  endtask: wait_for_preset_n
 
   //-------------------------------------------------------
   // Task: drive_idle_state
