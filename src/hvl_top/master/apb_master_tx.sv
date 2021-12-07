@@ -42,7 +42,7 @@
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
-  rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
+ rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
 
   //Variable : pready
   //Used to extend the transfer
@@ -206,7 +206,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field ("penable", penable, $bits(penable), UVM_DEC);
   //printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
   printer.print_field ("pwdata",  pwdata,  $bits(pwdata),  UVM_DEC);
-  printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_DEC);
+  printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_BIN);
   printer.print_field ("pready",  pready,  $bits(pready),  UVM_DEC);
   printer.print_field ("prdata",  prdata,  $bits(prdata),  UVM_DEC);
   //printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);

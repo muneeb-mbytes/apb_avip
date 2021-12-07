@@ -33,12 +33,12 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 
 task apb_master_16b_seq::body();
-  super.body();
+  //super.body();
   `uvm_info(get_type_name(),$sformatf("APB_MASTER_16B_SEQ_INCLUDE_"),UVM_LOW);
   req=apb_master_tx::type_id::create("req");
   start_item(req);
   `uvm_info(get_type_name(),"req_prtint",UVM_LOW);
-  if(!req.randomize()) begin
+  if(!req.randomize() with {req.pselx == SLAVE_4;}) begin
     `uvm_fatal("APB","Rand failed")
   end
   finish_item(req);
