@@ -134,13 +134,13 @@ function void apb_master_seq_item_converter::do_print(uvm_printer printer);
   apb_transfer_char_s apb_st;
   super.do_print(printer);
 
-    printer.print_field($sformatf("pwdata"),apb_st.pwdata,DATA_WIDTH,UVM_DEC);
-    printer.print_field($sformatf("prdata"),apb_st.prdata,DATA_WIDTH,UVM_DEC);
-    printer.print_field("pprot",apb_st.pprot,2,UVM_BIN);
+    printer.print_field("pwdata",apb_st.pwdata,$bits(apb_st.pwdata),UVM_DEC);
+    printer.print_field("prdata",apb_st.prdata,$bits(apb_st.pwdata),UVM_DEC);
+    printer.print_field("pprot",apb_st.pprot,$bits(apb_st.pprot),UVM_BIN);
     printer.print_field("pselx",apb_st.pselx,$bits(apb_st.pselx),UVM_BIN);
-    printer.print_field("pwrite",apb_st.pwrite,1,UVM_BIN);
-    printer.print_field("pstrb",apb_st.pstrb,DATA_WIDTH/8,UVM_BIN);
-    printer.print_field("pslverr",apb_st.pslverr,1,UVM_BIN);
+    printer.print_field("pwrite",apb_st.pwrite,$bits(apb_st.pwrite),UVM_BIN);
+    printer.print_field("pstrb",apb_st.pstrb,$bits(apb_st.pstrb),UVM_BIN);
+    printer.print_field("pslverr",apb_st.pslverr,$bits(apb_st.pslverr),UVM_BIN);
     //printer.print_field("pready",apb_st.pready,1,UVM_BIN);
 
 endfunction: do_print  

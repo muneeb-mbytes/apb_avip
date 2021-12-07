@@ -25,27 +25,30 @@ class apb_slave_agent_config extends uvm_object;
   //Used to indicate the slave number
   //slave_no_e slave_no;
 
-  //bit [63:0] address_range_low;
-   
+  //Variable : max_address
+  //Used to store the maximum address value of this slave
   bit [11:0]max_address;
 
+  //Variable : min_address
+  //Used to store the minimum address value of this slave
   bit [11:0]min_address;
   
   //Variable : slave_memory
   //Declaration of slave_memory to store the data from master
-  bit [DATA_WIDTH-1:0]slave_memory[ADDRESS_WIDTH-1:0];
-
-  //slave_max_addr_e slave_max_addr_h;
+  //bit [DATA_WIDTH-1:0]slave_memory[this.max_address:this.min_address];
+  //bit [DATA_WIDTH-1:0]slave_memory_array[int];
+  //logic [239:0]mem;
+  //bit mem[this.max_address+:8];
   
   //Variable: paddr
   //Used to indicate the slave address
-  //bit [DATA_WIDTH-1:0]paddr[max_address:min_address];
   bit [DATA_WIDTH-1:0]paddr;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_slave_agent_config");
   extern function void do_print(uvm_printer printer);
+  //extern function void slave_memory_mapping(min_address,max_address);
 
 endclass : apb_slave_agent_config
 
@@ -73,5 +76,9 @@ function void apb_slave_agent_config::do_print(uvm_printer printer);
   printer.print_field ("min_address"  ,min_address,   $bits(max_address),   UVM_DEC);
   
 endfunction : do_print
+
+//function void apb_slave_agent_config::slave_memory_mapping(min_address,max_address);
+  //bit [DATA_WIDTH-1:0]slave_array[min_address:max_address];
+//endfunction : slave_memory_mapping
 
 `endif
