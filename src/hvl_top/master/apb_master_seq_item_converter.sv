@@ -117,7 +117,7 @@ function void apb_master_seq_item_converter::do_print(uvm_printer printer);
   super.do_print(printer);
 
     printer.print_field("pwdata",apb_st.pwdata,$bits(apb_st.pwdata),UVM_DEC);
-    printer.print_field("prdata",apb_st.prdata,$bits(apb_st.prdata),UVM_DEC);
+    printer.print_field("prdata",apb_st.prdata,$bits(apb_st.pwdata),UVM_DEC);
     printer.print_field("pprot",apb_st.pprot,$bits(apb_st.pprot),UVM_BIN);
     printer.print_field("pselx",apb_st.pselx,$bits(apb_st.pselx),UVM_BIN);
     printer.print_field("pwrite",apb_st.pwrite,$bits(apb_st.pwrite),UVM_BIN);

@@ -52,7 +52,7 @@ class apb_master_agent_config extends uvm_object;
 
   //Variable : master_memory
   //Used to store all the data from the slaves
-  bit [DATA_WIDTH-1:0]master_memory[289:0];
+  bit [DATA_WIDTH-1:0]master_memory[2**NO_OF_SLAVES + (NO_OF_SLAVES-1)*SLAVE_MEMORY_GAP:0];
 
   //Variable : master_max_assry
   //An associative array used to store the max address ranges of every slave
@@ -97,12 +97,10 @@ function void apb_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("has_coverage",  has_coverage, $bits(has_coverage),  UVM_DEC);
   printer.print_field ("no_of_slaves",  no_of_slaves, $bits(no_of_slaves),  UVM_DEC);
   foreach(master_max_array[i]) begin
-    printer.print_field("master_max_array_index",i,$bits(i),UVM_DEC);
-    printer.print_field("master_max_array_value",master_max_array[i],$bits(master_max_array[i]),UVM_DEC);
+    printer.print_field($sformatf("master_max_array_value[%0d]",i),master_max_array[i],$bits(master_max_array[i]),UVM_DEC);
   end
   foreach(master_min_array[i]) begin
-    printer.print_field("master_min_array_index",i,$bits(i),UVM_DEC);
-    printer.print_field("master_min_array_value",master_min_array[i],$bits(master_min_array[i]),UVM_DEC);
+    printer.print_field($sformatf("master_min_array_value[%0d]",i),master_min_array[i],$bits(master_min_array[i]),UVM_DEC);
   end
 
 endfunction : do_print
