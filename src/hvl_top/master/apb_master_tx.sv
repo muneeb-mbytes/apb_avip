@@ -17,6 +17,7 @@
 
   //Variable : pprot
   //Used for different access
+  //rand protection_type_e pprot;
   rand bit [2:0]pprot;
 
   //Variable : pselx
@@ -212,6 +213,8 @@ function void apb_master_tx::do_print(uvm_printer printer);
   //printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
   printer.print_string("pslverr",pslverr.name());
   printer.print_string("tx_type",tx_type.name());
+  //printer.print_string("pprot",pprot.name());
+
 endfunction : do_print
 
 //function bit apb_master_tx::slave_select();
