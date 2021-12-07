@@ -28,6 +28,10 @@ class apb_slave_agent extends uvm_agent;
   // Decalring a handle for apb slave coverage
   apb_slave_coverage apb_slave_cov_h;
 
+  //Variable : apb_master_tx_h;
+  //Declaring handle for apb_master_tx
+  //apb_master_tx apb_master_tx_h;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -57,20 +61,22 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_slave_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config",apb_slave_agent_cfg_h)) begin
-   `uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config from config_db"))
-  end
+  //for(int i=0; i<NO_OF_SLAVES; i++) begin
+    //if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config[1]",apb_slave_agent_cfg_h)) begin
+      //`uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config from config_db"))
+    //end
+  //end
 
   // Have a print method in master_agent_config class and call it from here
   //`uvm_info(get_type_name(), $sformatf("The apb_slave_agent_config.slave_id = %0d", 
   //                                           slave_agent_cfg_h.slave_id), UVM_LOW);
+  `uvm_info(get_type_name(),$sformatf("SA_CFG=%0d",apb_slave_agent_cfg_h),UVM_LOW)
+  if(apb_slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
+    apb_slave_drv_proxy_h = apb_slave_driver_proxy::type_id::create("apb_slave_drv_proxy_h",this);
+    apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
+  end
 
-   if(apb_slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
-     apb_slave_drv_proxy_h = apb_slave_driver_proxy::type_id::create("apb_slave_drv_proxy_h",this);
-     apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
-   end
-
-   apb_slave_mon_proxy_h = apb_slave_monitor_proxy::type_id::create("apb_slave_mon_proxy_h",this);
+  apb_slave_mon_proxy_h = apb_slave_monitor_proxy::type_id::create("apb_slave_mon_proxy_h",this);
 
   if(apb_slave_agent_cfg_h.has_coverage) begin
     apb_slave_cov_h = apb_slave_coverage::type_id::create("apb_slave_cov_h",this);
@@ -98,8 +104,8 @@ function void apb_slave_agent::connect_phase(uvm_phase phase);
     apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_slave_cov_h.apb_slave_analysis_export);
   end
 
-
-   apb_slave_mon_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
+  //Passing the slave agent config to the slave driver proxy
+  apb_slave_mon_proxy_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
 
 endfunction: connect_phase
 
