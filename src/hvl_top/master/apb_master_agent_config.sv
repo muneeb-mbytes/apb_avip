@@ -52,7 +52,7 @@ class apb_master_agent_config extends uvm_object;
 
   //Variable : master_memory
   //Used to store all the data from the slaves
-  bit [DATA_WIDTH-1:0]master_memory[2**NO_OF_SLAVES + (NO_OF_SLAVES-1)*SLAVE_MEMORY_GAP:0];
+  bit [DATA_WIDTH-1:0]master_memory[(SLAVE_MEMORY_SIZE+SLAVE_MEMORY_GAP)*NO_OF_SLAVES:0];
 
   //Variable : master_max_assry
   //An associative array used to store the max address ranges of every slave

@@ -17,6 +17,7 @@
 
   //Variable : pprot
   //Used for different access
+  //rand protection_type_e pprot;
   rand bit [2:0]pprot;
 
   //Variable : pselx
@@ -42,7 +43,7 @@
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
-  rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
+ rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
 
   //Variable : pready
   //Used to extend the transfer
@@ -69,7 +70,7 @@
   //-------------------------------------------------------
   // pselx inside (16'd0, 16'd1, 16'd2, 16'd4 and so on), instead we can use onehot encoding
   // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
-  constraint pselx_c1  { $onehot0(pselx) == 1; }
+  constraint pselx_c1  { $countones(pselx) == 1; }
 
   constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
 
@@ -206,12 +207,14 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field ("penable", penable, $bits(penable), UVM_DEC);
   //printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
   printer.print_field ("pwdata",  pwdata,  $bits(pwdata),  UVM_DEC);
-  printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_DEC);
+  printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_BIN);
   printer.print_field ("pready",  pready,  $bits(pready),  UVM_DEC);
   printer.print_field ("prdata",  prdata,  $bits(prdata),  UVM_DEC);
   //printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
   printer.print_string("pslverr",pslverr.name());
   printer.print_string("tx_type",tx_type.name());
+  //printer.print_string("pprot",pprot.name());
+
 endfunction : do_print
 
 //function bit apb_master_tx::slave_select();
