@@ -54,7 +54,7 @@
 
   //Variable : pslverr
   //Goes high when a transfer fails
-  bit pslverr;
+  slave_error_e  pslverr;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -209,7 +209,8 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_DEC);
   printer.print_field ("pready",  pready,  $bits(pready),  UVM_DEC);
   printer.print_field ("prdata",  prdata,  $bits(prdata),  UVM_DEC);
-  printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
+  //printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
+  printer.print_string("pslverr",pslverr.name());
   printer.print_string("tx_type",tx_type.name());
 endfunction : do_print
 
