@@ -70,7 +70,7 @@
   //-------------------------------------------------------
   // pselx inside (16'd0, 16'd1, 16'd2, 16'd4 and so on), instead we can use onehot encoding
   // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
-  constraint pselx_c1  { $onehot0(pselx) == 1; }
+  constraint pselx_c1  { $countones(pselx) == 1; }
 
   constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
 

@@ -38,7 +38,7 @@ task apb_master_16b_seq::body();
   req=apb_master_tx::type_id::create("req");
   start_item(req);
   `uvm_info(get_type_name(),"req_prtint",UVM_LOW);
-  if(!req.randomize() with {req.pselx == SLAVE_2;}) begin
+  if(!req.randomize() with {req.pselx == SLAVE_1;}) begin
     `uvm_fatal("APB","Rand failed")
   end
   finish_item(req);
