@@ -70,43 +70,43 @@
   //-------------------------------------------------------
   // pselx inside (16'd0, 16'd1, 16'd2, 16'd4 and so on), instead we can use onehot encoding
   // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
-  constraint pselx_c  { $onehot0(pselx) == 1; }
+  constraint pselx_c1  { $onehot0(pselx) == 1; }
 
-  constraint pselx_c3 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
+  constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
 
-  constraint paddr_c_1 {if(pselx == SLAVE_0)
-                          //paddr>=0 && paddr <12;
-                          paddr inside {[0:11]};
+  constraint paddr_c1 {if(pselx == SLAVE_0)
+                          paddr>=0 && paddr <=2**11;
+                          //paddr inside {[0:11]};
                         else if(pselx == SLAVE_1)
-                          paddr>= 14 && paddr < 26;
+                          paddr>= 2**14 && paddr <= 2**25;
                         else if(pselx == SLAVE_2)
-                          paddr>= 28 && paddr < 40;
+                          paddr>= 2**28 && paddr <= 2**39;
                         else if(pselx == SLAVE_3)
-                          paddr>= 42 && paddr <= 53;
+                          paddr>= 2**42 && paddr <= 2**53;
                         else if(pselx == SLAVE_4)
-                          paddr>= 56 && paddr <= 67;
+                          paddr>= 2**56 && paddr <= 2**67;
                         else if(pselx == SLAVE_5)
-                          paddr>= 70 && paddr <= 81;
+                          paddr>= 2**70 && paddr <= 2**81;
                         else if(pselx == SLAVE_6)
-                          paddr>= 84 && paddr <= 95;
+                          paddr>= 2**84 && paddr <= 2**95;
                         else if(pselx == SLAVE_7)
-                          paddr>= 98 && paddr <= 109;
+                          paddr>= 2**98 && paddr <= 2**109;
                         else if(pselx == SLAVE_8)
-                          paddr>= 112 && paddr < 124;
+                          paddr>= 2**112 && paddr <= 2**123;
                         else if(pselx == SLAVE_9)
-                          paddr>= 126 && paddr <= 137;
+                          paddr>= 2**126 && paddr <= 2**137;
                         else if(pselx == SLAVE_10)
-                          paddr>= 140 && paddr <= 151;
+                          paddr>= 2**140 && paddr <= 2**151;
                         else if(pselx == SLAVE_11)
-                          paddr>= 154 && paddr <= 165;
+                          paddr>= 2**154 && paddr <= 2**165;
                         else if(pselx == SLAVE_12)
-                          paddr>= 168 && paddr <= 179;
+                          paddr>= 2**168 && paddr <= 2**179;
                         else if(pselx == SLAVE_13)
-                          paddr>= 182 && paddr <= 193;
+                          paddr>= 2**182 && paddr <= 2**193;
                         else if(pselx == SLAVE_14)
-                          paddr>= 196 && paddr <= 207;
+                          paddr>= 2**196 && paddr <= 2**207;
                         else if(pselx == SLAVE_15)
-                          paddr>= 210 && paddr <= 221;
+                          paddr>= 2**210 && paddr <= 2**221;
                         }
 
   //TODO(saha): use below for inline constraints
