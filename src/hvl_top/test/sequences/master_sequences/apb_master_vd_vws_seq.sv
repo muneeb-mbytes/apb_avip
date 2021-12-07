@@ -32,10 +32,7 @@ endfunction : new
 task apb_master_vd_vws_seq::body();
   req = apb_master_tx::type_id::create("req");
   start_item(req);
-  if(!req.randomize()) /*with {req.paddr inside {[0:8]};
-                              req.pwdata inside {[0:8]};
-                              $countones(req.psel) == NO_OF_SLAVES-1;
-                             })*/ 
+  if(!req.randomize() with {req.pselx == SLAVE_4;}) 
   begin
     `uvm_fatal(get_type_name(),"Randomisation failed");
   end
