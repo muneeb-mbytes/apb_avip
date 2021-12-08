@@ -70,7 +70,7 @@ function void apb_env::build_phase(uvm_phase phase);
     if(!uvm_config_db #(apb_slave_agent_config)::get(this,"",$sformatf("apb_slave_agent_config[%0d]",i),apb_slave_agent_cfg_h[i])) begin
       `uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config[%0d] from config_db",i))
     end
-    //`uvm_info(get_type_name(),$sformatf("SLAVE_AGNET_CONFIG[%0d]\n%p",i,apb_slave_agent_cfg_h[i]),UVM_LOW);
+    `uvm_info(get_type_name(),$sformatf("\nSLAVE_AGENT_CONFIG[%0d]\n%s",i,apb_slave_agent_cfg_h[i].sprint()),UVM_LOW);
   end
   
   apb_master_agent_h = apb_master_agent::type_id::create("apb_master_agent",this);

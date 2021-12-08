@@ -127,7 +127,7 @@ function void apb_base_test::setup_apb_slave_agent_config();
     end
     apb_env_cfg_h.apb_slave_agent_cfg_h[i].has_coverage = 1; 
     uvm_config_db #(apb_slave_agent_config)::set(this,$sformatf("*env*"),$sformatf("apb_slave_agent_config[%0d]",i),apb_env_cfg_h.apb_slave_agent_cfg_h[i]);
-  //`uvm_info(get_type_name(),$sformatf("\nAPB_SLAVE_CONFIG[i]\n%s",i,apb_env_cfg_h.apb_slave_agent_cfg_h.sprint),UVM_LOW);
+   `uvm_info(get_type_name(),$sformatf("\nAPB_SLAVE_CONFIG[%0d]\n%s",i,apb_env_cfg_h.apb_slave_agent_cfg_h[i].sprint()),UVM_LOW);
   end
 endfunction : setup_apb_slave_agent_config
 

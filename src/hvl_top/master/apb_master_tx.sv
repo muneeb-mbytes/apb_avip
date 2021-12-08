@@ -76,40 +76,40 @@
 
   constraint pwdata_c3 {soft pwdata inside {[0:100]};}
 
-  constraint paddr_c4 {if(pselx == SLAVE_0)
-                          paddr>=0 && paddr <=2**11;
-                          //paddr inside {[0:11]};
-                        else if(pselx == SLAVE_1)
-                          paddr>= 2**14 && paddr <= 2**25;
-                        else if(pselx == SLAVE_2)
-                          paddr>= 2**28 && paddr <= 2**39;
-                        else if(pselx == SLAVE_3)
-                          paddr>= 2**42 && paddr <= 2**53;
-                        else if(pselx == SLAVE_4)
-                          paddr>= 2**56 && paddr <= 2**67;
-                        else if(pselx == SLAVE_5)
-                          paddr>= 2**70 && paddr <= 2**81;
-                        else if(pselx == SLAVE_6)
-                          paddr>= 2**84 && paddr <= 2**95;
-                        else if(pselx == SLAVE_7)
-                          paddr>= 2**98 && paddr <= 2**109;
-                        else if(pselx == SLAVE_8)
-                          paddr>= 2**112 && paddr <= 2**123;
-                        else if(pselx == SLAVE_9)
-                          paddr>= 2**126 && paddr <= 2**137;
-                        else if(pselx == SLAVE_10)
-                          paddr>= 2**140 && paddr <= 2**151;
-                        else if(pselx == SLAVE_11)
-                          paddr>= 2**154 && paddr <= 2**165;
-                        else if(pselx == SLAVE_12)
-                          paddr>= 2**168 && paddr <= 2**179;
-                        else if(pselx == SLAVE_13)
-                          paddr>= 2**182 && paddr <= 2**193;
-                        else if(pselx == SLAVE_14)
-                          paddr>= 2**196 && paddr <= 2**207;
-                        else if(pselx == SLAVE_15)
-                          paddr>= 2**210 && paddr <= 2**221;
-                        }
+  // MSHA:constraint paddr_c4 {if(pselx == SLAVE_0)
+  // MSHA:                        paddr>=0 && paddr <=2**11;
+  // MSHA:                        //paddr inside {[0:11]};
+  // MSHA:                      else if(pselx == SLAVE_1)
+  // MSHA:                        paddr>= 2**14 && paddr <= 2**25;
+  // MSHA:                      else if(pselx == SLAVE_2)
+  // MSHA:                        paddr>= 2**28 && paddr <= 2**39;
+  // MSHA:                      else if(pselx == SLAVE_3)
+  // MSHA:                        paddr>= 2**42 && paddr <= 2**53;
+  // MSHA:                      else if(pselx == SLAVE_4)
+  // MSHA:                        paddr>= 2**56 && paddr <= 2**67;
+  // MSHA:                      else if(pselx == SLAVE_5)
+  // MSHA:                        paddr>= 2**70 && paddr <= 2**81;
+  // MSHA:                      else if(pselx == SLAVE_6)
+  // MSHA:                        paddr>= 2**84 && paddr <= 2**95;
+  // MSHA:                      else if(pselx == SLAVE_7)
+  // MSHA:                        paddr>= 2**98 && paddr <= 2**109;
+  // MSHA:                      else if(pselx == SLAVE_8)
+  // MSHA:                        paddr>= 2**112 && paddr <= 2**123;
+  // MSHA:                      else if(pselx == SLAVE_9)
+  // MSHA:                        paddr>= 2**126 && paddr <= 2**137;
+  // MSHA:                      else if(pselx == SLAVE_10)
+  // MSHA:                        paddr>= 2**140 && paddr <= 2**151;
+  // MSHA:                      else if(pselx == SLAVE_11)
+  // MSHA:                        paddr>= 2**154 && paddr <= 2**165;
+  // MSHA:                      else if(pselx == SLAVE_12)
+  // MSHA:                        paddr>= 2**168 && paddr <= 2**179;
+  // MSHA:                      else if(pselx == SLAVE_13)
+  // MSHA:                        paddr>= 2**182 && paddr <= 2**193;
+  // MSHA:                      else if(pselx == SLAVE_14)
+  // MSHA:                        paddr>= 2**196 && paddr <= 2**207;
+  // MSHA:                      else if(pselx == SLAVE_15)
+  // MSHA:                        paddr>= 2**210 && paddr <= 2**221;
+  // MSHA:                      }
 
   //TODO(saha): use below for inline constraints
   // constraint pwdata_c { pwdata WRITE | READ }
