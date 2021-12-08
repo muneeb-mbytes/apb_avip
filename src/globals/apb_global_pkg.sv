@@ -9,7 +9,7 @@ package apb_global_pkg;
 
   //Parameter : NO_OF_SLAVES
   //Used to set number of slaves required
-  parameter int NO_OF_SLAVES = 13;
+  parameter int NO_OF_SLAVES = 16;
 
   //Parameter : MASTER_AGENT_ACTIVE
   //Used to set the master agent either active or passive
@@ -116,16 +116,16 @@ package apb_global_pkg;
   // Used to declare the slave number by assigning the value for encoding
   //-------------------------------------------------------
   typedef enum bit [15:0] {
-    SLAVE_0 = 16'd1,
-    SLAVE_1 = 16'd2,
-    SLAVE_2 = 16'd4,
-    SLAVE_3 = 16'd8,
-    SLAVE_4 = 16'd16,
-    SLAVE_5 = 16'd32,
-    SLAVE_6 = 16'd64,
-    SLAVE_7 = 16'd128,
-    SLAVE_8 = 16'd256,
-    SLAVE_9 = 16'd512,
+    SLAVE_0  = 16'd1,
+    SLAVE_1  = 16'd2,
+    SLAVE_2  = 16'd4,
+    SLAVE_3  = 16'd8,
+    SLAVE_4  = 16'd16,
+    SLAVE_5  = 16'd32,
+    SLAVE_6  = 16'd64,
+    SLAVE_7  = 16'd128,
+    SLAVE_8  = 16'd256,
+    SLAVE_9  = 16'd512,
     SLAVE_10 = 16'd1024,
     SLAVE_11 = 16'd2048,
     SLAVE_12 = 16'd4096,
@@ -157,7 +157,7 @@ package apb_global_pkg;
   //which are used for seq item conversion
   //-------------------------------------------------------
   typedef struct{
-    bit [ADDRESS_WIDTH-1:0]paddr;
+    bit [ADDRESS_WIDTH-1:0] paddr;
   }apb_transfer_cfg_s;
 
   //-------------------------------------------------------

@@ -44,22 +44,20 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
   //output_conv.pstrb = input_conv_h.pstrb;  
   //output_conv.pready = input_conv_h.pready;
  
- `uvm_info("apb_seq_item_conv_from_class",$sformatf("----------------------------------------"),UVM_LOW);
+ `uvm_info("apb_seq_item_conv_from_class",$sformatf("----------------------------------------"),UVM_HIGH);
  
- `uvm_info("apb_slave_seq_item_conv_class",$sformatf("Before ramdomizing pwdata = \n %p",output_conv.pwdata),UVM_LOW);
   output_conv.pwdata = input_conv_h.pwdata;
-  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pwdata = \n %p",output_conv.pwdata),UVM_LOW); 
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pwdata = \n %p",output_conv.pwdata),UVM_HIGH); 
     
-  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("Before ramdomizing pslverr = \n %p",output_conv.pslverr),UVM_LOW);
-  output_conv.pslverr = input_conv_h.pslverr;
-  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pslverr = \n %p",output_conv.pslverr),UVM_LOW);
+  //output_conv.pslverr = input_conv_h.pslverr;
+  $cast(output_conv.pslverr,input_conv_h.pslverr);
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pslverr = \n %p",output_conv.pslverr),UVM_HIGH);
   
-  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("Before ramdomizing prdata = \n %p",output_conv.prdata),UVM_LOW);
   output_conv.prdata = input_conv_h.prdata;
-  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing prdata = \n %p",output_conv.prdata),UVM_LOW);
+  `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing prdata = \n %p",output_conv.prdata),UVM_HIGH);
  
    output_conv.no_of_wait_states = input_conv_h.no_of_wait_states;
- `uvm_info("apb_seq_item_conv_from_class",$sformatf("----------------------------------------"),UVM_LOW);
+ `uvm_info("apb_seq_item_conv_from_class",$sformatf("----------------------------------------"),UVM_HIGH);
 
  endfunction: from_class 
 
@@ -80,23 +78,21 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   //output_conv_h.pstrb = input_conv.pstrb;
   //output_conv_h.pready = input_conv.pready;
   
-  `uvm_info("apb_seq_item_conv_to_class",$sformatf("---------------------------------"),UVM_LOW);
+  `uvm_info("apb_seq_item_conv_to_class",$sformatf("---------------------------------"),UVM_HIGH);
 
-  `uvm_info("apb_seq_item_conv_class",$sformatf("Before randomizing the pwdata = \n %p",output_conv_h.pwdata),UVM_LOW);
   output_conv_h.pwdata = input_conv.pwdata;
-  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pwdata = \n %p",output_conv_h.pwdata),UVM_LOW);
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pwdata = \n %p",output_conv_h.pwdata),UVM_HIGH);
 
-  `uvm_info("apb_seq_item_conv_class",$sformatf("Before randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_LOW);
-  output_conv_h.pslverr = input_conv.pslverr;
-  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_LOW);
+  //output_conv_h.pslverr = input_conv.pslverr;
+  $cast(output_conv_h.pslverr,input_conv.pslverr);
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_HIGH);
 
-  `uvm_info("apb_seq_item_conv_class",$sformatf("Before randomizing the prdata = \n %p",output_conv_h.prdata),UVM_LOW);
   output_conv_h.prdata = input_conv.prdata;
- `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the prdata = \n %p",output_conv_h.prdata),UVM_LOW);
+ `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the prdata = \n %p",output_conv_h.prdata),UVM_HIGH);
   
   output_conv_h.no_of_wait_states = input_conv.no_of_wait_states;
 
- `uvm_info("apb_seq_item_conv_class_to_class",$sformatf("----------------------------------------"),UVM_LOW);
+ `uvm_info("apb_seq_item_conv_class_to_class",$sformatf("----------------------------------------"),UVM_HIGH);
 
 endfunction: to_class
 

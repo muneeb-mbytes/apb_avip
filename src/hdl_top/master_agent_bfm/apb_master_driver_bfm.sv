@@ -46,11 +46,11 @@ interface apb_master_driver_bfm (input  bit   pclk,
   initial begin
     `uvm_info("apb master driver bfm",$sformatf("APB MASTER DRIVER BFM"),UVM_LOW)
   end
-
-  //--------------------------------------------------------------------------------------------
-  // Task: wait_for_presetn
+ 
+  //-------------------------------------------------------
+  // Task: wait_for_preset_n
   // Waiting for the system reset to be active low
-  //--------------------------------------------------------------------------------------------
+  //-------------------------------------------------------
   task wait_for_preset_n();
     @(negedge preset_n);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)

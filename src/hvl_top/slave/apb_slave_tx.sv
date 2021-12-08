@@ -30,7 +30,7 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : pslverr
   //Goes high when a transfer fails
-  bit pslverr;
+  slave_error_e pslverr;
 
   //Variable : pready
   //Used to extend the transfer
@@ -142,7 +142,7 @@ function void apb_slave_tx::do_print(uvm_printer printer);
   printer.print_field("prdata",prdata,$bits(prdata),UVM_DEC);
   //printer.print_field("pprot",pprot,$bits(pprot),UVM_DEC);
   //printer.print_field("pstrb",pstrb,$bits(pstrb),UVM_DEC);
-  printer.print_field("pslverr",pslverr,$bits(pslverr),UVM_DEC);
+  printer.print_string("pslverr",pslverr.name());
 
 endfunction : do_print
 

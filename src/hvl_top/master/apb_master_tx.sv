@@ -17,6 +17,7 @@
 
   //Variable : pprot
   //Used for different access
+  //rand protection_type_e pprot;
   rand bit [2:0]pprot;
 
   //Variable : pselx
@@ -42,7 +43,7 @@
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
-  rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
+ rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
 
   //Variable : pready
   //Used to extend the transfer
@@ -54,7 +55,7 @@
 
   //Variable : pslverr
   //Goes high when a transfer fails
-  bit pslverr;
+  slave_error_e  pslverr;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -69,43 +70,45 @@
   //-------------------------------------------------------
   // pselx inside (16'd0, 16'd1, 16'd2, 16'd4 and so on), instead we can use onehot encoding
   // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
-  constraint pselx_c  { $onehot0(pselx) == 1; }
+  constraint pselx_c1  { $countones(pselx) == 1; }
 
-  constraint pselx_c3 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
+  constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
 
-  constraint paddr_c_1 {if(pselx == SLAVE_0)
-                          //paddr>=0 && paddr <12;
-                          paddr inside {[0:11]};
+  constraint pwdata_c3 {soft pwdata inside {[0:100]};}
+
+  constraint paddr_c4 {if(pselx == SLAVE_0)
+                          paddr>=0 && paddr <=2**11;
+                          //paddr inside {[0:11]};
                         else if(pselx == SLAVE_1)
-                          paddr>= 14 && paddr < 26;
+                          paddr>= 2**14 && paddr <= 2**25;
                         else if(pselx == SLAVE_2)
-                          paddr>= 28 && paddr < 40;
+                          paddr>= 2**28 && paddr <= 2**39;
                         else if(pselx == SLAVE_3)
-                          paddr>= 42 && paddr <= 53;
+                          paddr>= 2**42 && paddr <= 2**53;
                         else if(pselx == SLAVE_4)
-                          paddr>= 56 && paddr <= 67;
+                          paddr>= 2**56 && paddr <= 2**67;
                         else if(pselx == SLAVE_5)
-                          paddr>= 70 && paddr <= 81;
+                          paddr>= 2**70 && paddr <= 2**81;
                         else if(pselx == SLAVE_6)
-                          paddr>= 84 && paddr <= 95;
+                          paddr>= 2**84 && paddr <= 2**95;
                         else if(pselx == SLAVE_7)
-                          paddr>= 98 && paddr <= 109;
+                          paddr>= 2**98 && paddr <= 2**109;
                         else if(pselx == SLAVE_8)
-                          paddr>= 112 && paddr < 124;
+                          paddr>= 2**112 && paddr <= 2**123;
                         else if(pselx == SLAVE_9)
-                          paddr>= 126 && paddr <= 137;
+                          paddr>= 2**126 && paddr <= 2**137;
                         else if(pselx == SLAVE_10)
-                          paddr>= 140 && paddr <= 151;
+                          paddr>= 2**140 && paddr <= 2**151;
                         else if(pselx == SLAVE_11)
-                          paddr>= 154 && paddr <= 165;
+                          paddr>= 2**154 && paddr <= 2**165;
                         else if(pselx == SLAVE_12)
-                          paddr>= 168 && paddr <= 179;
+                          paddr>= 2**168 && paddr <= 2**179;
                         else if(pselx == SLAVE_13)
-                          paddr>= 182 && paddr <= 193;
+                          paddr>= 2**182 && paddr <= 2**193;
                         else if(pselx == SLAVE_14)
-                          paddr>= 196 && paddr <= 207;
+                          paddr>= 2**196 && paddr <= 2**207;
                         else if(pselx == SLAVE_15)
-                          paddr>= 210 && paddr <= 221;
+                          paddr>= 2**210 && paddr <= 2**221;
                         }
 
   //TODO(saha): use below for inline constraints
@@ -206,11 +209,14 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field ("penable", penable, $bits(penable), UVM_DEC);
   //printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
   printer.print_field ("pwdata",  pwdata,  $bits(pwdata),  UVM_DEC);
-  printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_DEC);
+  printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_BIN);
   printer.print_field ("pready",  pready,  $bits(pready),  UVM_DEC);
   printer.print_field ("prdata",  prdata,  $bits(prdata),  UVM_DEC);
-  printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
+  //printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
+  printer.print_string("pslverr",pslverr.name());
   printer.print_string("tx_type",tx_type.name());
+  //printer.print_string("pprot",pprot.name());
+
 endfunction : do_print
 
 //function bit apb_master_tx::slave_select();
