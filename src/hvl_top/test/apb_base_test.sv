@@ -64,10 +64,19 @@ function void apb_base_test::setup_apb_env_config();
   apb_env_cfg_h.no_of_slaves      = NO_OF_SLAVES;
   apb_env_cfg_h.has_scoreboard    = 1;
   apb_env_cfg_h.has_virtual_seqr  = 1;
+
+  //setting up the configuration for master agent
   setup_apb_master_agent_config();
+  //Setting the master agent configuration into config_db
+  uvm_config_db#(apb_master_agent_config)::set(this,"*master_agent*","apb_master_agent_config",apb_env_cfg_h.apb_master_agent_cfg_h);
+  //Displaying the master agent configuration
+  `uvm_info(get_type_name(),$sformatf("\nAPB_MASTER_AGENT_CONFIG\n%s",apb_env_cfg_h.apb_master_agent_cfg_h.sprint()),UVM_LOW);
+
   setup_apb_slave_agent_config();
+
   uvm_config_db#(apb_env_config)::set(this,"*","apb_env_config",apb_env_cfg_h);
-  `uvm_info(get_type_name(),$sformatf("\nAPB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint),UVM_LOW);
+  `uvm_info(get_type_name(),$sformatf("\nAPB_ENV_CONFIG\n%s",apb_env_cfg_h.sprint()),UVM_LOW);
+
 endfunction : setup_apb_env_config
 
 //--------------------------------------------------------------------------------------------
@@ -77,8 +86,8 @@ endfunction : setup_apb_env_config
 // Sets apb master agent config into configdb 
 //--------------------------------------------------------------------------------------------
 function void apb_base_test::setup_apb_master_agent_config();
-  bit [11:0]local_min_address;
-  bit [11:0]local_max_address;
+  bit [63:0]local_min_address;
+  bit [63:0]local_max_address;
   apb_env_cfg_h.apb_master_agent_cfg_h = apb_master_agent_config::type_id::create("apb_master_agent_config");
   if(MASTER_AGENT_ACTIVE === 1) begin
     apb_env_cfg_h.apb_master_agent_cfg_h.is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
@@ -89,21 +98,20 @@ function void apb_base_test::setup_apb_master_agent_config();
   apb_env_cfg_h.apb_master_agent_cfg_h.no_of_slaves   = NO_OF_SLAVES;
   apb_env_cfg_h.apb_master_agent_cfg_h.has_coverage   = 1;
 
-  uvm_config_db#(apb_master_agent_config)::set(this,"*master_agent*","apb_master_agent_config",apb_env_cfg_h.apb_master_agent_cfg_h);
 
   `uvm_info(get_type_name(),$sformatf("\nAPB_MASTER_CONFIG\n%s",apb_env_cfg_h.apb_master_agent_cfg_h.sprint),UVM_LOW);
   for(int i =0; i<NO_OF_SLAVES; i++) begin
     if(i == 0) begin
-      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_max(i,SLAVE_MEMORY_SIZE - 1);
-      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_min(i, 0);
-      local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_array[i];
-      local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_array[i];
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,SLAVE_MEMORY_SIZE - 1);
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i, 0);
+      local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
+      local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
     end
     else begin
-      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_max(i,local_max_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
-      apb_env_cfg_h.apb_master_agent_cfg_h.mem_mapping_min(i,local_min_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
-      local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_array[i];
-      local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_array[i];
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,local_max_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i,local_min_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
+      local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
+      local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
     end
   end
 endfunction : setup_apb_master_agent_config
@@ -117,8 +125,8 @@ function void apb_base_test::setup_apb_slave_agent_config();
   foreach(apb_env_cfg_h.apb_slave_agent_cfg_h[i]) begin
     apb_env_cfg_h.apb_slave_agent_cfg_h[i] = apb_slave_agent_config::type_id::create($sformatf("apb_slave_agent_config[%0d]",i));
     apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_id     = i;
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i].min_address  = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_array[i];
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i].max_address  = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_array[i];
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].min_address  = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].max_address  = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
     if(SLAVE_AGENT_ACTIVE === 1) begin
       apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active  = uvm_active_passive_enum'(UVM_ACTIVE);
     end
