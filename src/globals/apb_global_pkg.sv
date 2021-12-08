@@ -34,8 +34,8 @@ package apb_global_pkg;
 
   //Parameter : DATA_WIDTH
   //Used to set the data width 
-  //Maximum Value is 32
-  parameter int DATA_WIDTH = 32;
+  //Maximum Value is 8
+  parameter int DATA_WIDTH = 8;
 
   //Parameter : SLAVE_MEMORY_SIZE
   //Sets the memory size of the slave in KB
@@ -63,10 +63,10 @@ package apb_global_pkg;
   // Used to declare enum type for all transfer sizes
   //-------------------------------------------------------
   typedef enum bit[31:0]{
-    BYTE          = 32'd8,
-    WORD          = 32'd16,
-    WORD_AND_BYTE = 32'd24,
-    DOUBLE_WORD   = 32'd32
+    BIT_8   = 32'd8,
+    BIT_16  = 32'd16,
+    BIT_24  = 32'd24,
+    BIT_32  = 32'd32
   }transfer_size_e;
 
   //-------------------------------------------------------
@@ -77,6 +77,27 @@ package apb_global_pkg;
     NO_ERROR    = 1'b0,
     ERROR       = 1'b1
   }slave_error_e;
+
+  //-------------------------------------------------------
+  // Enum : endian_e
+  // Used to declare enum type for the endians
+  //-------------------------------------------------------
+  typedef enum bit{
+    LITTLE    = 1'b0,
+    BIG       = 1'b1
+  }endian_e;
+
+
+  //-------------------------------------------------------
+  // Enum : is_active_e
+  // Used to declare enum type for the is_active
+  //-------------------------------------------------------
+  typedef enum bit{
+    IS_ACTIVE     = 1'b1,
+    IS_PASSIVE    = 1'b0
+  }is_active_e;
+
+
 
   //-------------------------------------------------------
   // Enum : operation_states_e
@@ -103,12 +124,21 @@ package apb_global_pkg;
   // transaction
   //-------------------------------------------------------
   typedef enum logic[2:0]{
+    N_S_D       = 3'b000,
+    N_S_I       = 3'b001,
+    N_NS_D      = 3'b010,
+    N_NS_I      = 3'b011,
+    P_S_D       = 3'b100,
+    P_S_I       = 3'b101,
+    P_NS_D      = 3'b110,
+    P_NS_I      = 3'b111
+/*
     NORMAL_ACCESS      = 3'bxx0,
     PRIVILIGED_ACCESS  = 3'bxx1,
     SECURE_ACCESS      = 3'bx0x,
     NON_SECURE_ACCESS  = 3'bx1x,
     DATA_ACCESS        = 3'b0xx,
-    INSTRUCTION_ACCESS = 3'b1xx
+    INSTRUCTION_ACCESS = 3'b1xx*/
   }protection_type_e;
 
   //-------------------------------------------------------
@@ -116,22 +146,22 @@ package apb_global_pkg;
   // Used to declare the slave number by assigning the value for encoding
   //-------------------------------------------------------
   typedef enum bit [15:0] {
-    SLAVE_0  = 16'd1,
-    SLAVE_1  = 16'd2,
-    SLAVE_2  = 16'd4,
-    SLAVE_3  = 16'd8,
-    SLAVE_4  = 16'd16,
-    SLAVE_5  = 16'd32,
-    SLAVE_6  = 16'd64,
-    SLAVE_7  = 16'd128,
-    SLAVE_8  = 16'd256,
-    SLAVE_9  = 16'd512,
-    SLAVE_10 = 16'd1024,
-    SLAVE_11 = 16'd2048,
-    SLAVE_12 = 16'd4096,
-    SLAVE_13 = 16'd8192,
-    SLAVE_14 = 16'd16384,
-    SLAVE_15 = 16'd32768
+    SLAVE_0  = 16'b0000000000000001,
+    SLAVE_1  = 16'b0000000000000010,
+    SLAVE_2  = 16'b0000000000000100,
+    SLAVE_3  = 16'b0000000000001000,
+    SLAVE_4  = 16'b0000000000010000,
+    SLAVE_5  = 16'b0000000000100000,
+    SLAVE_6  = 16'b0000000001000000,
+    SLAVE_7  = 16'b0000000010000000,
+    SLAVE_8  = 16'b0000000100000000,
+    SLAVE_9  = 16'b0000001000000000,
+    SLAVE_10 = 16'b0000010000000000,
+    SLAVE_11 = 16'b0000100000000000,
+    SLAVE_12 = 16'b0001000000000000,
+    SLAVE_13 = 16'b0010000000000000,
+    SLAVE_14 = 16'b0100000000000000,
+    SLAVE_15 = 16'b1000000000000000
   }slave_no_e;
 
   //-------------------------------------------------------
