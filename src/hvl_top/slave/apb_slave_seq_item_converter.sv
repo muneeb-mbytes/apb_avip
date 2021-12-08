@@ -45,7 +45,14 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
   //output_conv.pready = input_conv_h.pready;
  
  `uvm_info("apb_seq_item_conv_from_class",$sformatf("----------------------------------------"),UVM_HIGH);
- 
+
+  output_conv.paddr = input_conv_h.paddr;
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the paddr = \n %p",output_conv.paddr),UVM_HIGH);
+
+ //output_conv.pselx = input_conv_h.pselx;
+  $cast(output_conv.pselx,input_conv_h.pselx);
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pselx = \n %p",output_conv.pselx),UVM_HIGH);
+
   output_conv.pwdata = input_conv_h.pwdata;
   `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pwdata = \n %p",output_conv.pwdata),UVM_HIGH); 
     
@@ -80,12 +87,24 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   
   `uvm_info("apb_seq_item_conv_to_class",$sformatf("---------------------------------"),UVM_HIGH);
 
+  output_conv_h.paddr = input_conv.paddr;
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the paddr = \n %p",output_conv_h.paddr),UVM_HIGH);
+
+
   output_conv_h.pwdata = input_conv.pwdata;
   `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pwdata = \n %p",output_conv_h.pwdata),UVM_HIGH);
 
+  //output_conv_h.pselx = input_conv.pselx;
+  $cast(output_conv_h.pselx,input_conv.pselx);
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pselx = \n %p",output_conv_h.pselx),UVM_HIGH);
+  
   //output_conv_h.pslverr = input_conv.pslverr;
   $cast(output_conv_h.pslverr,input_conv.pslverr);
   `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_HIGH);
+
+  //output_conv_h.pslverr = input_conv.pslverr;
+  $cast(output_conv_h.pwrite,input_conv.pwrite);
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pwrite = \n %p",output_conv_h.pwrite),UVM_HIGH);
 
   output_conv_h.prdata = input_conv.prdata;
  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the prdata = \n %p",output_conv_h.prdata),UVM_HIGH);

@@ -11,6 +11,12 @@ class apb_slave_tx extends uvm_sequence_item;
   //Variable : pselx
   //Used to select the slave
   //bit [NO_OF_SLAVES-1:0]pselx;
+    rand slave_no_e pselx;
+
+    
+  //Variable : paddr
+  //Address selected in apb_slave
+  rand bit [ADDRESS_WIDTH-1:0]paddr;
 
   //Variable : penable
   //Used to write data when penable is high
@@ -18,7 +24,8 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Varibale : pwrite
   //Write when pwrite is 1 and read is 0
-  //bit pwrite;
+ // bit pwrite;
+  rand tx_type_e pwrite;
 
   //Variable : pwdata
   //Used to store the wdata
@@ -34,11 +41,11 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : pready
   //Used to extend the transfer
-  rand bit pready;
+  bit pready;
 
   //Variable : prdata
   //Used to store the rdata from the slave
-  bit [DATA_WIDTH-1:0]prdata;
+   bit [DATA_WIDTH-1:0]prdata;
 
   //Variable : no_of_wait_states
   //Used to decide the number of wait states
@@ -83,9 +90,9 @@ function void apb_slave_tx::do_copy (uvm_object rhs);
     `uvm_fatal("do_copy","cast of the rhs object failed")
   end
   super.do_copy(rhs);
-  //paddr   = apb_slave_tx_copy_obj.paddr;
-  //pselx    = apb_slave_tx_copy_obj.pselx;
-  //pwrite  = apb_slave_tx_copy_obj.pwrite;
+  paddr   = apb_slave_tx_copy_obj.paddr;
+  pselx    = apb_slave_tx_copy_obj.pselx;
+  pwrite  = apb_slave_tx_copy_obj.pwrite;
   //penable = apb_slave_tx_copy_obj.penable;
   pwdata  = apb_slave_tx_copy_obj.pwdata;
   pready  = apb_slave_tx_copy_obj.pready;
@@ -112,9 +119,9 @@ function bit apb_slave_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   end
 
   return super.do_compare(apb_slave_tx_compare_obj, comparer) &&
-  //paddr   == apb_slave_tx_compare_obj.paddr &&
-  //pselx    == apb_slave_tx_compare_obj.pselx &&
-  //pwrite  == apb_slave_tx_compare_obj.pwrite &&
+  paddr   == apb_slave_tx_compare_obj.paddr &&
+  pselx    == apb_slave_tx_compare_obj.pselx &&
+  pwrite  == apb_slave_tx_compare_obj.pwrite &&
   //penable == apb_slave_tx_compare_obj.penable &&
   pwdata  == apb_slave_tx_compare_obj.pwdata &&
   pready  == apb_slave_tx_compare_obj.pready &&
@@ -133,7 +140,7 @@ endfunction:do_compare
 //--------------------------------------------------------------------------------------------
 function void apb_slave_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-  //printer.print_field("paddr",paddr,$bits(paddr),UVM_DEC);
+  printer.print_field("paddr",paddr,$bits(paddr),UVM_DEC);
   //printer.print_field("pselx",pselx,1,UVM_DEC);
   //printer.print_field("penable",penable,1,UVM_DEC);
   //printer.print_field("pwrite",pwrite,1,UVM_DEC);
@@ -143,7 +150,8 @@ function void apb_slave_tx::do_print(uvm_printer printer);
   //printer.print_field("pprot",pprot,$bits(pprot),UVM_DEC);
   //printer.print_field("pstrb",pstrb,$bits(pstrb),UVM_DEC);
   printer.print_string("pslverr",pslverr.name());
-
+  printer.print_string("pselx",pselx.name());
+  printer.print_string("pwrite",pwrite.name());
 endfunction : do_print
 
 
