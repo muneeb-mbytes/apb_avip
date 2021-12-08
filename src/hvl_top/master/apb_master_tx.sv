@@ -74,7 +74,9 @@
 
   constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
 
-  constraint paddr_c1 {if(pselx == SLAVE_0)
+  constraint pwdata_c3 {soft pwdata inside {[0:100]};}
+
+  constraint paddr_c4 {if(pselx == SLAVE_0)
                           paddr>=0 && paddr <=2**11;
                           //paddr inside {[0:11]};
                         else if(pselx == SLAVE_1)
