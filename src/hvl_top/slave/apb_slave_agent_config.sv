@@ -27,18 +27,15 @@ class apb_slave_agent_config extends uvm_object;
 
   //Variable : max_address
   //Used to store the maximum address value of this slave
-  bit [11:0]max_address;
+  bit [ADDRESS_WIDTH-1:0]max_address;
 
   //Variable : min_address
   //Used to store the minimum address value of this slave
-  bit [11:0]min_address;
+  bit [ADDRESS_WIDTH-1:0]min_address;
   
   //Variable : slave_memory
   //Declaration of slave_memory to store the data from master
-  //bit [DATA_WIDTH-1:0]slave_memory[this.max_address:this.min_address];
-  //bit [DATA_WIDTH-1:0]slave_memory_array[int];
-  //logic [239:0]mem;
-  //bit mem[this.max_address+:8];
+  bit [DATA_WIDTH-1:0]slave_memory[SLAVE_MEMORY_SIZE-1:0];
   
   //Variable: paddr
   //Used to indicate the slave address
@@ -48,8 +45,7 @@ class apb_slave_agent_config extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "apb_slave_agent_config");
   extern function void do_print(uvm_printer printer);
-  //extern function void slave_memory_mapping(min_address,max_address);
-
+  
 endclass : apb_slave_agent_config
 
 //--------------------------------------------------------------------------------------------
@@ -72,13 +68,9 @@ function void apb_slave_agent_config::do_print(uvm_printer printer);
   printer.print_field ("is_active"    ,is_active,     $bits(is_active),     UVM_DEC);
   printer.print_field ("slave_id"     ,slave_id,      $bits(slave_id),      UVM_DEC);
   printer.print_field ("has_coverage" ,has_coverage,  $bits(has_coverage),  UVM_DEC);
-  printer.print_field ("max_address"  ,max_address,   $bits(max_address),   UVM_DEC);
-  printer.print_field ("min_address"  ,min_address,   $bits(max_address),   UVM_DEC);
+  printer.print_field ("max_address"  ,max_address,   $bits(max_address),   UVM_HEX);
+  printer.print_field ("min_address"  ,min_address,   $bits(max_address),   UVM_HEX);
   
 endfunction : do_print
-
-//function void apb_slave_agent_config::slave_memory_mapping(min_address,max_address);
-  //bit [DATA_WIDTH-1:0]slave_array[min_address:max_address];
-//endfunction : slave_memory_mapping
 
 `endif
