@@ -32,7 +32,9 @@ endfunction : new
 task apb_master_8b_seq::body();
   req=apb_master_tx::type_id::create("req");
   start_item(req);
-  if(!req.randomize() with {req.pselx == SLAVE_13;}) begin
+  if(!req.randomize() with {req.pselx == SLAVE_13;
+                            req.transfer_size == BIT_8;
+                            req.tx_type == WRITE;}) begin
     `uvm_fatal("APB","Rand failed");
   end
   //req.print();
