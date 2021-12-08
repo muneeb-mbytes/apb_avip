@@ -46,6 +46,12 @@ class apb_slave_tx extends uvm_sequence_item;
   //Variable : prdata
   //Used to store the rdata from the slave
    bit [DATA_WIDTH-1:0]prdata;
+ 
+   //Variable : pprot
+  //Used for different access
+   rand protection_type_e pprot;
+  //rand bit [2:0]pprot;
+
 
   //Variable : no_of_wait_states
   //Used to decide the number of wait states
@@ -98,7 +104,7 @@ function void apb_slave_tx::do_copy (uvm_object rhs);
   pready  = apb_slave_tx_copy_obj.pready;
   prdata  = apb_slave_tx_copy_obj.prdata;
   pslverr = apb_slave_tx_copy_obj.pslverr;
-  //pprot   = apb_slave_tx_copy_obj.pprot;
+  pprot   = apb_slave_tx_copy_obj.pprot;
   //pstrb  = apb_slave_tx_copy_obj.pstrb;
 
 endfunction:do_copy
@@ -126,8 +132,8 @@ function bit apb_slave_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   pwdata  == apb_slave_tx_compare_obj.pwdata &&
   pready  == apb_slave_tx_compare_obj.pready &&
   prdata  == apb_slave_tx_compare_obj.prdata &&
-  pslverr == apb_slave_tx_compare_obj.pslverr ;
-  //pprot   == apb_slave_tx_compare_obj.pprot &&
+  pslverr == apb_slave_tx_compare_obj.pslverr && 
+  pprot   == apb_slave_tx_compare_obj.pprot ;
   //pstrb  == apb_slave_tx_compare_obj.pstrb;
 endfunction:do_compare
 
@@ -152,6 +158,8 @@ function void apb_slave_tx::do_print(uvm_printer printer);
   printer.print_string("pslverr",pslverr.name());
   printer.print_string("pselx",pselx.name());
   printer.print_string("pwrite",pwrite.name());
+  printer.print_string("pprot",pprot.name());
+
 endfunction : do_print
 
 

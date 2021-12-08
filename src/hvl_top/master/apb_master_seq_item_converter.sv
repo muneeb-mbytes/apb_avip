@@ -39,8 +39,9 @@ function void apb_master_seq_item_converter::from_class(input apb_master_tx inpu
                                                         output apb_transfer_char_s output_conv);
   
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("----------------------------------------------------------------------"),UVM_HIGH);
-  output_conv.pprot = input_conv.pprot;
-  //$cast(output_conv.pprot,input_conv.pprot); 
+ 
+  //output_conv.pprot = input_conv.pprot;
+  $cast(output_conv.pprot,input_conv.pprot); 
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pprot = \n %b",output_conv.pprot),UVM_HIGH);
 
   $cast(output_conv.pselx,input_conv.pselx);
@@ -82,8 +83,8 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
 
   `uvm_info("apb_master_seq_item_conv",$sformatf("------------------------------------------------"),UVM_HIGH);
   
-   output_conv_h.pprot = input_conv.pprot;
-   //$cast(output_conv_h.pprot,input_conv.pprot);
+   //output_conv_h.pprot = input_conv.pprot;
+   $cast(output_conv_h.pprot,input_conv.pprot);
    `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pprot = \n %p",output_conv_h.pprot),UVM_HIGH);
  
    $cast(output_conv_h.pselx,input_conv.pselx);

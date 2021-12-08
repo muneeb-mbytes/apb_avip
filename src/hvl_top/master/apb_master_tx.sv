@@ -17,8 +17,8 @@
 
   //Variable : pprot
   //Used for different access
-  //rand protection_type_e pprot;
-  rand bit [2:0]pprot;
+  rand protection_type_e pprot;
+  //rand bit [2:0]pprot;
 
   //Variable : pselx
   //Used to select the slave
@@ -204,7 +204,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
   
   printer.print_field ("paddr",   paddr,   $bits(paddr),   UVM_DEC);
-  printer.print_field ("pprot",   pprot,   $bits(pprot),   UVM_DEC);
+  //printer.print_field ("pprot",   pprot,   $bits(pprot),   UVM_DEC);
   printer.print_string ("pselx",   pselx.name());
   printer.print_field ("penable", penable, $bits(penable), UVM_DEC);
   //printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
@@ -215,7 +215,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   //printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
   printer.print_string("pslverr",pslverr.name());
   printer.print_string("tx_type",tx_type.name());
-  //printer.print_string("pprot",pprot.name());
+  printer.print_string("pprot",pprot.name());
 
 endfunction : do_print
 

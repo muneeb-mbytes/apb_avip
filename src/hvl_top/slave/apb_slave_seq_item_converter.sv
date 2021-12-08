@@ -56,6 +56,10 @@ function void apb_slave_seq_item_converter::from_class(input apb_slave_tx input_
   output_conv.pwdata = input_conv_h.pwdata;
   `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pwdata = \n %p",output_conv.pwdata),UVM_HIGH); 
     
+ //output_conv.pprot = input_conv_h.pprot;
+  $cast(output_conv.pprot,input_conv_h.pprot);
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pprot = \n %p",output_conv.pprot),UVM_HIGH);
+
   //output_conv.pslverr = input_conv_h.pslverr;
   $cast(output_conv.pslverr,input_conv_h.pslverr);
   `uvm_info("apb_slave_seq_item_conv_class",$sformatf("After ramdomizing pslverr = \n %p",output_conv.pslverr),UVM_HIGH);
@@ -98,6 +102,12 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   $cast(output_conv_h.pselx,input_conv.pselx);
   `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pselx = \n %p",output_conv_h.pselx),UVM_HIGH);
   
+  //output_conv.pprot = input_conv_h.pprot;
+  $cast(output_conv_h.pprot,input_conv.pprot);
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pprot = \n %p",output_conv_h.pprot),UVM_HIGH);
+
+
+
   //output_conv_h.pslverr = input_conv.pslverr;
   $cast(output_conv_h.pslverr,input_conv.pslverr);
   `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_HIGH);
