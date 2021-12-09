@@ -57,6 +57,7 @@ class apb_slave_tx extends uvm_sequence_item;
   //<TODO>
   //transfer_size_e transfer_size;
 
+  constraint wait_states_c1 {no_of_wait_states inside {[0:3]};}
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

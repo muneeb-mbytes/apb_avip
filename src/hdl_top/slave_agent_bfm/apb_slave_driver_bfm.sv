@@ -45,10 +45,10 @@ end
   //-------------------------------------------------------
   task wait_for_preset_n();
     @(negedge preset_n);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)
+    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("SYSTEM RESET DETECTED"),UVM_HIGH)
 
     @(posedge preset_n);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
+    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("SYSTEM RESET DEACTIVATED"),UVM_HIGH)
   
   endtask: wait_for_preset_n
 //-------------------------------------------------------
@@ -62,8 +62,8 @@ end
 
    task drive_to_bfm(inout apb_transfer_char_s data_packet,
                           input apb_transfer_cfg_s cfg_pkt);
-    @(posedge pclk);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
+    //@(posedge pclk);
+    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR SETUP STATE"),UVM_HIGH);
 
    // wait_for_idle_state(data_packet);
 
@@ -101,7 +101,7 @@ end
   //-------------------------------------------------------
   task wait_for_setup_state(apb_transfer_char_s data_packet);
     @(posedge pclk);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH)
+    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR SETUP STATE"),UVM_HIGH)
     if($countones(pselx) == 1)begin
       data_packet.pselx = 1;
       //data_packet.penable = penable;
@@ -121,14 +121,19 @@ end
   // task: wait_for_access_state
   //-------------------------------------------------------
   task wait_for_access_state(input apb_transfer_char_s data_packet);
+    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR ACCESS STATE - no_of_wait_states=%0d",data_packet.no_of_wait_states),UVM_HIGH);
     @(posedge pclk);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
+    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR ACCESS STATE"),UVM_HIGH);
     if($countones(pselx) == 1)begin
+      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED"),UVM_HIGH);
+      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED-PSELx = %0d",$countones(pselx)),UVM_HIGH);
       data_packet.pselx = 1;
       //data_packet.penable = penable;
     end
     if(data_packet.pselx == 1 && penable == 1) begin
+      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SEL AND ENABLE ARE HIGH"),UVM_HIGH);
       repeat(data_packet.no_of_wait_states)begin
+        `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
         @(posedge pclk);
         pready<=0;
       end
