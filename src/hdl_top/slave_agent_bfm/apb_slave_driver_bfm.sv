@@ -107,10 +107,10 @@ end
       //data_packet.penable = penable;
     end
     if(data_packet.pselx == 1 && penable == 0) begin
-    data_packet.paddr=paddr;
-    data_packet.pwrite=pwrite;
-    data_packet.pwdata=pwdata;
-    data_packet.prdata=prdata;
+    data_packet.paddr<=paddr;
+    data_packet.pwrite<=pwrite;
+    data_packet.pwdata<=pwdata;
+    data_packet.prdata<=prdata;
     //data_packet.pstrb<=pstrb;
     //data_packet.pready<=pready;
   end
@@ -187,7 +187,7 @@ end
 //-------------------------------------------------------
   task transfer_data(apb_transfer_char_s data_packet);
     if(pwrite == 1'b1) begin
-      data_packet.pwdata<=pwdata;
+      data_packet.pwdata=pwdata;
       //end_of_transfer = 1'b1;
     end
     else begin
@@ -200,8 +200,8 @@ end
 //
 //-------------------------------------------------------
   task drive_wait_state(apb_transfer_char_s data_packet, bit penable);
-    data_packet.paddr<=paddr;
-    data_packet.pwrite<=pwrite;
+    data_packet.paddr=paddr;
+    data_packet.pwrite=pwrite;
     //pready=data_packet.pready;
   while(penable) begin
     if(!pready) begin
