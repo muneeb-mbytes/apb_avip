@@ -30,8 +30,8 @@ package apb_base_test_pkg;
   //-------------------------------------------------------
   `include "apb_base_test.sv"
   `include "apb_vd_vws_test.sv"
-  `include "apb_8b_test.sv"
-  `include "apb_16b_test.sv"
+  `include "apb_8b_write_test.sv"
+  `include "apb_16b_write_test.sv"
 
 endpackage : apb_base_test_pkg
 

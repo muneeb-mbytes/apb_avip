@@ -23,8 +23,8 @@ package apb_virtual_seq_pkg;
   //-------------------------------------------------------
   `include "apb_virtual_base_seq.sv"
   `include "apb_virtual_vd_vws_seq.sv"
-  `include "apb_virtual_8b_seq.sv"
-  `include "apb_virtual_16b_seq.sv"
+  `include "apb_virtual_8b_write_seq.sv"
+  `include "apb_virtual_16b_write_seq.sv"
 
 endpackage : apb_virtual_seq_pkg
 
