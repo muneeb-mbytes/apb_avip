@@ -111,6 +111,8 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
   output_conv_h.prdata = input_conv.prdata;
    `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize prdata = \n %p",output_conv_h.prdata),UVM_HIGH);
 
+  output_conv_h.no_of_wait_states_detected = input_conv.no_of_wait_states;
+
   `uvm_info("apb_master_seq_item_conv",$sformatf("------------------------------------------------"),UVM_HIGH);
     
 endfunction: to_class

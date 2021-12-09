@@ -96,6 +96,9 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
   //wait for system reset
   apb_master_drv_bfm_h.wait_for_preset_n();
 
+  //Drive the idel state for APB interface
+  apb_master_drv_bfm_h.drive_idle_state();
+
   forever begin
     apb_transfer_char_s struct_packet;
     apb_transfer_cfg_s struct_cfg;
@@ -104,7 +107,7 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
 
     //Printing the req item
     //req.print();
-    `uvm_info(get_type_name(), $sformatf("REQ-MASTER_TX \n %s",req.sprint),UVM_LOW);
+    `uvm_info(get_type_name(), $sformatf("REQ-MASTER_TX \n %s",req.sprint),UVM_HIGH);
   
     //Printing master agent config
     //`uvm_info(get_type_name(), $sformatf("apb_master_agent_config \n %s",apb_master_agent_cfg_h.sprint),UVM_LOW);
@@ -126,6 +129,8 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
     //Converting struct to transaction
     apb_master_seq_item_converter::to_class(struct_packet, req);
     
+    `uvm_info("DEBUG_MSHA", $sformatf("AFTER :: received req packet \n %s", req.sprint()), UVM_NONE); 
+
     seq_item_port.item_done();
 
   end

@@ -57,18 +57,21 @@
   //Goes high when a transfer fails
   slave_error_e pslverr;
 
-  //Variable : apb_master_agent_config_h
+  //Variable : apb_master_agent_cfg_h
   //Instantiation of apb master agent config
   apb_master_agent_config apb_master_agent_cfg_h;
 
+  // Variable: no_of_wait_states_detected
+  int no_of_wait_states_detected;
+  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new   (string name = "apb_master_tx");
-  extern function void  do_copy(uvm_object rhs);
-  extern function bit   do_compare(uvm_object rhs, uvm_comparer comparer);
-  extern function void  do_print(uvm_printer printer);
-  extern function void  post_randomize();
+  extern function new  (string name = "apb_master_tx");
+  extern function void do_copy(uvm_object rhs);
+  extern function bit  do_compare(uvm_object rhs, uvm_comparer comparer);
+  extern function void do_print(uvm_printer printer);
+  extern function void post_randomize();
 
   //-------------------------------------------------------
   // Constraints defined on variables pselx,
@@ -217,6 +220,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field  ("pready",  pready,      $bits(pready),  UVM_DEC);
   printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
   printer.print_string ("pslverr", pslverr.name());
+  printer.print_field  ("no_of_wait_states_detected", no_of_wait_states_detected, $bits(no_of_wait_states_detected), UVM_DEC);
   endfunction : do_print
 
 //--------------------------------------------------------------------------------------------
@@ -224,11 +228,30 @@ function void apb_master_tx::do_print(uvm_printer printer);
 // Selects the address based on the slave selected
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::post_randomize();
+  int index;
+
   `uvm_info(get_type_name(),$sformatf("APB_MASTER_TX.CFG=%0d",apb_master_agent_cfg_h),UVM_LOW);
+
+  // Derive the slave number using the index
+  for(int i=0; i<NO_OF_SLAVES; i++) begin
+    if(pselx[i]) begin
+      index = i;
+    end
+  end
+
+  // Randmoly chosing paddr value between a given range
+  if (!std::randomize(paddr) with { 
+          paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
+          paddr %4 == 0;
+        }) begin
+
+    `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));  
+  end
+
   //bit [7:0]slave_num;
   //slave_num= pselx.match("SLAVE");
   //$display(slave_num);
-  //paddr = $urandom_range(2**apb_master_agent_config_h.master_min_addr_range_array[2],2**apb_master_agent_config_h.master_max_addr_range_array[2]);
+  //paddr = $urandom_range(2**apb_master_agent_cfg_h.master_min_addr_range_array[2],2**apb_master_agent_cfg_h.master_max_addr_range_array[2]);
 endfunction : post_randomize
 
 `endif
