@@ -1,17 +1,17 @@
-`ifndef APB_VIRTUAL_8B_SEQ_INCLUDED_
-`define APB_VIRTUAL_8B_SEQ_INCLUDED_
+`ifndef APB_VIRTUAL_8B_WRITE_SEQ_INCLUDED_
+`define APB_VIRTUAL_8B_WRITE_SEQ_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class: apb_virtual_8b_seq
+// Class: apb_virtual_8b_write_seq
 // Creates and starts the master and slave vd_vws sequnences of variable data and variable 
 // wait states.
 //--------------------------------------------------------------------------------------------
-class apb_virtual_8b_seq extends apb_virtual_base_seq;
-  `uvm_object_utils(apb_virtual_8b_seq)
+class apb_virtual_8b_write_seq extends apb_virtual_base_seq;
+  `uvm_object_utils(apb_virtual_8b_write_seq)
 
   //Variable : apb_master_8b_seq_h
   //Instatiation of apb_master_8b_seq
-  apb_master_8b_seq apb_master_8b_seq_h;
+  apb_master_8b_write_seq apb_master_8b_seq_h;
 
   //Variable : apb_slave_8b_seq_h
   //Instantiation of apb_master_8b_seq
@@ -20,18 +20,18 @@ class apb_virtual_8b_seq extends apb_virtual_base_seq;
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
 
-  extern function new(string name ="apb_virtual_8b_seq");
+  extern function new(string name ="apb_virtual_8b_write_seq");
   extern task body();
 
-endclass : apb_virtual_8b_seq
+endclass : apb_virtual_8b_write_seq
 //--------------------------------------------------------------------------------------------
 // Construct: new
 //
 // Parameters:
-//  name - apb_virtual_8b_seq
+//  name - apb_virtual_8b_write_seq
 //--------------------------------------------------------------------------------------------
 
-function apb_virtual_8b_seq::new(string name ="apb_virtual_8b_seq");
+function apb_virtual_8b_write_seq::new(string name ="apb_virtual_8b_write_seq");
   super.new(name);
 endfunction : new
 
@@ -39,9 +39,9 @@ endfunction : new
 // Task - body
 // Creates and starts the 8bit data of master and slave sequences
 //--------------------------------------------------------------------------------------------
-task apb_virtual_8b_seq::body();
+task apb_virtual_8b_write_seq::body();
   super.body();
-  apb_master_8b_seq_h=apb_master_8b_seq::type_id::create("apb_master_8b_seq_h");
+  apb_master_8b_seq_h=apb_master_8b_write_seq::type_id::create("apb_master_8b_seq_h");
   apb_slave_8b_seq_h=apb_slave_8b_seq::type_id::create("apb_slave_8b_seq_h");
    fork
     forever begin

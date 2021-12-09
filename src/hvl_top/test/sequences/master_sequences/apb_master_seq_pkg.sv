@@ -20,8 +20,8 @@ package apb_master_seq_pkg;
   //-------------------------------------------------------
   `include "apb_master_base_seq.sv"
   `include "apb_master_vd_vws_seq.sv"
-  `include "apb_master_8b_seq.sv"
-  `include "apb_master_16b_seq.sv"
+  `include "apb_master_8b_write_seq.sv"
+  `include "apb_master_16b_write_seq.sv"
 
 endpackage : apb_master_seq_pkg
 

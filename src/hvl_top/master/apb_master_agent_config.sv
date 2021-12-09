@@ -24,51 +24,38 @@ class apb_master_agent_config extends uvm_object;
   //Variable: master_memory
   //Memory decleration for master to store the data of each slave
   //bit [DATA_WIDTH-1:0]master_memory[NO_OF_SLAVES*ADDRESS_WIDTH-1:0];
-
   bit [ADDRESS_WIDTH-1:0]paddr;
 
   //Variable: slave_no
   //Used to indicate the slave number
   //slave_no_e slave_no;
   
-  //Declaring address ranges for 16 slaves
-  // ommitting 7 address locations for memory gap between each slave
-  /*bit [DATA_WIDTH-1:0] slave_1  [63:0]; 
-  bit [DATA_WIDTH-1:0] slave_2  [133:70];
-  bit [DATA_WIDTH-1:0] slave_3  [203:140];
-  bit [DATA_WIDTH-1:0] slave_4  [273:210];
-  bit [DATA_WIDTH-1:0] slave_5  [343:280];
-  bit [DATA_WIDTH-1:0] slave_6  [413:350];
-  bit [DATA_WIDTH-1:0] slave_7  [483:420];
-  bit [DATA_WIDTH-1:0] slave_8  [553:490];
-  bit [DATA_WIDTH-1:0] slave_9  [623:560];
-  bit [DATA_WIDTH-1:0] slave_10 [693:630];
-  bit [DATA_WIDTH-1:0] slave_11 [763:700];
-  bit [DATA_WIDTH-1:0] slave_12 [833:770];
-  bit [DATA_WIDTH-1:0] slave_13 [903:840];
-  bit [DATA_WIDTH-1:0] slave_14 [973:910];
-  bit [DATA_WIDTH-1:0] slave_15 [1043:980];
-  bit [DATA_WIDTH-1:0] slave_16 [1113:1050];*/
-
   //Variable : master_memory
   //Used to store all the data from the slaves
-  bit [DATA_WIDTH-1:0]master_memory[(SLAVE_MEMORY_SIZE+SLAVE_MEMORY_GAP)*NO_OF_SLAVES:0];
-
-  //Variable : master_max_assry
-  //An associative array used to store the max address ranges of every slave
-  bit [DATA_WIDTH-1:0]master_max_array[int];
+  //Each location of the master memory stores 8 bit data
+  bit [7:0]master_memory[(SLAVE_MEMORY_SIZE+SLAVE_MEMORY_GAP)*NO_OF_SLAVES:0];
 
   //Variable : master_min_array
   //An associative array used to store the min address ranges of every slave
-  bit [DATA_WIDTH-1:0]master_min_array[int];
+  //Index - type    - int
+  //        stores  - slave number
+  //Value - stores the minimum address range of that slave.
+  bit [ADDRESS_WIDTH-1:0]master_min_addr_range_array[int];
+
+  //Variable : master_max_array
+  //An associative array used to store the max address ranges of every slave
+  //Index - type    - int
+  //        stores  - slave number
+  //Value - stores the maximum address range of that slave.
+  bit [ADDRESS_WIDTH-1:0]master_max_addr_range_array[int];
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_master_agent_config");
   extern function void do_print(uvm_printer printer);
-  extern function void mem_mapping_max(int i, bit [11:0]value);
-  extern function void mem_mapping_min(int i, bit [11:0]value);
+  extern function void master_min_addr_range(int slave_number, bit [63:0]slave_min_address_range);
+  extern function void master_max_addr_range(int slave_number, bit [63:0]slave_max_address_range);
 
 endclass : apb_master_agent_config
 
@@ -96,22 +83,34 @@ function void apb_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("is_active",     is_active,    $bits(is_active),     UVM_DEC);
   printer.print_field ("has_coverage",  has_coverage, $bits(has_coverage),  UVM_DEC);
   printer.print_field ("no_of_slaves",  no_of_slaves, $bits(no_of_slaves),  UVM_DEC);
-  foreach(master_max_array[i]) begin
-    printer.print_field($sformatf("master_max_array_value[%0d]",i),master_max_array[i],$bits(master_max_array[i]),UVM_DEC);
-  end
-  foreach(master_min_array[i]) begin
-    printer.print_field($sformatf("master_min_array_value[%0d]",i),master_min_array[i],$bits(master_min_array[i]),UVM_DEC);
+  foreach(master_max_addr_range_array[i]) begin
+    printer.print_field($sformatf("master_min_addr_range_array[%0d]",i),master_min_addr_range_array[i],$bits(master_min_addr_range_array[i]),UVM_HEX);
+    printer.print_field($sformatf("master_max_addr_range_array[%0d]",i),master_max_addr_range_array[i],$bits(master_max_addr_range_array[i]),UVM_HEX);
   end
 
 endfunction : do_print
 
-function void apb_master_agent_config::mem_mapping_max(int i, bit [11:0]value);
-  master_max_array[i] = value;
-endfunction : mem_mapping_max
+//--------------------------------------------------------------------------------------------
+// Function : master_max_addr_range_array
+// Used to store the maximum address ranges of the slaves in the array
+// Parameters :
+//  slave_number            - int
+//  slave_max_address_range - bit [63:0]
+//--------------------------------------------------------------------------------------------
+function void apb_master_agent_config::master_max_addr_range(int slave_number, bit [63:0]slave_max_address_range);
+  master_max_addr_range_array[slave_number] = slave_max_address_range;
+endfunction : master_max_addr_range
 
-function void apb_master_agent_config::mem_mapping_min(int i, bit [11:0]value);
-  master_min_array[i] = value;
-endfunction : mem_mapping_min
+//--------------------------------------------------------------------------------------------
+// Function : master_min_addr_range_array
+// Used to store the minimum address ranges of the slaves in the array
+// Parameters :
+//  slave_number            - int
+//  slave_min_address_range - bit [63:0]
+//--------------------------------------------------------------------------------------------
+function void apb_master_agent_config::master_min_addr_range(int slave_number, bit [63:0]slave_min_address_range);
+  master_min_addr_range_array[slave_number] = slave_min_address_range;
+endfunction : master_min_addr_range
 
 `endif
 

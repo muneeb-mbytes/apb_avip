@@ -9,7 +9,7 @@ package apb_global_pkg;
 
   //Parameter : NO_OF_SLAVES
   //Used to set number of slaves required
-  parameter int NO_OF_SLAVES = 16;
+  parameter int NO_OF_SLAVES = 4;
 
   //Parameter : MASTER_AGENT_ACTIVE
   //Used to set the master agent either active or passive
@@ -83,8 +83,8 @@ package apb_global_pkg;
   // Used to declare enum type for the endians
   //-------------------------------------------------------
   typedef enum bit{
-    LITTLE    = 1'b0,
-    BIG       = 1'b1
+    LITTL_ENDIAN    = 1'b0,
+    BIG_ENDIAN      = 1'b1
   }endian_e;
 
 
@@ -92,10 +92,10 @@ package apb_global_pkg;
   // Enum : is_active_e
   // Used to declare enum type for the is_active
   //-------------------------------------------------------
-  typedef enum bit{
-    IS_ACTIVE     = 1'b1,
-    IS_PASSIVE    = 1'b0
-  }is_active_e;
+  //typedef enum bit{
+  //  IS_ACTIVE     = 1'b1,
+  //  IS_PASSIVE    = 1'b0
+  //}is_active_e;
 
 
 
@@ -124,22 +124,15 @@ package apb_global_pkg;
   // transaction
   //-------------------------------------------------------
   typedef enum logic[2:0]{
-    N_S_D       = 3'b000,
-    N_S_I       = 3'b001,
-    N_NS_D      = 3'b010,
-    N_NS_I      = 3'b011,
-    P_S_D       = 3'b100,
-    P_S_I       = 3'b101,
-    P_NS_D      = 3'b110,
-    P_NS_I      = 3'b111
-/*
-    NORMAL_ACCESS      = 3'bxx0,
-    PRIVILIGED_ACCESS  = 3'bxx1,
-    SECURE_ACCESS      = 3'bx0x,
-    NON_SECURE_ACCESS  = 3'bx1x,
-    DATA_ACCESS        = 3'b0xx,
-    INSTRUCTION_ACCESS = 3'b1xx*/
-  }protection_type_e;
+    NORMAL_SECURE_DATA              = 3'b000,
+    NORMAL_SECURE_INSTRUCTION       = 3'b001,
+    NORMAL_NONSECURE_DATA           = 3'b010,
+    NORMAL_NONSECURE_INSTRUCTION    = 3'b011,
+    PRIVILEGED_SECURE_DATA          = 3'b100,
+    PRIVILEGED_SECURE_INSTRUCTION   = 3'b101,
+    PRIVILEGED_NONSECURE_DATA       = 3'b110,
+    PRIVILEGED_NONSECURE_INSTUCTION = 3'b111
+    }protection_type_e;
 
   //-------------------------------------------------------
   // Enum : slave_no_e
@@ -187,7 +180,9 @@ package apb_global_pkg;
   //which are used for seq item conversion
   //-------------------------------------------------------
   typedef struct{
-    bit [ADDRESS_WIDTH-1:0] paddr;
+    bit [ADDRESS_WIDTH-1:0]min_address;
+    bit [ADDRESS_WIDTH-1:0]max_address;
+    bit [ADDRESS_WIDTH-1:0]paddr;
   }apb_transfer_cfg_s;
 
   //-------------------------------------------------------
