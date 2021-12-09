@@ -106,8 +106,6 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
   $cast(output_conv_h.pprot,input_conv_h.pprot);
   `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pprot = \n %p",output_conv_h.pprot),UVM_HIGH);
 
-
-
   //output_conv_h.pslverr = input_conv_h.pslverr;
   $cast(output_conv_h.pslverr,input_conv_h.pslverr);
   `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the pslverr = \n %p",output_conv_h.pslverr),UVM_HIGH);
