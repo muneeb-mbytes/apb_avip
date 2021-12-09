@@ -65,7 +65,7 @@ endfunction : new
 function void apb_slave_agent_config::do_print(uvm_printer printer);
   super.do_print(printer);
 
-  printer.print_field ("is_active"    ,is_active,     $bits(is_active),     UVM_DEC);
+  printer.print_string ("is_active"    ,is_active.name());
   printer.print_field ("slave_id"     ,slave_id,      $bits(slave_id),      UVM_DEC);
   printer.print_field ("has_coverage" ,has_coverage,  $bits(has_coverage),  UVM_DEC);
   printer.print_field ("max_address"  ,max_address,   $bits(max_address),   UVM_HEX);
