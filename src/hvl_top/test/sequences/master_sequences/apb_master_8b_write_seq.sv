@@ -13,7 +13,7 @@ class apb_master_8b_write_seq extends apb_master_base_seq;
   //-------------------------------------------------------
   extern function new(string name ="apb_master_8b_write_seq");
   extern task body();
-endclass : apb_master_8b_write_seq
+  endclass : apb_master_8b_write_seq
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
@@ -40,5 +40,7 @@ task apb_master_8b_write_seq::body();
   //req.print();
   finish_item(req);
 endtask : body
+
+
 
 `endif

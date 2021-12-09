@@ -166,7 +166,7 @@ task apb_base_test::run_phase(uvm_phase phase);
 
   super.run_phase(phase);
 
-  #100;
+  //#100;
   phase.drop_objection(this);
 
 endtask : run_phase

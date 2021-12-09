@@ -19,8 +19,8 @@ package apb_master_pkg;
   //-------------------------------------------------------
   // Include all other files
   //-------------------------------------------------------
-  `include "apb_master_tx.sv"
   `include "apb_master_agent_config.sv"
+  `include "apb_master_tx.sv"
   `include "apb_master_seq_item_converter.sv"
   `include "apb_master_cfg_converter.sv"
   `include "apb_master_sequencer.sv"

@@ -47,9 +47,9 @@ import uvm_pkg::*;
   initial begin
     preset_n = 1'b1;
     
-    #25 preset_n = 1'b0;
+    #15 preset_n = 1'b0;
 
-    repeat(2) begin
+    repeat(1) begin
       @(posedge pclk);
     end
     preset_n = 1'b1;

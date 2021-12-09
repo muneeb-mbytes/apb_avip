@@ -57,6 +57,10 @@
   //Goes high when a transfer fails
   slave_error_e  pslverr;
 
+  //Variable : apb_master_agent_config_h
+  //Instantiation of apb master agent config
+  apb_master_agent_config apb_master_agent_cfg_h;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -64,6 +68,7 @@
   extern function void  do_copy(uvm_object rhs);
   extern function bit   do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function void  do_print(uvm_printer printer);
+  extern function void post_randomize();
 
   //-------------------------------------------------------
   // Constraints defined on variables pselx,
@@ -204,23 +209,30 @@ endfunction : do_compare
 function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
   
-  printer.print_string ("pselx",   pselx.name()                        );
+  printer.print_string ("pselx",   pselx.name());
   printer.print_field  ("penable", penable,     $bits(penable), UVM_DEC);
   printer.print_field  ("paddr",   paddr,       $bits(paddr),   UVM_HEX);
   printer.print_string ("pwrite",  pwrite.name());
   printer.print_field  ("pwdata",  pwdata,      $bits(pwdata),  UVM_HEX);
-  printer.print_string ("transfer_size",transfer_size.name()           );
+  printer.print_string ("transfer_size",transfer_size.name());
   printer.print_field  ("pstrb",   pstrb,       $bits(pstrb),   UVM_BIN);
-  printer.print_string ("pprot",   pprot.name()                        );
+  printer.print_string ("pprot",   pprot.name());
   printer.print_field  ("pready",  pready,      $bits(pready),  UVM_DEC);
   printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
-  printer.print_string ("pslverr", pslverr.name()                      );
+  printer.print_string ("pslverr", pslverr.name());
   endfunction : do_print
 
-//function bit apb_master_tx::slave_select();
-  //`uvm_info(get_type_name(),"SLAVE_SELECT",UVM_LOW);
-  //return '0;
-//endfunction : slave_select
+//--------------------------------------------------------------------------------------------
+// Function : post_randomize
+// Selects the address based on the slave selected
+//--------------------------------------------------------------------------------------------
+function void apb_master_tx::post_randomize();
+  //`uvm_info(get_type_name(),"APB_MASTER_TX.CFG=%0d",apb_master_agent_cfg_h,UVM_LOW);
+  //bit [7:0]slave_num;
+  //slave_num= pselx.match("SLAVE");
+  //$display(slave_num);
+  //paddr = $urandom_range(2**apb_master_agent_config_h.master_min_addr_range[2],2**apb_master_agent_config_h.master_max_addr_range[2]);
+endfunction : post_randomize
 
 `endif
 

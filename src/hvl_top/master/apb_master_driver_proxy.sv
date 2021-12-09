@@ -107,7 +107,7 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
     `uvm_info(get_type_name(), $sformatf("REQ-MASTER_TX \n %s",req.sprint),UVM_LOW);
   
     //Printing master agent config
-    `uvm_info(get_type_name(), $sformatf("apb_master_agent_config \n %s",apb_master_agent_cfg_h.sprint),UVM_LOW);
+    //`uvm_info(get_type_name(), $sformatf("apb_master_agent_config \n %s",apb_master_agent_cfg_h.sprint),UVM_LOW);
 
     //Converting transaction to struct data_packet
     apb_master_seq_item_converter::from_class(req, struct_packet); 

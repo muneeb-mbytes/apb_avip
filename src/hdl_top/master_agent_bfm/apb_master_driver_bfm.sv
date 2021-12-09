@@ -37,7 +37,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
   
   //Variable: end_of_transfer
   //Used to indicate the end of transfer of the packet
-  bit end_of_transfer;
+  //bit end_of_transfer;
   
   //Variable: apb_master_drv_proxy_h
   //Creating the handle for the proxy_driver
@@ -57,7 +57,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
  
     @(posedge preset_n);
     `uvm_info("MASTER_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
-    drive_idle_state();
+    //drive_idle_state();
   endtask: wait_for_preset_n
   
   //--------------------------------------------------------------------------------------------
@@ -68,9 +68,11 @@ interface apb_master_driver_bfm (input  bit   pclk,
   // data_packet  - handle for apb_transfer_char_s
   // cfg_pkt      - handle for apb_transfer_cfg_s
   //--------------------------------------------------------------------------------------------
-  task drive_to_bfm(inout apb_transfer_char_s data_packet, input apb_transfer_cfg_s cfg_pkt);
-    if(preset_n) begin
-      @(posedge pclk);
+  task drive_to_bfm(inout apb_transfer_char_s data_packet, input apb_transfer_cfg_s cfg_packet);
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("data_packet=\n%p",data_packet),UVM_HIGH);
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("cfg_packet=\n%p",cfg_packet),UVM_HIGH);
+    //if(preset_n) begin
+      //@(posedge pclk);
       `uvm_info("MASTER_DRIVER_BFM",$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
 
       //Driving Idle state
@@ -80,16 +82,22 @@ interface apb_master_driver_bfm (input  bit   pclk,
       drive_setup_state(data_packet);
 
       //Driving Access state
-      drive_access_state(data_packet);
+      waiting_in_access_state(data_packet);
 
-    end
-    else begin
-      `uvm_info("MASTER_DRIVER_BFM",$sformatf("RESET_DETECTED"),UVM_HIGH);
+    //end
+    //else begin
+    //  `uvm_info("MASTER_DRIVER_BFM",$sformatf("RESET_DETECTED"),UVM_HIGH);
 
-      //Driving idle state
-      drive_idle_state();
-    end
-  
+    //  //Driving idle state
+    //  drive_idle_state();
+    //end
+    @(posedge pclk);
+    penable <= 0;
+    paddr <= 'x;
+    pwdata <= 'x;
+    pwrite <='x;
+    pstrb <= 'x;
+    pprot <= 'x;
    endtask: drive_to_bfm
 
   //--------------------------------------------------------------------------------------------
@@ -97,16 +105,16 @@ interface apb_master_driver_bfm (input  bit   pclk,
   // This task drives the apb interface to idle state
   //--------------------------------------------------------------------------------------------
   task drive_idle_state();
-    if(preset_n) begin
-      @(posedge pclk);
+    //if(preset_n) begin
+      //@(posedge pclk);
       `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the idle state"),UVM_HIGH)
       pselx   <= '0;
       penable <= 1'b0;
-    end
-    else begin
-      `uvm_info("MASTER_DRIVER_BFM",$sformatf("RESET_DETECTED"),UVM_HIGH);
-      drive_idle_state();
-    end
+    //end
+    //else begin
+    //  `uvm_info("MASTER_DRIVER_BFM",$sformatf("RESET_DETECTED"),UVM_HIGH);
+    //  drive_idle_state();
+    //end
   endtask: drive_idle_state
 
   //--------------------------------------------------------------------------------------------
@@ -118,18 +126,26 @@ interface apb_master_driver_bfm (input  bit   pclk,
   // paddr - address signal
   //--------------------------------------------------------------------------------------------
   task drive_setup_state(input apb_transfer_char_s data_packet);
-    if(preset_n) begin
+    //if(preset_n) begin
       @(posedge pclk);
       `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH)
       pselx   <= data_packet.pselx;
       penable <= 1'b0;
       paddr   <= data_packet.paddr;
       pwrite  <= data_packet.pwrite;
-    end
-    else begin
-      `uvm_info("MASTER_DRIVER_BFM",$sformatf("RESET_DETECTED"),UVM_HIGH);
-      drive_idle_state();
-    end 
+      if(data_packet.pwrite == 1) begin
+        pwdata <= data_packet.pwdata;
+      end
+      else begin
+        data_packet.prdata = prdata;
+      end
+      pprot <= data_packet.pprot;
+      pstrb <= data_packet.pstrb;
+    //end
+    //else begin
+    //  `uvm_info("MASTER_DRIVER_BFM",$sformatf("RESET_DETECTED"),UVM_HIGH);
+    //  drive_idle_state();
+    //end 
   endtask: drive_setup_state
 
   //-------------------------------------------------------
@@ -139,12 +155,12 @@ interface apb_master_driver_bfm (input  bit   pclk,
   // Parameters:
   // data_packet - handle for apb_transfer_char_s
   //-------------------------------------------------------
-  task drive_access_state(input apb_transfer_char_s data_packet);
+  task waiting_in_access_state(input apb_transfer_char_s data_packet);
     if(preset_n) begin
       @(posedge pclk);
-      `uvm_info("MASTER_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
+      `uvm_info("MASTER_DRIVER_BFM",$sformatf("inside access state"),UVM_HIGH);
 
-      pselx     <= data_packet.pselx;
+      //pselx     <= data_packet.pselx;
       penable   <= 1'b1;
       
       if(pready == 1'b1) begin
@@ -154,36 +170,40 @@ interface apb_master_driver_bfm (input  bit   pclk,
         //Driving Wait State
         drive_wait_state(data_packet, penable);
       end
-      if(end_of_transfer == 1'b1) begin
-        drive_idle_state();
-      end
-      else begin
-        drive_setup_state(data_packet);
-      end
-      end
+      //if(end_of_transfer == 1'b1) begin
+      //  drive_idle_state();
+      //end
+      //else begin
+      //  drive_setup_state(data_packet);
+      //end
+    end
     else begin
       `uvm_info("MASTER_DRIVER_BFM",$sformatf("RESET_DETECTED"),UVM_HIGH);
       drive_idle_state();
     end
 
-  endtask: drive_access_state
+  endtask: waiting_in_access_state
 
   //--------------------------------------------------------------------------------------------
-  // Task: drive_access_state
-  // This task defines the accessing of data signals from master to slave or viceverse
+  // Task: transfer_data
+  // This task makes apb to drive pwdata or sample prdata based on pwrite operation
   //
   // Parameters:
   // data_packet - handle for apb_transfer_char_s
   //--------------------------------------------------------------------------------------------
   task transfer_data(apb_transfer_char_s data_packet);
+        
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("transfer data"),UVM_HIGH);
     if(pwrite == 1'b1) begin
       pwdata <= data_packet.pwdata;
-      end_of_transfer = 1'b1;
+      //end_of_transfer = 1'b1;
     end
     else begin
       data_packet.prdata = prdata;
-      end_of_transfer = 1'b1;
+      //end_of_transfer = 1'b1;
     end
+
+    //drive_idle_state();
   endtask :transfer_data
 
   //--------------------------------------------------------------------------------------------
@@ -195,18 +215,22 @@ interface apb_master_driver_bfm (input  bit   pclk,
   //--------------------------------------------------------------------------------------------
   task drive_wait_state(apb_transfer_char_s data_packet, bit penable);
     
-    paddr <= data_packet.paddr;
-    pwrite <= data_packet.pwrite;
-
-    while(penable) begin
-      if(!pready) begin
-        `uvm_info("MASTER_DRIVER_BFM","WAIT_STATE_DETECTED",UVM_LOW);
-        @(posedge pclk);
-      end
-      else begin
-        transfer_data(data_packet);
-      end
+    `uvm_info("MASTER_DRIVER_BFM",$sformatf("drive wait state"),UVM_HIGH);
+    //paddr <= data_packet.paddr;
+    //pwrite <= data_packet.pwrite;
+    if(data_packet.pwrite == 1) begin
+      pwdata <= data_packet.pwdata;
     end
+    //else begin
+    //  data_packet.prdata = prdata;
+    //end
+    //while(pready==0) begin
+      `uvm_info("MASTER_DRIVER_BFM","WAIT_STATE_DETECTED",UVM_LOW);
+      //@(posedge pclk);
+    //end
+    
+    transfer_data(data_packet);
+
   endtask : drive_wait_state
 
 endinterface : apb_master_driver_bfm
