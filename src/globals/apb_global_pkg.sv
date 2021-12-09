@@ -180,7 +180,9 @@ package apb_global_pkg;
   //which are used for seq item conversion
   //-------------------------------------------------------
   typedef struct{
-    bit [ADDRESS_WIDTH-1:0] paddr;
+    bit [ADDRESS_WIDTH-1:0]min_address;
+    bit [ADDRESS_WIDTH-1:0]max_address;
+    bit [ADDRESS_WIDTH-1:0]paddr;
   }apb_transfer_cfg_s;
 
   //-------------------------------------------------------

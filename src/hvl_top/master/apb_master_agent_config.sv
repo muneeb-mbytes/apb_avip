@@ -24,7 +24,6 @@ class apb_master_agent_config extends uvm_object;
   //Variable: master_memory
   //Memory decleration for master to store the data of each slave
   //bit [DATA_WIDTH-1:0]master_memory[NO_OF_SLAVES*ADDRESS_WIDTH-1:0];
-
   bit [ADDRESS_WIDTH-1:0]paddr;
 
   //Variable: slave_no
@@ -33,7 +32,8 @@ class apb_master_agent_config extends uvm_object;
   
   //Variable : master_memory
   //Used to store all the data from the slaves
-  bit [DATA_WIDTH-1:0]master_memory[(SLAVE_MEMORY_SIZE+SLAVE_MEMORY_GAP)*NO_OF_SLAVES:0];
+  //Each location of the master memory stores 8 bit data
+  bit [7:0]master_memory[(SLAVE_MEMORY_SIZE+SLAVE_MEMORY_GAP)*NO_OF_SLAVES:0];
 
   //Variable : master_min_array
   //An associative array used to store the min address ranges of every slave
@@ -48,7 +48,6 @@ class apb_master_agent_config extends uvm_object;
   //        stores  - slave number
   //Value - stores the maximum address range of that slave.
   bit [ADDRESS_WIDTH-1:0]master_max_addr_range_array[int];
-
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -85,8 +84,8 @@ function void apb_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("has_coverage",  has_coverage, $bits(has_coverage),  UVM_DEC);
   printer.print_field ("no_of_slaves",  no_of_slaves, $bits(no_of_slaves),  UVM_DEC);
   foreach(master_max_addr_range_array[i]) begin
-    printer.print_field($sformatf("master_max_addr_range_array[%0d]",i),master_min_addr_range_array[i],$bits(master_min_addr_range_array[i]),UVM_DEC);
-    printer.print_field($sformatf("master_max_addr_range_array[%0d]",i),master_max_addr_range_array[i],$bits(master_max_addr_range_array[i]),UVM_DEC);
+    printer.print_field($sformatf("master_min_addr_range_array[%0d]",i),master_min_addr_range_array[i],$bits(master_min_addr_range_array[i]),UVM_HEX);
+    printer.print_field($sformatf("master_max_addr_range_array[%0d]",i),master_max_addr_range_array[i],$bits(master_max_addr_range_array[i]),UVM_HEX);
   end
 
 endfunction : do_print
