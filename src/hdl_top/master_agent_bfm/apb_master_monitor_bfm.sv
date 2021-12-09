@@ -65,7 +65,7 @@ interface apb_master_monitor_bfm (input bit pclk,
   //-------------------------------------------------------
   task wait_for_idle_state();
     @(negedge pclk);
-    while (penable !== 1 && pselx == '0) begin
+    while (pselx == '0) begin
       @(negedge pclk);
     end
     `uvm_info("MASTER_MONITOR_BFM",$sformatf("waiting for the idle state"),UVM_HIGH)
@@ -87,10 +87,9 @@ interface apb_master_monitor_bfm (input bit pclk,
   endtask: wait_for_transfer_start
 
   //task sample_data(output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_pkt);
-  task sample_data(output apb_transfer_char_s apb_data_packet,
-                   input apb_transfer_cfg_s apb_cfg_packet);
+  task sample_data(output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_packet);
     forever begin
-      if(penable == 1) begin
+      if(penable==1 && pready==1 && $countones(pselx)==1) begin
         apb_data_packet.prdata = prdata;
         apb_data_packet.pwdata = pwdata;
       end

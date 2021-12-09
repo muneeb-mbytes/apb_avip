@@ -9,12 +9,6 @@
 //--------------------------------------------------------------------------------------------
 class apb_slave_monitor_proxy extends uvm_monitor;
   
-  //-------------------------------------------------------
-  // Package : Importing SPI Global Package 
-  //-------------------------------------------------------
-
-  //  import spi_globals_pkg::*;
-
   `uvm_component_utils(apb_slave_monitor_proxy)
 
   //Declaring Monitor Analysis Import
@@ -23,8 +17,8 @@ class apb_slave_monitor_proxy extends uvm_monitor;
   //Declaring Virtual Monitor BFM Handle
   virtual apb_slave_monitor_bfm apb_slave_mon_bfm_h;
     
-  // Variable: apb_slave_agent_cfg_h;
-  // Handle for  apb slave agent configuration
+  //Variable: apb_slave_agent_cfg_h;
+  //Handle for apb slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
 
   //-------------------------------------------------------
@@ -38,24 +32,21 @@ class apb_slave_monitor_proxy extends uvm_monitor;
 endclass : apb_slave_monitor_proxy
                                                           
 //--------------------------------------------------------------------------------------------
-//  Construct: new
-//  Parameters:
-//  name - apb_slave_monitor_proxy
-//  parent - parent under which this component is created
+// Construct: new
+// Parameters:
+// name - apb_slave_monitor_proxy
+// parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function apb_slave_monitor_proxy::new(string name = "apb_slave_monitor_proxy",
-                                                       uvm_component parent = null);
+function apb_slave_monitor_proxy::new(string name = "apb_slave_monitor_proxy", uvm_component parent = null);
   super.new(name, parent);
-
- apb_slave_analysis_port = new("apb_slave_analysis_port",this);
-
+  apb_slave_analysis_port = new("apb_slave_analysis_port",this);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-//  Function: build_phase
+// Function: build_phase
 //
-//  Parameters:
-//  phase - uvm phase
+// Parameters:
+// phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_slave_monitor_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
@@ -66,10 +57,9 @@ function void apb_slave_monitor_proxy::build_phase(uvm_phase phase);
 
 endfunction : build_phase
 
-
 //-------------------------------------------------------
 // Function: end_of_elaboration_phase
-//Description: connects monitor_proxy and monitor_bfm
+// Description: connects monitor_proxy and monitor_bfm
 //
 // Parameters:
 //  phase - stores the current phase
@@ -80,11 +70,11 @@ function void apb_slave_monitor_proxy::end_of_elaboration_phase(uvm_phase phase)
 endfunction : end_of_elaboration_phase
 
 //--------------------------------------------------------------------------------------------
-//  Task: run_phase
-// calls the tasks defined in slave  monitor bfm 
-// receives data packet from slave monitor bfm
-// and converts into the transaction objects
-//  Parameters:
+// Task: run_phase
+// Calls the tasks defined in slave monitor bfm 
+// Receives data packet from slave monitor bfm and converts into the transaction objects
+// 
+// Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
@@ -110,17 +100,15 @@ task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
     apb_slave_mon_bfm_h.sample_data(struct_data_packet, struct_cfg_packet);
     apb_slave_seq_item_converter::to_class(struct_data_packet, apb_slave_packet);
 
-    `uvm_info(get_type_name(),$sformatf("Received packet from MONITOR BFM : , \n %s",
-                                        apb_slave_packet.sprint()),UVM_HIGH)
+    `uvm_info(get_type_name(),$sformatf("Received packet from MONITOR BFM : , \n %s", apb_slave_packet.sprint()),UVM_HIGH)
 
     // Clone and publish the cloned item to the subscribers
     $cast(apb_slave_clone_packet, apb_slave_packet.clone());
-    `uvm_info(get_type_name(),$sformatf("Sending packet via analysis_port : , \n %s",
-                                        apb_slave_clone_packet.sprint()),UVM_HIGH)
+    `uvm_info(get_type_name(),$sformatf("Sending packet via analysis_port : , \n %s", apb_slave_clone_packet.sprint()),UVM_HIGH)
     apb_slave_analysis_port.write(apb_slave_clone_packet);
   end
 
 endtask : run_phase
 
-
 `endif
+
