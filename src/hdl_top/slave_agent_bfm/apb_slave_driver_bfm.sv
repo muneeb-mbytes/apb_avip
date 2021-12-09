@@ -34,7 +34,7 @@ import uvm_pkg::*;
 
 import apb_slave_pkg::apb_slave_driver_proxy;
 apb_slave_driver_proxy apb_slave_drv_proxy_h;
-bit end_of_transfer;
+//bit end_of_transfer;
 initial begin
   `uvm_info("apb slave driver bfm",$sformatf("APB SLAVE DRIVER BFM"),UVM_LOW);
 end
@@ -53,7 +53,11 @@ end
   endtask: wait_for_preset_n
 //-------------------------------------------------------
 //task: drive to bfm
-//
+//this task will drive the data from bfm to proxy using converters
+
+// Parameters:
+// data_packet  - handle for apb_transfer_char_s
+// cfg_pkt      - handle for apb_transfer_cfg_s
 //-------------------------------------------------------
 
    task drive_to_bfm(inout apb_transfer_char_s data_packet,
@@ -61,7 +65,7 @@ end
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
 
-    wait_for_idle_state(data_packet);
+   // wait_for_idle_state(data_packet);
 
     wait_for_setup_state(data_packet);
 
@@ -83,13 +87,14 @@ end
   // paddr - address signal
   //-------------------------------------------------------
   
-  task wait_for_idle_state(apb_transfer_char_s data_packet);
+  /*task wait_for_idle_state(apb_transfer_char_s data_packet);
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the idle state"),UVM_HIGH)
     data_packet.pselx <= pselx;
     //data_packet.penable <= penable;
 
   endtask: wait_for_idle_state
+  */
 
   //-------------------------------------------------------
   // task: wait_for_setup_state
@@ -97,10 +102,19 @@ end
   task wait_for_setup_state(apb_transfer_char_s data_packet);
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH)
-    data_packet.pselx<= pselx;
-    //data_packet.penable <= penable;
-    //paddr <= $urandom;
-    //pready <= 0;
+    if($countones(pselx) == 1)begin
+      data_packet.pselx = 1;
+      //data_packet.penable = penable;
+    end
+    if(data_packet.pselx == 1 && penable == 0) begin
+    data_packet.paddr=paddr;
+    data_packet.pwrite=pwrite;
+    data_packet.pwdata=pwdata;
+    data_packet.prdata=prdata;
+    //data_packet.pstrb<=pstrb;
+    //data_packet.pready<=pready;
+  end
+
   endtask: wait_for_setup_state
 
   //-------------------------------------------------------
@@ -109,34 +123,55 @@ end
   task wait_for_access_state(input apb_transfer_char_s data_packet);
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the setup state"),UVM_HIGH);
-    data_packet.pselx = pselx;
+    if($countones(pselx) == 1)begin
+      data_packet.pselx = 1;
+      //data_packet.penable = penable;
+    end
+    if(data_packet.pselx == 1 && penable == 1) begin
+      repeat(data_packet.no_of_wait_states)begin
+        @(posedge pclk);
+        pready<=0;
+      end
+      pready<=1;
+    end
+    if($countones(pselx) == 1 && penable==1)begin
+      if(pwrite == 1'b1) begin
+        data_packet.pwdata=pwdata;
+      end
+      else begin
+        prdata <= data_packet.prdata;
+      end
+    end
+
+    //data_packet.pselx = pselx;
     //data_packet.penable = penable;
-    data_packet.pstrb <= pstrb;
-    data_packet.pprot <= pprot;
-  while(data_packet.pselx != '0 && penable == 1) begin
-    data_packet.paddr <= paddr;
-    data_packet.pwrite <= pwrite;
-    if(pwrite == 1) begin
-      data_packet.pwdata <= pwdata;
-      end_of_transfer=1'b1;
-    end
-    else begin
-      prdata <= data_packet.prdata;
-      end_of_transfer = 1'b1;
-    end
-    end
+    //data_packet.pstrb <= pstrb;
+    //data_packet.pprot <= pprot;
+  //if(data_packet.pselx == 1 && penable == 1) begin
+   // data_packet.paddr <= paddr;
+    //data_packet.pwrite <= pwrite;
+    //if(pwrite == 1) begin
+      //data_packet.pwdata = pwdata;
+     // end_of_transfer=1'b1;
+    //end
+    //else begin
+      //prdata <= data_packet.prdata;
+     // end_of_transfer = 1'b1;
+    //end
+    //end
     //pselx[0] <= 1'b1;
     //penable <= 1'b1;
-    data_packet.paddr<=paddr;
-    data_packet.pwrite<=pwrite;
+   // data_packet.paddr=paddr;
+    //data_packet.pwrite=pwrite;
     //pready = data_packet.pready;
-    if(pready == 1'b1) begin
-      transfer_data(data_packet);
-    end
-    else begin
+    //data_packet
+    //if(pready == 1'b1) begin
+      //transfer_data(data_packet);
+    //end
+    //else begin
       //Wait State
-      drive_wait_state(data_packet,penable);
-    end
+      //drive_wait_state(data_packet,penable);
+    //end
     
     //end_of_transfer_check(paddr,pready,penable);
     //repeat(delay-1) begin
@@ -153,11 +188,11 @@ end
   task transfer_data(apb_transfer_char_s data_packet);
     if(pwrite == 1'b1) begin
       data_packet.pwdata<=pwdata;
-      end_of_transfer = 1'b1;
+      //end_of_transfer = 1'b1;
     end
     else begin
       prdata = data_packet.prdata;
-      end_of_transfer = 1'b1;
+      //end_of_transfer = 1'b1;
     end
   endtask :transfer_data
 //-------------------------------------------------------

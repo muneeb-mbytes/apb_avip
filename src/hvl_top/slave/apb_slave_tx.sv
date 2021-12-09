@@ -10,9 +10,7 @@ class apb_slave_tx extends uvm_sequence_item;
   
   //Variable : pselx
   //Used to select the slave
-  bit [NO_OF_SLAVES-1:0]pselx;
-   // bit slave_no_e pselx;
-
+  bit pselx;
     
   //Variable : paddr
   //Address selected in apb_slave
@@ -25,7 +23,7 @@ class apb_slave_tx extends uvm_sequence_item;
   //Varibale : pwrite
   //Write when pwrite is 1 and read is 0
  // bit pwrite;
-  rand tx_type_e pwrite;
+  tx_type_e pwrite;
 
   //Variable : pwdata
   //Used to store the wdata
@@ -49,18 +47,15 @@ class apb_slave_tx extends uvm_sequence_item;
  
    //Variable : pprot
   //Used for different access
-   rand protection_type_e pprot;
-  //rand bit [2:0]pprot;
-
+   protection_type_e pprot;
 
   //Variable : no_of_wait_states
   //Used to decide the number of wait states
-  
+  rand bit [2:0]no_of_wait_states;
+
   //variable : transfer_size
   //<TODO>
-  rand transfer_size_e transfer_size;
-
-  rand bit [2:0]no_of_wait_states;
+  //transfer_size_e transfer_size;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
