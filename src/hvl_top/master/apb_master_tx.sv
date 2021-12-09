@@ -31,7 +31,7 @@
   //Variable : pwrite
   //Write when pwrite is 1 and read is 0
   //rand bit pwrite;
-  rand tx_type_e tx_type;
+  rand tx_type_e pwrite;
 
   //variable : transfer_size
   //Used to dcide the transfer size of the pwdata
@@ -43,8 +43,8 @@
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
- rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
-
+  rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
+    
   //Variable : pready
   //Used to extend the transfer
   bit pready;
@@ -115,14 +115,15 @@
   // constraint pwdata_c { pwdata WRITE | READ }
  
   //This constraint is used to decide the pwdata size based om transfer size
-  /*constraint transfer_size_c {if(transfer_size == BYTE)
-                                pwdata inside {[7:0]};
-                              else if(transfer_size == WORD)
-                                pwdata inside {[15:8]};
-                              else if(transfer_size == WORD_AND_BYTE)
-                                pwdata inside {[23:16]};
+  constraint transfer_size_c {if(transfer_size == BIT_8)
+                                $countones (pstrb) == 1;
+                              else if(transfer_size == BIT_16)
+                                  $countones (pstrb) == 2;
+                              else if(transfer_size == BIT_24)
+                                $countones (pstrb) == 3;
                               else 
-                                pwdata inside {[31:24]};}*/
+                                $countones (pstrb) == 4;
+}
 endclass : apb_master_tx
 
 //--------------------------------------------------------------------------------------------
@@ -203,21 +204,18 @@ endfunction : do_compare
 function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
   
-  printer.print_field ("paddr",   paddr,   $bits(paddr),   UVM_DEC);
-  //printer.print_field ("pprot",   pprot,   $bits(pprot),   UVM_DEC);
-  printer.print_string ("pselx",   pselx.name());
-  printer.print_field ("penable", penable, $bits(penable), UVM_DEC);
-  //printer.print_field ("pwrite",  pwrite,  $bits(pwrite),  UVM_DEC);
-  printer.print_field ("pwdata",  pwdata,  $bits(pwdata),  UVM_DEC);
-  printer.print_field ("pstrb",   pstrb,   $bits(pstrb),   UVM_BIN);
-  printer.print_field ("pready",  pready,  $bits(pready),  UVM_DEC);
-  printer.print_field ("prdata",  prdata,  $bits(prdata),  UVM_DEC);
-  //printer.print_field ("pslverr", pslverr, $bits(pslverr), UVM_DEC);
-  printer.print_string("pslverr",pslverr.name());
-  printer.print_string("tx_type",tx_type.name());
-  printer.print_string("pprot",pprot.name());
-
-endfunction : do_print
+  printer.print_string ("pselx",   pselx.name()                        );
+  printer.print_field  ("penable", penable,     $bits(penable), UVM_DEC);
+  printer.print_field  ("paddr",   paddr,       $bits(paddr),   UVM_HEX);
+  printer.print_string ("pwrite",  pwrite.name());
+  printer.print_field  ("pwdata",  pwdata,      $bits(pwdata),  UVM_HEX);
+  printer.print_string ("transfer_size",transfer_size.name()           );
+  printer.print_field  ("pstrb",   pstrb,       $bits(pstrb),   UVM_BIN);
+  printer.print_string ("pprot",   pprot.name()                        );
+  printer.print_field  ("pready",  pready,      $bits(pready),  UVM_DEC);
+  printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
+  printer.print_string ("pslverr", pslverr.name()                      );
+  endfunction : do_print
 
 //function bit apb_master_tx::slave_select();
   //`uvm_info(get_type_name(),"SLAVE_SELECT",UVM_LOW);

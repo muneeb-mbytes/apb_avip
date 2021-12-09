@@ -35,7 +35,7 @@ package apb_global_pkg;
   //Parameter : DATA_WIDTH
   //Used to set the data width 
   //Maximum Value is 8
-  parameter int DATA_WIDTH = 8;
+  parameter int DATA_WIDTH = 32;
 
   //Parameter : SLAVE_MEMORY_SIZE
   //Sets the memory size of the slave in KB

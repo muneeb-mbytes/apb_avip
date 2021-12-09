@@ -10,13 +10,13 @@ class apb_slave_tx extends uvm_sequence_item;
   
   //Variable : pselx
   //Used to select the slave
-  //bit [NO_OF_SLAVES-1:0]pselx;
-    rand slave_no_e pselx;
+  bit [NO_OF_SLAVES-1:0]pselx;
+   // bit slave_no_e pselx;
 
     
   //Variable : paddr
   //Address selected in apb_slave
-  rand bit [ADDRESS_WIDTH-1:0]paddr;
+   bit [ADDRESS_WIDTH-1:0]paddr;
 
   //Variable : penable
   //Used to write data when penable is high
@@ -146,17 +146,17 @@ endfunction:do_compare
 //--------------------------------------------------------------------------------------------
 function void apb_slave_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-  printer.print_field("paddr",paddr,$bits(paddr),UVM_DEC);
-  //printer.print_field("pselx",pselx,1,UVM_DEC);
+  printer.print_field("paddr",paddr,$bits(paddr),UVM_HEX);
+  printer.print_field("pselx",pselx,1,UVM_DEC);
   //printer.print_field("penable",penable,1,UVM_DEC);
   //printer.print_field("pwrite",pwrite,1,UVM_DEC);
-  printer.print_field("pwdata",pwdata,$bits(pwdata),UVM_DEC);
+  printer.print_field("pwdata",pwdata,$bits(pwdata),UVM_HEX);
   printer.print_field("pready",pready,1,UVM_DEC);
-  printer.print_field("prdata",prdata,$bits(prdata),UVM_DEC);
+  printer.print_field("prdata",prdata,$bits(prdata),UVM_HEX);
   //printer.print_field("pprot",pprot,$bits(pprot),UVM_DEC);
   //printer.print_field("pstrb",pstrb,$bits(pstrb),UVM_DEC);
-  printer.print_string("pslverr",pslverr.name());
-  printer.print_string("pselx",pselx.name());
+  //printer.print_string("pslverr",pslverr.name());
+ // printer.print_string("pselx",pselx.name());
   printer.print_string("pwrite",pwrite.name());
   printer.print_string("pprot",pprot.name());
 
