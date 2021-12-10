@@ -19,14 +19,6 @@ package apb_global_pkg;
   //Used to set the slave agent either active or passive
   parameter bit SLAVE_AGENT_ACTIVE = 1;
 
-  //Parameter : MASTER_HAS_COVERAGE
-  //Used to set the coverage if we need it in master
-  //parameter bit MASTER_HAS_COVERAGE = 1;
-
-  //Parameter : SLAVE_HAS_COVERAGE
-  //Used to set the coverage if we need it in slave
-  //parameter bit SLAVE_HAS_COVERAGE = 1;
-
   //Parameter : ADDRESS_WIDTH
   //Used to set the address width to the address bus
   //Maximum Value is 32
@@ -43,25 +35,12 @@ package apb_global_pkg;
 
   //Parameter : SLAVE_MEMORY_GAP
   //Sets the memory gap size of the slave
-  parameter int SLAVE_MEMORY_GAP = 4;
+  parameter int SLAVE_MEMORY_GAP = 2;
 
   //Parameter : MEMORY_WIDTH
   //Sets the width it can store in each loaction
   parameter int MEMORY_WIDTH = 8;
 
-  //Parameter : transfer_size
-  //Used to declare the size of bits will be transferred
-  //Maximum value is 32bits
-  //parameter int TRANSFER_SIZE = 32;
-
-  //Parameter : MAX_ADDR_RANGE
-  //Used to set the maximum address range as 32 
-  //parameter int MAX_ADDR_RANGE = 32;
-
-  //Parameter : MIN_ADDR_RANGE
-  //Used to set the minimum address range as 0 
-  //parameter int MIN_ADDR_RANGE = 0;
-  
   //-------------------------------------------------------
   // Enum : transfer_size_e
   // Used to declare enum type for all transfer sizes
@@ -90,28 +69,6 @@ package apb_global_pkg;
     LITTL_ENDIAN    = 1'b0,
     BIG_ENDIAN      = 1'b1
   }endian_e;
-
-
-  //-------------------------------------------------------
-  // Enum : is_active_e
-  // Used to declare enum type for the is_active
-  //-------------------------------------------------------
-  //typedef enum bit{
-  //  IS_ACTIVE     = 1'b1,
-  //  IS_PASSIVE    = 1'b0
-  //}is_active_e;
-
-
-
-  //-------------------------------------------------------
-  // Enum : operation_states_e
-  // Used to declare enum type for all the states used
-  //-------------------------------------------------------
-  //typedef enum bit[1:0] {
-  //  IDLE_STATE    = 2'b00,
-  //  SETUP_STATE   = 2'b01,
-  //  ACCESS_STATE  = 2'b10 
-  //}operation_states_e;
 
   //-------------------------------------------------------
   // Enum : tx_type_e 

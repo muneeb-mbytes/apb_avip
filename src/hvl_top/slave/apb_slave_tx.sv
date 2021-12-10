@@ -137,7 +137,7 @@ endfunction:do_compare
 //  printer - uvm_printer
 //--------------------------------------------------------------------------------------------
 function void apb_slave_tx::do_print(uvm_printer printer);
-  super.do_print(printer);
+  //super.do_print(printer);
 
   printer.print_field("psel",psel,1,UVM_DEC);
   printer.print_field("paddr",paddr,$bits(paddr),UVM_HEX);

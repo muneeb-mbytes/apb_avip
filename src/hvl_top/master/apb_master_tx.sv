@@ -126,11 +126,9 @@ function void apb_master_tx::do_copy (uvm_object rhs);
   paddr   = apb_master_tx_copy_obj.paddr;
   pprot   = apb_master_tx_copy_obj.pprot;
   pselx   = apb_master_tx_copy_obj.pselx;
-  //penable = apb_master_tx_copy_obj.penable;
   pwrite  = apb_master_tx_copy_obj.pwrite;
   pwdata  = apb_master_tx_copy_obj.pwdata;
   pstrb   = apb_master_tx_copy_obj.pstrb;
-  //pready  = apb_master_tx_copy_obj.pready;
   prdata  = apb_master_tx_copy_obj.prdata;
   pslverr = apb_master_tx_copy_obj.pslverr;
 
@@ -155,11 +153,9 @@ function bit apb_master_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   paddr   == apb_master_tx_compare_obj.paddr &&
   pprot   == apb_master_tx_compare_obj.pprot &&
   pselx   == apb_master_tx_compare_obj.pselx &&
-  //penable == apb_master_tx_compare_obj.penable &&
   pwrite  == apb_master_tx_compare_obj.pwrite &&
   pwdata  == apb_master_tx_compare_obj.pwdata &&
   pstrb   == apb_master_tx_compare_obj.pstrb &&
-  //pready  == apb_master_tx_compare_obj.pready &&
   prdata  == apb_master_tx_compare_obj.prdata &&
   pslverr == apb_master_tx_compare_obj.pslverr;
 
@@ -173,17 +169,15 @@ endfunction : do_compare
 // printer - uvm_printer
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_print(uvm_printer printer);
-  super.do_print(printer);
+  //super.do_print(printer);
   
   printer.print_string ("pselx",   pselx.name());
-  //printer.print_field  ("penable", penable,     $bits(penable), UVM_DEC);
   printer.print_field  ("paddr",   paddr,       $bits(paddr),   UVM_HEX);
   printer.print_string ("pwrite",  pwrite.name());
   printer.print_field  ("pwdata",  pwdata,      $bits(pwdata),  UVM_HEX);
   printer.print_string ("transfer_size",transfer_size.name());
   printer.print_field  ("pstrb",   pstrb,       $bits(pstrb),   UVM_BIN);
   printer.print_string ("pprot",   pprot.name());
-  //printer.print_field  ("pready",  pready,      $bits(pready),  UVM_DEC);
   printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
   printer.print_string ("pslverr", pslverr.name());
   printer.print_field  ("no_of_wait_states_detected", no_of_wait_states_detected, $bits(no_of_wait_states_detected), UVM_DEC);
