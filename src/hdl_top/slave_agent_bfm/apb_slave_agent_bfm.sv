@@ -38,7 +38,7 @@ parameter SLAVE_ID = 0;
   //-------------------------------------------------------
   apb_slave_monitor_bfm apb_slave_mon_bfm_h (.pclk(intf.pclk),
                                               .preset_n(intf.preset_n),
-                                              .pselx(intf.pselx[SLAVE_ID]),
+                                              .psel(intf.pselx[SLAVE_ID]),
                                               .paddr(intf.paddr),
                                               .pwrite(intf.pwrite),
                                               .pwdata(intf.pwdata),
