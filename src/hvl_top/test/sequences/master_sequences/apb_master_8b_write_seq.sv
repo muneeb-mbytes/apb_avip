@@ -30,7 +30,9 @@ endfunction : new
 // Creates the req of type master transaction and randomises the req.
 //--------------------------------------------------------------------------------------------
 task apb_master_8b_write_seq::body();
+  super.body();
   req=apb_master_tx::type_id::create("req");
+  req.apb_master_agent_cfg_h = p_sequencer.apb_master_agent_cfg_h;
   start_item(req);
   if(!req.randomize() with {req.pselx == SLAVE_0;
                             req.transfer_size == BIT_8;
