@@ -118,7 +118,8 @@ function void apb_slave_seq_item_converter::to_class(input apb_transfer_char_s i
  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the prdata = \n %p",output_conv_h.prdata),UVM_HIGH);
   
   output_conv_h.no_of_wait_states = input_conv_h.no_of_wait_states;
-
+  `uvm_info("apb_seq_item_conv_class",$sformatf("After randomizing the prdata = \n %p",output_conv_h.no_of_wait_states),UVM_HIGH);
+  
  `uvm_info("apb_seq_item_conv_class_to_class",$sformatf("----------------------------------------"),UVM_HIGH);
 
 endfunction: to_class

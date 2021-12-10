@@ -162,7 +162,7 @@ function void apb_slave_tx::do_print(uvm_printer printer);
  // printer.print_string("pselx",pselx.name());
   printer.print_string("pwrite",pwrite.name());
   printer.print_string("pprot",pprot.name());
-
+  printer.print_field ("no_of_wait_states",no_of_wait_states,$bits(no_of_wait_states),UVM_DEC);
 endfunction : do_print
 
 
