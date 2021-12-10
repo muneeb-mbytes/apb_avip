@@ -1,5 +1,11 @@
 `ifndef APB_SLAVE_DRIVER_BFM_INCLUDED_
 `define APB_SLAVE_DRIVER_BFM_INCLUDED_
+
+//-------------------------------------------------------
+// Importing apb global package
+//-------------------------------------------------------
+import apb_global_pkg::*;
+
 //--------------------------------------------------------------------------------------------
 // Interface : apb_slave_driver_bfm
 //  Used as the HDL driver for apb
@@ -8,115 +14,70 @@
 // Parameters:
 //  intf - apb interface
 //--------------------------------------------------------------------------------------------
-import apb_global_pkg::*;
 interface apb_slave_driver_bfm(input bit pclk,
                                input bit preset_n,
-                               input bit [2:0]pprot,
+                               input logic psel,
+                               input logic penable,
+                               input logic [ADDRESS_WIDTH-1:0] paddr,
+                               input logic pwrite,
+                               input logic [(DATA_WIDTH/8)-1:0] pstrb, 
+                               input logic [DATA_WIDTH-1:0] pwdata,
                                output bit pslverr,
                                output bit pready,
-                               input logic penable,
-                               input logic pwrite,
-                               input logic [ADDRESS_WIDTH-1:0] paddr,
-                               input logic pselx,
-                               input logic [DATA_WIDTH-1:0] pwdata,
-                               input logic [(DATA_WIDTH/8)-1:0] pstrb, 
+                               input bit [2:0]pprot,
                                output logic [DATA_WIDTH-1:0] prdata);
 
-//-------------------------------------------------------
-//importing uvm packages
-//-------------------------------------------------------
-import uvm_pkg::*;
-`include "uvm_macros.svh"
+  //-------------------------------------------------------
+  // Importing uvm package
+  //-------------------------------------------------------
+  import uvm_pkg::*;
+  `include "uvm_macros.svh"
+  
+  //-------------------------------------------------------
+  // Importing slave driver proxy
+  //------------------------------------------------------- 
+  import apb_slave_pkg::apb_slave_driver_proxy;
 
-//-------------------------------------------------------
-//creating handle for apb slave driver proxy
-//-------------------------------------------------------
-
-import apb_slave_pkg::apb_slave_driver_proxy;
-apb_slave_driver_proxy apb_slave_drv_proxy_h;
-//bit end_of_transfer;
-initial begin
-  `uvm_info("apb slave driver bfm",$sformatf("APB SLAVE DRIVER BFM"),UVM_LOW);
-end
+  //Variable : apb_slave_drv_proxy_h
+  //Declaring handle for apb_slave_driver_proxy
+  apb_slave_driver_proxy apb_slave_drv_proxy_h;
+  
+  //Variable : name
+  //Used to store the name of the interface
+  string name = "APB_SLAVE_DRIVER_BFM";
 
   //-------------------------------------------------------
-  // task: wait_for_preset_n
-  // waiting for the system reset to be active low
+  // Used to display the name of the interface
+  //-------------------------------------------------------
+  initial begin
+    `uvm_info(name,$sformatf(name),UVM_LOW);
+  end
+
+  //-------------------------------------------------------
+  // Task: wait_for_preset_n
+  // Waiting for the system reset to be active low
   //-------------------------------------------------------
   task wait_for_preset_n();
+
     @(negedge preset_n);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("SYSTEM RESET DETECTED"),UVM_HIGH)
+    `uvm_info(name,$sformatf("SYSTEM RESET DETECTED"),UVM_HIGH)
 
     @(posedge preset_n);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("SYSTEM RESET DEACTIVATED"),UVM_HIGH)
+    `uvm_info(name,$sformatf("SYSTEM RESET DEACTIVATED"),UVM_HIGH)
   
   endtask: wait_for_preset_n
-//-------------------------------------------------------
-//task: drive to bfm
-//this task will drive the data from bfm to proxy using converters
-
-// Parameters:
-// data_packet  - handle for apb_transfer_char_s
-// cfg_pkt      - handle for apb_transfer_cfg_s
-//-------------------------------------------------------
-
-   task drive_to_bfm(inout apb_transfer_char_s data_packet,
-                          input apb_transfer_cfg_s cfg_pkt);
-    //@(posedge pclk);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR SETUP STATE"),UVM_HIGH);
-
-   // wait_for_idle_state(data_packet);
-
-    //wait_for_setup_state(data_packet);
-
-
-    wait_for_access_state(data_packet);
-    /*
-    pselx <= data_packet.pselx;
-    penable <= data_packet.penable;
-    paddr <= data_packet.paddr;
-    pwdata <= data_packet.pwdata;
-    pready <= data_packet.pready;
-    */
-    endtask: drive_to_bfm
-  //-------------------------------------------------------
-  // task: wait_for_idle_state
-  // this task drives the apb interface to idle state
-  //
-  // pselx - this signal selects the slave
-  // penable - enable signal
-  // paddr - address signal
-  //-------------------------------------------------------
   
-  /*task wait_for_idle_state(apb_transfer_char_s data_packet);
-    @(posedge pclk);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("driving the idle state"),UVM_HIGH)
-    data_packet.pselx <= pselx;
-    //data_packet.penable <= penable;
-
-  endtask: wait_for_idle_state
-  */
-
   //-------------------------------------------------------
-  // task: wait_for_setup_state
+  // Task: wait_for_setup_state
+  // Samples the required data and sends back to the proxy
   //-------------------------------------------------------
   task wait_for_setup_state(output apb_transfer_char_s data_packet);
     @(posedge pclk);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR SETUP STATE"),UVM_HIGH)
+    `uvm_info(name,$sformatf("WAITING FOR SETUP STATE"),UVM_HIGH)
 
-    while(pselx != 1) begin
+    while(psel != 1) begin
       @(posedge pclk);
     end
-
-    // TODO(mshariff): name in string
-    // MSHA: `uvm_info("SLAVE_DRIVER_BFM",$sformatf("Slave %0d is selected", ),UVM_HIGH)
-
-    // MSHA: if($countones(pselx) == 1)begin
-    // MSHA:   data_packet.pselx = 1;
-    // MSHA:   //data_packet.penable = penable;
-    // MSHA: end
-
-    // MSHA: if(data_packet.pselx == 1 && penable == 0) begin
 
     // Sampling the signals
     data_packet.paddr  = paddr;
@@ -138,15 +99,16 @@ end
   endtask: wait_for_setup_state
 
   //-------------------------------------------------------
-  // task: wait_for_access_state
+  // Task: wait_for_access_state
+  // Samples the data or drives the data to master based
+  // on pwrite signal
   //-------------------------------------------------------
-  task wait_for_access_state(input apb_transfer_char_s data_packet);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR ACCESS STATE - no_of_wait_states=%0d",data_packet.no_of_wait_states),UVM_HIGH);
+  task wait_for_access_state(inout apb_transfer_char_s data_packet);
     @(posedge pclk);
-    `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR ACCESS STATE"),UVM_HIGH);
+    `uvm_info(name,$sformatf("WAITING FOR ACCESS STATE - no_of_wait_states=%0d",data_packet.no_of_wait_states),UVM_HIGH);
 
     repeat(data_packet.no_of_wait_states)begin
-      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
+      `uvm_info(name,$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
       @(posedge pclk);
       pready<=0;
     end
@@ -160,114 +122,8 @@ end
     // TODO(mshariff): 
     pslverr <= 0;
 
-
-
-    // MSHA: if($countones(pselx) == 1)begin
-    // MSHA:   `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED"),UVM_HIGH);
-    // MSHA:   `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED-PSELx = %0d",$countones(pselx)),UVM_HIGH);
-    // MSHA:   data_packet.pselx = 1;
-    // MSHA:   //data_packet.penable = penable;
-    // MSHA: end
-    // MSHA: if(data_packet.pselx == 1 && penable == 1) begin
-    // MSHA:   `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SEL AND ENABLE ARE HIGH"),UVM_HIGH);
-    // MSHA:   repeat(data_packet.no_of_wait_states)begin
-    // MSHA:     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
-    // MSHA:     @(posedge pclk);
-    // MSHA:     pready<=0;
-    // MSHA:   end
-    // MSHA:   pready<=1;
-    // MSHA: end
-    // MSHA: if($countones(pselx) == 1 && penable==1)begin
-    // MSHA:   if(pwrite == 1'b1) begin
-    // MSHA:     data_packet.pwdata=pwdata;
-    // MSHA:   end
-    // MSHA:   else begin
-    // MSHA:     prdata <= data_packet.prdata;
-    // MSHA:   end
-    // MSHA: end
-
-    //data_packet.pselx = pselx;
-    //data_packet.penable = penable;
-    //data_packet.pstrb <= pstrb;
-    //data_packet.pprot <= pprot;
-  //if(data_packet.pselx == 1 && penable == 1) begin
-   // data_packet.paddr <= paddr;
-    //data_packet.pwrite <= pwrite;
-    //if(pwrite == 1) begin
-      //data_packet.pwdata = pwdata;
-     // end_of_transfer=1'b1;
-    //end
-    //else begin
-      //prdata <= data_packet.prdata;
-     // end_of_transfer = 1'b1;
-    //end
-    //end
-    //pselx[0] <= 1'b1;
-    //penable <= 1'b1;
-   // data_packet.paddr=paddr;
-    //data_packet.pwrite=pwrite;
-    //pready = data_packet.pready;
-    //data_packet
-    //if(pready == 1'b1) begin
-      //transfer_data(data_packet);
-    //end
-    //else begin
-      //Wait State
-      //drive_wait_state(data_packet,penable);
-    //end
-    
-    //end_of_transfer_check(paddr,pready,penable);
-    //repeat(delay-1) begin
-    //@(posedge pclk);
-    //pready <= 0;
-    //end
-    //pready <= data_packet.pready;
   endtask: wait_for_access_state
 
-//-------------------------------------------------------
-//task: transfer_data
-//
-//-------------------------------------------------------
-  task transfer_data(apb_transfer_char_s data_packet);
-    if(pwrite == 1'b1) begin
-      data_packet.pwdata<=pwdata;
-      //end_of_transfer = 1'b1;
-    end
-    else begin
-      prdata = data_packet.prdata;
-      //end_of_transfer = 1'b1;
-    end
-  endtask :transfer_data
-//-------------------------------------------------------
-//task: drive_wait_state
-//
-//-------------------------------------------------------
-  task drive_wait_state(apb_transfer_char_s data_packet, bit penable);
-    data_packet.paddr<=paddr;
-    data_packet.pwrite<=pwrite;
-    //pready=data_packet.pready;
-  while(penable) begin
-    if(!pready) begin
-      `uvm_info("SLAVE_DRIVER_BFM","WAIT_STATE_DETECTED",UVM_LOW);
-      @(posedge pclk);
-      end
-      else begin
-        transfer_data(data_packet);
-      end
-    end
-  endtask : drive_wait_state
-/*
-  task end_of_transfer_check(input bit paddr,input bit pready, input bit penable);
-    if(end_of_transfer && pready) begin
-     // drive_setup_state(paddr);
-     wait_for_setup_state(paddr);
-    end
-    else if(!end_of_transfer && pready) begin
-      //drive_idle_state();
-      wait_for_idle_state();
-    end
-  endtask : end_of_transfer_check
-*/
 endinterface : apb_slave_driver_bfm
 
 `endif

@@ -22,7 +22,7 @@ parameter SLAVE_ID = 0;
   //-------------------------------------------------------
   apb_slave_driver_bfm apb_slave_drv_bfm_h(.pclk(intf.pclk),
                                            .preset_n(intf.preset_n),
-                                           .pselx(intf.pselx[SLAVE_ID]),
+                                           .psel(intf.pselx[SLAVE_ID]),
                                            .penable(intf.penable),
                                            .pprot(intf.pprot),
                                            .paddr(intf.paddr),

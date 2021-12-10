@@ -114,33 +114,23 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
 
 
     //Printing the req item
-    //req.print();
     `uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
   
-    //Printing master agent config
-    //`uvm_info(get_type_name(),$sformatf("\n apb_slave_agent_config\n%s",apb_slave_agent_cfg_h.sprint),UVM_LOW);
-
     //Converting transaction to struct data_packet
     apb_slave_seq_item_converter::from_class(req, struct_packet); 
 
     //Converting configurations to struct cfg_packet
     apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg);
 
-    `uvm_info(get_type_name(), $sformatf("Inside slave driver proxy-driver to bfm "),UVM_HIGH);
+    //`uvm_info(get_type_name(), $sformatf("Inside slave driver proxy-driver to bfm "),UVM_HIGH);
     //drive the converted data packets to the slave driver bfm
-    apb_slave_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
-  
-  
-    //Drive the idel state for APB interface
-    //apb_slave_drv_bfm_h.drive_idle_state();
-
-    //drive to setup state for APB interface
-    //apb_slave_drv_bfm_h.drive_setup_state();
+    apb_slave_drv_bfm_h.wait_for_access_state(struct_packet);
   
     //converting the struct data items into transcations 
     apb_slave_seq_item_converter::to_class(struct_packet, req);
   
     seq_item_port.item_done();
+
   end
   endtask : run_phase
 

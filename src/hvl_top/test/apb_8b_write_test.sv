@@ -42,7 +42,6 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 task apb_8b_write_test::run_phase(uvm_phase phase);
   
-  super.run_phase(phase);
   apb_virtual_8b_seq_h = apb_virtual_8b_write_seq::type_id::create("apb_virtual_8b_seq_h");
   `uvm_info(get_type_name(),$sformatf("apb_8b_write_test"),UVM_LOW);
   phase.raise_objection(this);

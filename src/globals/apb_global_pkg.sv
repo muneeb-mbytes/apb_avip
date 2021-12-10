@@ -43,7 +43,11 @@ package apb_global_pkg;
 
   //Parameter : SLAVE_MEMORY_GAP
   //Sets the memory gap size of the slave
-  parameter int SLAVE_MEMORY_GAP = 2;
+  parameter int SLAVE_MEMORY_GAP = 4;
+
+  //Parameter : MEMORY_WIDTH
+  //Sets the width it can store in each loaction
+  parameter int MEMORY_WIDTH = 8;
 
   //Parameter : transfer_size
   //Used to declare the size of bits will be transferred

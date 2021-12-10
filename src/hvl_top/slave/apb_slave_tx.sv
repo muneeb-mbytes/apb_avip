@@ -162,7 +162,7 @@ function void apb_slave_tx::do_print(uvm_printer printer);
  // printer.print_string("pselx",pselx.name());
   printer.print_string("pwrite",pwrite.name());
   printer.print_string("pprot",pprot.name());
-
+  
 endfunction : do_print
 
 

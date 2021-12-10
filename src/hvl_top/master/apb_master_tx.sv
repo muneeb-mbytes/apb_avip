@@ -26,7 +26,7 @@
 
   //Variable : penable
   //Used to write data when penable is high
-  bit penable;
+  //bit penable;
 
   //Variable : pwrite
   //Write when pwrite is 1 and read is 0
@@ -47,7 +47,7 @@
     
   //Variable : pready
   //Used to extend the transfer
-  bit pready;
+  //bit pready;
 
   //Variable : prdata
   //Used to store the rdata from the slave
@@ -84,43 +84,8 @@
 
   constraint pwdata_c3 { soft pwdata inside {[0:100]}; }
 
-  // MSHA:constraint paddr_c4 {if(pselx == SLAVE_0)
-  // MSHA:                        paddr>=0 && paddr <=2**11;
-  // MSHA:                        //paddr inside {[0:11]};
-  // MSHA:                      else if(pselx == SLAVE_1)
-  // MSHA:                        paddr>= 2**14 && paddr <= 2**25;
-  // MSHA:                      else if(pselx == SLAVE_2)
-  // MSHA:                        paddr>= 2**28 && paddr <= 2**39;
-  // MSHA:                      else if(pselx == SLAVE_3)
-  // MSHA:                        paddr>= 2**42 && paddr <= 2**53;
-  // MSHA:                      else if(pselx == SLAVE_4)
-  // MSHA:                        paddr>= 2**56 && paddr <= 2**67;
-  // MSHA:                      else if(pselx == SLAVE_5)
-  // MSHA:                        paddr>= 2**70 && paddr <= 2**81;
-  // MSHA:                      else if(pselx == SLAVE_6)
-  // MSHA:                        paddr>= 2**84 && paddr <= 2**95;
-  // MSHA:                      else if(pselx == SLAVE_7)
-  // MSHA:                        paddr>= 2**98 && paddr <= 2**109;
-  // MSHA:                      else if(pselx == SLAVE_8)
-  // MSHA:                        paddr>= 2**112 && paddr <= 2**123;
-  // MSHA:                      else if(pselx == SLAVE_9)
-  // MSHA:                        paddr>= 2**126 && paddr <= 2**137;
-  // MSHA:                      else if(pselx == SLAVE_10)
-  // MSHA:                        paddr>= 2**140 && paddr <= 2**151;
-  // MSHA:                      else if(pselx == SLAVE_11)
-  // MSHA:                        paddr>= 2**154 && paddr <= 2**165;
-  // MSHA:                      else if(pselx == SLAVE_12)
-  // MSHA:                        paddr>= 2**168 && paddr <= 2**179;
-  // MSHA:                      else if(pselx == SLAVE_13)
-  // MSHA:                        paddr>= 2**182 && paddr <= 2**193;
-  // MSHA:                      else if(pselx == SLAVE_14)
-  // MSHA:                        paddr>= 2**196 && paddr <= 2**207;
-  // MSHA:                      else if(pselx == SLAVE_15)
-  // MSHA:                        paddr>= 2**210 && paddr <= 2**221;
-  // MSHA:                      }
-
   //This constraint is used to decide the pwdata size based om transfer size
-  constraint transfer_size_c {if(transfer_size == BIT_8)
+  constraint transfer_size_c4 {if(transfer_size == BIT_8)
                                 $countones (pstrb) == 1;
                               else if(transfer_size == BIT_16)
                                 $countones (pstrb) == 2;
@@ -129,6 +94,7 @@
                               else 
                                 $countones (pstrb) == 4;
                              }
+
 endclass : apb_master_tx
 
 //--------------------------------------------------------------------------------------------
@@ -160,11 +126,11 @@ function void apb_master_tx::do_copy (uvm_object rhs);
   paddr   = apb_master_tx_copy_obj.paddr;
   pprot   = apb_master_tx_copy_obj.pprot;
   pselx   = apb_master_tx_copy_obj.pselx;
-  penable = apb_master_tx_copy_obj.penable;
+  //penable = apb_master_tx_copy_obj.penable;
   pwrite  = apb_master_tx_copy_obj.pwrite;
   pwdata  = apb_master_tx_copy_obj.pwdata;
   pstrb   = apb_master_tx_copy_obj.pstrb;
-  pready  = apb_master_tx_copy_obj.pready;
+  //pready  = apb_master_tx_copy_obj.pready;
   prdata  = apb_master_tx_copy_obj.prdata;
   pslverr = apb_master_tx_copy_obj.pslverr;
 
@@ -189,11 +155,11 @@ function bit apb_master_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   paddr   == apb_master_tx_compare_obj.paddr &&
   pprot   == apb_master_tx_compare_obj.pprot &&
   pselx   == apb_master_tx_compare_obj.pselx &&
-  penable == apb_master_tx_compare_obj.penable &&
+  //penable == apb_master_tx_compare_obj.penable &&
   pwrite  == apb_master_tx_compare_obj.pwrite &&
   pwdata  == apb_master_tx_compare_obj.pwdata &&
   pstrb   == apb_master_tx_compare_obj.pstrb &&
-  pready  == apb_master_tx_compare_obj.pready &&
+  //pready  == apb_master_tx_compare_obj.pready &&
   prdata  == apb_master_tx_compare_obj.prdata &&
   pslverr == apb_master_tx_compare_obj.pslverr;
 
@@ -210,14 +176,14 @@ function void apb_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
   
   printer.print_string ("pselx",   pselx.name());
-  printer.print_field  ("penable", penable,     $bits(penable), UVM_DEC);
+  //printer.print_field  ("penable", penable,     $bits(penable), UVM_DEC);
   printer.print_field  ("paddr",   paddr,       $bits(paddr),   UVM_HEX);
   printer.print_string ("pwrite",  pwrite.name());
   printer.print_field  ("pwdata",  pwdata,      $bits(pwdata),  UVM_HEX);
   printer.print_string ("transfer_size",transfer_size.name());
   printer.print_field  ("pstrb",   pstrb,       $bits(pstrb),   UVM_BIN);
   printer.print_string ("pprot",   pprot.name());
-  printer.print_field  ("pready",  pready,      $bits(pready),  UVM_DEC);
+  //printer.print_field  ("pready",  pready,      $bits(pready),  UVM_DEC);
   printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
   printer.print_string ("pslverr", pslverr.name());
   printer.print_field  ("no_of_wait_states_detected", no_of_wait_states_detected, $bits(no_of_wait_states_detected), UVM_DEC);
@@ -238,20 +204,21 @@ function void apb_master_tx::post_randomize();
       index = i;
     end
   end
-
+  
   // Randmoly chosing paddr value between a given range
-  if (!std::randomize(paddr) with { 
-          paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
-          paddr %4 == 0;
-        }) begin
-
-    `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));  
+  if (!std::randomize(paddr) with { paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
+    paddr %4 == 0;
+  }) begin
+  `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
   end
 
-  //bit [7:0]slave_num;
-  //slave_num= pselx.match("SLAVE");
-  //$display(slave_num);
-  //paddr = $urandom_range(2**apb_master_agent_cfg_h.master_min_addr_range_array[2],2**apb_master_agent_cfg_h.master_max_addr_range_array[2]);
+  //Constraint to make pwdata not zero when pstrb is high for that 8-bit lane
+  for(int i=0; i<NO_OF_SLAVES; i++) begin
+    if(pstrb[i] == 1) begin
+      //pwdata[8*i+7 -: 8*i] = pwdata[8*i+7 -: 8*i] inside {[1:127]};
+    end
+  end
+
 endfunction : post_randomize
 
 `endif

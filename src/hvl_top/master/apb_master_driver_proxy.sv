@@ -106,26 +106,17 @@ task apb_master_driver_proxy::run_phase(uvm_phase phase);
     seq_item_port.get_next_item(req);
 
     //Printing the req item
-    //req.print();
     `uvm_info(get_type_name(), $sformatf("REQ-MASTER_TX \n %s",req.sprint),UVM_HIGH);
   
-    //Printing master agent config
-    //`uvm_info(get_type_name(), $sformatf("apb_master_agent_config \n %s",apb_master_agent_cfg_h.sprint),UVM_LOW);
-
     //Converting transaction to struct data_packet
     apb_master_seq_item_converter::from_class(req, struct_packet); 
   
     //Converting configurations to struct cfg_packet
     apb_master_cfg_converter::from_class(apb_master_agent_cfg_h, struct_cfg);
 
+    //Calling the drive_to_bfm task in driver proxy
     apb_master_drv_bfm_h.drive_to_bfm(struct_packet,struct_cfg);
   
-    //Drive the idel state for APB interface
-    //apb_master_drv_bfm_h.drive_idle_state();
-
-    //drive to setup state for APB interface
-    //apb_master_drv_bfm_h.drive_setup_state();
-    
     //Converting struct to transaction
     apb_master_seq_item_converter::to_class(struct_packet, req);
     
