@@ -17,7 +17,7 @@ interface apb_slave_driver_bfm(input bit pclk,
                                input logic penable,
                                input logic pwrite,
                                input logic [ADDRESS_WIDTH-1:0] paddr,
-                               input logic [NO_OF_SLAVES-1:0] pselx,
+                               input logic pselx,
                                input logic [DATA_WIDTH-1:0] pwdata,
                                input logic [(DATA_WIDTH/8)-1:0] pstrb, 
                                output logic [DATA_WIDTH-1:0] prdata);
@@ -67,7 +67,8 @@ end
 
    // wait_for_idle_state(data_packet);
 
-    wait_for_setup_state(data_packet);
+    //wait_for_setup_state(data_packet);
+
 
     wait_for_access_state(data_packet);
     /*
@@ -99,21 +100,40 @@ end
   //-------------------------------------------------------
   // task: wait_for_setup_state
   //-------------------------------------------------------
-  task wait_for_setup_state(apb_transfer_char_s data_packet);
+  task wait_for_setup_state(output apb_transfer_char_s data_packet);
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR SETUP STATE"),UVM_HIGH)
-    if($countones(pselx) == 1)begin
-      data_packet.pselx = 1;
-      //data_packet.penable = penable;
+
+    while(pselx != 1) begin
+      @(posedge pclk);
     end
-    if(data_packet.pselx == 1 && penable == 0) begin
-    data_packet.paddr<=paddr;
-    data_packet.pwrite<=pwrite;
-    data_packet.pwdata<=pwdata;
-    data_packet.prdata<=prdata;
+
+    // TODO(mshariff): name in string
+    // MSHA: `uvm_info("SLAVE_DRIVER_BFM",$sformatf("Slave %0d is selected", ),UVM_HIGH)
+
+    // MSHA: if($countones(pselx) == 1)begin
+    // MSHA:   data_packet.pselx = 1;
+    // MSHA:   //data_packet.penable = penable;
+    // MSHA: end
+
+    // MSHA: if(data_packet.pselx == 1 && penable == 0) begin
+
+    // Sampling the signals
+    data_packet.paddr  = paddr;
+    data_packet.pwrite = pwrite;
+    if(pwrite == WRITE) begin
+      data_packet.pwdata = pwdata;
+      data_packet.pstrb  = pstrb;
+    end
+    data_packet.pprot = pprot;
+
+
+    // TODO(mshariff): 
+    // Get the required READ data and/ PSLVERR
+    //
     //data_packet.pstrb<=pstrb;
     //data_packet.pready<=pready;
-  end
+    // MSHA: end
 
   endtask: wait_for_setup_state
 
@@ -124,29 +144,47 @@ end
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR ACCESS STATE - no_of_wait_states=%0d",data_packet.no_of_wait_states),UVM_HIGH);
     @(posedge pclk);
     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("WAITING FOR ACCESS STATE"),UVM_HIGH);
-    if($countones(pselx) == 1)begin
-      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED"),UVM_HIGH);
-      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED-PSELx = %0d",$countones(pselx)),UVM_HIGH);
-      data_packet.pselx = 1;
-      //data_packet.penable = penable;
+
+    repeat(data_packet.no_of_wait_states)begin
+      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
+      @(posedge pclk);
+      pready<=0;
     end
-    if(data_packet.pselx == 1 && penable == 1) begin
-      `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SEL AND ENABLE ARE HIGH"),UVM_HIGH);
-      repeat(data_packet.no_of_wait_states)begin
-        `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
-        @(posedge pclk);
-        pready<=0;
-      end
-      pready<=1;
+
+    pready<=1;
+
+    if(data_packet.pwrite == READ) begin
+      prdata <= 32'hDEAD_BEEF;
     end
-    if($countones(pselx) == 1 && penable==1)begin
-      if(pwrite == 1'b1) begin
-        data_packet.pwdata=pwdata;
-      end
-      else begin
-        prdata <= data_packet.prdata;
-      end
-    end
+
+    // TODO(mshariff): 
+    pslverr <= 0;
+
+
+
+    // MSHA: if($countones(pselx) == 1)begin
+    // MSHA:   `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED"),UVM_HIGH);
+    // MSHA:   `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SLAVE SELECTED-PSELx = %0d",$countones(pselx)),UVM_HIGH);
+    // MSHA:   data_packet.pselx = 1;
+    // MSHA:   //data_packet.penable = penable;
+    // MSHA: end
+    // MSHA: if(data_packet.pselx == 1 && penable == 1) begin
+    // MSHA:   `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - SEL AND ENABLE ARE HIGH"),UVM_HIGH);
+    // MSHA:   repeat(data_packet.no_of_wait_states)begin
+    // MSHA:     `uvm_info("SLAVE_DRIVER_BFM",$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
+    // MSHA:     @(posedge pclk);
+    // MSHA:     pready<=0;
+    // MSHA:   end
+    // MSHA:   pready<=1;
+    // MSHA: end
+    // MSHA: if($countones(pselx) == 1 && penable==1)begin
+    // MSHA:   if(pwrite == 1'b1) begin
+    // MSHA:     data_packet.pwdata=pwdata;
+    // MSHA:   end
+    // MSHA:   else begin
+    // MSHA:     prdata <= data_packet.prdata;
+    // MSHA:   end
+    // MSHA: end
 
     //data_packet.pselx = pselx;
     //data_packet.penable = penable;

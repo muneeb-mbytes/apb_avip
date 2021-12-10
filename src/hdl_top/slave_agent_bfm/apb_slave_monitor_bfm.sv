@@ -19,7 +19,7 @@ interface apb_slave_monitor_bfm (input bit pclk,
                                  input logic penable,
                                  input logic pwrite,
                                  input logic [ADDRESS_WIDTH-1:0] paddr,
-                                 input logic [NO_OF_SLAVES-1:0] pselx,
+                                 input logic pselx,
                                  input logic [DATA_WIDTH-1:0] pwdata,
                                  input logic [(DATA_WIDTH/8)-1:0] pstrb, 
                                  input logic [DATA_WIDTH-1:0] prdata);
@@ -45,10 +45,10 @@ interface apb_slave_monitor_bfm (input bit pclk,
   //-------------------------------------------------------
   task wait_for_preset_n();
     @(posedge preset_n);
-    `uvm_info("slave_DRIVER_BFM",$sformatf("system reset detected"),UVM_HIGH)
+    `uvm_info("SLAVE_MONITOR_BFM",$sformatf("SYSTEM RESET DETECTED"),UVM_HIGH)
     
     @(negedge preset_n);
-    `uvm_info("slave_DRIVER_BFM",$sformatf("system reset deactivated"),UVM_HIGH)
+    `uvm_info("SLAVE_MONITOR_BFM",$sformatf("SYSTEM RESET DEACTIVATED"),UVM_HIGH)
   endtask: wait_for_preset_n
 
   //-------------------------------------------------------
@@ -59,13 +59,14 @@ interface apb_slave_monitor_bfm (input bit pclk,
   // pselx - this signal selects the slave
   // penable - enable signal
   //-------------------------------------------------------
-  task wait_for_idle_state();
-    @(negedge pclk);
-    while (pselx == '0) begin
-      @(negedge pclk);
-    end
-    `uvm_info("slave_MONITOR_BFM",$sformatf("waiting for the idle state"),UVM_HIGH)
-  endtask: wait_for_idle_state
+  //task wait_for_idle_state();
+  //  @(negedge pclk);
+  //  while (pselx == '0) begin
+  //    @(negedge pclk);
+  //    `uvm_info("SLAVE_MONITOR_BFM",$sformatf("WAITING FOR THE IDLE STATE"),UVM_HIGH)
+  //  end
+  //  `uvm_info("SLAVE_MONITOR_BFM",$sformatf("IDLE STATE"),UVM_HIGH)
+  //endtask: wait_for_idle_state
 
   //-------------------------------------------------------
   // Task: wait_for_transfer_start
@@ -74,21 +75,21 @@ interface apb_slave_monitor_bfm (input bit pclk,
   // Parameter:
   // penable - enable signal
   //-------------------------------------------------------
-  task wait_for_transfer_start();
-    @(negedge pclk);
-    while (penable==1 && pready==1 && pselx==1) begin
-      @(negedge pclk);
-    end
-   `uvm_info("slave_MONITOR_BFM",$sformatf("waiting for the transfer to start"),UVM_HIGH)
-  endtask: wait_for_transfer_start
+  //task wait_for_transfer_start();
+  //  @(negedge pclk);
+  //  while (penable==1 && pready==1 && pselx==1) begin
+  //    @(negedge pclk);
+  //  end
+  // `uvm_info("SLAVE_MONITOR_BFM",$sformatf("WAITING FOR THE TRANSFER TO START"),UVM_HIGH)
+  //endtask: wait_for_transfer_start
 
   task sample_data(output apb_transfer_char_s apb_data_packet,input apb_transfer_cfg_s apb_cfg_packet);
-    forever begin
-      if(penable == 1) begin
-        apb_data_packet.prdata = prdata;
-        apb_data_packet.pwdata = pwdata;
-      end
+    if(penable==1 && pready==1 && $countones(pselx)==1) begin
+      //TODO(saha): if condition for write and read
+      apb_data_packet.prdata = prdata;
+      apb_data_packet.pwdata = pwdata;
     end
+   `uvm_info("SLAVE_MONITOR_BFM",$sformatf("SLAVE_SAMPLE_DATA"),UVM_HIGH)
   endtask: sample_data
 
 endinterface : apb_slave_monitor_bfm

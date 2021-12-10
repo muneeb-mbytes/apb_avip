@@ -85,7 +85,7 @@ task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
   apb_slave_packet = apb_slave_tx::type_id::create("slave_packet");
   
   apb_slave_mon_bfm_h.wait_for_preset_n();
-  apb_slave_mon_bfm_h.wait_for_idle_state();
+  //apb_slave_mon_bfm_h.wait_for_idle_state();
   
   //super.run_phase(phase);
 
@@ -94,7 +94,7 @@ task apb_slave_monitor_proxy::run_phase(uvm_phase phase);
     apb_transfer_cfg_s   struct_cfg_packet; 
     apb_slave_tx         apb_slave_clone_packet;
     
-    apb_slave_mon_bfm_h.wait_for_transfer_start();
+    //apb_slave_mon_bfm_h.wait_for_transfer_start();
     
     apb_slave_cfg_converter::from_class(apb_slave_agent_cfg_h, struct_cfg_packet);
     apb_slave_mon_bfm_h.sample_data(struct_data_packet, struct_cfg_packet);

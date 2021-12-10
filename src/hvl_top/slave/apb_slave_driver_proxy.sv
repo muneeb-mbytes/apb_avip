@@ -101,7 +101,17 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
     apb_transfer_char_s struct_packet;
     apb_transfer_cfg_s struct_cfg;
 
+    apb_slave_drv_bfm_h.wait_for_setup_state(struct_packet);
+    `uvm_info("DEBUG_MSHA", $sformatf("AFTER wait struct :: %p", struct_packet), UVM_NONE); 
+
+    // TODO(mshariff): 
+    // access the slave memory
+    
     seq_item_port.get_next_item(req);
+
+    // TODO(mshariff): 
+    // Put the data from struct_packet and req into req using choose_packet_data variable
+
 
     //Printing the req item
     //req.print();

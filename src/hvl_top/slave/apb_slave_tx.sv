@@ -35,7 +35,7 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : pslverr
   //Goes high when a transfer fails
-  slave_error_e pslverr;
+  rand slave_error_e pslverr;
 
   //Variable : pready
   //Used to extend the transfer
@@ -43,7 +43,7 @@ class apb_slave_tx extends uvm_sequence_item;
 
   //Variable : prdata
   //Used to store the rdata from the slave
-   bit [DATA_WIDTH-1:0]prdata;
+  rand bit [DATA_WIDTH-1:0]prdata;
  
    //Variable : pprot
   //Used for different access
@@ -53,11 +53,18 @@ class apb_slave_tx extends uvm_sequence_item;
   //Used to decide the number of wait states
   rand bit [2:0]no_of_wait_states;
 
+  // Variable: choose_packet_data
+  // Used for driving the prdata from this packet rather than from the Slave memory
+  bit choose_packet_data;
+
   //variable : transfer_size
   //<TODO>
   //transfer_size_e transfer_size;
 
   constraint wait_states_c1 {no_of_wait_states inside {[0:3]};}
+
+  constraint pslverr_c {soft pslverr == NO_ERROR;}
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

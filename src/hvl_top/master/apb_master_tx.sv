@@ -13,7 +13,7 @@
 
   //Variable : paddr
   //Address selected in apb_slave
-  rand bit [ADDRESS_WIDTH-1:0]paddr;
+  rand bit [ADDRESS_WIDTH-1:0] paddr;
 
   //Variable : pprot
   //Used for different access
@@ -39,11 +39,11 @@
 
   //Variable : pwdata
   //Used to store the wdata
-  rand bit [DATA_WIDTH-1:0]pwdata;
+  rand bit [DATA_WIDTH-1:0] pwdata;
 
   //Variable : pstrb
   //Used to transfer the data to pwdata bus
-  rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
+  rand bit [(DATA_WIDTH/8)-1:0] pstrb;              
     
   //Variable : pready
   //Used to extend the transfer
@@ -51,23 +51,26 @@
 
   //Variable : prdata
   //Used to store the rdata from the slave
-  bit [DATA_WIDTH-1:0]prdata;
+  bit [DATA_WIDTH-1:0] prdata;
 
   //Variable : pslverr
   //Goes high when a transfer fails
-  slave_error_e  pslverr;
+  slave_error_e pslverr;
 
-  //Variable : apb_master_agent_config_h
+  //Variable : apb_master_agent_cfg_h
   //Instantiation of apb master agent config
   apb_master_agent_config apb_master_agent_cfg_h;
 
+  // Variable: no_of_wait_states_detected
+  int no_of_wait_states_detected;
+  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new   (string name = "apb_master_tx");
-  extern function void  do_copy(uvm_object rhs);
-  extern function bit   do_compare(uvm_object rhs, uvm_comparer comparer);
-  extern function void  do_print(uvm_printer printer);
+  extern function new  (string name = "apb_master_tx");
+  extern function void do_copy(uvm_object rhs);
+  extern function bit  do_compare(uvm_object rhs, uvm_comparer comparer);
+  extern function void do_print(uvm_printer printer);
   extern function void post_randomize();
 
   //-------------------------------------------------------
@@ -77,9 +80,9 @@
   // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
   constraint pselx_c1  { $countones(pselx) == 1; }
 
-  constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES;}
+  constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES; }
 
-  constraint pwdata_c3 {soft pwdata inside {[0:100]};}
+  constraint pwdata_c3 { soft pwdata inside {[0:100]}; }
 
   // MSHA:constraint paddr_c4 {if(pselx == SLAVE_0)
   // MSHA:                        paddr>=0 && paddr <=2**11;
@@ -116,19 +119,16 @@
   // MSHA:                        paddr>= 2**210 && paddr <= 2**221;
   // MSHA:                      }
 
-  //TODO(saha): use below for inline constraints
-  // constraint pwdata_c { pwdata WRITE | READ }
- 
   //This constraint is used to decide the pwdata size based om transfer size
   constraint transfer_size_c {if(transfer_size == BIT_8)
                                 $countones (pstrb) == 1;
                               else if(transfer_size == BIT_16)
-                                  $countones (pstrb) == 2;
+                                $countones (pstrb) == 2;
                               else if(transfer_size == BIT_24)
                                 $countones (pstrb) == 3;
                               else 
                                 $countones (pstrb) == 4;
-}
+                             }
 endclass : apb_master_tx
 
 //--------------------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ function void apb_master_tx::do_copy (uvm_object rhs);
   pprot   = apb_master_tx_copy_obj.pprot;
   pselx   = apb_master_tx_copy_obj.pselx;
   penable = apb_master_tx_copy_obj.penable;
-  //pwrite  = apb_master_tx_copy_obj.pwrite;
+  pwrite  = apb_master_tx_copy_obj.pwrite;
   pwdata  = apb_master_tx_copy_obj.pwdata;
   pstrb   = apb_master_tx_copy_obj.pstrb;
   pready  = apb_master_tx_copy_obj.pready;
@@ -190,7 +190,7 @@ function bit apb_master_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   pprot   == apb_master_tx_compare_obj.pprot &&
   pselx   == apb_master_tx_compare_obj.pselx &&
   penable == apb_master_tx_compare_obj.penable &&
-  //pwrite  == apb_master_tx_compare_obj.pwrite &&
+  pwrite  == apb_master_tx_compare_obj.pwrite &&
   pwdata  == apb_master_tx_compare_obj.pwdata &&
   pstrb   == apb_master_tx_compare_obj.pstrb &&
   pready  == apb_master_tx_compare_obj.pready &&
@@ -220,6 +220,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_field  ("pready",  pready,      $bits(pready),  UVM_DEC);
   printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
   printer.print_string ("pslverr", pslverr.name());
+  printer.print_field  ("no_of_wait_states_detected", no_of_wait_states_detected, $bits(no_of_wait_states_detected), UVM_DEC);
   endfunction : do_print
 
 //--------------------------------------------------------------------------------------------
@@ -227,11 +228,30 @@ function void apb_master_tx::do_print(uvm_printer printer);
 // Selects the address based on the slave selected
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::post_randomize();
-  //`uvm_info(get_type_name(),"APB_MASTER_TX.CFG=%0d",apb_master_agent_cfg_h,UVM_LOW);
+  int index;
+
+  `uvm_info(get_type_name(),$sformatf("APB_MASTER_TX.CFG=%0d",apb_master_agent_cfg_h),UVM_LOW);
+
+  // Derive the slave number using the index
+  for(int i=0; i<NO_OF_SLAVES; i++) begin
+    if(pselx[i]) begin
+      index = i;
+    end
+  end
+
+  // Randmoly chosing paddr value between a given range
+  if (!std::randomize(paddr) with { 
+          paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
+          paddr %4 == 0;
+        }) begin
+
+    `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));  
+  end
+
   //bit [7:0]slave_num;
   //slave_num= pselx.match("SLAVE");
   //$display(slave_num);
-  //paddr = $urandom_range(2**apb_master_agent_config_h.master_min_addr_range[2],2**apb_master_agent_config_h.master_max_addr_range[2]);
+  //paddr = $urandom_range(2**apb_master_agent_cfg_h.master_min_addr_range_array[2],2**apb_master_agent_cfg_h.master_max_addr_range_array[2]);
 endfunction : post_randomize
 
 `endif

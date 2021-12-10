@@ -6,6 +6,8 @@
 // Description : Instantiates driver and monitor
 //--------------------------------------------------------------------------------------------
 module apb_slave_agent_bfm(apb_if intf);
+
+parameter SLAVE_ID = 0;
   //-------------------------------------------------------
   // importing uvm_pkg file
   //-------------------------------------------------------
@@ -20,7 +22,7 @@ module apb_slave_agent_bfm(apb_if intf);
   //-------------------------------------------------------
   apb_slave_driver_bfm apb_slave_drv_bfm_h(.pclk(intf.pclk),
                                            .preset_n(intf.preset_n),
-                                           .pselx(intf.pselx),
+                                           .pselx(intf.pselx[SLAVE_ID]),
                                            .penable(intf.penable),
                                            .pprot(intf.pprot),
                                            .paddr(intf.paddr),
@@ -36,7 +38,7 @@ module apb_slave_agent_bfm(apb_if intf);
   //-------------------------------------------------------
   apb_slave_monitor_bfm apb_slave_mon_bfm_h (.pclk(intf.pclk),
                                               .preset_n(intf.preset_n),
-                                              .pselx(intf.pselx),
+                                              .pselx(intf.pselx[SLAVE_ID]),
                                               .paddr(intf.paddr),
                                               .pwrite(intf.pwrite),
                                               .pwdata(intf.pwdata),

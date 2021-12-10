@@ -7,8 +7,11 @@
 // Including APB interface and apb_Slave Agent BFM Files
 //-------------------------------------------------------
 module hdl_top;
-import uvm_pkg::*;
-`include "uvm_macros.svh"
+
+  import uvm_pkg::*;
+  import apb_global_pkg::*;
+  `include "uvm_macros.svh"
+
   //-------------------------------------------------------
   // Clock Reset Initialization
   //-------------------------------------------------------
@@ -68,6 +71,11 @@ import uvm_pkg::*;
   //-------------------------------------------------------
   // apb slave BFM Agent Instantiation
   //-------------------------------------------------------
-  apb_slave_agent_bfm apb_slave_agent_bfm_h(intf);
+  genvar i;
+  generate
+    for (i=0; i < NO_OF_SLAVES; i++) begin
+      apb_slave_agent_bfm #(.SLAVE_ID(i)) apb_slave_agent_bfm_h(intf);
+    end
+  endgenerate
 
 endmodule : hdl_top
