@@ -92,7 +92,7 @@ task apb_master_monitor_proxy::run_phase(uvm_phase phase);
     apb_master_tx       apb_master_clone_packet;
     
     apb_master_cfg_converter :: from_class (apb_master_agent_cfg_h, struct_cfg_packet);
-    apb_master_mon_bfm_h.sample_data(struct_data_packet, struct_cfg_packet);
+    apb_master_mon_bfm_h.sample_data (struct_data_packet, struct_cfg_packet);
     apb_master_seq_item_converter :: to_class (struct_data_packet, apb_master_packet);
 
     `uvm_info(get_type_name(),$sformatf("Received packet from master monitor bfm: , \n %s", apb_master_packet.sprint()),UVM_HIGH)
