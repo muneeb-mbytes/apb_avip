@@ -131,9 +131,10 @@ function void apb_base_test::setup_apb_slave_agent_config();
   apb_env_cfg_h.apb_slave_agent_cfg_h = new[apb_env_cfg_h.no_of_slaves];
   foreach(apb_env_cfg_h.apb_slave_agent_cfg_h[i]) begin
     apb_env_cfg_h.apb_slave_agent_cfg_h[i] = apb_slave_agent_config::type_id::create($sformatf("apb_slave_agent_config[%0d]",i));
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_id     = i;
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i].min_address  = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
-    apb_env_cfg_h.apb_slave_agent_cfg_h[i].max_address  = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_id       = i;
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].slave_selected = 0;
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].min_address    = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
+    apb_env_cfg_h.apb_slave_agent_cfg_h[i].max_address    = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
     if(SLAVE_AGENT_ACTIVE === 1) begin
       apb_env_cfg_h.apb_slave_agent_cfg_h[i].is_active  = uvm_active_passive_enum'(UVM_ACTIVE);
     end

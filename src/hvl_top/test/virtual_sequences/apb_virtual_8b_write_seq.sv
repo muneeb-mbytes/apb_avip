@@ -49,7 +49,7 @@ task apb_virtual_8b_write_seq::body();
     end
   join_none
 
-  repeat(2) begin
+  repeat(5) begin
     apb_master_8b_seq_h.start(p_sequencer.apb_master_seqr_h);
   end
  endtask : body

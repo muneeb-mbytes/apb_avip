@@ -31,7 +31,8 @@ parameter SLAVE_ID = 0;
                                            .pstrb(intf.pstrb),
                                            .pslverr(intf.pslverr),
                                            .pready(intf.pready),
-                                           .prdata(intf.prdata));
+                                           .prdata(intf.prdata)
+                                           );
 
   //-------------------------------------------------------
   //slave monitor bfm instantiation
@@ -53,6 +54,8 @@ parameter SLAVE_ID = 0;
   initial begin
    uvm_config_db#(virtual apb_slave_driver_bfm)::set(null,"*", "apb_slave_driver_bfm", apb_slave_drv_bfm_h); 
    uvm_config_db #(virtual apb_slave_monitor_bfm)::set(null,"*", "apb_slave_monitor_bfm", apb_slave_mon_bfm_h); 
+   `uvm_info("SLAVE_AGENT_BFM",$sformatf("PSELX=%0d",intf.pselx),UVM_HIGH)
+   `uvm_info("SLAVE_AGENT_BFM",$sformatf("PSEL=%0d",SLAVE_ID),UVM_HIGH)
  end
 
 endmodule : apb_slave_agent_bfm

@@ -106,12 +106,20 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
 
     // TODO(mshariff): 
     // access the slave memory
-    
+    //for(int i=0; i<DATA_WIDTH/8; i++) begin
+    //  bit [7:0] local_data;
+    //  local_data = struct_packet.pwdata[8*i+];
+    //  apb_slave_agent_cfg_h.slave_memory[struct_packet.paddr] = local_data;
+    //end
+    apb_slave_agent_cfg_h.slave_memory[struct_packet.paddr] = struct_packet.pwdata;
+
+    //slave_memory_display
+    `uvm_info(get_type_name(), $sformatf("SLAVE_ADDRESS[%0h]=%0d",struct_packet.paddr,apb_slave_agent_cfg_h.slave_memory[struct_packet.paddr]),UVM_HIGH);
+
     seq_item_port.get_next_item(req);
 
     // TODO(mshariff): 
     // Put the data from struct_packet and req into req using choose_packet_data variable
-
 
     //Printing the req item
     `uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);

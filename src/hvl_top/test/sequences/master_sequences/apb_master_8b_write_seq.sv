@@ -41,7 +41,7 @@ task apb_master_8b_write_seq::body();
   end
   //req.print();
   finish_item(req);
-
+ /* 
   start_item(req);
   if(!req.randomize() with {req.pselx == SLAVE_1;
                             req.transfer_size == BIT_8;
@@ -60,7 +60,7 @@ task apb_master_8b_write_seq::body();
   //req.print();
   finish_item(req);
 
-    start_item(req);
+  start_item(req);
   if(!req.randomize() with {req.pselx == SLAVE_3;
                             req.transfer_size == BIT_8;
                             req.pwrite == WRITE;}) begin
@@ -68,7 +68,7 @@ task apb_master_8b_write_seq::body();
   end
   //req.print();
   finish_item(req);
-
+*/
 
 endtask : body
 

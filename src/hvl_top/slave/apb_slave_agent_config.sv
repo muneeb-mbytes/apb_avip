@@ -21,6 +21,10 @@ class apb_slave_agent_config extends uvm_object;
   //Used to set whether we need to create coverage or not
   bit has_coverage;
   
+  //Variable : slave_selected
+  //Used to represent that this slave is selected
+  bit slave_selected;
+
   //Variable: slave_no
   //Used to indicate the slave number
   //slave_no_e slave_no;
@@ -35,7 +39,8 @@ class apb_slave_agent_config extends uvm_object;
   
   //Variable : slave_memory
   //Declaration of slave_memory to store the data from master
-  bit [MEMORY_WIDTH-1:0]slave_memory[2**SLAVE_MEMORY_SIZE:1];
+  //bit [MEMORY_WIDTH-1:0]slave_memory[2**250:1];
+  bit [DATA_WIDTH-1:0]slave_memory[2**250:1];
   
   //Variable: paddr
   //Used to indicate the slave address
