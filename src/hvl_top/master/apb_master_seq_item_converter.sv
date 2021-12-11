@@ -89,7 +89,7 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
    `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pprot = \n %p",output_conv_h.pprot),UVM_HIGH);
  
     // output_conv_h.pselx = input_conv.pselx; 
-   $cast(output_conv_h.pselx,input_conv.pselx);
+   //$cast(output_conv_h.pselx,input_conv.pselx);
    `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pselx = \n %p",output_conv_h.pselx),UVM_HIGH);
 
   $cast(output_conv_h.pwrite,input_conv.pwrite);

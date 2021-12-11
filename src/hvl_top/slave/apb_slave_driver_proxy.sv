@@ -112,7 +112,6 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
     // TODO(mshariff): 
     // Put the data from struct_packet and req into req using choose_packet_data variable
 
-
     //Printing the req item
     `uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
   

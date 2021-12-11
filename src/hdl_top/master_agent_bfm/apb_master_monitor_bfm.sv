@@ -48,13 +48,13 @@ interface apb_master_monitor_bfm (input bit pclk,
   //  Waiting for the system reset to be active low
   //-------------------------------------------------------
   task wait_for_preset_n();
-    @(posedge preset_n);
+    @(negedge preset_n);
     `uvm_info(name, $sformatf("system reset detected"), UVM_HIGH)
     
-    @(negedge preset_n);
+    @(posedge preset_n);
     `uvm_info(name, $sformatf("system reset deactivated"), UVM_HIGH)
   endtask : wait_for_preset_n
- 
+  
   //-------------------------------------------------------
   // Task: sample_data
   //  In this task, the pwdata and prdata is sampled
@@ -64,15 +64,30 @@ interface apb_master_monitor_bfm (input bit pclk,
   //  apb_cfg_packet  - Handle for apb_transfer_cfg_s class
   //-------------------------------------------------------
   task sample_data (output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_packet);
-    if(penable==1 && pready==1 && $countones(pselx)==1) begin
+    @(negedge pclk);
+ 
+    while(penable != 1) begin
+      @(posedge pclk);
+      `uvm_info(name, $sformatf("Inside while loop"), UVM_HIGH)
+    end
+    
+    `uvm_info(name, $sformatf("SAHA_DEBUG: penable =%0d, pready=%0d, pselx=%0d ", penable, pready, pselx), UVM_HIGH)
+    if (penable==1 && pready==1 && $countones(pselx)==1) begin
+      apb_data_packet.pslverr = pslverr;
+      apb_data_packet.pprot   = pprot;
+      apb_data_packet.pwrite  = pwrite;
+      apb_data_packet.paddr   = paddr;
+      apb_data_packet.pselx   = pselx;
+
       if (pwrite == WRITE) begin
         apb_data_packet.pwdata = pwdata;
+        apb_data_packet.pstrb = pstrb;
       end
       else begin
         apb_data_packet.prdata = prdata;
       end
     end
-   `uvm_info(name, $sformatf("MASTER_SAMPLE_DATA"), UVM_HIGH)
+    `uvm_info(name, $sformatf("MASTER_SAMPLE_DATA=%p", apb_data_packet), UVM_HIGH)
   endtask : sample_data
 
 endinterface : apb_master_monitor_bfm
