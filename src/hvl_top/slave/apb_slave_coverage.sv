@@ -29,20 +29,20 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   //-------------------------------------------------------
   covergroup apb_slave_covergroup with function sample (apb_slave_agent_config cfg, apb_slave_tx packet);
   option.per_instance = 1;
-/*
+
   //cheking the signal coverage
   PWRITE_CP:coverpoint tx_cov.pwrite {
     option.comment = "read and write conditon based on pwrite";
     bins read = {0};
     bins write = {1};
   }
-  PENABLE_CP:coverpoint tx_cov.penable {
-    option.comment = "setup and access based on the enable";
-    bins setup  = {0};
-    bins access = {1};
-  }
+//  PENABLE_CP:coverpoint tx_cov.penable {
+//    option.comment = "setup and access based on the enable";
+//    bins setup  = {0};
+//    bins access = {1};
+//  }
 
-  PSELX_CP: coverpoint tx_cov.pselx {
+  PSELX_CP: coverpoint tx_cov.psel {
     option.comment = "no.of slaves used ";
     bins NO_OF_SLAVES[] = {[15:0]};
   }
@@ -51,14 +51,22 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
     option.comment = "address range";
     bins addr = {[31:8]};
   }
-*/
+
   PWDATA_CP: coverpoint tx_cov.pwdata {
     option.comment = "write data range";
-    bins wdata = {[31:8]};
+    bins wdata_8bit = {8};
+    bins wdata_16bit = {16};
+    bins wdata_24bit = {24};
+    bins wdata_32bit = {32};
+
   }
   PRDATA_CP : coverpoint tx_cov.prdata {
     option.comment = "read data range ";  
-    bins pread = {[31:8]};
+    bins wdata_8bit = {8};
+    bins wdata_16bit = {16};
+    bins wdata_24bit = {24};
+    bins wdata_32bit = {32};
+
   }
 
   PSLVERR_CP:coverpoint tx_cov.pslverr {
@@ -94,6 +102,7 @@ endclass : apb_slave_coverage
 function apb_slave_coverage::new(string name = "apb_slave_coverage",uvm_component parent = null);
   super.new(name, parent);
   apb_slave_analysis_export = new("apb_slave_analysis_export",this);
+ // apb_slave_cover_group = new();
 endfunction : new
 
 //-------------------------------------------------------
@@ -103,6 +112,7 @@ endfunction : new
 //-------------------------------------------------------
 function void apb_slave_coverage::write(apb_slave_tx t);
   `uvm_info(get_type_name(),"APB SLAVE COVERAGE",UVM_LOW);
+  apb_slave_covergroup.sample(apb_slave_agent_cfg_h,t);
 endfunction: write
 
 `endif
