@@ -73,8 +73,9 @@ module hdl_top;
   //-------------------------------------------------------
   genvar i;
   generate
-    for (i=0; i < NO_OF_SLAVES; i++) begin
+    for (i=0; i < NO_OF_SLAVES; i++) begin : apb_slave_agent_bfm
       apb_slave_agent_bfm #(.SLAVE_ID(i)) apb_slave_agent_bfm_h(intf);
+      defparam apb_slave_agent_bfm[i].apb_slave_agent_bfm_h.SLAVE_ID = i;
     end
   endgenerate
 

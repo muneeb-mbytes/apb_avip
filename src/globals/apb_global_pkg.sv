@@ -144,6 +144,7 @@ package apb_global_pkg;
     bit [ADDRESS_WIDTH-1:0]min_address;
     bit [ADDRESS_WIDTH-1:0]max_address;
     bit [ADDRESS_WIDTH-1:0]paddr;
+    int slave_id;
   }apb_transfer_cfg_s;
 
   //-------------------------------------------------------

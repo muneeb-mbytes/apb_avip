@@ -13,12 +13,12 @@ import apb_global_pkg::*;
 //--------------------------------------------------------------------------------------------
 interface apb_slave_monitor_bfm (input bit pclk,
                                  input bit preset_n,
+                                 input logic [NO_OF_SLAVES-1:0] psel,
                                  input bit [2:0]pprot,
                                  input bit pslverr,
                                  input bit pready,
                                  input logic penable,
                                  input logic pwrite,
-                                 input logic psel,
                                  input logic [ADDRESS_WIDTH-1:0] paddr,
                                  input logic [DATA_WIDTH-1:0] pwdata,
                                  input logic [(DATA_WIDTH/8)-1:0] pstrb, 
@@ -68,25 +68,30 @@ interface apb_slave_monitor_bfm (input bit pclk,
   task sample_data (output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_packet);
     @(negedge pclk);
     
-    while(penable != 1) begin
-      @(posedge pclk);
-      `uvm_info(name, $sformatf("Inside while loop"), UVM_HIGH)
+    while(psel[apb_cfg_packet.slave_id] === 1'bX) begin
+      @(negedge pclk);
+      `uvm_info(name, $sformatf("Inside while loop PSEL"), UVM_HIGH)
+    end
+
+    while(psel[apb_cfg_packet.slave_id] !==1 || penable !==1 || pready !==1) begin
+      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: SLAVE[%0d] penable =%0d, pready=%0d, psel=%0d ", apb_cfg_packet.slave_id, penable, pready, psel), UVM_HIGH)
+      @(negedge pclk);
     end
     
     `uvm_info(name, $sformatf("SAHA_DEBUG: penable =%0d, pready=%0d, psel=%0d ", penable, pready, psel), UVM_HIGH)
-    if (penable==1 && pready==1 && psel==1) begin
-      apb_data_packet.pslverr = pslverr;
-      apb_data_packet.pprot   = pprot;
-      apb_data_packet.pwrite  = pwrite;
-      apb_data_packet.paddr   = paddr;
 
-      if (pwrite == WRITE) begin
-        apb_data_packet.pwdata = pwdata;
-        apb_data_packet.pstrb = pstrb;
-      end
-      else begin
-        apb_data_packet.prdata = prdata;
-      end
+    apb_data_packet.pselx[0]= psel[apb_cfg_packet.slave_id];
+    apb_data_packet.pslverr = pslverr;
+    apb_data_packet.pprot   = pprot;
+    apb_data_packet.pwrite  = pwrite;
+    apb_data_packet.paddr   = paddr;
+    apb_data_packet.pstrb   = pstrb;
+
+    if (pwrite == WRITE) begin
+      apb_data_packet.pwdata = pwdata;
+    end
+    else begin
+      apb_data_packet.prdata = prdata;
     end
     `uvm_info(name, $sformatf("SLAVE_SAMPLE_DATA=%p", apb_data_packet), UVM_HIGH)
   endtask : sample_data

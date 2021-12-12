@@ -14,9 +14,9 @@ import apb_global_pkg::*;
 // Parameters:
 //  intf - apb interface
 //--------------------------------------------------------------------------------------------
-interface apb_slave_driver_bfm(input bit pclk,
+interface apb_slave_driver_bfm (input bit pclk,
                                input bit preset_n,
-                               input bit psel,
+                               input bit [NO_OF_SLAVES-1:0] psel,
                                input logic penable,
                                input logic [ADDRESS_WIDTH-1:0] paddr,
                                input logic pwrite,
@@ -77,14 +77,18 @@ interface apb_slave_driver_bfm(input bit pclk,
     
     `uvm_info(name,$sformatf("WAITING FOR SETUP STATE"),UVM_HIGH)
     `uvm_info(name,$sformatf("PSEL=%0d",psel),UVM_HIGH)
-    //`uvm_info(name,$sformatf("SLAVE_ID=%0d",slave_id),UVM_HIGH)
+    //`uvm_info(name,$sformatf("LOCAL_SLAVE_ID=%0d",slave_id),UVM_HIGH)
     
-    while(psel == 1'bx) begin
-      `uvm_info(name,$sformatf("WAITING FOR SETUP STATE-INSIDE WHILE LOOP"),UVM_HIGH)
-      `uvm_info(name,$sformatf("PSEL=%0d",psel),UVM_HIGH)
-      @(posedge pclk);
+    // MSHA: while(psel == 1'bx) begin
+    // MSHA:   `uvm_info(name,$sformatf("WAITING FOR SETUP STATE-INSIDE WHILE LOOP"),UVM_HIGH)
+    // MSHA:   `uvm_info(name,$sformatf("PSEL=%0d",psel),UVM_HIGH)
+    // MSHA:   @(posedge pclk);
+    // MSHA: end
+    
+    while(psel[0] !==1) begin
+      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: penable =%0d, pready=%0d, psel=%0d ", penable, pready, psel), UVM_HIGH)
+      @(negedge pclk);
     end
-    
     //while(penable != 1'b0) begin
     //  `uvm_info(name,$sformatf("WAITING FOR SETUP STATE-INSIDE WHILE LOOP"),UVM_HIGH)
     //  `uvm_info(name,$sformatf("PSEL=%0d",psel),UVM_HIGH)

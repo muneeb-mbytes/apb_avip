@@ -65,27 +65,37 @@ interface apb_master_monitor_bfm (input bit pclk,
   //-------------------------------------------------------
   task sample_data (output apb_transfer_char_s apb_data_packet, input apb_transfer_cfg_s apb_cfg_packet);
     @(negedge pclk);
- 
-    while(penable != 1) begin
-      @(posedge pclk);
-      `uvm_info(name, $sformatf("Inside while loop"), UVM_HIGH)
-    end
     
-    `uvm_info(name, $sformatf("SAHA_DEBUG: penable =%0d, pready=%0d, pselx=%0d ", penable, pready, pselx), UVM_HIGH)
-    if (penable==1 && pready==1 && $countones(pselx)==1) begin
-      apb_data_packet.pslverr = pslverr;
-      apb_data_packet.pprot   = pprot;
-      apb_data_packet.pwrite  = pwrite;
-      apb_data_packet.paddr   = paddr;
-      apb_data_packet.pselx   = pselx;
+    // MSHA:while(^pselx === 1'bX) begin
+    // MSHA:  @(negedge pclk);
+    // MSHA:  `uvm_info(name, $sformatf("Inside while loop PSEL"), UVM_HIGH)
+    // MSHA:end
+    while($countones(pselx) !==1 || penable !==1 ) begin
+      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: penable =%0d, pready=%0d, pselx=%0d", 
+                                  penable, pready, pselx), UVM_HIGH)
+      @(negedge pclk);
+    end
 
-      if (pwrite == WRITE) begin
-        apb_data_packet.pwdata = pwdata;
-        apb_data_packet.pstrb = pstrb;
-      end
-      else begin
-        apb_data_packet.prdata = prdata;
-      end
+    // Waiting for pready to be '1
+    while(pready !==1) begin
+      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: penable =%0d, pready=%0d, pselx=%0d", 
+                                  penable, pready, pselx), UVM_HIGH)
+      @(negedge pclk);
+      // increament the counter of wait states
+    end
+
+    apb_data_packet.pslverr = pslverr;
+    apb_data_packet.pprot   = pprot;
+    apb_data_packet.pwrite  = pwrite;
+    apb_data_packet.paddr   = paddr;
+    apb_data_packet.pselx   = pselx;
+    apb_data_packet.pstrb   = pstrb;
+
+    if (pwrite == WRITE) begin
+      apb_data_packet.pwdata = pwdata;
+    end
+    else begin
+      apb_data_packet.prdata = prdata;
     end
     `uvm_info(name, $sformatf("MASTER_SAMPLE_DATA=%p", apb_data_packet), UVM_HIGH)
   endtask : sample_data
