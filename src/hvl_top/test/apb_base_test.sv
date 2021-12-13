@@ -88,9 +88,9 @@ endfunction : setup_apb_env_config
 function void apb_base_test::setup_apb_master_agent_config();
   bit [63:0]local_min_address;
   bit [63:0]local_max_address;
-  byte start_address;
-  start_address = 'd4;
-  local_min_address = 64'd4;
+  //byte start_address;
+  //start_address = 'd4;
+  //local_min_address = 64'd4;
   apb_env_cfg_h.apb_master_agent_cfg_h = apb_master_agent_config::type_id::create("apb_master_agent_config");
   if(MASTER_AGENT_ACTIVE === 1) begin
     apb_env_cfg_h.apb_master_agent_cfg_h.is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
@@ -104,22 +104,13 @@ function void apb_base_test::setup_apb_master_agent_config();
 
   `uvm_info(get_type_name(),$sformatf("\nAPB_MASTER_CONFIG\n%s",apb_env_cfg_h.apb_master_agent_cfg_h.sprint),UVM_LOW);
   for(int i =0; i<NO_OF_SLAVES; i++) begin
-    if(i == 0) begin
       
-      apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,2**(SLAVE_MEMORY_SIZE+local_min_address)-1);
-      local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
-      
-      apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i,local_min_address);
-      local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
-    end
-    else begin
-      
-    apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i,local_min_address + 2**(SLAVE_MEMORY_SIZE+start_address) + 2**SLAVE_MEMORY_GAP);
+    apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i,local_max_address + 2**SLAVE_MEMORY_GAP);
     local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
       
-    apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,local_max_address + 2**(SLAVE_MEMORY_SIZE+start_address) + 2**SLAVE_MEMORY_GAP -1);
+    apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,local_max_address+ 2**(SLAVE_MEMORY_SIZE)-1 + 2**SLAVE_MEMORY_GAP);
     local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
-    end
+      
   end
 endfunction : setup_apb_master_agent_config
 
