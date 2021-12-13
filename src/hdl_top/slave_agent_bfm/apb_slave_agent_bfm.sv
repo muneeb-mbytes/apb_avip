@@ -37,18 +37,18 @@ module apb_slave_agent_bfm #(parameter int SLAVE_ID) (apb_if intf);
   //slave monitor bfm instantiation
   //-------------------------------------------------------
   apb_slave_monitor_bfm apb_slave_mon_bfm_h (.pclk(intf.pclk),
-                                             .preset_n(intf.preset_n),
-                                             .psel(intf.pselx),
-                                             .paddr(intf.paddr),
-                                             .pwrite(intf.pwrite),
-                                             .pwdata(intf.pwdata),
-                                             .pstrb(intf.pstrb),
-                                             .pslverr(intf.pslverr),
-                                             .pready(intf.pready),
-                                             .prdata(intf.prdata),
-                                             .penable(intf.penable),
-                                             .pprot(intf.pprot)
-                                            );
+                                              .preset_n(intf.preset_n),
+                                              .psel(intf.pselx),
+                                              .paddr(intf.paddr),
+                                              .pwrite(intf.pwrite),
+                                              .pwdata(intf.pwdata),
+                                              .pstrb(intf.pstrb),
+                                              .pslverr(intf.pslverr),
+                                              .pready(intf.pready),
+                                              .prdata(intf.prdata),
+                                              .penable(intf.penable),
+                                              .pprot(intf.pprot)
+                                              );
 
   initial begin
     uvm_config_db#(virtual apb_slave_driver_bfm)::set(null,"*", "apb_slave_driver_bfm", apb_slave_drv_bfm_h); 

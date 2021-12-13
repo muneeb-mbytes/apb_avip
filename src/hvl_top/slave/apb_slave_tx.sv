@@ -36,9 +36,9 @@ class apb_slave_tx extends uvm_sequence_item;
   //Used to store the rdata from the slave
   rand bit [DATA_WIDTH-1:0]prdata;
  
-   //Variable : pprot
+  //Variable : pprot
   //Used for different access
-   rand protection_type_e pprot;
+  rand protection_type_e pprot;
 
   //Variable : no_of_wait_states
   //Used to decide the number of wait states
@@ -46,17 +46,19 @@ class apb_slave_tx extends uvm_sequence_item;
 
   // Variable: choose_packet_data
   // Used for driving the prdata from this packet rather than from the Slave memory
-  bit choose_packet_data;
+  rand bit choose_packet_data;
 
   //variable : transfer_size
-  //<TODO>
-  //transfer_size_e transfer_size;
+  transfer_size_e transfer_size;
 
   //To randomise the wait states in range of 0 to 3
   constraint wait_states_c1 {soft no_of_wait_states inside {[0:3]};}
 
   //To randomize the pslverr as NO_ERROR by defualt
-  constraint pslverr_c {soft pslverr == NO_ERROR;}
+  constraint pslverr_c2 {soft pslverr == NO_ERROR;}
+
+  //To choose the randomised pslverr and prdata make choose_packet_data as high
+  constraint choose_data_packet_c3 {soft choose_packet_data==0;} 
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions

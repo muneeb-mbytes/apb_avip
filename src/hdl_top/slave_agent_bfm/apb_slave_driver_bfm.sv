@@ -106,6 +106,7 @@ interface apb_slave_driver_bfm (input bit pclk,
     if(pwrite == WRITE) begin
       data_packet.pwdata = pwdata;
       data_packet.pstrb  = pstrb;
+      //data_packet.transfer_size = $countones(pstrb);
     end
     data_packet.pprot = pprot;
 
@@ -134,12 +135,16 @@ interface apb_slave_driver_bfm (input bit pclk,
 
     pready<=1;
 
+    // This display is only to check whether the data from proxy is received or not
+    `uvm_info(name,$sformatf("INSIDE ACCESS - PRDATA=%0h",data_packet.prdata),UVM_HIGH);
+    
     if(data_packet.pwrite == READ) begin
-      prdata <= 32'hDEAD_BEEF;
+      `uvm_info(name,$sformatf("INSIDE ACCESS - PRDATA=%0h",data_packet.prdata),UVM_HIGH);
+      prdata <= data_packet.prdata;
     end
 
     // TODO(mshariff): 
-    pslverr <= 0;
+    pslverr <= data_packet.pslverr;
 
   endtask: wait_for_access_state
 

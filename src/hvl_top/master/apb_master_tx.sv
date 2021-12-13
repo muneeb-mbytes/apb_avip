@@ -190,8 +190,6 @@ function void apb_master_tx::do_print(uvm_printer printer);
 function void apb_master_tx::post_randomize();
   int index;
 
-  `uvm_info(get_type_name(),$sformatf("APB_MASTER_TX.CFG=%0d",apb_master_agent_cfg_h),UVM_LOW);
-
   // Derive the slave number using the index
   for(int i=0; i<NO_OF_SLAVES; i++) begin
     if(pselx[i]) begin
@@ -208,8 +206,14 @@ function void apb_master_tx::post_randomize();
 
   //Constraint to make pwdata not zero when pstrb is high for that 8-bit lane
   for(int i=0; i<NO_OF_SLAVES; i++) begin
+    //`uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
     if(pstrb[i] == 1) begin
-      //pwdata[8*i+7 -: 8*i] = pwdata[8*i+7 -: 8*i] inside {[1:127]};
+      if(!std::randomize(pwdata) with {pwdata[8*i+7 -: 8] != 0;}) begin
+        `uvm_fatal("FATAL_STD_RANDOMIZATION_PWDATA", $sformatf("Not able to randomize pwdata"));
+      end
+      else begin
+        `uvm_info(get_type_name(),$sformatf("MASTER-TX-pwdata[%0d]",pwdata[8*i+7 +: 8]),UVM_HIGH);
+      end 
     end
   end
 
