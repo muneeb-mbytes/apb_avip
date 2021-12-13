@@ -82,7 +82,7 @@ interface apb_master_monitor_bfm (input bit pclk,
                                   penable, pready, pselx), UVM_HIGH)
       @(negedge pclk);
       // increament the counter of wait states
-      apb_data_packet.no_of_wait_states++
+      apb_data_packet.no_of_wait_states++;
     end
 
     apb_data_packet.pslverr = pslverr;
