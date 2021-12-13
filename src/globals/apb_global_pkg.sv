@@ -77,7 +77,21 @@ package apb_global_pkg;
   typedef enum bit {
     WRITE = 1,
     READ  = 0 
-  }tx_type_e;  
+  }tx_type_e; 
+
+ //-------------------------------------------------------
+  // Enum : apb_fsm_state_e
+  // Used to declare the type of f state
+  //-------------------------------------------------------
+  typedef enum bit[2:0] {
+    IDLE,
+    SETUP,
+    ACCESS
+  }apb_fsm_state_e; 
+
+
+
+
   
   //-------------------------------------------------------
   // Enum : protection_type_e 
