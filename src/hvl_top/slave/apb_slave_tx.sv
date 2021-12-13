@@ -38,7 +38,7 @@ class apb_slave_tx extends uvm_sequence_item;
  
    //Variable : pprot
   //Used for different access
-   protection_type_e pprot;
+   rand protection_type_e pprot;
 
   //Variable : no_of_wait_states
   //Used to decide the number of wait states
