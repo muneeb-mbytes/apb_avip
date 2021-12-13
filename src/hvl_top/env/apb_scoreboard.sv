@@ -1,6 +1,8 @@
 `ifndef APB_SCOREBOARD_INCLUDED_
 `define APB_SCOREBOARD_INCLUDED_
 
+import apb_global_pkg::*;
+
 //--------------------------------------------------------------------------------------------
 // Class: apb_scoreboard
 // Used to compare the data from the master monitor proxy and slave monitor proxy
@@ -54,6 +56,10 @@ class apb_scoreboard extends uvm_scoreboard;
   //to keep track of number of byte wise compared failed slave_tx_data
   int byte_data_cmp_failed_slave_tx_count = 0;
 
+  
+   bit index;
+
+   //bit slave_no_e pselx;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -117,10 +123,17 @@ task apb_scoreboard::run_phase(uvm_phase phase);
    `uvm_info(get_type_name(),$sformatf("printing apb_master_tx_h, \n %s",apb_master_tx_h.sprint()),UVM_HIGH)
    `uvm_info(get_type_name(),$sformatf("before calling slave's analysis_fifo"),UVM_HIGH)
    
-  
-   //TODO apb_slave_tx_h.slave_id = 2**NO_OF_SLAVE;
+   //apb_master_tx_h.pselx = 2**NO_OF_SLAVES;
    
-   apb_slave_analysis_fifo[0].get(apb_slave_tx_h);
+
+   for(int i=0;i<NO_OF_SLAVES;i++) begin
+     if(apb_master_tx_h.pselx[i]==1) begin
+       index = i;
+       break;
+     end
+   end
+   
+   apb_slave_analysis_fifo[index].get(apb_slave_tx_h);
    // TODO(mshariff): Keep a track on slave transaction
    apb_slave_tx_count++;
    
