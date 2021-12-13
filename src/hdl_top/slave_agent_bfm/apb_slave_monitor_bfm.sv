@@ -73,7 +73,7 @@ interface apb_slave_monitor_bfm (input bit pclk,
       `uvm_info(name, $sformatf("Inside while loop PSEL"), UVM_HIGH)
     end
 
-    while(psel[apb_cfg_packet.slave_id] !==1 && penable !==1 && pready !==1) begin
+    while(psel[apb_cfg_packet.slave_id] !==1 || penable !==1 || pready !==1) begin
       `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: SLAVE[%0d] penable =%0d, pready=%0d, psel=%0d ", apb_cfg_packet.slave_id, penable, pready, psel), UVM_HIGH)
       @(negedge pclk);
     end

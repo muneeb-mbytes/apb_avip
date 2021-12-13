@@ -138,10 +138,10 @@ interface apb_master_driver_bfm (input  bit   pclk,
 
     penable   <= 1'b1;
     
-    detect_wait_state(data_packet);
-    if(pready == 1) begin
-      penable <= 0;
-    end
+   // detect_wait_state(data_packet);
+   // if(pready == 1) begin
+   //   penable <= 0;
+   // end
 
   endtask: waiting_in_access_state
 

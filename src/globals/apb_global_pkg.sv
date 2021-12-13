@@ -43,7 +43,7 @@ package apb_global_pkg;
 
   //-------------------------------------------------------
   // Enum : transfer_size_e
-  // Used to declare enum type for all transfer sizes
+  //  Used to declare enum type for all transfer sizes
   //-------------------------------------------------------
   typedef enum bit[31:0]{
     BIT_8   = 32'd8,
@@ -54,7 +54,7 @@ package apb_global_pkg;
 
   //-------------------------------------------------------
   // Enum : slave_error_e
-  // Used to declare enum type for the pslverr
+  //  Used to declare enum type for the pslverr
   //-------------------------------------------------------
   typedef enum bit{
     NO_ERROR    = 1'b0,
@@ -63,7 +63,7 @@ package apb_global_pkg;
 
   //-------------------------------------------------------
   // Enum : endian_e
-  // Used to declare enum type for the endians
+  //  Used to declare enum type for the endians
   //-------------------------------------------------------
   typedef enum bit{
     LITTL_ENDIAN    = 1'b0,
@@ -72,16 +72,16 @@ package apb_global_pkg;
 
   //-------------------------------------------------------
   // Enum : tx_type_e 
-  // Used to declare the type of transaction done
+  //  Used to declare the type of transaction done
   //-------------------------------------------------------
   typedef enum bit {
     WRITE = 1,
     READ  = 0 
   }tx_type_e; 
 
- //-------------------------------------------------------
+  //-------------------------------------------------------
   // Enum : apb_fsm_state_e
-  // Used to declare the type of f state
+  //  Used to declare the type of f state
   //-------------------------------------------------------
   typedef enum bit[2:0] {
     IDLE,
@@ -89,14 +89,10 @@ package apb_global_pkg;
     ACCESS
   }apb_fsm_state_e; 
 
-
-
-
-  
   //-------------------------------------------------------
   // Enum : protection_type_e 
-  // Used to declare the type ofprotection of the 
-  // transaction
+  //  Used to declare the type ofprotection of the 
+  //  transaction
   //-------------------------------------------------------
   typedef enum logic[2:0]{
     NORMAL_SECURE_DATA              = 3'b000,
@@ -107,11 +103,11 @@ package apb_global_pkg;
     PRIVILEGED_SECURE_INSTRUCTION   = 3'b101,
     PRIVILEGED_NONSECURE_DATA       = 3'b110,
     PRIVILEGED_NONSECURE_INSTUCTION = 3'b111
-    }protection_type_e;
+  }protection_type_e;
 
   //-------------------------------------------------------
   // Enum : slave_no_e
-  // Used to declare the slave number by assigning the value for encoding
+  //  Used to declare the slave number by assigning the value for encoding
   //-------------------------------------------------------
   typedef enum bit [15:0] {
     SLAVE_0  = 16'b0000_0000_0000_0001,
@@ -134,8 +130,8 @@ package apb_global_pkg;
 
   //-------------------------------------------------------
   // Struct : apb_transfer_char_s
-  //This struct datatype consists of all signals which 
-  //are used for seq item conversion
+  //  This struct datatype consists of all signals which 
+  //  are used for seq item conversion
   //-------------------------------------------------------
   typedef struct {
     bit pwrite;
@@ -151,8 +147,8 @@ package apb_global_pkg;
   
   //-------------------------------------------------------
   // Struct : apb_cfg_char_s
-  //This struct datatype consists of all configurations
-  //which are used for seq item conversion
+  //  This struct datatype consists of all configurations
+  //  which are used for seq item conversion
   //-------------------------------------------------------
   typedef struct{
     bit [ADDRESS_WIDTH-1:0]min_address;
@@ -161,55 +157,6 @@ package apb_global_pkg;
     int slave_id;
   }apb_transfer_cfg_s;
 
-  //-------------------------------------------------------
-  // Enum : slave_max_address
-  // Used to declare the slave max address range for 
-  // respective slave
-  // 3 bits are given as memory gap bwtween eaxh slave
-  //-------------------------------------------------------
-  //typedef enum bit[237:0] {
-  //  S0 = 238'd12,
-  //  S1 = 238'd27,
-  //  S2 = 238'd42,
-  //  S3 = 238'd57,
-  //  S4 = 238'd72,
-  //  S5 = 238'd87,
-  //  S6 = 238'd102,
-  //  S7 = 238'd117,
-  //  S8 = 238'd132,
-  //  S9 = 238'd147,
-  //  S10 = 238'd2382,
-  //  S11 = 238'd177,
-  //  S12 = 238'd192,
-  //  S13 = 238'd207,
-  //  S14 = 238'd222,
-  //  S15 = 238'd237
-  //}slave_max_addr_e;
-
-  //-------------------------------------------------------
-  // Enum : slave_min_address
-  // Used to declare the slave min address range for 
-  // respective slave
-  //-------------------------------------------------------
-  //typedef enum bit[237:0] {
-  //  S_MIN_0 = 238'd0,
-  //  S_MIN_1 = 238'd16,
-  //  S_MIN_2 = 238'd31,
-  //  S_MIN_3 = 238'd46,
-  //  S_MIN_4 = 238'd61,
-  //  S_MIN_5 = 238'd76,
-  //  S_MIN_6 = 238'd91,
-  //  S_MIN_7 = 238'd106,
-  //  S_MIN_8 = 238'd121,
-  //  S_MIN_9 = 238'd136,
-  //  S_MIN_10 = 238'd2151,
-  //  S_MIN_11 = 238'd166,
-  //  S_MIN_12 = 238'd181,
-  //  S_MIN_13 = 238'd196,
-  //  S_MIN_14 = 238'd211,
-  //  S_MIN_15 = 238'd2226
-  //}slave_min_addr_e;
-  
 endpackage : apb_global_pkg
 
 `endif
