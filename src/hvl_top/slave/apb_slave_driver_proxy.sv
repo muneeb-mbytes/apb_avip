@@ -29,7 +29,9 @@ class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   extern virtual function void connect_phase(uvm_phase phase);
   extern function void end_of_elaboration_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
-
+  extern virtual task check_for_pslverr(apb_transfer_char_s struct_packet);
+  extern virtual task task_write(apb_transfer_char_s struct_packet);
+  extern virtual task task_read(apb_transfer_char_s struct_packet);
 endclass : apb_slave_driver_proxy
   
 //--------------------------------------------------------------------------------------------
@@ -103,7 +105,8 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
 
     apb_slave_drv_bfm_h.wait_for_setup_state(struct_packet);
     `uvm_info("DEBUG_MSHA", $sformatf("AFTER wait struct :: %p", struct_packet), UVM_NONE); 
-
+  
+    check_for_pslverr(struct_packet);
     // TODO(mshariff): 
     // access the slave memory
     //for(int i=0; i<DATA_WIDTH/8; i++) begin
@@ -140,6 +143,81 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
     seq_item_port.item_done();
 
   end
-  endtask : run_phase
+endtask : run_phase
+
+//--------------------------------------------------------------------------------------------
+// Task: task_write
+// This task is used to write the data into the slave memory
+// Parameters:
+//  struct_packet   - apb_transfer_char_s
+//--------------------------------------------------------------------------------------------
+task apb_slave_driver_proxy::task_write(apb_transfer_char_s struct_packet);
+  
+  for(int i=0; i<(DATA_WIDTH/8); i++)begin
+    if(struct_packet.pstrb[i] == 1)begin
+      apb_slave_agent_cfg_h.slave_memory_task(struct_packet.paddr+i,struct_packet.pwdata[8*i+7 -: 8]);
+    end
+  end
+
+endtask : task_write
+
+//--------------------------------------------------------------------------------------------
+// Task: task_read
+// This task is used to read the data from the slave memory
+// Parameters:
+//  struct_packet   - apb_transfer_char_s
+//--------------------------------------------------------------------------------------------
+task apb_slave_driver_proxy::task_read(apb_transfer_char_s struct_packet);
+  
+  bit [7:0]local_rdata;
+  //local [DATA_WIDTH-1:0]read_data;
+
+  for(int i=0; i<(DATA_WIDTH/8); i++)begin
+    //read_data = read_data >> 8;
+    local_rdata = apb_slave_agent_cfg_h.slave_memory[struct_packet.paddr + i];
+    struct_packet.prdata[8*i+7 -: 8] = local_rdata;
+  end 
+
+endtask : task_read
+
+//--------------------------------------------------------------------------------------------
+// Task: check_for_pslverr
+// Gets the struct packet and sends it to slave agent config to check the correct address 
+// of the slave is selected
+//
+// Parameters:
+//  struct_packet   - apb_transfer_char_s
+//--------------------------------------------------------------------------------------------
+task apb_slave_driver_proxy::check_for_pslverr(apb_transfer_char_s struct_packet);
+
+  `uvm_info("PACKET_FROM_RUN_PHASE", $sformatf("AFTER wait struct :: %p", struct_packet), UVM_HIGH);
+  if(struct_packet.paddr inside {[apb_slave_agent_cfg_h.min_address : apb_slave_agent_cfg_h.max_address]}) begin
+    struct_packet.pslverr = NO_ERROR;
+   
+    if(struct_packet.pwrite == WRITE)begin
+      task_write(struct_packet);
+    end
+    else begin
+      task_read(struct_packet);
+    end
+    //case(struct_packet.pwrite)
+    //  WRITE : task_write(apb_transfer_char_s struct_packet);
+    //  READ  : task_read(apb_transfer_char_s struct_packet);
+    //endcase
+    
+    //struct_packet.pwrite == WRITE ? task_write(apb_transfer_char_s struct_packet) : task_read(apb_transfer_char_s struct_packet);
+    //foreach(apb_slave_agent_cfg_h.slave_memory[i])begin
+      //`uvm_info("CHECK FROM PSLAVE ERROR", $sformatf("ADDRESS=%0h, DATA=%0h",struct_packet.paddr,apb_slave_agent_cfg_h.slave_memory[struct_packet.paddr]), UVM_HIGH);
+    //end
+  end
+  else begin 
+    struct_packet.pslverr = ERROR;
+  end
+  `uvm_info("PACKET_FROM_RUN_PHASE", $sformatf("min_address = %0h, max_address=%0h ",apb_slave_agent_cfg_h.min_address, apb_slave_agent_cfg_h.max_address), UVM_HIGH);
+  //struct_packet.pslverr = struct_packet.paddr inside {[apb_slave_agent_cfg_h.min_address : apb_slave_agent_cfg_h.max_address]} ? NO_ERROR : ERROR;
+
+  `uvm_info("PACKET_FROM_RUN_PHASE", $sformatf("AFTER wait struct-paddr :: %0h", struct_packet.paddr), UVM_HIGH);
+  `uvm_info("PACKET_FROM_RUN_PHASE-pslverr", $sformatf("AFTER wait struct :: %p", struct_packet), UVM_HIGH);
+endtask : check_for_pslverr 
 
 `endif
