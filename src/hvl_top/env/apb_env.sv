@@ -114,7 +114,7 @@ function void apb_env::connect_phase(uvm_phase phase);
   apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_scoreboard_h.apb_master_analysis_fifo.analysis_export);
   
   foreach(apb_slave_agent_h[i]) begin
-    apb_slave_agent_h[i].apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h.apb_slave_analysis_fifo.analysis_export);
+    apb_slave_agent_h[i].apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h.apb_slave_analysis_fifo[i].analysis_export);
   end
   
   endfunction : connect_phase

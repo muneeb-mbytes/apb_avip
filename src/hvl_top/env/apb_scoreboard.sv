@@ -22,7 +22,7 @@ class apb_scoreboard extends uvm_scoreboard;
 
   //Variable : apb_slave_analysis_fifo
   //Used to store the apb_slave_data
-  uvm_tlm_analysis_fifo#(apb_slave_tx) apb_slave_analysis_fifo;
+  uvm_tlm_analysis_fifo#(apb_slave_tx) apb_slave_analysis_fifo[];
   //uvm_tlm_analysis_fifo#(apb_slave_tx) apb_slave_analysis_fifo[NO_OF_SLAVES];
 
   //Variable : apb_master_tx_count
@@ -77,7 +77,11 @@ endclass : apb_scoreboard
 function apb_scoreboard::new(string name = "apb_scoreboard",uvm_component parent = null);
   super.new(name, parent);
   apb_master_analysis_fifo = new("apb_master_analysis_fifo",this);
-  apb_slave_analysis_fifo  = new("apb_slave_analysis_fifo",this);
+  apb_slave_analysis_fifo = new[NO_OF_SLAVES];
+  foreach(apb_slave_analysis_fifo[i]) begin
+    apb_slave_analysis_fifo[i] = new($sformatf("apb_slave_analysis_fifo[%0d]",i),this);
+  end
+  //apb_slave_analysis_fifo  = new("apb_slave_analysis_fifo",this);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
@@ -104,21 +108,23 @@ task apb_scoreboard::run_phase(uvm_phase phase);
 
   forever begin
  
-  `uvm_info(get_type_name(),$sformatf("before calling analysis fifo get method"),UVM_HIGH)
+  `uvm_info(get_type_name(),$sformatf("before calling master's analysis fifo get method"),UVM_HIGH)
    apb_master_analysis_fifo.get(apb_master_tx_h);
    // TODO(mshariff): Keep a track on master transaction
    apb_master_tx_count++;
   
-   `uvm_info(get_type_name(),$sformatf("after calling analysis fifo get method"),UVM_HIGH) 
+   `uvm_info(get_type_name(),$sformatf("after calling master's analysis fifo get method"),UVM_HIGH) 
    `uvm_info(get_type_name(),$sformatf("printing apb_master_tx_h, \n %s",apb_master_tx_h.sprint()),UVM_HIGH)
+   `uvm_info(get_type_name(),$sformatf("before calling slave's analysis_fifo"),UVM_HIGH)
+   
   
    //TODO apb_slave_tx_h.slave_id = 2**NO_OF_SLAVE;
    
-   apb_slave_analysis_fifo .get(apb_slave_tx_h);
+   apb_slave_analysis_fifo[0].get(apb_slave_tx_h);
    // TODO(mshariff): Keep a track on slave transaction
    apb_slave_tx_count++;
    
-   `uvm_info(get_type_name(),$sformatf("after calling analysis fifo get method"),UVM_HIGH) 
+   `uvm_info(get_type_name(),$sformatf("after calling slave's analysis fifo get method"),UVM_HIGH) 
    `uvm_info(get_type_name(),$sformatf("printing apb_slave_tx_h, \n %s",apb_slave_tx_h.sprint()),UVM_HIGH)
 
    //Data comparision for master
