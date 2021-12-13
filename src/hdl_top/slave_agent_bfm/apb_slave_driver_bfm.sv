@@ -106,6 +106,7 @@ interface apb_slave_driver_bfm (input bit pclk,
     if(pwrite == WRITE) begin
       data_packet.pwdata = pwdata;
       data_packet.pstrb  = pstrb;
+      //data_packet.transfer_size = $countones(pstrb);
     end
     data_packet.pprot = pprot;
 
@@ -135,11 +136,11 @@ interface apb_slave_driver_bfm (input bit pclk,
     pready<=1;
 
     if(data_packet.pwrite == READ) begin
-      prdata <= 32'hDEAD_BEEF;
+      prdata <= data_packet.prdata;
     end
 
     // TODO(mshariff): 
-    pslverr <= 0;
+    pslverr <= data_packet.pslverr;
 
   endtask: wait_for_access_state
 

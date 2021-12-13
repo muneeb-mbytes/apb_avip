@@ -38,7 +38,7 @@ module apb_slave_agent_bfm #(parameter int SLAVE_ID) (apb_if intf);
   //-------------------------------------------------------
   apb_slave_monitor_bfm apb_slave_mon_bfm_h (.pclk(intf.pclk),
                                               .preset_n(intf.preset_n),
-                                              .psel(intf.pselx[SLAVE_ID]),
+                                              .psel(intf.pselx),
                                               .paddr(intf.paddr),
                                               .pwrite(intf.pwrite),
                                               .pwdata(intf.pwdata),
