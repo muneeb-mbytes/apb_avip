@@ -80,9 +80,9 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
  // bins strb = {[3:0]};
  // }
  //cross coverage 
-  //PADDR_X_PWDATA_: cross PADDR_CP,PWDATA_CP;
-  //PSEL_X_PENABLE_: cross PSEL_CP,PENABLE_CP;
-  //PADDR_X_PRDATA_: cross PADDR_CP,PRDATA_CP;
+  PADDR_X_PWDATA_ : cross PADDR_CP,PWDATA_CP;
+ // PSEL_X_PENABLE_ : cross PSEL_CP,PENABLE_CP;
+  PADDR_X_PRDATA_ : cross PADDR_CP,PRDATA_CP;
 
 endgroup : apb_slave_covergroup
 //-------------------------------------------------------
