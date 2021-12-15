@@ -108,13 +108,13 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
   
     // TODO(mshariff): access the slave memory 
     check_for_pslverr(struct_packet);
-    `uvm_info("DEBUG_NA", $sformatf("AFTER PSLVERR_CHECK_5 -struct:: %p", struct_packet), UVM_HIGH); 
+    `uvm_info("DEBUG_NA", $sformatf("AFTER PSLVERR_CHECK_5 -struct:: %p", struct_packet), UVM_MEDIUM); 
     
     seq_item_port.get_next_item(req);
       
     // TODO(mshariff): 
     // Put the data from struct_packet and req into req using choose_packet_data variable
-    if(req.choose_packet_data == 1) begin
+    //if(req.choose_packet_data) begin
 
       //Printing the req item
       `uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
@@ -133,16 +133,17 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
       //converting the struct data items into transcations 
       apb_slave_seq_item_converter::to_class(struct_packet, req);
 
-    end
-    else begin
+    //end
+    //else begin
 
-      `uvm_info("DEBUG_NA", $sformatf("before wait for access state- inside else :: %p", struct_packet), UVM_HIGH); 
-      `uvm_info("DEBUG_NA", $sformatf("before wait for access state- inside else prdata :: %0h", struct_packet.prdata), UVM_HIGH); 
+      //`uvm_info("DEBUG_NA", $sformatf("before wait for access state- inside else :: %p", struct_packet), UVM_HIGH); 
+      //`uvm_info("DEBUG_NA", $sformatf("before wait for access state- inside else prdata :: %0h", struct_packet.prdata), UVM_HIGH); 
        
       //drive the converted data packets to the slave driver bfm
-      apb_slave_drv_bfm_h.wait_for_access_state(struct_packet);
+      //apb_slave_drv_bfm_h.wait_for_access_state(struct_packet);
 
-    end
+      //`uvm_info("DEBUG_NA", $sformatf("before wait for access state- inside else :: %p", struct_packet), UVM_HIGH); 
+    //end
   
     seq_item_port.item_done();
 
@@ -235,6 +236,7 @@ task apb_slave_driver_proxy::check_for_pslverr(inout apb_transfer_char_s struct_
 
   //Adding dummy data to check whether read is working or not
   //struct_packet.prdata = 32'hDEADBEEF;
+  `uvm_info("DEBUG_NA-pslverr", $sformatf("AFTER PSLVERR_CHECK_4C struct :: %p", struct_packet), UVM_MEDIUM);
   end
 
 endtask : check_for_pslverr 
