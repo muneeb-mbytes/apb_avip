@@ -35,14 +35,23 @@ interface apb_if (input pclk, input preset_n);
 
   // Variable : pready
   // Used to extend the transfer
+  // Declared as wire so that it can be multiiply driven
+  // Questa-sim gives a warning for multiply driven signals
+  // Cadence gives compilation error
   logic pready;
 
   // Variable : prdata
-  // Used to store the rdata from the slave
+  // Used to store the rdata from the slave  
+  // Declared as wire so that it can be multiiply driven
+  // Questa-sim gives a warning for multiply driven signals
+  // Cadence gives compilation error
   logic [DATA_WIDTH-1:0] prdata;
 
   // Variable : pslverr
   // Goes high when a transfer fails
+  // Declared as wire so that it can be multiiply driven
+  // Questa-sim gives a warning for multiply driven signals
+  // Cadence gives compilation error
   logic pslverr;
   
   // Variable : pprot
