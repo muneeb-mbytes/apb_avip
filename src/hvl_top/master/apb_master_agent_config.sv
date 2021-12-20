@@ -83,6 +83,7 @@ function void apb_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("is_active",     is_active,    $bits(is_active),     UVM_DEC);
   printer.print_field ("has_coverage",  has_coverage, $bits(has_coverage),  UVM_DEC);
   printer.print_field ("no_of_slaves",  no_of_slaves, $bits(no_of_slaves),  UVM_DEC);
+  //printer.print_array_header ("master_memory_range", 4096 , "master_meory");
   foreach(master_max_addr_range_array[i]) begin
     printer.print_field($sformatf("master_min_addr_range_array[%0d]",i),master_min_addr_range_array[i],$bits(master_min_addr_range_array[i]),UVM_HEX);
     printer.print_field($sformatf("master_max_addr_range_array[%0d]",i),master_max_addr_range_array[i],$bits(master_max_addr_range_array[i]),UVM_HEX);

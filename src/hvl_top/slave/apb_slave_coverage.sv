@@ -42,10 +42,10 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
 //    bins access = {1};
 //  }
 
-  PSELX_CP: coverpoint packet.psel {
-    option.comment = "no.of slaves used ";
-    bins NO_OF_SLAVES[] = {[15:0]};
-  }
+  //PSELX_CP: coverpoint packet.psel {
+    //option.comment = "no.of slaves used ";
+    //bins NO_OF_SLAVES[] = {[15:0]};
+  //}
 
   PADDR_CP : coverpoint packet.paddr {
     option.comment = "address range";

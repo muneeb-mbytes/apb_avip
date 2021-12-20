@@ -176,7 +176,7 @@ function void apb_master_tx::do_print(uvm_printer printer);
   printer.print_string ("pwrite",  pwrite.name());
   printer.print_field  ("pwdata",  pwdata,      $bits(pwdata),  UVM_HEX);
   printer.print_string ("transfer_size",transfer_size.name());
-  printer.print_field  ("pstrb",   pstrb,       $bits(pstrb),   UVM_BIN);
+  printer.print_field  ("pstrb",   pstrb,       4,   UVM_BIN);
   printer.print_string ("pprot",   pprot.name());
   printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
   printer.print_string ("pslverr", pslverr.name());
@@ -204,15 +204,16 @@ function void apb_master_tx::post_randomize();
   `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
   end
 
-  //Constraint to make pwdata not zero when pstrb is high for that 8-bit lane
-  for(int i=0; i<NO_OF_SLAVES; i++) begin
-    //`uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
-    if(pstrb[i] == 1) begin
+  //Constraint to make pwdata non-zero when pstrb is high for that 8-bit lane
+  for(int i=0; i<DATA_WIDTH/8; i++) begin
+    `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
+    if(pstrb[i]) begin
+      `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
       if(!std::randomize(pwdata) with {pwdata[8*i+7 -: 8] != 0;}) begin
         `uvm_fatal("FATAL_STD_RANDOMIZATION_PWDATA", $sformatf("Not able to randomize pwdata"));
       end
       else begin
-        `uvm_info(get_type_name(),$sformatf("MASTER-TX-pwdata[%0d]",pwdata[8*i+7 +: 8]),UVM_HIGH);
+        `uvm_info(get_type_name(),$sformatf("MASTER-TX-pwdata[%0d]=%0h",8*i+7,pwdata[8*i+7 +: 8]),UVM_HIGH);
       end 
     end
   end
