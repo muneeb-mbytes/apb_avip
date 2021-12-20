@@ -1,11 +1,9 @@
 `ifndef APB_SCOREBOARD_INCLUDED_
 `define APB_SCOREBOARD_INCLUDED_
 
-import apb_global_pkg::*;
-
 //--------------------------------------------------------------------------------------------
 // Class: apb_scoreboard
-// Used to compare the data from the master monitor proxy and slave monitor proxy
+// Used to compare the data sent/received by the master with the slave's data sent/received
 //--------------------------------------------------------------------------------------------
 class apb_scoreboard extends uvm_scoreboard;
   `uvm_component_utils(apb_scoreboard)
@@ -31,11 +29,9 @@ class apb_scoreboard extends uvm_scoreboard;
   //to keep track of number of transactions for master 
   int apb_master_tx_count = 0;
 
-
   //Variable : apb_slave_tx_count
   //to keep track of number of transactions for slave 
   int apb_slave_tx_count = 0;
-
 
   //Variable byte_data_cmp_verified_master_pwdata_count
   //to keep track of number of byte wise compared verified master_tx_data
@@ -61,24 +57,25 @@ class apb_scoreboard extends uvm_scoreboard;
   //to keep track of number of byte wise compared failed master_tx_data
   int byte_data_cmp_failed_master_pwrite_count = 0;
 
-  
-
   //Variable byte_data_cmp_verified_slave_prdata_count
   //to keep track of number of byte wise compared verified slave_tx_data
   int byte_data_cmp_verified_slave_prdata_count = 0;
-
 
   //Variable byte_data_cmp_failed_slave_prdata_count
   //to keep track of number of byte wise compared failed slave_tx_data
   int byte_data_cmp_failed_slave_prdata_count = 0;
 
-
-
+  //Variable : byte_data_cmp_verified_slave_pprot_count
+  //Used to keep track of comparision verified pprot count
+  int byte_data_cmp_verified_master_pprot_count;
   
-   bit index;
+  //Variable : index
+  //Used to note the slave number 
+  bit index;
 
-   //bit slave_no_e pselx;
-
+  //Variable : byte_data_cmp_failed_slave_pprot_count
+  //Used to keep track of comparision failed pprot count
+  int byte_data_cmp_failed_master_pprot_count;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -105,7 +102,6 @@ function apb_scoreboard::new(string name = "apb_scoreboard",uvm_component parent
   foreach(apb_slave_analysis_fifo[i]) begin
     apb_slave_analysis_fifo[i] = new($sformatf("apb_slave_analysis_fifo[%0d]",i),this);
   end
-  //apb_slave_analysis_fifo  = new("apb_slave_analysis_fifo",this);
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
@@ -133,100 +129,113 @@ task apb_scoreboard::run_phase(uvm_phase phase);
   forever begin
  
   `uvm_info(get_type_name(),$sformatf("before calling master's analysis fifo get method"),UVM_HIGH)
-   apb_master_analysis_fifo.get(apb_master_tx_h);
-   // TODO(mshariff): Keep a track on master transaction
-   //apb_master_tx_count++;
+  apb_master_analysis_fifo.get(apb_master_tx_h);
+  // TODO(mshariff): Keep a track on master transaction
+  apb_master_tx_count++;
   
-   `uvm_info(get_type_name(),$sformatf("after calling master's analysis fifo get method"),UVM_HIGH) 
-   `uvm_info(get_type_name(),$sformatf("printing apb_master_tx_h, \n %s",apb_master_tx_h.sprint()),UVM_HIGH)
-   `uvm_info(get_type_name(),$sformatf("before calling slave's analysis_fifo"),UVM_HIGH)
-   
-   //apb_master_tx_h.pselx = 2**NO_OF_SLAVES;
-   
-
-   for(int i=0;i<NO_OF_SLAVES;i++) begin
-     if(apb_master_tx_h.pselx[i]==1) begin
-       index = i;
-       break;
-     end
-   end
-   
-   apb_slave_analysis_fifo[index].get(apb_slave_tx_h);
-   // TODO(mshariff): Keep a track on slave transaction
-   //apb_slave_tx_count++;
-   
-   `uvm_info(get_type_name(),$sformatf("after calling slave's analysis fifo get method"),UVM_HIGH) 
-   `uvm_info(get_type_name(),$sformatf("printing apb_slave_tx_h, \n %s",apb_slave_tx_h.sprint()),UVM_HIGH)
+  `uvm_info(get_type_name(),$sformatf("after calling master's analysis fifo get method"),UVM_HIGH) 
+  `uvm_info(get_type_name(),$sformatf("printing apb_master_tx_h, \n %s",apb_master_tx_h.sprint()),UVM_HIGH)
+  `uvm_info(get_type_name(),$sformatf("before calling slave's analysis_fifo"),UVM_HIGH)
   
-   //-------------------------------------------------------
+  for(int i=0;i<NO_OF_SLAVES;i++) begin
+    if(apb_master_tx_h.pselx[i]==1) begin
+      index = i;
+      break;
+    end
+  end
+  
+  apb_slave_analysis_fifo[index].get(apb_slave_tx_h);
+  // TODO(mshariff): Keep a track on slave transaction
+  apb_slave_tx_count++;
+  
+  `uvm_info(get_type_name(),$sformatf("after calling slave's analysis fifo get method"),UVM_HIGH) 
+  `uvm_info(get_type_name(),$sformatf("printing apb_slave_tx_h, \n %s",apb_slave_tx_h.sprint()),UVM_HIGH)
+  
+  //-------------------------------------------------------
   //Data comparision for master
   //-------------------------------------------------------
-      
-   //verifying pwdata in master and slave 
-   if(apb_master_tx_h.pwdata == apb_slave_tx_h.pwdata) begin
-     `uvm_info(get_type_name(),$sformatf("apb_pwdata from master and slave is equal"),UVM_HIGH);
-   end
+   
+  `uvm_info(get_type_name(),$sformatf("--\n-----------------------------------------------SCOREBOARD COMPARISIONS--------------------------------------------------"),UVM_HIGH) 
 
-   else begin
-     `uvm_info(get_type_name(),$sformatf("apb_pwdata from master and slave is not equal"),UVM_HIGH);
-   end
+  //Verifying pwdata in master and slave 
+  if(apb_master_tx_h.pwdata == apb_slave_tx_h.pwdata) begin
+    `uvm_info(get_type_name(),$sformatf("apb_pwdata from master and slave is equal"),UVM_HIGH);
+    `uvm_info("SB_PWDATA_MATCHED", 
+             $sformatf("Master PWDATA = 'h%0x and Slave PWDATA = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata), UVM_HIGH);             
+    byte_data_cmp_verified_master_pwdata_count++;
+  end
+  else begin
+    `uvm_info(get_type_name(),$sformatf("apb_pwdata from master and slave is not equal"),UVM_HIGH);
+    `uvm_error("ERROR_SC_PWDATA_MISMATCH", 
+              $sformatf("Master PWDATA = 'h%0x and Slave PWDATA = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata));
+    byte_data_cmp_failed_master_pwdata_count++;
+  end
   
+  //if(apb_master_tx_h.pwdata != apb_slave_tx_h.pwdata) begin
+  //  `uvm_error("ERROR_SC_PWDATA_MISMATCH", 
+  //            $sformatf("Master PWDATA = 'h%0x and Slave PWDATA = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata));
+  //  byte_data_cmp_failed_master_pwdata_count++;
+  //end
+  //else begin
+  //  `uvm_info("SB_PWDATA_MATCH", 
+  //           $sformatf("Master PWDATA = 'h%0x and Slave PWDATA = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata), UVM_HIGH);
+  //                      
+  //  byte_data_cmp_verified_master_pwdata_count++;
+  //end
 
-     if(apb_master_tx_h.pwdata != apb_slave_tx_h.pwdata) begin
-       `uvm_error("ERROR_SC_PWDATA_MISMATCH", 
-                 $sformatf("Master PWDATA = 'h%0x and Slave PWDATA = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata));
-       byte_data_cmp_failed_master_pwdata_count++;
-     end
-     else begin
-       `uvm_info("SB_PWDATA_MATCH", 
-                $sformatf("Master PWDATA = 'h%0x and Slave PWDATA = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata), UVM_HIGH);
-                           
-       byte_data_cmp_verified_master_pwdata_count++;
-     end
+  //verifying paddr in master and slave 
+  if(apb_master_tx_h.paddr == apb_slave_tx_h.paddr) begin
+    `uvm_info(get_type_name(),$sformatf("apb_paddr from master and slave is equal"),UVM_HIGH);
+    `uvm_info("SB_PADDR_MATCH", 
+               $sformatf("Master PADDR = 'h%0x and Slave PADDR = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata), UVM_HIGH);             
+    byte_data_cmp_verified_master_paddr_count++;
+  end
+  else begin
+    `uvm_info(get_type_name(),$sformatf("apb_paddr from master and slave is not equal"),UVM_HIGH);
+    `uvm_error("ERROR_SC_PADDR_MISMATCH", 
+                $sformatf("Master PADDR = 'h%0x and Slave PADDR = 'h%0x",apb_master_tx_h.paddr,apb_slave_tx_h.paddr));
+    byte_data_cmp_failed_master_paddr_count++;
+  end
 
-   //verifying paddr in master and slave 
-   if(apb_master_tx_h.paddr == apb_slave_tx_h.paddr) begin
-     `uvm_info(get_type_name(),$sformatf("apb_paddr from master and slave is equal"),UVM_HIGH);
-   end
-
-   else begin
-     `uvm_info(get_type_name(),$sformatf("apb_paddr from master and slave is not equal"),UVM_HIGH);
-   end
-
-   if(apb_master_tx_h.paddr != apb_slave_tx_h.paddr) begin
-       `uvm_error("ERROR_SC_PADDR_MISMATCH", 
-                 $sformatf("Master PADDR = 'h%0x and Slave PADDR = 'h%0x",apb_master_tx_h.paddr,apb_slave_tx_h.paddr));
-       byte_data_cmp_failed_master_paddr_count++;
-     end
-     else begin
-       `uvm_info("SB_PADDR_MATCH", 
-                $sformatf("Master PADDR = 'h%0x and Slave PADDR = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata), UVM_HIGH);
-                           
-       byte_data_cmp_verified_master_paddr_count++;
-     end
+  //if(apb_master_tx_h.paddr != apb_slave_tx_h.paddr) begin
+  //    `uvm_error("ERROR_SC_PADDR_MISMATCH", 
+  //              $sformatf("Master PADDR = 'h%0x and Slave PADDR = 'h%0x",apb_master_tx_h.paddr,apb_slave_tx_h.paddr));
+  //    byte_data_cmp_failed_master_paddr_count++;
+  //  end
+  //  else begin
+  //    `uvm_info("SB_PADDR_MATCH", 
+  //             $sformatf("Master PADDR = 'h%0x and Slave PADDR = 'h%0x",apb_master_tx_h.pwdata,apb_slave_tx_h.pwdata), UVM_HIGH);
+  //                        
+  //    byte_data_cmp_verified_master_paddr_count++;
+  //  end
 
 
 
-   //verifying pwrite in master and slave 
-   if(apb_master_tx_h.pwrite == apb_slave_tx_h.pwrite) begin
-     `uvm_info(get_type_name(),$sformatf("apb_pwrite from master and slave is equal"),UVM_HIGH);
-   end
-
-   else begin
-     `uvm_info(get_type_name(),$sformatf("apb_pwrite from master and slave is not equal"),UVM_HIGH);
-   end
-
-  if(apb_master_tx_h.pwrite != apb_slave_tx_h.pwrite) begin
-       `uvm_error("ERROR_SC_PWRITE_MISMATCH", 
-                 $sformatf("Master PWRITE = 'h%0x and Slave PWRITE = 'h%0x",apb_master_tx_h.pwrite,apb_slave_tx_h.pwrite));
-       byte_data_cmp_failed_master_pwrite_count++;
-     end
-     else begin
-       `uvm_info("SB_PWRITE_MATCH", 
+  //verifying pwrite in master and slave 
+  if(apb_master_tx_h.pwrite == apb_slave_tx_h.pwrite) begin
+    `uvm_info(get_type_name(),$sformatf("apb_pwrite from master and slave is equal"),UVM_HIGH);
+    `uvm_info("SB_PWRITE_MATCH", 
                 $sformatf("Master PWRITE = 'h%0x and Slave PWRITE = 'h%0x",apb_master_tx_h.pwrite,apb_slave_tx_h.pwrite), UVM_HIGH);
-                           
-       byte_data_cmp_verified_master_pwrite_count++;
-     end
+    byte_data_cmp_verified_master_pwrite_count++;
+  end
+  else begin
+    `uvm_info(get_type_name(),$sformatf("apb_pwrite from master and slave is not equal"),UVM_HIGH);
+    `uvm_error("ERROR_SC_PWRITE_MISMATCH", 
+                 $sformatf("Master PWRITE = 'h%0x and Slave PWRITE = 'h%0x",apb_master_tx_h.pwrite,apb_slave_tx_h.pwrite));
+    byte_data_cmp_failed_master_pwrite_count++;
+  end
+
+  //if(apb_master_tx_h.pwrite != apb_slave_tx_h.pwrite) begin
+  //     `uvm_error("ERROR_SC_PWRITE_MISMATCH", 
+  //               $sformatf("Master PWRITE = 'h%0x and Slave PWRITE = 'h%0x",apb_master_tx_h.pwrite,apb_slave_tx_h.pwrite));
+  //     byte_data_cmp_failed_master_pwrite_count++;
+  //   end
+  //   else begin
+  //     `uvm_info("SB_PWRITE_MATCH", 
+  //              $sformatf("Master PWRITE = 'h%0x and Slave PWRITE = 'h%0x",apb_master_tx_h.pwrite,apb_slave_tx_h.pwrite), UVM_HIGH);
+  //                         
+  //     byte_data_cmp_verified_master_pwrite_count++;
+  //   end
 
 
 
@@ -235,23 +244,40 @@ task apb_scoreboard::run_phase(uvm_phase phase);
    //verifying prdata in master and slave 
    if(apb_slave_tx_h.prdata == apb_master_tx_h.prdata) begin
      `uvm_info(get_type_name(),$sformatf("apb_prdata from master and slave is equal"),UVM_HIGH);
+     `uvm_info("SB_PRDATA_MATCHED", 
+                $sformatf("Master PRDATA = 'h%0x and Slave PRDATA = 'h%0x",apb_master_tx_h.prdata,apb_slave_tx_h.prdata), UVM_HIGH);
+     byte_data_cmp_verified_slave_prdata_count++;
    end
-
    else begin
      `uvm_info(get_type_name(),$sformatf("apb_prdata from master and slave is not equal"),UVM_HIGH);
+     `uvm_error("ERROR_SC_PRDATA_MISMATCH", 
+                 $sformatf("Master PRDATA = 'h%0x and Slave PRDATA = 'h%0x",apb_master_tx_h.prdata,apb_slave_tx_h.prdata));
+     byte_data_cmp_failed_slave_prdata_count++;
    end
 
-   if(apb_slave_tx_h.prdata != apb_master_tx_h.prdata) begin
-       `uvm_error("ERROR_SC_PRDATA_MISMATCH", 
-                 $sformatf("Master PRDATA = 'h%0x and Slave PRDATA = 'h%0x",apb_master_tx_h.prdata,apb_slave_tx_h.prdata));
-       byte_data_cmp_failed_slave_prdata_count++;
-     end
-     else begin
-       `uvm_info("SB_PWRITE_MATCH", 
-                $sformatf("Master PRDATA = 'h%0x and Slave PRDATA = 'h%0x",apb_master_tx_h.prdata,apb_slave_tx_h.prdata), UVM_HIGH);
-                           
-       byte_data_cmp_verified_slave_prdata_count++;
-     end
+   //verifying pprot in master and slave 
+   if(apb_slave_tx_h.pprot == apb_master_tx_h.pprot) begin
+     `uvm_info(get_type_name(),$sformatf("apb_prdata from master and slave is equal"),UVM_HIGH);
+     `uvm_info("SB_PPROT_MATCHED", 
+                $sformatf("Master PPROT = 'h%0x and Slave PPROT = 'h%0x",apb_master_tx_h.pprot,apb_slave_tx_h.pprot), UVM_HIGH);
+     byte_data_cmp_verified_master_pprot_count++;
+   end
+   else begin
+     `uvm_info(get_type_name(),$sformatf("apb_prdata from master and slave is not equal"),UVM_HIGH);
+     `uvm_error("ERROR_SC_PRDATA_MISMATCH", 
+                 $sformatf("Master PPROT = %s and Slave PPROT = %s",apb_master_tx_h.pprot.name(),apb_slave_tx_h.pprot.name()));
+     byte_data_cmp_failed_master_pprot_count++;
+   end
+   //if(apb_slave_tx_h.prdata != apb_master_tx_h.prdata) begin
+   //    `uvm_error("ERROR_SC_PRDATA_MISMATCH", 
+   //              $sformatf("Master PRDATA = 'h%0x and Slave PRDATA = 'h%0x",apb_master_tx_h.prdata,apb_slave_tx_h.prdata));
+   //    byte_data_cmp_failed_slave_prdata_count++;
+   //  end
+   //  else begin
+   //    `uvm_info("SB_PWRITE_MATCH", 
+   //             $sformatf("Master PRDATA = 'h%0x and Slave PRDATA = 'h%0x",apb_master_tx_h.prdata,apb_slave_tx_h.prdata), UVM_HIGH);
+   //    byte_data_cmp_verified_slave_prdata_count++;
+   //  end
 
    
 
@@ -273,6 +299,8 @@ task apb_scoreboard::run_phase(uvm_phase phase);
   //   `uvm_info(get_type_name(),$sformatf("apb_pslverr from master and slave is not equal"),UVM_HIGH);
   // end
 
+  `uvm_info(get_type_name(),$sformatf("--\n-----------------------------------------------END OF SCOREBOARD COMPARISIONS---------------------------------------"),UVM_HIGH) 
+
  end
 
 endtask : run_phase
@@ -288,6 +316,7 @@ endtask : run_phase
 function void apb_scoreboard::check_phase(uvm_phase phase);
   super.check_phase(phase);
 
+  `uvm_info(get_type_name(),$sformatf("--\n----------------------------------------------SCOREBOARD CHECK PHASE---------------------------------------"),UVM_HIGH) 
   // TODO(mshariff): Banner as discussed
   `uvm_info (get_type_name(),$sformatf(" Scoreboard Check Phase is starting"),UVM_HIGH); 
 
@@ -374,6 +403,7 @@ function void apb_scoreboard::check_phase(uvm_phase phase);
      `uvm_error (get_type_name(),$sformatf ("APB Slave analysis FIFO is not empty"));
   end
 
+  `uvm_info(get_type_name(),$sformatf("--\n----------------------------------------------END OF SCOREBOARD CHECK PHASE---------------------------------------"),UVM_HIGH) 
 endfunction : check_phase
   
 
@@ -386,7 +416,7 @@ endfunction : check_phase
 //--------------------------------------------------------------------------------------------
 function void apb_scoreboard::report_phase(uvm_phase phase);
   super.report_phase(phase);
-  `uvm_info("scoreboard",$sformatf("Scoreboard Report"),UVM_HIGH);
+  `uvm_info("scoreboard",$sformatf("--\n--------------------------------------------------Scoreboard Report-----------------------------------------------"),UVM_HIGH);
   
   // TODO(mshariff): Print the below items:
   // TODO(mshariff): Banner as discussed
@@ -433,6 +463,7 @@ function void apb_scoreboard::report_phase(uvm_phase phase);
   `uvm_info (get_type_name(),$sformatf("No. of byte wise slave_prdata comparision failed:%0d",
                 byte_data_cmp_failed_slave_prdata_count),UVM_HIGH);
 
+  `uvm_info("scoreboard",$sformatf("--\n--------------------------------------------------End of Scoreboard Report-----------------------------------------------"),UVM_HIGH);
 endfunction : report_phase
 
 
