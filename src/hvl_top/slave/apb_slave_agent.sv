@@ -70,7 +70,7 @@ function void apb_slave_agent::build_phase(uvm_phase phase);
   // Have a print method in master_agent_config class and call it from here
   //`uvm_info(get_type_name(), $sformatf("The apb_slave_agent_config.slave_id = %0d", 
   //                                           slave_agent_cfg_h.slave_id), UVM_LOW);
-  `uvm_info(get_type_name(),$sformatf("SA_CFG=%0d",apb_slave_agent_cfg_h),UVM_LOW)
+  //`uvm_info(get_type_name(),$sformatf("SA_CFG=%0d",apb_slave_agent_cfg_h),UVM_LOW)
   if(apb_slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_slave_drv_proxy_h = apb_slave_driver_proxy::type_id::create("apb_slave_drv_proxy_h",this);
     apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
