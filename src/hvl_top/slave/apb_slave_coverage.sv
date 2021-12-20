@@ -9,7 +9,7 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   `uvm_component_utils(apb_slave_coverage)
 
   //creating handle for slav tx coverage data
-  apb_slave_tx tx_cov;
+  //apb_slave_tx tx_cov; 
 
   // Variable: apb_slave_agent_cfg_h;
   // Handle for apb_slave agent configuration
@@ -17,7 +17,7 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
 
   // Variable: apb_slave_analysis_export
   //declaring analysis port for coverage
-  uvm_analysis_port #(apb_slave_tx)apb_slave_analysis_export;
+  //uvm_analysis_port #(apb_slave_tx)apb_slave_analysis_export;
 
   //creating handle for slave transaction coverage
   //apb_slave_tx apb_slave_tx_h;
@@ -31,28 +31,28 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   option.per_instance = 1;
 
   //cheking the signal coverage
-  PWRITE_CP:coverpoint tx_cov.pwrite {
+  PWRITE_CP:coverpoint packet.pwrite {
     option.comment = "read and write conditon based on pwrite";
     bins read = {0};
     bins write = {1};
   }
-//  PENABLE_CP:coverpoint tx_cov.penable {
+//  PENABLE_CP:coverpoint packet.penable {
 //    option.comment = "setup and access based on the enable";
 //    bins setup  = {0};
 //    bins access = {1};
 //  }
 
-  PSELX_CP: coverpoint tx_cov.psel {
+  PSELX_CP: coverpoint packet.psel {
     option.comment = "no.of slaves used ";
     bins NO_OF_SLAVES[] = {[15:0]};
   }
 
-  PADDR_CP : coverpoint tx_cov.paddr {
+  PADDR_CP : coverpoint packet.paddr {
     option.comment = "address range";
     bins addr = {[31:8]};
   }
 
-  PWDATA_CP: coverpoint tx_cov.pwdata {
+  PWDATA_CP: coverpoint packet.pwdata {
     option.comment = "write data range";
     bins wdata_8bit = {8};
     bins wdata_16bit = {16};
@@ -60,7 +60,7 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
     bins wdata_32bit = {32};
 
   }
-  PRDATA_CP : coverpoint tx_cov.prdata {
+  PRDATA_CP : coverpoint packet.prdata {
     option.comment = "read data range ";  
     bins wdata_8bit = {8};
     bins wdata_16bit = {16};
@@ -69,13 +69,13 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
 
   }
 
-  PSLVERR_CP:coverpoint tx_cov.pslverr {
+  PSLVERR_CP:coverpoint packet.pslverr {
     option.comment = "error signal at the end of transfer";
     bins err = {1};
     bins ok = {0};
   }
 
- //  PSTRB_CP :  coverpoint tx_cov.pstrb {
+ //  PSTRB_CP :  coverpoint packet.pstrb {
  //   option.comment = "error signal at the end of transfer";
  // bins strb = {[3:0]};
  // }
@@ -101,8 +101,8 @@ endclass : apb_slave_coverage
 //--------------------------------------------------------------------------------------------
 function apb_slave_coverage::new(string name = "apb_slave_coverage",uvm_component parent = null);
   super.new(name, parent);
-  apb_slave_analysis_export = new("apb_slave_analysis_export",this);
- // apb_slave_cover_group = new();
+  //apb_slave_analysis_export = new("apb_slave_analysis_export",this);
+  apb_slave_covergroup = new();
 endfunction : new
 
 //-------------------------------------------------------

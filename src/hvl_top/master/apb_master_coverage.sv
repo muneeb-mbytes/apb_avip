@@ -14,13 +14,13 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   
   // Variable: apb_master_analysis_export
   //declaring analysis port for coverage
-  uvm_analysis_port #(apb_master_tx)apb_master_analysis_export;
+  //uvm_analysis_port #(apb_master_tx)apb_master_analysis_export;
   
   //-------------------------------------------------------
   //Covergroup
   //covergroup consists of the various coverpoints based on no. of the variables used to improve the coverage.
   //-------------------------------------------------------
-  covergroup master_covergroup with function sample (apb_master_agent_config cfg, apb_master_tx packet);
+  covergroup apb_master_covergroup with function sample (apb_master_agent_config cfg, apb_master_tx packet);
     option.per_instance = 1;
 
    // To check the number slaves we used
@@ -103,7 +103,7 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
    PADDR_CP_X_PWDATA_CP : cross PADDR_CP , PWDATA_CP;
    PADDR_CP_X_PRDATA_CP : cross PADDR_CP , PRDATA_CP;
 
- endgroup: master_covergroup
+ endgroup: apb_master_covergroup
 
 
   //Creating handle for apb_master transacion coverage
@@ -128,8 +128,8 @@ endclass : apb_master_coverage
 //--------------------------------------------------------------------------------------------
 function apb_master_coverage::new(string name = "apb_master_coverage", uvm_component parent = null);
   super.new(name, parent);
-  //  master_covergroup = new();
-  apb_master_analysis_export = new("apb_master_analysis_export",this);
+  apb_master_covergroup = new();
+  //apb_master_analysis_export = new("apb_master_analysis_export",this);
 endfunction : new
 
 //-------------------------------------------------------------------------------------------
@@ -140,10 +140,12 @@ endfunction : new
 //  t - apb_master_tx
 //--------------------------------------------------------------------------------------------
 function void apb_master_coverage::write(apb_master_tx t);
- // `uvm_info("SHW DEBUG",$formatf("config values = %0p", apb_master_agent_cfg_h.sprint()),UVM_HIGH);
-  master_covergroup.sample(apb_master_agent_cfg_h,t);
+  `uvm_info(get_type_name(),$sformatf("Before calling SAMPLE METHOD"),UVM_HIGH);
 
-  //`uvm_info(get_type_name(),"APB_MASTER_COVERAGE",UVM_LOW);
+
+  apb_master_covergroup.sample(apb_master_agent_cfg_h,t);
+
+  `uvm_info(get_type_name(),"After calling SAMPLE METHOD",UVM_HIGH);
   // cg.sample(master_agent_cfg_h, master_tx_cov_data);     
 
 endfunction : write
@@ -153,7 +155,7 @@ endfunction : write
 // Used for reporting the coverage instance percentage values
 //--------------------------------------------------------------------------------------------
 //function apb_master_coverage::report_phase(uvm_phase phase);
- // `uvm_info(get_type_name(), $sformatf("APB Master Agent Coverage = %0.2f %%", master_covergroup.get_coverage()), UVM_NONE);
+ // `uvm_info(get_type_name(), $sformatf("APB Master Agent Coverage = %0.2f %%", apb_master_covergroup.get_coverage()), UVM_NONE);
 //endfunction: report_phase
 
 `endif

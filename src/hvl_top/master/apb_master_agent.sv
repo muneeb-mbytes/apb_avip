@@ -105,7 +105,7 @@ function void apb_master_agent::connect_phase(uvm_phase phase);
     apb_master_cov_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
   
     // Connecting monitor_proxy port to coverage export
-    apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_master_cov_h.apb_master_analysis_export);
+    apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_master_cov_h.analysis_export);
   end
 
     apb_master_mon_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
