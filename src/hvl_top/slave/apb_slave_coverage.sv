@@ -20,11 +20,9 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   //declaring analysis port for coverage
   //uvm_analysis_port #(apb_slave_tx)apb_slave_analysis_export;
 
-  //creating handle for slave transaction coverage
-  //apb_slave_tx apb_slave_tx_h;
  
   //-------------------------------------------------------
-  // Covergroup 
+  // Covergroup : apb_slave_covergroup
   // Covergroup consists of the various coverpoints
   // based on the number of the variables used to improve the coverage.
   //-------------------------------------------------------
@@ -37,11 +35,6 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
     bins read = {0};
     bins write = {1};
   }
-//  PENABLE_CP:coverpoint packet.penable {
-//    option.comment = "setup and access based on the enable";
-//    bins setup  = {0};
-//    bins access = {1};
-//  }
 
   PSELX_CP: coverpoint packet.psel {
     option.comment = "no.of slaves used ";
@@ -56,15 +49,15 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   PWDATA_CP: coverpoint packet.pwdata {
     option.comment = "write data range";
     bins wdata_bit[] = {[0:DATA_WIDTH-1]};
-   // bins wdata_16bit = {16};
- //   bins wdata_24bit = {24};
- //   bins wdata_32bit = {32};
+ //  bins wdata_16bit = {16};
+ // bins wdata_24bit = {24};
+ // bins wdata_32bit = {32};
 
   }
   PRDATA_CP : coverpoint packet.prdata {
     option.comment = "read data range ";  
     bins rdata_bit[]  = {[0:DATA_WIDTH-1]};
-   // bins wdata_16bit = {16};
+ //   bins wdata_16bit = {16};
  //   bins wdata_24bit = {24};
  //   bins wdata_32bit = {32};
 
@@ -80,7 +73,8 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
 //    option.comment = "error signal at the end of transfer";
 //   bins strb = {[0:(DATA_WIDTH/8)-1]};
 //  }
- //cross coverage 
+
+//cross coverage 
   PADDR_X_PWDATA_ : cross PADDR_CP,PWDATA_CP;
  // PSEL_X_PENABLE_ : cross PSEL_CP,PENABLE_CP;
   PADDR_X_PRDATA_ : cross PADDR_CP,PRDATA_CP;
