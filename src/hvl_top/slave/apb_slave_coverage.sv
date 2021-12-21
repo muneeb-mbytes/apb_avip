@@ -9,9 +9,6 @@
 class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   `uvm_component_utils(apb_slave_coverage)
 
-  //creating handle for slav tx coverage data
-  //apb_slave_tx tx_cov; 
-
   // Variable: apb_slave_agent_cfg_h;
   // Handle for apb_slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
@@ -30,25 +27,26 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   option.per_instance = 1;
 
   //cheking the signal coverage
-  PWRITE_CP:coverpoint packet.pwrite {
+  PWRITE_CP:coverpoint tx_type_e'(packet.pwrite) {
     option.comment = "read and write conditon based on pwrite";
-    bins read = {0};
-    bins write = {1};
+    bins TRANSACTION_TYPE[] = {0,1};
+   // bins read = {0};
+    //bins write = {1};
   }
 
   PSELX_CP: coverpoint packet.psel {
     option.comment = "no.of slaves used ";
-    bins NO_OF_SLAVES[] = {[0:NO_OF_SLAVES]};
+    bins NO_OF_SLAVES[] = {1};
   }
 
   PADDR_CP : coverpoint cfg.paddr {
     option.comment = "address range";
-    bins addr[] = {[0:ADDRESS_WIDTH-1]};
+    bins addr[] = {[0:2**ADDRESS_WIDTH]};
   }
 
   PWDATA_CP: coverpoint packet.pwdata {
     option.comment = "write data range";
-    bins wdata_bit[] = {[0:DATA_WIDTH-1]};
+    bins WDATA_BIT[] = {[0:2**DATA_WIDTH]};
  //  bins wdata_16bit = {16};
  // bins wdata_24bit = {24};
  // bins wdata_32bit = {32};
@@ -56,17 +54,18 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   }
   PRDATA_CP : coverpoint packet.prdata {
     option.comment = "read data range ";  
-    bins rdata_bit[]  = {[0:DATA_WIDTH-1]};
+    bins RDATA_BIT[]  = {[0:2**DATA_WIDTH]};
  //   bins wdata_16bit = {16};
  //   bins wdata_24bit = {24};
  //   bins wdata_32bit = {32};
 
   }
 
-  PSLVERR_CP:coverpoint packet.pslverr {
+  PSLVERR_CP:coverpoint slave_error_e'(packet.pslverr) {
     option.comment = "error signal at the end of transfer";
-    bins err = {1};
-    bins ok = {0};
+    bins SLAVE_ERROR[] = {0,1};
+    //bins err = {1};
+    //bins ok = {0};
   }
 
 //   PSTRB_CP :  coverpoint packet.pstrb {

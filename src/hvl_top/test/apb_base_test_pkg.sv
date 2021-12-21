@@ -33,6 +33,7 @@ package apb_base_test_pkg;
   `include "apb_8b_write_test.sv"
   `include "apb_8b_write_read_test.sv"
   `include "apb_16b_write_test.sv"
+  `include "apb_24b_write_test.sv"
 
 endpackage : apb_base_test_pkg
 

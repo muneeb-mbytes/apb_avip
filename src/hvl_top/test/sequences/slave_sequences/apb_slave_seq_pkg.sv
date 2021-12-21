@@ -23,7 +23,7 @@ package apb_slave_seq_pkg;
   `include "apb_slave_8b_seq.sv"
   `include "apb_slave_8b_write_read_seq.sv"
   `include "apb_slave_16b_seq.sv"
-
+  `include "apb_slave_24b_write_seq.sv"
 endpackage : apb_slave_seq_pkg
 
 `endif

@@ -32,9 +32,9 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
    // bins APB_PADDR[] = {[0:ADDRESS_WIDTH-1]};
    // }
 
-   PADDR_CP : coverpoint packet.paddr {
+   PADDR_CP : coverpoint cfg.paddr {
      option.comment = " apb address";
-     bins APB_PADDR[16] = {[0:2**DATA_WIDTH]};   
+     bins APB_PADDR[] = {[0:2**ADDRESS_WIDTH]};   
    }
 
    //To check whether the apb has done both read and write operations
@@ -51,7 +51,7 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
 
    PWDATA_CP : coverpoint packet.pwdata {
      option.comment = "apb write data";
-     bins APB_WRITE_DATA[16] = {[0:2**DATA_WIDTH]};  
+     bins APB_WRITE_DATA[] = {[0:2**DATA_WIDTH]};  
    }
 
 /*
@@ -71,7 +71,7 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   
   PRDATA_CP : coverpoint packet.prdata{
     option.comment = "apb read data";
-    bins APB_READ_DATA[16] = {[0:2**DATA_WIDTH]};
+    bins APB_READ_DATA[] = {[0:2**DATA_WIDTH]};
   }
 
    //To check whether the slave is giving any slave error or not
