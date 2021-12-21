@@ -12,10 +12,6 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   // Declaring handle for master agent configuration class 
   apb_master_agent_config apb_master_agent_cfg_h;
   
-  // Variable: apb_master_analysis_export
-  // Declaring analysis port for coverage
-  //uvm_analysis_port #(apb_master_tx)apb_master_analysis_export;
-  
   //-------------------------------------------------------
   // Covergroup: apb_master_covergroup
   // Covergroup consists of the various coverpoints based on
@@ -36,16 +32,15 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
    // bins APB_PADDR[] = {[0:ADDRESS_WIDTH-1]};
    // }
 
-   PADDR_CP : coverpoint cfg.paddr {
+   PADDR_CP : coverpoint packet.paddr {
      option.comment = " apb address";
-     bins APB_PADDR[] = {[0:ADDRESS_WIDTH-1]};
+     bins APB_PADDR[16] = {[0:2**DATA_WIDTH]};   
    }
 
    //To check whether the apb has done both read and write operations
    PWRITE_CP : coverpoint tx_type_e'(packet.pwrite) {
      option.comment = "apb write or read operation";
-     bins READ_DATA = {0};
-     bins WRITE_DATA = {1};
+     bins TRANSACTION_TYPE[] = {0,1};
    }
 
    // To check whether the apb has covered all possible cases of data range
@@ -56,7 +51,7 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
 
    PWDATA_CP : coverpoint packet.pwdata {
      option.comment = "apb write data";
-     bins APB_WRITE_DATA[] = {[0:DATA_WIDTH-1]};
+     bins APB_WRITE_DATA[16] = {[0:2**DATA_WIDTH]};  
    }
 
 /*
@@ -75,29 +70,27 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   // }
   
   PRDATA_CP : coverpoint packet.prdata{
-     option.comment = "apb read data";
-     bins APB_READ_DATA[] = {[0:DATA_WIDTH-1]};
-   }
+    option.comment = "apb read data";
+    bins APB_READ_DATA[16] = {[0:2**DATA_WIDTH]};
+  }
 
    //To check whether the slave is giving any slave error or not
   PSLVERR_CP : coverpoint packet.pslverr{
     option.comment = "apb pslverr signal";
-    bins APB_SLAVE_ERR = {0};
-    bins APB_SLAVE_NO_ERR = {1};
+    bins APB_SLAVE_NO_ERROR = {0};
+    bins APB_SLAVE_ERROR = {1};
   }
 
   //To check whether the apb has used strobe for all 4 lanes or not
-  //PSTRB_CP : coverpoint packet.pstrb.size()*(DATA_WIDTH/8){
-  //  option.comment = "apb strobe data";
-  //  bins APB_PSTRB[] = {[0:(DATA_WIDTH/8)-1]};
-  //}
-   
-   PSTRB_CP : coverpoint packet.pstrb{
-     option.comment = "apb strobe data";
-     bins APB_PSTRB[] = {[0:(DATA_WIDTH/8)-1]};
-   }
+  PSTRB_CP : coverpoint packet.pstrb{
+    option.comment = "apb strobe data";
+    bins APB_PSTRB[] = {[0:2**(DATA_WIDTH/8)-1]};
+  }
 
-
+  PPROT_CP : coverpoint packet.pprot{
+    option.comment = "apb protection sin=gnal";
+    bins APB_PPROT[] = {[0:7]};
+  }
 
    //CROSS OF THE CFG AND THE PACKET WITH MULTIPLE COVERPOINT
    //Cross coverage between paddr(for different slaves) and pwdata to check whether the apb avip has covered all possible cross          cases
@@ -130,7 +123,6 @@ endclass : apb_master_coverage
 function apb_master_coverage::new(string name = "apb_master_coverage", uvm_component parent = null);
   super.new(name, parent);
   apb_master_covergroup = new();
-  //apb_master_analysis_export = new("apb_master_analysis_export",this);
 endfunction : new
 
 //-------------------------------------------------------------------------------------------
@@ -146,7 +138,6 @@ function void apb_master_coverage::write(apb_master_tx t);
   apb_master_covergroup.sample(apb_master_agent_cfg_h,t);
 
   `uvm_info(get_type_name(),"After calling SAMPLE METHOD",UVM_HIGH);
-  // cg.sample(master_agent_cfg_h, master_tx_cov_data);     
 endfunction : write
 
 //--------------------------------------------------------------------------------------------
