@@ -27,7 +27,7 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
    // To check the number slaves we used
    PSEL_CP : coverpoint slave_no_e'(packet.pselx) {
      option.comment = " psel of apb";
-     bins APB_PSELX[] = {[0:NO_OF_SLAVES-1]};
+     bins APB_PSELX[] = {[0:NO_OF_SLAVES]};
    }
 
    // To check whether the apb has written into or read from all address ranges
@@ -92,16 +92,18 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   //  bins APB_PSTRB[] = {[0:(DATA_WIDTH/8)-1]};
   //}
    
-  PSTRB_CP : coverpoint packet.pstrb{
-    option.comment = "apb strobe data";
-    bins APB_PSTRB[] = {[0:(DATA_WIDTH/8)-1]};
-  }
+   PSTRB_CP : coverpoint packet.pstrb{
+     option.comment = "apb strobe data";
+     bins APB_PSTRB[] = {[0:(DATA_WIDTH/8)-1]};
+   }
 
-  //CROSS OF THE CFG AND THE PACKET WITH MULTIPLE COVERPOINT
-  //Cross coverage between paddr(for different slaves) and pwdata to check whether the apb avip has covered all possible cross          cases
-  //Cross coverage between paddr(for different slaves) and prdata to check whether the apb avip has covered all possible cross          cases
-  PADDR_CP_X_PWDATA_CP : cross PADDR_CP , PWDATA_CP;
-  PADDR_CP_X_PRDATA_CP : cross PADDR_CP , PRDATA_CP;
+
+
+   //CROSS OF THE CFG AND THE PACKET WITH MULTIPLE COVERPOINT
+   //Cross coverage between paddr(for different slaves) and pwdata to check whether the apb avip has covered all possible cross          cases
+   //Cross coverage between paddr(for different slaves) and prdata to check whether the apb avip has covered all possible cross          cases
+     PADDR_CP_X_PWDATA_CP : cross PADDR_CP , PWDATA_CP;
+     PADDR_CP_X_PRDATA_CP : cross PADDR_CP , PRDATA_CP;
 
  endgroup: apb_master_covergroup
 
