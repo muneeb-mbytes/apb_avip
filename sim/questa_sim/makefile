@@ -51,8 +51,17 @@ usage:
 	echo "To compile use:"
 	echo "make compile";
 	echo "";
-	echo "To simulate use:"
-	echo "make simulate test=<test_name>";
+	echo "To simulate individual test:"
+	echo "make simulate test=<test_name> uvm_verbosity=<VERBOSITY_LEVEL>";
+	echo "";
+	echo "Example:":
+	echo "make simulate test=base_test uvm_verbosity=UVM_HIGH";
+	echo "";
+	echo "To run regression:"
+	echo "make regression testlist_name=<regression_testlist_name.list>";
+	echo "";
+	echo "Example:":
+	echo "make regression testlist_name=apb_regression.list";
 	echo "";
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
@@ -60,11 +69,6 @@ usage:
 
 all:
 	make clean; make compile; make simulate;
-
-# TODO(mshariff): 
-# Need some work to point to the 
-# dir:
-# 	mkdir -p logfiles_and_waveforms
 
 # For Assertions use +acc options
 #  +cover=becstf
@@ -86,15 +90,25 @@ compile:
 	# or use .SILENT
 	make compile_war_err
 
-# Setting a default test as apb_base_test
+# Setting a default test as base_test
 ifndef test
-override test = apb_base_test
+override test = base_test
 endif
 
 # Setting the default uvm_verbosity to UVM_MEDIUM
 ifndef uvm_verbosity
 override uvm_verbosity = UVM_MEDIUM
 endif
+
+
+ifndef apb_type
+override  apb_type= apb_base_test
+endif
+
+## For randomized seed
+# TODO(mshariff): 
+#Add this line after -sva 
+#-sv_seed random 
 
 # Setting the default test folder to test name 
 ifndef test_folder
@@ -113,6 +127,7 @@ simulate:
 	-assertdebug \
 	+UVM_TESTNAME=$(test) \
 	+UVM_VERBOSITY=$(uvm_verbosity) \
+	+define+$(apb_type) \
 	-l $(test_folder)/$(test).log \
 	-sva \
   -coverage \
@@ -225,3 +240,15 @@ simulate_war_err:
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
 	echo "";
+
+
+
+
+
+
+
+
+
+
+
+
