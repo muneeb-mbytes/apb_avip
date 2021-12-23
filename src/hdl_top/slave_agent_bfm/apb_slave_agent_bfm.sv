@@ -5,7 +5,7 @@
 // Module      : apb_slave Agent BFM
 // Description : Instantiates driver and monitor
 //--------------------------------------------------------------------------------------------
-module apb_slave_agent_bfm #(parameter int SLAVE_ID) (apb_if intf);
+module apb_slave_agent_bfm #(parameter int SLAVE_ID=0) (apb_if intf);
 
   //-------------------------------------------------------
   // importing uvm_pkg file
