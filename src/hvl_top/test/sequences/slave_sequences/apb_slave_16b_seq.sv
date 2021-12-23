@@ -1,18 +1,18 @@
-`ifndef APB_SLAVE_16B_INCLUDED_
-`define APB_SLAVE_16B_INCLUDED_
+`ifndef APB_SLAVE_16B_WRITE_INCLUDED_
+`define APB_SLAVE_16B_WRITE_INCLUDED_
 
-class apb_slave_16b_seq extends apb_slave_base_seq;
-  `uvm_object_utils(apb_slave_16b_seq)
-  extern function new(string name="apb_slave_16b_seq");
+class apb_slave_16b_write_seq extends apb_slave_base_seq;
+  `uvm_object_utils(apb_slave_16b_write_seq)
+  extern function new(string name="apb_slave_16b_write_seq");
   extern task body();
-endclass : apb_slave_16b_seq
+endclass : apb_slave_16b_write_seq
 
-function apb_slave_16b_seq::new(string name="apb_slave_16b_seq");
+function apb_slave_16b_write_seq::new(string name="apb_slave_16b_write_seq");
   super.new(name);
 endfunction : new
 
-task apb_slave_16b_seq::body();
-  `uvm_info(get_type_name(),$sformatf("APB_SLAVE_16B_SEQ"),UVM_LOW);
+task apb_slave_16b_write_seq::body();
+  `uvm_info(get_type_name(),$sformatf("APB_SLAVE_16b_write_SEQ"),UVM_LOW);
   req=apb_slave_tx::type_id::create("req");
   start_item(req);
   if(!req.randomize())

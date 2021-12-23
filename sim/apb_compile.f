@@ -1,15 +1,12 @@
 +incdir+../../src/globals/
 +incdir+../../src/hvl_top/test/sequences/master_sequences/
 +incdir+../../src/hvl_top/master/
-+incdir+../../src/hdl_top/master_agent_bfm/ 
 +incdir+../../src/hvl_top/env/virtual_sequencer/
 +incdir+../../src/hvl_top/test/virtual_sequences/
 +incdir+../../src/hvl_top/env
 +incdir+../../src/hvl_top/slave
 +incdir+../../src/hvl_top/test/sequences/slave_sequences/
 +incdir+../../src/hvl_top/test
-+incdir+../../src/hdl_top/slave_agent_bfm
-+incdir+../../src/hdl_top/apb_interface
 ../../src/globals/apb_global_pkg.sv
 ../../src/hvl_top/master/apb_master_pkg.sv
 ../../src/hvl_top/slave/apb_slave_pkg.sv
