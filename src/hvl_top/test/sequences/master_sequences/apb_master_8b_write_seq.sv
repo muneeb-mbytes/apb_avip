@@ -39,7 +39,7 @@ task apb_master_8b_write_seq::body();
                             req.pwrite == WRITE;}) begin
     `uvm_fatal("APB","Rand failed");
   end
-  //req.print();
+  req.print();
   finish_item(req);
  /* 
   start_item(req);
