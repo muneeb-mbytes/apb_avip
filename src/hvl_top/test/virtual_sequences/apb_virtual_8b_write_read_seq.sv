@@ -9,12 +9,14 @@ class apb_virtual_8b_write_read_seq extends apb_virtual_base_seq;
   `uvm_object_utils(apb_virtual_8b_write_read_seq)
 
   //Variable : apb_master_8b_seq_h
-  //Instatiation of apb_master_8b_write_read_seq
-  apb_master_8b_write_read_seq apb_master_8b_write_read_seq_h;
+  //Instatiation of apb_master_8b_write_seq
+  apb_master_8b_write_seq apb_master_8b_write_seq_h;
+  apb_master_8b_read_seq apb_master_8b_read_seq_h;
 
   //Variable : apb_slave_8b_seq_h
   //Instantiation of apb_master_8b_write_read_seq
-  apb_slave_8b_write_read_seq apb_slave_8b_write_read_seq_h;
+  apb_slave_8b_seq apb_slave_8b_write_seq_h;
+  apb_slave_8b_read_seq apb_slave_8b_read_seq_h;
 
 
   //-------------------------------------------------------
@@ -40,16 +42,26 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 task apb_virtual_8b_write_read_seq::body();
   super.body();
-  apb_master_8b_write_read_seq_h=apb_master_8b_write_read_seq::type_id::create("apb_master_8b_write_read_seq_h");
-  apb_slave_8b_write_read_seq_h=apb_slave_8b_write_read_seq::type_id::create("apb_slave_8b_write_read_seq_h");
-   fork
+  apb_master_8b_write_seq_h=apb_master_8b_write_seq::type_id::create("apb_master_8b_write_seq_h");
+  apb_master_8b_read_seq_h=apb_master_8b_read_seq::type_id::create("apb_master_8b_read_seq_h");
+  apb_slave_8b_write_seq_h=apb_slave_8b_seq::type_id::create("apb_slave_8b_write_seq_h");
+  apb_slave_8b_read_seq_h=apb_slave_8b_read_seq::type_id::create("apb_slave_8b_read_seq_h");
+  //apb_master_8b_write_read_seq_h=apb_master_8b_write_read_seq::type_id::create("apb_master_8b_write_read_seq_h");
+  //apb_slave_8b_write_read_seq_h=apb_slave_8b_write_read_seq::type_id::create("apb_slave_8b_write_read_seq_h");
+  fork
     forever begin
-      apb_slave_8b_write_read_seq_h.start(p_sequencer.apb_slave_seqr_h);
+      apb_slave_8b_write_seq_h.start(p_sequencer.apb_slave_seqr_h);
+      `uvm_info(get_type_name(),$sformatf("DEBUG - S_W_SEQ"),UVM_HIGH);
+      apb_slave_8b_read_seq_h.start(p_sequencer.apb_slave_seqr_h);
+      `uvm_info(get_type_name(),$sformatf("DEBUG - S_R_SEQ"),UVM_HIGH);
     end
   join_none
 
   repeat(5) begin
-    apb_master_8b_write_read_seq_h.start(p_sequencer.apb_master_seqr_h);
+    apb_master_8b_write_seq_h.start(p_sequencer.apb_master_seqr_h);
+      `uvm_info(get_type_name(),$sformatf("DEBUG - M_W_SEQ"),UVM_HIGH);
+    apb_master_8b_read_seq_h.start(p_sequencer.apb_master_seqr_h);
+      `uvm_info(get_type_name(),$sformatf("DEBUG - M_R_SEQ"),UVM_HIGH);
   end
 endtask : body
 

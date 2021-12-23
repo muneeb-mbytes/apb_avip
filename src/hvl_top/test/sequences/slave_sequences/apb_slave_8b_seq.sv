@@ -32,11 +32,12 @@ endfunction : new
 task apb_slave_8b_seq::body();
   req=apb_slave_tx::type_id::create("req");
   start_item(req);
-  if(!req.randomize())
-  begin
-    `uvm_error(get_type_name(),"randomization failed");
+  
+  //if(!req.randomize() with {req.pwrite == WRITE;}) begin
+  if(!req.randomize()) begin
+    `uvm_fatal("APB","Rand failed");
   end
-  req.print();
+//  req.print();
   finish_item(req);
 endtask : body
 

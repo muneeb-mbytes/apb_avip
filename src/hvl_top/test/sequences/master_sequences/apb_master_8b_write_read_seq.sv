@@ -36,14 +36,8 @@ task apb_master_8b_write_read_seq::body();
   start_item(req);
   if(!req.randomize() with {req.pselx == SLAVE_0;
                             req.transfer_size == BIT_8;
-                            req.pwrite == WRITE | READ;}) begin
+                            req.pwrite == READ;}) begin
     `uvm_fatal("APB","Rand failed");
-   
-    while(READ == 1'b1) begin
-      if(req.prdata == null) begin
-        req.pslverr = 1'b1;
-      end
-    end
   end
   //req.print();
   finish_item(req);
