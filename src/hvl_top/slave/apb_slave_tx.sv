@@ -150,6 +150,7 @@ function void apb_slave_tx::do_print(uvm_printer printer);
   printer.print_string("pslverr",pslverr.name());
   printer.print_string("pprot",pprot.name());
   printer.print_field ("no_of_wait_states",no_of_wait_states,$bits(no_of_wait_states),UVM_DEC);
+  printer.print_field ("choose_packet_data",choose_packet_data,$bits(choose_packet_data),UVM_DEC);
 
 endfunction : do_print
 

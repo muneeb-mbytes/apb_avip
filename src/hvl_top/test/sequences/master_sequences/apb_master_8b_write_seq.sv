@@ -35,6 +35,7 @@ task apb_master_8b_write_seq::body();
   req.apb_master_agent_cfg_h = p_sequencer.apb_master_agent_cfg_h;
   start_item(req);
   if(!req.randomize() with {req.pselx == SLAVE_0;
+                            req.paddr == 'h3;
                             req.transfer_size == BIT_8;
                             req.pwrite == WRITE;}) begin
     `uvm_fatal("APB","Rand failed");

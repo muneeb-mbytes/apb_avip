@@ -111,13 +111,15 @@ task apb_slave_driver_proxy::run_phase(uvm_phase phase);
     `uvm_info("DEBUG_NA", $sformatf("AFTER PSLVERR_CHECK_5 -struct:: %p", struct_packet), UVM_MEDIUM); 
     
     seq_item_port.get_next_item(req);
+    //Printing the req item
+    `uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
       
     // TODO(mshariff): 
     // Put the data from struct_packet and req into req using choose_packet_data variable
     if(req.choose_packet_data) begin
 
       //Printing the req item
-      `uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
+      //`uvm_info(get_type_name(), $sformatf("REQ-SLAVE_TX \n %s",req.sprint),UVM_LOW);
   
       //Converting transaction to struct data_packet
       apb_slave_seq_item_converter::from_class(req, struct_packet); 
