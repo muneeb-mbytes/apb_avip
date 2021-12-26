@@ -84,9 +84,11 @@ package apb_global_pkg;
   //  Used to declare the type of f state
   //-------------------------------------------------------
   typedef enum bit[2:0] {
+    NO_STATE,
     IDLE,
     SETUP,
-    ACCESS
+    ACCESS,
+    WAIT_STATE
   }apb_fsm_state_e; 
 
   //-------------------------------------------------------
