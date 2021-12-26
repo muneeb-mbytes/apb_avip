@@ -214,7 +214,7 @@ simulate_war_err:
 	echo "";
 	echo "Testname: $(test)"
 	echo "Log file path: $(test)/$(test).log"
-	echo "Waveform: vsim -view $(test)/waveform.wlf &"
+	echo "Waveform: simvision waves.shm/"
 	echo "";
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
