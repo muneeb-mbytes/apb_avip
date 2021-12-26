@@ -1,4 +1,3 @@
-+incdir+../../src/globals/
 +incdir+../../src/hvl_top/test/sequences/master_sequences/
 +incdir+../../src/hvl_top/master/
 +incdir+../../src/hvl_top/env/virtual_sequencer/

@@ -6,7 +6,7 @@
 //Extends the base test and starts the virtual sequence of 24bit
 //--------------------------------------------------------------------------------------------
 class apb_24b_write_test extends apb_base_test;
-  `uvm_component_utils(apb_24b_write_test);
+  `uvm_component_utils(apb_24b_write_test)
 
   //Variable : apb_virtual_24b_seq_h'
   //Instatiation of apb_virtual_24b_seq

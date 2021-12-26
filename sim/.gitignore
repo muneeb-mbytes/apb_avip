@@ -1,0 +1,11 @@
+*_test*
+*.log*
+*.do*
+*work*
+*cov*
+*vish*
+*vsim*
+*transcript*
+*.simvision/*
+*INCA_libs/*
+*.shm*
