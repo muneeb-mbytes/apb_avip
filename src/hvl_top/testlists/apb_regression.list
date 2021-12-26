@@ -6,3 +6,4 @@ apb_16b_write_test
 apb_24b_write_test
 apb_8b_write_read_test
 apb_8b_read_test
+apb_32b_write_test
