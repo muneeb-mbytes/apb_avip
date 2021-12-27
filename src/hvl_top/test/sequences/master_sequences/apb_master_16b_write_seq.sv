@@ -33,12 +33,15 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 
 task apb_master_16b_write_seq::body();
-  //super.body();
+  super.body();
   `uvm_info(get_type_name(),$sformatf("apb_master_16b_write_seq_INCLUDE_"),UVM_LOW);
   req=apb_master_tx::type_id::create("req");
+  req.apb_master_agent_cfg_h = p_sequencer.apb_master_agent_cfg_h;
   start_item(req);
   `uvm_info(get_type_name(),"req_prtint",UVM_LOW);
-  if(!req.randomize() with {req.pselx == SLAVE_1;}) begin
+  if(!req.randomize() with {req.pselx == SLAVE_0; 
+                            req.pwrite == WRITE;
+                            req.transfer_size == BIT_16;}) begin
     `uvm_fatal("APB","Rand failed")
   end
   finish_item(req);
