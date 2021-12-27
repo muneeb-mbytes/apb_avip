@@ -41,12 +41,12 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
 
   PADDR_CP : coverpoint cfg.paddr {
     option.comment = "address range";
-    bins addr[] = {[0:2**ADDRESS_WIDTH]};
+    bins addr[] = {0,2,1000};
   }
 
   PWDATA_CP: coverpoint packet.pwdata {
     option.comment = "write data range";
-    bins WDATA_BIT[] = {[0:2**DATA_WIDTH]};
+    bins WDATA_BIT[] = {[0:DATA_WIDTH]};
  //  bins wdata_16bit = {16};
  // bins wdata_24bit = {24};
  // bins wdata_32bit = {32};
@@ -54,7 +54,7 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   }
   PRDATA_CP : coverpoint packet.prdata {
     option.comment = "read data range ";  
-    bins RDATA_BIT[]  = {[0:2**DATA_WIDTH]};
+    bins RDATA_BIT[]  = {[0:DATA_WIDTH]};
  //   bins wdata_16bit = {16};
  //   bins wdata_24bit = {24};
  //   bins wdata_32bit = {32};
@@ -77,6 +77,11 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
   PADDR_X_PWDATA_ : cross PADDR_CP,PWDATA_CP;
  // PSEL_X_PENABLE_ : cross PSEL_CP,PENABLE_CP;
   PADDR_X_PRDATA_ : cross PADDR_CP,PRDATA_CP;
+//  PSTRB_X_PRDATA_ : cross PSTRB_CP,PRDATA_CP;
+//  PSTRB_X_PWDATA_ : cross PSTRB_CP,PWDATA_CP;
+
+
+
 
 endgroup : apb_slave_covergroup
 //-------------------------------------------------------
