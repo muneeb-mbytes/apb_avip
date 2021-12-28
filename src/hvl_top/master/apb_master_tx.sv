@@ -62,8 +62,16 @@
   apb_master_agent_config apb_master_agent_cfg_h;
 
   // Variable: no_of_wait_states_detected
+  // Used to keep track of the no of wait states
   int no_of_wait_states_detected;
-  
+
+  // Variable : cont_write_read
+  // Used to show the transfer as cont write and read
+  rand bit cont_write_read;
+ 
+  //Variable : address
+  bit [ADDRESS_WIDTH-1:0]address;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -196,25 +204,36 @@ function void apb_master_tx::post_randomize();
       index = i;
     end
   end
-  
+ 
   // Randmoly chosing paddr value between a given range
   if (!std::randomize(paddr) with { paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
     paddr %4 == 0;
   }) begin
-  `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
+    `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
   end
+  
+  //if(cont_write_read)begin
+  //  if(pwrite == WRITE) begin
+  //    address = paddr;
+  //  end
+  //  else begin
+  //    paddr = address;
+  //  end
+  //end
 
   //Constraint to make pwdata non-zero when pstrb is high for that 8-bit lane
   for(int i=0; i<DATA_WIDTH/8; i++) begin
     `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
-    if(pstrb[i]) begin
-      `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
-      if(!std::randomize(pwdata) with {pwdata[8*i+7 -: 8] != 0;}) begin
-        `uvm_fatal("FATAL_STD_RANDOMIZATION_PWDATA", $sformatf("Not able to randomize pwdata"));
+    if(pwrite == WRITE) begin
+      if(pstrb[i]) begin
+        `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
+        if(!std::randomize(pwdata) with {pwdata[8*i+7 -: 8] != 0;}) begin
+          `uvm_fatal("FATAL_STD_RANDOMIZATION_PWDATA", $sformatf("Not able to randomize pwdata"));
+        end
+        else begin
+          `uvm_info(get_type_name(),$sformatf("MASTER-TX-pwdata[%0d]=%0h",8*i+7,pwdata[8*i+7 +: 8]),UVM_HIGH);
+        end 
       end
-      else begin
-        `uvm_info(get_type_name(),$sformatf("MASTER-TX-pwdata[%0d]=%0h",8*i+7,pwdata[8*i+7 +: 8]),UVM_HIGH);
-      end 
     end
   end
 

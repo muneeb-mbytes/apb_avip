@@ -12,6 +12,7 @@ package apb_virtual_seq_pkg;
   //-------------------------------------------------------
   `include "uvm_macros.svh"
   import uvm_pkg::*;
+  import apb_global_pkg::*;
   import apb_env_pkg::*;
   import apb_master_pkg::*;
   import apb_slave_pkg::*;

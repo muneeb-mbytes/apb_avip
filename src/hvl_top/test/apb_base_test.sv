@@ -100,13 +100,20 @@ function void apb_base_test::setup_apb_master_agent_config();
 
 
   for(int i =0; i<NO_OF_SLAVES; i++) begin
+    if(i == 0) begin  
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i,0);
+      local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
       
-    apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i,local_max_address + SLAVE_MEMORY_GAP);
-    local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,2**(SLAVE_MEMORY_SIZE)-1 );
+      local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
+    end
+    else begin
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range(i,local_max_address + SLAVE_MEMORY_GAP);
+      local_min_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_min_addr_range_array[i];
       
-    apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,local_max_address+ 2**(SLAVE_MEMORY_SIZE)-1 + SLAVE_MEMORY_GAP);
-    local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
-      
+      apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range(i,local_max_address+ 2**(SLAVE_MEMORY_SIZE)-1 + SLAVE_MEMORY_GAP);
+      local_max_address = apb_env_cfg_h.apb_master_agent_cfg_h.master_max_addr_range_array[i];
+    end
   end
 endfunction : setup_apb_master_agent_config
 
