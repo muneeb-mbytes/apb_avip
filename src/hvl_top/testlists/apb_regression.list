@@ -1,6 +1,6 @@
 # Regression list for Simple APB - MASTER and SLAVE 
 
-# Directed testcases
+# Directed testcases for writes and reads
 apb_8b_write_test
 apb_16b_write_test
 apb_24b_write_test
