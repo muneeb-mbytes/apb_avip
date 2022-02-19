@@ -178,6 +178,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
     while(pready==0) begin
       `uvm_info(name,"WAIT_STATE_DETECTED",UVM_HIGH);
       @(posedge pclk);
+      state=WAIT_STATE;
       data_packet.no_of_wait_states++;
     end
 
@@ -188,7 +189,11 @@ interface apb_master_driver_bfm (input  bit   pclk,
     end
 
     data_packet.pslverr = pslverr;
-    state=WAIT_STATE;
+
+    // TODO(mshariff): Add logic for making it work for ACCESS to SETUP phase
+    state=IDLE;
+    penable <= 1'b0;
+    pselx <= 'b0;
 
 //     `uvm_info("DEBUG_MSHA", $sformatf("drive_apb_access state = %0s and state = %0d",
 //                                      state.name(), state), UVM_NONE);
