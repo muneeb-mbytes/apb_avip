@@ -13,7 +13,7 @@ class apb_master_seq_item_converter extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "apb_master_seq_item_converter");
   extern static function void from_class(input apb_master_tx input_conv, output apb_transfer_char_s output_conv);
-  extern static function void to_class(input apb_transfer_char_s input_conv, output apb_master_tx
+  extern static function void to_class(input apb_transfer_char_s input_conv, ref apb_master_tx
   output_conv_h);
   extern function void do_print(uvm_printer printer);
 
@@ -82,8 +82,8 @@ endfunction: from_class
 // name - apb_master_tx, apb_transfer_char_s
 //--------------------------------------------------------------------------------------------
 function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s input_conv, 
-                                                      output apb_master_tx output_conv_h);
-  output_conv_h = new();
+                                                      ref apb_master_tx output_conv_h);
+  //output_conv_h = new();
 
   `uvm_info("apb_master_seq_item_conv",$sformatf("------------------------------------------------"),UVM_HIGH);
   

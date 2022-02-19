@@ -23,6 +23,7 @@ package apb_master_pkg;
   `include "apb_master_tx.sv"
   `include "apb_master_seq_item_converter.sv"
   `include "apb_master_cfg_converter.sv"
+  `include "apb_master_adapter.sv"
   `include "apb_master_sequencer.sv"
   `include "apb_master_driver_proxy.sv"
   `include "apb_master_monitor_proxy.sv"

@@ -154,10 +154,13 @@ interface apb_master_driver_bfm (input  bit   pclk,
     penable   <= 1'b1;
     
     `uvm_info("DEBUG_NADEEM",$sformatf("pready=%0d",pready), UVM_HIGH);
-    if(pready == 0) begin
       detect_wait_state(data_packet);
-    end
-    `uvm_info("DEBUG_MSHA",$sformatf("wait_apb_access_state=%0d and state=%0d",state.name(),state), UVM_NONE);
+    // MSHA: if(pready == 0) begin
+    // MSHA:   detect_wait_state(data_packet);
+    // MSHA: end
+    // MSHA: `uvm_info("DEBUG_MSHA",$sformatf("wait_apb_access_state=%0d and state=%0d",state.name(),state), UVM_NONE);
+
+
   endtask: waiting_in_access_state
 
   //--------------------------------------------------------------------------------------------
