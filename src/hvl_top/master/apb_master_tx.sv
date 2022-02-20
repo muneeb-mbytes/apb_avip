@@ -79,7 +79,7 @@
   extern function void do_copy(uvm_object rhs);
   extern function bit  do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function void do_print(uvm_printer printer);
-  extern function void post_randomize();
+ // extern function void post_randomize();
 
   //-------------------------------------------------------
   // Constraints defined on variables pselx,
@@ -195,49 +195,49 @@ function void apb_master_tx::do_print(uvm_printer printer);
 // Function : post_randomize
 // Selects the address based on the slave selected
 //--------------------------------------------------------------------------------------------
-function void apb_master_tx::post_randomize();
-  int index;
-
-  // Derive the slave number using the index
-  for(int i=0; i<NO_OF_SLAVES; i++) begin
-    if(pselx[i]) begin
-      index = i;
-    end
-  end
- 
-  // Randmoly chosing paddr value between a given range
-  if (!std::randomize(paddr) with { paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
-    paddr %4 == 0;
-  }) begin
-    `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
-  end
-  
-  //if(cont_write_read)begin
-  //  if(pwrite == WRITE) begin
-  //    address = paddr;
-  //  end
-  //  else begin
-  //    paddr = address;
-  //  end
-  //end
-
-  //Constraint to make pwdata non-zero when pstrb is high for that 8-bit lane
-  for(int i=0; i<DATA_WIDTH/8; i++) begin
-    `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
-    if(pwrite == WRITE) begin
-      if(pstrb[i]) begin
-        `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
-        if(!std::randomize(pwdata) with {pwdata[8*i+7 -: 8] != 0;}) begin
-          `uvm_fatal("FATAL_STD_RANDOMIZATION_PWDATA", $sformatf("Not able to randomize pwdata"));
-        end
-        else begin
-          `uvm_info(get_type_name(),$sformatf("MASTER-TX-pwdata[%0d]=%0h",8*i+7,pwdata[8*i+7 +: 8]),UVM_HIGH);
-        end 
-      end
-    end
-  end
-
-endfunction : post_randomize
+//function void apb_master_tx::post_randomize();
+//  int index;
+//
+//  // Derive the slave number using the index
+//  for(int i=0; i<NO_OF_SLAVES; i++) begin
+//    if(pselx[i]) begin
+//      index = i;
+//    end
+//  end
+// 
+//  // Randmoly chosing paddr value between a given range
+//  if (!std::randomize(paddr) with { paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
+//    paddr %4 == 0;
+//  }) begin
+//    `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
+//  end
+//  
+//  //if(cont_write_read)begin
+//  //  if(pwrite == WRITE) begin
+//  //    address = paddr;
+//  //  end
+//  //  else begin
+//  //    paddr = address;
+//  //  end
+//  //end
+//
+//  //Constraint to make pwdata non-zero when pstrb is high for that 8-bit lane
+//  for(int i=0; i<DATA_WIDTH/8; i++) begin
+//    `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
+//    if(pwrite == WRITE) begin
+//      if(pstrb[i]) begin
+//        `uvm_info(get_type_name(),$sformatf("MASTER-TX-pstrb[%0d]=%0d",i,pstrb[i]),UVM_HIGH);
+//        if(!std::randomize(pwdata) with {pwdata[8*i+7 -: 8] != 0;}) begin
+//          `uvm_fatal("FATAL_STD_RANDOMIZATION_PWDATA", $sformatf("Not able to randomize pwdata"));
+//        end
+//        else begin
+//          `uvm_info(get_type_name(),$sformatf("MASTER-TX-pwdata[%0d]=%0h",8*i+7,pwdata[8*i+7 +: 8]),UVM_HIGH);
+//        end 
+//      end
+//    end
+//  end
+//
+//endfunction : post_randomize
 
 `endif
 
