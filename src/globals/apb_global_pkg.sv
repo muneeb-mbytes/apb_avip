@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Package : apb_global_pkg
-// Used for storing required enums, parameters and defines
+//  Used for storing required enums, parameters and defines
 //--------------------------------------------------------------------------------------------
 package apb_global_pkg;
 
@@ -46,10 +46,10 @@ package apb_global_pkg;
   //  Used to declare enum type for all transfer sizes
   //-------------------------------------------------------
   typedef enum bit[31:0]{
-    BIT_8   = 32'd8,
-    BIT_16  = 32'd16,
-    BIT_24  = 32'd24,
-    BIT_32  = 32'd32
+    BIT_8  = 32'd8,
+    BIT_16 = 32'd16,
+    BIT_24 = 32'd24,
+    BIT_32 = 32'd32
   }transfer_size_e;
 
   //-------------------------------------------------------
@@ -57,8 +57,8 @@ package apb_global_pkg;
   //  Used to declare enum type for the pslverr
   //-------------------------------------------------------
   typedef enum bit{
-    NO_ERROR    = 1'b0,
-    ERROR       = 1'b1
+    NO_ERROR = 1'b0,
+    ERROR    = 1'b1
   }slave_error_e;
 
   //-------------------------------------------------------
@@ -66,24 +66,24 @@ package apb_global_pkg;
   //  Used to declare enum type for the endians
   //-------------------------------------------------------
   typedef enum bit{
-    LITTL_ENDIAN    = 1'b0,
-    BIG_ENDIAN      = 1'b1
+    LITTL_ENDIAN = 1'b0,
+    BIG_ENDIAN   = 1'b1
   }endian_e;
 
   //-------------------------------------------------------
   // Enum : tx_type_e 
   //  Used to declare the type of transaction done
   //-------------------------------------------------------
-  typedef enum bit {
-    WRITE = 1,
-    READ  = 0 
+  typedef enum bit{
+    WRITE = 1'b1,
+    READ  = 1'b0 
   }tx_type_e; 
 
   //-------------------------------------------------------
   // Enum : apb_fsm_state_e
-  //  Used to declare the type of f state
+  //  Used to declare the type of fsm state
   //-------------------------------------------------------
-  typedef enum bit[2:0] {
+  typedef enum bit[2:0]{
     IDLE,
     SETUP,
     ACCESS
@@ -91,7 +91,7 @@ package apb_global_pkg;
 
   //-------------------------------------------------------
   // Enum : protection_type_e 
-  //  Used to declare the type ofprotection of the 
+  //  Used to declare the type of protection of the 
   //  transaction
   //-------------------------------------------------------
   typedef enum logic[2:0]{
@@ -107,9 +107,10 @@ package apb_global_pkg;
 
   //-------------------------------------------------------
   // Enum : slave_no_e
-  //  Used to declare the slave number by assigning the value for encoding
+  //  Used to declare the slave number by assigning the 
+  //  value for encoding
   //-------------------------------------------------------
-  typedef enum bit [15:0] {
+  typedef enum bit [15:0]{
     SLAVE_0  = 16'b0000_0000_0000_0001,
     SLAVE_1  = 16'b0000_0000_0000_0010,
     SLAVE_2  = 16'b0000_0000_0000_0100,
@@ -133,15 +134,15 @@ package apb_global_pkg;
   //  This struct datatype consists of all signals which 
   //  are used for seq item conversion
   //-------------------------------------------------------
-  typedef struct {
+  typedef struct{
     bit pwrite;
     bit pslverr;
-    bit [2:0] pprot;
-    bit [NO_OF_SLAVES-1:0] pselx;
-    bit [(DATA_WIDTH/8)-1:0] pstrb;
-    bit [DATA_WIDTH-1:0] prdata;
-    bit [ADDRESS_WIDTH-1:0] paddr; 
-    bit [DATA_WIDTH-1:0] pwdata;
+    bit [2:0]pprot;
+    bit [NO_OF_SLAVES-1:0]pselx;
+    bit [(DATA_WIDTH/8)-1:0]pstrb;
+    bit [DATA_WIDTH-1:0]prdata;
+    bit [ADDRESS_WIDTH-1:0]paddr; 
+    bit [DATA_WIDTH-1:0]pwdata;
     int no_of_wait_states;
   }apb_transfer_char_s;
   

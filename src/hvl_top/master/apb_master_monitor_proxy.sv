@@ -34,7 +34,7 @@ endclass : apb_master_monitor_proxy
 //--------------------------------------------------------------------------------------------
 // Construct: new
 //  Initializes memory for new object
-
+//
 // Parameters:
 //  name   - apb_master_monitor_proxy
 //  parent - parent under which this component is created
@@ -53,7 +53,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void apb_master_monitor_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  if(!uvm_config_db #(virtual apb_master_monitor_bfm)::get(this,"","apb_master_monitor_bfm" ,apb_master_mon_bfm_h)) begin
+  if(!uvm_config_db #(virtual apb_master_monitor_bfm)::get(this,"","apb_master_monitor_bfm", apb_master_mon_bfm_h)) begin
     `uvm_fatal("FATAL_MDP_CANNOT_GET_APB_MASTER_MONITOR_BFM","cannot get() apb_master_mon_bfm_h");
   end
 endfunction : build_phase
@@ -97,7 +97,7 @@ task apb_master_monitor_proxy::run_phase(uvm_phase phase);
 
     `uvm_info(get_type_name(),$sformatf("Received packet from master monitor bfm: , \n %s", apb_master_packet.sprint()),UVM_HIGH)
 
-    // Clone and publish the cloned item to the subscribers
+    //Clone and publish the cloned item to the subscribers
     $cast(apb_master_clone_packet, apb_master_packet.clone());
     `uvm_info(get_type_name(),$sformatf("Sending packet via analysis_port: , \n %s", apb_master_clone_packet.sprint()),UVM_HIGH)
     apb_master_analysis_port.write(apb_master_clone_packet);

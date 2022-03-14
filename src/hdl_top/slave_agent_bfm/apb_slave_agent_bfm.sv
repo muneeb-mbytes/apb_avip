@@ -8,7 +8,7 @@
 module apb_slave_agent_bfm #(parameter int SLAVE_ID=0) (apb_if intf);
 
   //-------------------------------------------------------
-  // importing uvm_pkg file
+  // Importing uvm_pkg file
   //-------------------------------------------------------
   import uvm_pkg::*;
   `include "uvm_macros.svh";
@@ -17,7 +17,7 @@ module apb_slave_agent_bfm #(parameter int SLAVE_ID=0) (apb_if intf);
     `uvm_info("apb slave agent bfm",$sformatf("APB SLAVE AGENT BFM"),UVM_LOW);
   end
   //-------------------------------------------------------
-  //slave driver bfm instantiation
+  // slave driver bfm instantiation
   //-------------------------------------------------------
   apb_slave_driver_bfm apb_slave_drv_bfm_h(.pclk(intf.pclk),
                                            .preset_n(intf.preset_n),
@@ -34,7 +34,7 @@ module apb_slave_agent_bfm #(parameter int SLAVE_ID=0) (apb_if intf);
                                           );
 
   //-------------------------------------------------------
-  //slave monitor bfm instantiation
+  // slave monitor bfm instantiation
   //-------------------------------------------------------
   apb_slave_monitor_bfm apb_slave_mon_bfm_h (.pclk(intf.pclk),
                                               .preset_n(intf.preset_n),
@@ -60,3 +60,4 @@ module apb_slave_agent_bfm #(parameter int SLAVE_ID=0) (apb_if intf);
 endmodule : apb_slave_agent_bfm
 
 `endif
+

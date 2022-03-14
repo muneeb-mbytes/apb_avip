@@ -1,29 +1,25 @@
+`ifndef HDL_TOP_INCLUDED
+`define HDL_TOP_INCLUDED
+
 //--------------------------------------------------------------------------------------------
 // Module      : HDL Top
 // Description : Has a interface and slave agent bfm.
 //--------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------
-// Including APB interface and apb_Slave Agent BFM Files
-//-------------------------------------------------------
 module hdl_top;
 
+  //-------------------------------------------------------
+  // Importing uvm package and Including uvm macros file
+  //-------------------------------------------------------
   import uvm_pkg::*;
-  import apb_global_pkg::*;
   `include "uvm_macros.svh"
+  
+  //-------------------------------------------------------
+  // Importing apb global package
+  //-------------------------------------------------------
+  import apb_global_pkg::*;
 
-  //-------------------------------------------------------
-  // Clock Reset Initialization
-  //-------------------------------------------------------
- // bit clk;
-  //bit rst;
-
-  //-------------------------------------------------------
-  // Display statement for HDL_TOP
-  //-------------------------------------------------------
   initial begin
-    `uvm_info("UVM_INFO","HDL_TOP",UVM_LOW);
-    $display("HDL TOP");
+    `uvm_info("HDL_TOP","HDL_TOP",UVM_LOW);
   end
 
   //Variable : pclk
@@ -35,7 +31,7 @@ module hdl_top;
   bit preset_n;
 
   //-------------------------------------------------------
-  //Generation of system clock at frequency rate of 20ns
+  // Generation of system clock at frequency rate of 20ns
   //-------------------------------------------------------
   initial begin
     pclk = 1'b0;
@@ -43,13 +39,12 @@ module hdl_top;
   end
 
   //-------------------------------------------------------
-  //Generation of system preset_n
-  //system reset can be asserted asynchronously
-  //system reset de-assertion is synchronous.
+  // Generation of system preset_n
+  //  system reset can be asserted asynchronously,
+  //  but system reset de-assertion is synchronous.
   //-------------------------------------------------------
   initial begin
     preset_n = 1'b1;
-    
     #15 preset_n = 1'b0;
 
     repeat(1) begin
@@ -59,17 +54,17 @@ module hdl_top;
   end
 
   //-------------------------------------------------------
-  // apb Interface Instantiation
+  // APB Interface Instantiation
   //-------------------------------------------------------
   apb_if intf(pclk,preset_n);
 
   //-------------------------------------------------------
-  // apb Master BFM Agent Instantiation
+  // APB Master BFM Agent Instantiation
   //-------------------------------------------------------
   apb_master_agent_bfm apb_master_agent_bfm_h(intf); 
   
   //-------------------------------------------------------
-  // apb slave BFM Agent Instantiation
+  // APB Slave BFM Agent Instantiation
   //-------------------------------------------------------
   genvar i;
   generate
@@ -80,3 +75,6 @@ module hdl_top;
   endgenerate
 
 endmodule : hdl_top
+
+`endif
+

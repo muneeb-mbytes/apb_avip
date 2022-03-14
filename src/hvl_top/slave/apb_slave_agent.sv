@@ -2,35 +2,31 @@
 `define APB_SLAVE_AGENT_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-//  Class: apb_slave_agent
+// Class: apb_slave_agent
 //  This agent has sequencer, driver_proxy, monitor_proxy for APB  
 //--------------------------------------------------------------------------------------------
 class apb_slave_agent extends uvm_agent;
   `uvm_component_utils(apb_slave_agent)
 
-  // Variable: apb_slave_agent_cfg_h;
-  // Handle for apb_slave agent configuration
+  //Variable: apb_slave_agent_cfg_h;
+  //Handle for apb_slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
 
-  // Variable: apb_slave_seqr_h;
-  // Handle for  apb slave sequencer
+  //Variable: apb_slave_seqr_h;
+  //Handle for apb slave sequencer
   apb_slave_sequencer apb_slave_seqr_h;
 
-  // Variable: apb_slave_drv_proxy_h
-  // Handle for apb slave driver proxy
+  //Variable: apb_slave_drv_proxy_h
+  //Handle for apb slave driver proxy
   apb_slave_driver_proxy apb_slave_drv_proxy_h;
 
-  // Variable: apb_slave_mon_proxy_h
-  // Handle for  apb slave monitor proxy
+  //Variable: apb_slave_mon_proxy_h
+  //Handle for apb slave monitor proxy
   apb_slave_monitor_proxy apb_slave_mon_proxy_h;
 
-  // Variable: apb_slave_coverage
-  // Decalring a handle for apb slave coverage
+  //Variable: apb_slave_coverage
+  //Decalring a handle for apb slave coverage
   apb_slave_coverage apb_slave_cov_h;
-
-  //Variable : apb_master_tx_h;
-  //Declaring handle for apb_master_tx
-  //apb_master_tx apb_master_tx_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -42,9 +38,9 @@ class apb_slave_agent extends uvm_agent;
 endclass : apb_slave_agent
 
 //--------------------------------------------------------------------------------------------
-//  Construct: new
+// Construct: new
 //
-//  Parameters:
+// Parameters:
 //  name - instance name of the  apb_slave_agent
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
@@ -53,24 +49,15 @@ function apb_slave_agent::new(string name = "apb_slave_agent", uvm_component par
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-//  Function: build_phase
+// Function: build_phase
 //  Creates the required ports, gets the required configuration from config_db
 //
-//  Parameters:
+// Parameters:
 //  phase - stores the current phase
 //--------------------------------------------------------------------------------------------
 function void apb_slave_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  //for(int i=0; i<NO_OF_SLAVES; i++) begin
-    //if(!uvm_config_db #(apb_slave_agent_config)::get(this,"","apb_slave_agent_config[1]",apb_slave_agent_cfg_h)) begin
-      //`uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config from config_db"))
-    //end
-  //end
-
-  // Have a print method in master_agent_config class and call it from here
-  //`uvm_info(get_type_name(), $sformatf("The apb_slave_agent_config.slave_id = %0d", 
-  //                                           slave_agent_cfg_h.slave_id), UVM_LOW);
-  //`uvm_info(get_type_name(),$sformatf("SA_CFG=%0d",apb_slave_agent_cfg_h),UVM_LOW)
+  
   if(apb_slave_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_slave_drv_proxy_h = apb_slave_driver_proxy::type_id::create("apb_slave_drv_proxy_h",this);
     apb_slave_seqr_h = apb_slave_sequencer::type_id::create("apb_slave_seqr_h",this);
@@ -81,12 +68,14 @@ function void apb_slave_agent::build_phase(uvm_phase phase);
   if(apb_slave_agent_cfg_h.has_coverage) begin
     apb_slave_cov_h = apb_slave_coverage::type_id::create("apb_slave_cov_h",this);
   end
+
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
-//  Function: connect_phase 
-//  it connects the components using TLM ports
-//  Parameters:
+// Function: connect_phase 
+//  It connects the components using TLM ports
+//  
+// Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_slave_agent::connect_phase(uvm_phase phase);
@@ -97,10 +86,9 @@ function void apb_slave_agent::connect_phase(uvm_phase phase);
     apb_slave_seqr_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
     apb_slave_cov_h.apb_slave_agent_cfg_h = apb_slave_agent_cfg_h;
     
-    // Connecting the ports
+    //Connecting the ports
     apb_slave_drv_proxy_h.seq_item_port.connect(apb_slave_seqr_h.seq_item_export);
-    
-    // Connecting monitor_proxy port to coverage export
+    //Connecting monitor_proxy port to coverage export
     apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_slave_cov_h.analysis_export);
   end
 
@@ -110,3 +98,4 @@ function void apb_slave_agent::connect_phase(uvm_phase phase);
 endfunction: connect_phase
 
 `endif
+

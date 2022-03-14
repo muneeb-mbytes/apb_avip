@@ -3,65 +3,53 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_tx.
-// This class holds the data items required to drive stimulus to dut 
-// and also holds methods that manipulate those data items
+//  This class holds the data items required to drive stimulus to dut 
+//  and also holds methods that manipulate those data items
 //--------------------------------------------------------------------------------------------
-//import apb_global_pkg::*;
-
  class apb_master_tx extends uvm_sequence_item;
   `uvm_object_utils(apb_master_tx)
 
-  //Variable : paddr
+  //Variable: paddr
   //Address selected in apb_slave
   rand bit [ADDRESS_WIDTH-1:0] paddr;
 
-  //Variable : pprot
+  //Variable: pprot
   //Used for different access
   rand protection_type_e pprot;
-  //rand bit [2:0]pprot;
 
-  //Variable : pselx
+  //Variable: pselx
   //Used to select the slave
   rand slave_no_e pselx;
 
-  //Variable : penable
-  //Used to write data when penable is high
-  //bit penable;
-
-  //Variable : pwrite
+  //Variable: pwrite
   //Write when pwrite is 1 and read is 0
-  //rand bit pwrite;
   rand tx_type_e pwrite;
 
-  //variable : transfer_size
+  //Variable: transfer_size
   //Used to dcide the transfer size of the pwdata
   rand transfer_size_e transfer_size;
 
-  //Variable : pwdata
+  //Variable: pwdata
   //Used to store the wdata
-  rand bit [DATA_WIDTH-1:0] pwdata;
+  rand bit [DATA_WIDTH-1:0]pwdata;
 
-  //Variable : pstrb
+  //Variable: pstrb
   //Used to transfer the data to pwdata bus
-  rand bit [(DATA_WIDTH/8)-1:0] pstrb;              
+  rand bit [(DATA_WIDTH/8)-1:0]pstrb;              
     
-  //Variable : pready
-  //Used to extend the transfer
-  //bit pready;
-
-  //Variable : prdata
+  //Variable: prdata
   //Used to store the rdata from the slave
-  bit [DATA_WIDTH-1:0] prdata;
+  bit [DATA_WIDTH-1:0]prdata;
 
-  //Variable : pslverr
+  //Variable: pslverr
   //Goes high when a transfer fails
   slave_error_e pslverr;
 
-  //Variable : apb_master_agent_cfg_h
+  //Variable: apb_master_agent_cfg_h
   //Instantiation of apb master agent config
   apb_master_agent_config apb_master_agent_cfg_h;
 
-  // Variable: no_of_wait_states_detected
+  //Variable: no_of_wait_states_detected
   int no_of_wait_states_detected;
   
   //-------------------------------------------------------
@@ -76,8 +64,6 @@
   //-------------------------------------------------------
   // Constraints defined on variables pselx,
   //-------------------------------------------------------
-  // pselx inside (16'd0, 16'd1, 16'd2, 16'd4 and so on), instead we can use onehot encoding
-  // $onehot0(pselx) will either selects all bits to be 0, or only one bit should be high(1)
   constraint pselx_c1  { $countones(pselx) == 1; }
 
   constraint pselx_c2 { pselx >0 && pselx < 2**NO_OF_SLAVES; }
@@ -86,23 +72,22 @@
 
   //This constraint is used to decide the pwdata size based om transfer size
   constraint transfer_size_c4 {if(transfer_size == BIT_8)
-                                $countones (pstrb) == 1;
+                                  $countones (pstrb) == 1;
                               else if(transfer_size == BIT_16)
-                                $countones (pstrb) == 2;
+                                      $countones (pstrb) == 2;
                               else if(transfer_size == BIT_24)
-                                $countones (pstrb) == 3;
+                                      $countones (pstrb) == 3;
                               else 
-                                $countones (pstrb) == 4;
+                                  $countones (pstrb) == 4;
                              }
-
 endclass : apb_master_tx
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
-// Initializes the class object
+//  Initializes the class object
 //
 // Parameters:
-// name - apb_master_tx
+//  name - apb_master_tx
 //--------------------------------------------------------------------------------------------
 function apb_master_tx::new(string name = "apb_master_tx");
   super.new(name);
@@ -110,10 +95,10 @@ endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Function: do_copy
-// Copy method is implemented using handle rhs
+//  Copy method is implemented using handle rhs
 //
 // Parameters:
-// rhs - uvm_object
+//  rhs - uvm_object
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_copy (uvm_object rhs);
   apb_master_tx apb_master_tx_copy_obj;
@@ -136,17 +121,17 @@ endfunction : do_copy
 
 //--------------------------------------------------------------------------------------------
 // Function: do_compare
-// Compare method is implemented using handle rhs
+//  Compare method is implemented using handle rhs
 //
 // Parameters:
-// phase - uvm phase
+//  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function bit apb_master_tx::do_compare (uvm_object rhs, uvm_comparer comparer);
   apb_master_tx apb_master_tx_compare_obj;
 
   if(!$cast(apb_master_tx_compare_obj,rhs)) begin
     `uvm_fatal("FATAL_APB_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
-  return 0;
+    return 0;
   end
 
   return super.do_compare(apb_master_tx_compare_obj, comparer) &&
@@ -163,25 +148,25 @@ endfunction : do_compare
 
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
-// Print method can be added to display the data members values
+//  Print method can be added to display the data members values
 //
 // Parameters:
-// printer - uvm_printer
+//  printer - uvm_printer
 //--------------------------------------------------------------------------------------------
 function void apb_master_tx::do_print(uvm_printer printer);
-  //super.do_print(printer);
   
-  printer.print_string ("pselx",   pselx.name());
-  printer.print_field  ("paddr",   paddr,       $bits(paddr),   UVM_HEX);
-  printer.print_string ("pwrite",  pwrite.name());
-  printer.print_field  ("pwdata",  pwdata,      $bits(pwdata),  UVM_HEX);
+  printer.print_string ("pselx",pselx.name());
+  printer.print_field  ("paddr",paddr,$bits(paddr),UVM_HEX);
+  printer.print_string ("pwrite",pwrite.name());
+  printer.print_field  ("pwdata",pwdata,$bits(pwdata),UVM_HEX);
   printer.print_string ("transfer_size",transfer_size.name());
-  printer.print_field  ("pstrb",   pstrb,       4,   UVM_BIN);
-  printer.print_string ("pprot",   pprot.name());
-  printer.print_field  ("prdata",  prdata,      $bits(prdata),  UVM_HEX);
-  printer.print_string ("pslverr", pslverr.name());
+  printer.print_field  ("pstrb",pstrb,4,UVM_BIN);
+  printer.print_string ("pprot",pprot.name());
+  printer.print_field  ("prdata",prdata,$bits(prdata),UVM_HEX);
+  printer.print_string ("pslverr",pslverr.name());
   printer.print_field  ("no_of_wait_states_detected", no_of_wait_states_detected, $bits(no_of_wait_states_detected), UVM_DEC);
-  endfunction : do_print
+
+endfunction : do_print
 
 //--------------------------------------------------------------------------------------------
 // Function : post_randomize
@@ -198,10 +183,11 @@ function void apb_master_tx::post_randomize();
   end
   
   // Randmoly chosing paddr value between a given range
-  if (!std::randomize(paddr) with { paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
+  if (!std::randomize(paddr) with { paddr inside {[apb_master_agent_cfg_h.master_min_addr_range_array[index]:
+                                                   apb_master_agent_cfg_h.master_max_addr_range_array[index]]};
     paddr %4 == 0;
   }) begin
-  `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
+    `uvm_fatal("FATAL_STD_RANDOMIZATION_PADDR", $sformatf("Not able to randomize paddr"));
   end
 
   //Constraint to make pwdata non-zero when pstrb is high for that 8-bit lane

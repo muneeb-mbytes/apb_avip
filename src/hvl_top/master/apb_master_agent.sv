@@ -3,14 +3,14 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_agent
-// This agent is a configurable with respect to configuration which can create active and passive components
-// It contains testbench components like sequencer,driver_proxy and monitor_proxy for APB
+//  This agent is a configurable with respect to configuration which can create active and passive components
+//  It contains testbench components like sequencer,driver_proxy and monitor_proxy for APB
 //--------------------------------------------------------------------------------------------
 class apb_master_agent extends uvm_agent;
   `uvm_component_utils(apb_master_agent)
 
-  // Variable: apb_master_agent_cfg_h
-  // Declaring handle for apb_master agent configuration class 
+  //Variable: apb_master_agent_cfg_h
+  //Declaring handle for apb_master agent configuration class 
   apb_master_agent_config apb_master_agent_cfg_h;
 
   //Varible: apb_master_seqr_h 
@@ -25,8 +25,8 @@ class apb_master_agent extends uvm_agent;
   //Declaring a handle for apb_master monitor proxy 
   apb_master_monitor_proxy apb_master_mon_proxy_h;
 
-  // Variable: master_coverage
-  // Decalring a handle for master_coverage
+  //Variable: master_coverage
+  //Decalring a handle for master_coverage
   apb_master_coverage apb_master_cov_h;
     
   //-------------------------------------------------------
@@ -39,10 +39,10 @@ class apb_master_agent extends uvm_agent;
 endclass : apb_master_agent
 
 //--------------------------------------------------------------------------------------------
-//  Construct: new
+// Construct: new
 //  Initializes memory for new object
 //
-//  Parameters:
+// Parameters:
 //  name - instance name of the apb_master_agent
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
@@ -51,26 +51,19 @@ function apb_master_agent::new(string name="apb_master_agent", uvm_component par
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-//  Function: build_phase
-//  Creates the required ports, gets the required configuration from confif_db
+// Function: build_phase
+// Creates the required ports, gets the required configuration from confif_db
 //
-//  Parameters:
-//  phase - uvm phase
+// Parameters:
+// phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
-  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config"
-                                                            ,apb_master_agent_cfg_h)) begin
-    `uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG",
-               "cannot get apb_master_agent_cfg_h from uvm_config_db");
+  if(!uvm_config_db #(apb_master_agent_config)::get(this,"","apb_master_agent_config", apb_master_agent_cfg_h)) begin
+    `uvm_fatal("FATAL_MA_CANNOT_GET_APB_MASTER_AGENT_CONFIG", "cannot get apb_master_agent_cfg_h from uvm_config_db");
   end
 
-  // Printing the values of the apb_master_agent_config
-  // Print method is declared in apb_master_agent_config class and calling it from here
-  //`uvm_info(get_type_name(), $sformatf("The apb_master_agent_config \n %s", 
-  //                                     apb_master_agent_cfg_h.sprint),UVM_LOW);
-  
   if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h=apb_master_driver_proxy::type_id::create("apb_master_drv_proxy_h",this);
     apb_master_seqr_h=apb_master_sequencer::type_id::create("apb_master_seqr_h",this);
@@ -84,33 +77,31 @@ function void apb_master_agent::build_phase(uvm_phase phase);
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
-//  Function: connect_phase 
-//  Connecting apb_master driver, apb_master monitor and apb_master sequencer for configuration
+// Function: connect_phase 
+// Connecting apb_master driver, apb_master monitor and apb_master sequencer for configuration
 //
-//  Parameters:
-//  phase - uvm phase
+// Parameters:
+// phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void apb_master_agent::connect_phase(uvm_phase phase);
   if(apb_master_agent_cfg_h.is_active == UVM_ACTIVE) begin
     apb_master_drv_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     apb_master_seqr_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
     
-    // Connecting driver_proxy port to sequencer export
+    //Connecting driver_proxy port to sequencer export
     apb_master_drv_proxy_h.seq_item_port.connect(apb_master_seqr_h.seq_item_export);
   end
-  
   apb_master_mon_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
 
   if(apb_master_agent_cfg_h.has_coverage) begin
     apb_master_cov_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
   
-    // Connecting monitor_proxy port to coverage export
+    //Connecting monitor_proxy port to coverage export
     apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_master_cov_h.analysis_export);
   end
-
     apb_master_mon_proxy_h.apb_master_agent_cfg_h = apb_master_agent_cfg_h;
 
-endfunction: connect_phase
+endfunction : connect_phase
 
 `endif
 

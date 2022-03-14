@@ -7,8 +7,8 @@
 class apb_master_sequencer extends uvm_sequencer #(apb_master_tx);
   `uvm_component_utils(apb_master_sequencer)
 
-  // Variable: apb_master_agent_cfg_h
-  // Declaring handle for apb_master agent config class 
+  //Variable: apb_master_agent_cfg_h
+  //Declaring handle for apb_master agent config class 
   apb_master_agent_config apb_master_agent_cfg_h;
 
   //-------------------------------------------------------
@@ -20,11 +20,11 @@ endclass : apb_master_sequencer
  
 //--------------------------------------------------------------------------------------------
 // Construct: new
-// Initializes the apb_master sequencer class component
+//  Initializes the apb_master sequencer class component
 //
 // Parameters:
-// name - apb_master_sequencer
-// parent - parent under which this component is created
+//  name - apb_master_sequencer
+//  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
 function apb_master_sequencer::new(string name = "apb_master_sequencer",uvm_component parent);
   super.new(name,parent);

@@ -35,7 +35,7 @@ module apb_master_agent_bfm(apb_if intf);
                                               );
 
   //-------------------------------------------------------
-  //master monitor bfm instantiation
+  // master monitor bfm instantiation
   //-------------------------------------------------------
   apb_master_monitor_bfm apb_master_mon_bfm_h (.pclk(intf.pclk),
                                               .preset_n(intf.preset_n),
@@ -53,7 +53,7 @@ module apb_master_agent_bfm(apb_if intf);
 
 
   //-------------------------------------------------------
-  //setting the virtualhandle of BFMs into config_db
+  // setting the virtual handle of BFMs into config_db
   //-------------------------------------------------------
   initial begin
     uvm_config_db#(virtual apb_master_driver_bfm)::set(null,"*","apb_master_driver_bfm",apb_master_drv_bfm_h);

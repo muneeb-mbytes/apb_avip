@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_slave_vsequencer
-// <Description_here>
+// This class contains the handle of actual sequencer pointing towards them
 //--------------------------------------------------------------------------------------------
 class apb_slave_vsequencer extends uvm_sequencer;
   `uvm_component_utils(apb_slave_vsequencer)
@@ -30,7 +30,6 @@ endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Function: build_phase
-// <Description_here>
 //
 // Parameters:
 //  phase - uvm phase
@@ -41,7 +40,6 @@ endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
 // Function: connect_phase
-// <Description_here>
 //
 // Parameters:
 //  phase - uvm phase
@@ -49,7 +47,6 @@ endfunction : build_phase
 function void apb_slave_vsequencer::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
-
 
 `endif
 

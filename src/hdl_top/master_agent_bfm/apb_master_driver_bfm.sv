@@ -10,9 +10,6 @@ import apb_global_pkg::*;
 // Interface : apb_master_driver_bfm
 //  Used as the HDL driver for apb
 //  It connects with the HVL driver_proxy for driving the stimulus
-//
-// Parameters:
-//  intf - apb Interface
 //--------------------------------------------------------------------------------------------
 interface apb_master_driver_bfm (input  bit   pclk,
                                  input  bit   preset_n,
@@ -22,10 +19,10 @@ interface apb_master_driver_bfm (input  bit   pclk,
                                  output logic [2:0]pprot,
                                  output logic penable,
                                  output logic pwrite,
-                                 output logic [ADDRESS_WIDTH-1:0] paddr,
-                                 output logic [NO_OF_SLAVES-1:0] pselx,
-                                 output logic [DATA_WIDTH-1:0] pwdata,
-                                 output logic [(DATA_WIDTH/8)-1:0] pstrb
+                                 output logic [ADDRESS_WIDTH-1:0]paddr,
+                                 output logic [NO_OF_SLAVES-1:0]pselx,
+                                 output logic [DATA_WIDTH-1:0]pwdata,
+                                 output logic [(DATA_WIDTH/8)-1:0]pstrb
                                 );
 
   //-------------------------------------------------------
@@ -37,9 +34,9 @@ interface apb_master_driver_bfm (input  bit   pclk,
   //-------------------------------------------------------
   // Importing the master package file
   //-------------------------------------------------------
-  import apb_master_pkg::apb_master_driver_proxy;
+  import apb_master_pkg::*;
   
-  //Variable : name
+  //Variable: name
   //Used to store the name of the interface
   string name = "APB_MASTER_DRIVER_BFM"; 
   
@@ -47,9 +44,9 @@ interface apb_master_driver_bfm (input  bit   pclk,
   //Creating the handle for the proxy_driver
   apb_master_driver_proxy apb_master_drv_proxy_h;
    
-   //variable state
-   //creating handle for fsm states
-   apb_fsm_state_e state;
+  //Variable: state
+  //Creating handle for fsm states
+  apb_fsm_state_e state;
 
   //-------------------------------------------------------
   // Used to display the name of the interface
@@ -60,7 +57,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
  
   //-------------------------------------------------------
   // Task: wait_for_preset_n
-  // Waiting for the system reset to be active low
+  //  Waiting for the system reset to be active low
   //-------------------------------------------------------
   task wait_for_preset_n();
     @(negedge preset_n);
@@ -68,16 +65,15 @@ interface apb_master_driver_bfm (input  bit   pclk,
  
     @(posedge preset_n);
     `uvm_info(name ,$sformatf("SYSTEM RESET DEACTIVATED"),UVM_HIGH)
-    //drive_idle_state();
   endtask: wait_for_preset_n
   
   //--------------------------------------------------------------------------------------------
   // Task: drive_to_bfm
-  // This task will drive the data from bfm to proxy using converters
+  //  This task will drive the data from bfm to proxy using converters
   //
   // Parameters:
-  // data_packet  - handle for apb_transfer_char_s
-  // cfg_pkt      - handle for apb_transfer_cfg_s
+  // data_packet - handle for apb_transfer_char_s
+  // cfg_pkt     - handle for apb_transfer_cfg_s
   //--------------------------------------------------------------------------------------------
   task drive_to_bfm(inout apb_transfer_char_s data_packet, input apb_transfer_cfg_s cfg_packet);
     `uvm_info(name,$sformatf("data_packet=\n%p",data_packet),UVM_HIGH);
@@ -94,29 +90,29 @@ interface apb_master_driver_bfm (input  bit   pclk,
 
   //--------------------------------------------------------------------------------------------
   // Task: drive_idle_state
-  // This task drives the apb interface to idle state
+  //  This task drives the apb interface to idle state
   //--------------------------------------------------------------------------------------------
   task drive_idle_state();
     state = IDLE;
-      @(posedge pclk);
-      pselx   <= '0;
-      penable <= 1'b0;
-      `uvm_info(name,$sformatf("DROVE THE IDLE STATE"),UVM_HIGH)
-
-      `uvm_info("DEBUG_MSHA", $sformatf("drive_apb_idle state = %0s and state = %0d",
-                                      state.name(), state), UVM_NONE);
     
-  endtask: drive_idle_state
+    @(posedge pclk);
+    pselx   <= '0;
+    penable <= 1'b0;
+    `uvm_info(name,$sformatf("DROVE THE IDLE STATE"),UVM_HIGH)
+    `uvm_info(name, $sformatf("drive_apb_idle state = %0s and state = %0d", state.name(), state), UVM_NONE);
+    
+  endtask : drive_idle_state
 
   //--------------------------------------------------------------------------------------------
   // Task: drive_setup_state
-  // It drives the required signals to the slave 
+  //  It drives the required signals to the slave 
   //
   // Parameters:
-  // data_packet - apb_transfer_char_s
+  //  data_packet - apb_transfer_char_s
   //--------------------------------------------------------------------------------------------
   task drive_setup_state(inout apb_transfer_char_s data_packet);
-    state=SETUP;
+    state = SETUP;
+    
     @(posedge pclk);
     `uvm_info(name,$sformatf("DRIVING THE SETUP STATE"),UVM_HIGH)
     
@@ -124,40 +120,41 @@ interface apb_master_driver_bfm (input  bit   pclk,
     penable <= 1'b0;
     paddr   <= data_packet.paddr;
     pwrite  <= data_packet.pwrite;
+    
     if(data_packet.pwrite == WRITE) begin
       pwdata <= data_packet.pwdata;
       pstrb  <= data_packet.pstrb;
     end
+    
     else begin
       pstrb <= '0;
     end
-    pprot <= data_packet.pprot;
-
-     `uvm_info("DEBUG_MSHA", $sformatf("drive_apb_setup state = %0s and state = %0d",
-                                      state.name(), state), UVM_NONE);
+    pprot <= data_packet.pprot;    
+    `uvm_info(name, $sformatf("drive_apb_setup state = %0s and state = %0d", state.name(), state), UVM_NONE);
     
-  endtask: drive_setup_state
-
-  
+  endtask : drive_setup_state
+ 
   //-------------------------------------------------------
   // Task: drive_access_state
-  // This task defines the accessing of data signals from master to slave or viceverse
+  //  This task defines the accessing of data signals from 
+  //  master to slave or viceverse
   //
   // Parameters:
-  // data_packet - handle for apb_transfer_char_s
+  //  data_packet - handle for apb_transfer_char_s
   //-------------------------------------------------------
   task waiting_in_access_state(inout apb_transfer_char_s data_packet);
-    state=ACCESS;  
+    state = ACCESS;  
+    
     @(posedge pclk);
     `uvm_info(name,$sformatf("INSIDE ACCESS STATE"),UVM_HIGH);
 
-    penable   <= 1'b1;
-    
+    penable <= 1'b1;
     detect_wait_state(data_packet);
+
     if(pready == 1) begin
       penable <= 0;
    end
-    `uvm_info("DEBUG_MSHA",$sformatf("wait_apb_access_state=%0d and state=%0d",state.name(),state), UVM_NONE);
+   `uvm_info(name, $sformatf("wait_apb_access_state=%0d and state=%0d",state.name(),state), UVM_NONE);
   endtask: waiting_in_access_state
 
   //--------------------------------------------------------------------------------------------
@@ -168,8 +165,7 @@ interface apb_master_driver_bfm (input  bit   pclk,
   // data_packet - handle for apb_transfer_char_s
   //--------------------------------------------------------------------------------------------
   task detect_wait_state(inout apb_transfer_char_s data_packet);
-   
-  //   state=ACCESS;
+    //state = ACCESS;
     @(posedge pclk);
     `uvm_info(name,$sformatf("DETECT_WAIT_STATE"),UVM_HIGH);
 
@@ -178,7 +174,6 @@ interface apb_master_driver_bfm (input  bit   pclk,
       @(posedge pclk);
       data_packet.no_of_wait_states++;
     end
-
     `uvm_info(name,$sformatf("DATA READY TO TRANSFER"),UVM_HIGH);
 
     if(data_packet.pwrite == READ) begin
@@ -186,11 +181,8 @@ interface apb_master_driver_bfm (input  bit   pclk,
     end
 
     data_packet.pslverr = pslverr;
-
-//     `uvm_info("DEBUG_MSHA", $sformatf("drive_apb_access state = %0s and state = %0d",
-//                                      state.name(), state), UVM_NONE);
+    //`uvm_info("DEBUG_MSHA", $sformatf("drive_apb_access state = %0s and state = %0d"state.name(), state), UVM_NONE);
     
-
   endtask : detect_wait_state
 
 endinterface : apb_master_driver_bfm

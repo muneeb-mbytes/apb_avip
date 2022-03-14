@@ -17,11 +17,11 @@ interface apb_master_monitor_bfm (input bit pclk,
                                   input bit [2:0]pprot,
                                   input logic penable,
                                   input logic pwrite,
-                                  input logic [ADDRESS_WIDTH-1:0] paddr,
-                                  input logic [NO_OF_SLAVES-1:0] pselx,
-                                  input logic [DATA_WIDTH-1:0] pwdata,
-                                  input logic [(DATA_WIDTH/8)-1:0] pstrb, 
-                                  input logic [DATA_WIDTH-1:0] prdata
+                                  input logic [ADDRESS_WIDTH-1:0]paddr,
+                                  input logic [NO_OF_SLAVES-1:0]pselx,
+                                  input logic [DATA_WIDTH-1:0]pwdata,
+                                  input logic [(DATA_WIDTH/8)-1:0]pstrb, 
+                                  input logic [DATA_WIDTH-1:0]prdata
                                  );
 
   //-------------------------------------------------------
@@ -29,7 +29,11 @@ interface apb_master_monitor_bfm (input bit pclk,
   //-------------------------------------------------------
   import uvm_pkg::*;
   `include "uvm_macros.svh"
-  import apb_master_pkg::apb_master_monitor_proxy;
+
+  //-------------------------------------------------------
+  // Importing global package
+  //-------------------------------------------------------
+  import apb_master_pkg::*;
 
   // Variable: apb_master_mon_proxy_h
   // Declaring handle for apb_master_monitor_proxy  
@@ -70,18 +74,16 @@ interface apb_master_monitor_bfm (input bit pclk,
     // MSHA:  @(negedge pclk);
     // MSHA:  `uvm_info(name, $sformatf("Inside while loop PSEL"), UVM_HIGH)
     // MSHA:end
-    while($countones(pselx) !==1 || penable !==1 ) begin
-      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: penable =%0d, pready=%0d, pselx=%0d", 
-                                  penable, pready, pselx), UVM_HIGH)
+    while($countones(pselx) !== 1 || penable !== 1 ) begin
+      `uvm_info(name, $sformatf("Inside while loop: penable =%0d, pready=%0d, pselx=%0d", penable, pready, pselx), UVM_HIGH)
       @(negedge pclk);
     end
 
-    // Waiting for pready to be '1
-    while(pready !==1) begin
-      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: penable =%0d, pready=%0d, pselx=%0d", 
-                                  penable, pready, pselx), UVM_HIGH)
+    //Waiting for pready to be '1
+    while(pready !== 1) begin
+      `uvm_info(name, $sformatf("Inside while loop: penable =%0d, pready=%0d, pselx=%0d", penable, pready, pselx), UVM_HIGH)
       @(negedge pclk);
-      // increament the counter of wait states
+      //Increment the counter of wait states
       apb_data_packet.no_of_wait_states++;
     end
 

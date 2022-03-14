@@ -10,22 +10,19 @@ import apb_global_pkg::*;
 // Interface : apb_slave_driver_bfm
 //  Used as the HDL driver for apb
 //  It connects with the HVL driver_proxy for driving the stimulus
-//
-// Parameters:
-//  intf - apb interface
 //--------------------------------------------------------------------------------------------
 interface apb_slave_driver_bfm (input bit pclk,
                                input bit preset_n,
-                               input bit [NO_OF_SLAVES-1:0] psel,
+                               input bit [NO_OF_SLAVES-1:0]psel,
                                input logic penable,
-                               input logic [ADDRESS_WIDTH-1:0] paddr,
+                               input logic [ADDRESS_WIDTH-1:0]paddr,
                                input logic pwrite,
-                               input logic [(DATA_WIDTH/8)-1:0] pstrb, 
-                               input logic [DATA_WIDTH-1:0] pwdata,
+                               input logic [(DATA_WIDTH/8)-1:0]pstrb, 
+                               input logic [DATA_WIDTH-1:0]pwdata,
                                output bit pslverr,
                                output bit pready,
                                input bit [2:0]pprot,
-                               output logic [DATA_WIDTH-1:0] prdata
+                               output logic [DATA_WIDTH-1:0]prdata
                                );
 
   //-------------------------------------------------------
@@ -37,9 +34,9 @@ interface apb_slave_driver_bfm (input bit pclk,
   //-------------------------------------------------------
   // Importing slave driver proxy
   //------------------------------------------------------- 
-  import apb_slave_pkg::apb_slave_driver_proxy;
+  import apb_slave_pkg::*;
 
-  //Variable : apb_slave_drv_proxy_h
+  //Variable: apb_slave_drv_proxy_h
   //Declaring handle for apb_slave_driver_proxy
   apb_slave_driver_proxy apb_slave_drv_proxy_h;
   
@@ -62,7 +59,6 @@ interface apb_slave_driver_bfm (input bit pclk,
 
     @(negedge preset_n);
     `uvm_info(name,$sformatf("SYSTEM RESET DETECTED"),UVM_HIGH)
-
     @(posedge preset_n);
     `uvm_info(name,$sformatf("SYSTEM RESET DEACTIVATED"),UVM_HIGH)
   
@@ -86,7 +82,7 @@ interface apb_slave_driver_bfm (input bit pclk,
     // MSHA: end
     
     while(psel[0] !==1) begin
-      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: penable =%0d, pready=%0d, psel=%0d ", penable, pready, psel), UVM_HIGH)
+      `uvm_info(name, $sformatf("Inside while loop: penable =%0d, pready=%0d, psel=%0d ", penable, pready, psel), UVM_HIGH)
       @(negedge pclk);
     end
     //while(penable != 1'b0) begin
@@ -98,7 +94,6 @@ interface apb_slave_driver_bfm (input bit pclk,
     `uvm_info(name,$sformatf("SETUP PHASE STARTED"),UVM_HIGH)
     `uvm_info(name,$sformatf("PSEL=%0d",psel),UVM_HIGH)
 
-    //@(negedge pclk);
     // Sampling the signals
     data_packet.pselx  = psel;
     data_packet.paddr  = paddr;
@@ -106,14 +101,11 @@ interface apb_slave_driver_bfm (input bit pclk,
     if(pwrite == WRITE) begin
       data_packet.pwdata = pwdata;
       data_packet.pstrb  = pstrb;
-      //data_packet.transfer_size = $countones(pstrb);
     end
     data_packet.pprot = pprot;
 
-
     // TODO(mshariff): 
-    // Get the required READ data and/ PSLVERR
-    //
+    // Get the required READ data and PSLVERR
 
   endtask: wait_for_setup_state
 
@@ -124,7 +116,6 @@ interface apb_slave_driver_bfm (input bit pclk,
   //-------------------------------------------------------
   task wait_for_access_state(inout apb_transfer_char_s data_packet);
     @(posedge pclk);
-    
     `uvm_info(name,$sformatf("WAITING FOR ACCESS STATE - no_of_wait_states=%0d",data_packet.no_of_wait_states),UVM_HIGH);
 
     repeat(data_packet.no_of_wait_states)begin
@@ -132,10 +123,9 @@ interface apb_slave_driver_bfm (input bit pclk,
       @(posedge pclk);
       pready<=0;
     end
-
     pready<=1;
 
-    // This display is only to check whether the data from proxy is received or not
+    // This display checks whether the data from proxy is received or not
     `uvm_info(name,$sformatf("INSIDE ACCESS - PRDATA=%0h",data_packet.prdata),UVM_HIGH);
     
     if(data_packet.pwrite == READ) begin
@@ -151,3 +141,4 @@ interface apb_slave_driver_bfm (input bit pclk,
 endinterface : apb_slave_driver_bfm
 
 `endif
+

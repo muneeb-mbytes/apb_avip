@@ -10,16 +10,16 @@ class apb_slave_monitor_proxy extends uvm_monitor;
   
   `uvm_component_utils(apb_slave_monitor_proxy)
 
-  // Variable: apb_slave_analysis_port
-  // Declaring Monitor Analysis Import
+  //Variable: apb_slave_analysis_port
+  //Declaring Monitor Analysis Import
   uvm_analysis_port #(apb_slave_tx) apb_slave_analysis_port;
   
-  // Variable: apb_slave_mon_bfm_h
-  // Declaring Virtual Monitor BFM Handle
+  //Variable: apb_slave_mon_bfm_h
+  //Declaring Virtual Monitor BFM Handle
   virtual apb_slave_monitor_bfm apb_slave_mon_bfm_h;
     
-  // Variable: apb_slave_agent_cfg_h;
-  // Handle for apb slave agent configuration
+  //Variable: apb_slave_agent_cfg_h;
+  //Handle for apb slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h;
 
   //-------------------------------------------------------

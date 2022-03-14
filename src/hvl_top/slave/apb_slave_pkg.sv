@@ -14,7 +14,7 @@ package apb_slave_pkg;
   import uvm_pkg::*;
 
   //-------------------------------------------------------
-  // Importing apb Global Package
+  // Importing Global Package
   //-------------------------------------------------------
   import apb_global_pkg::*;
 
@@ -34,3 +34,4 @@ package apb_slave_pkg;
 endpackage : apb_slave_pkg
 
 `endif
+

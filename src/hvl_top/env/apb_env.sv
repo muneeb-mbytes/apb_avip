@@ -8,28 +8,28 @@
 class apb_env extends uvm_env;
   `uvm_component_utils(apb_env)
 
-  //Variable : apb_master_agent_h
+  //Variable: apb_master_agent_h
   //Declaring apb master agent handle
   apb_master_agent apb_master_agent_h;
 
-  //Variable : apb_slave_agent_h
+  //Variable: apb_slave_agent_h
   //Declaring apb slave agent handle
   apb_slave_agent apb_slave_agent_h[];
 
-  //Variable : apb__scoreboard_h
+  //Variable: apb_scoreboard_h
   //Declaring apb scoreboard handle
   apb_scoreboard apb_scoreboard_h;
 
-  //Variable : apb_virtual_seqr_h
+  //Variable: apb_virtual_seqr_h
   //Declaring apb virtual seqr handle
   apb_virtual_sequencer apb_virtual_seqr_h;
   
-  //Variable : apb_env_cfg_h
+  //Variable: apb_env_cfg_h
   //Declaring handle for apb_env_config_object
   apb_env_config apb_env_cfg_h;  
   
-  // Variable: apb_slave_agent_cfg_h;
-  // Handle for apb_slave agent configuration
+  //Variable: apb_slave_agent_cfg_h;
+  //Handle for apb_slave agent configuration
   apb_slave_agent_config apb_slave_agent_cfg_h[];
 
   //-------------------------------------------------------
@@ -70,7 +70,6 @@ function void apb_env::build_phase(uvm_phase phase);
     if(!uvm_config_db #(apb_slave_agent_config)::get(this,"",$sformatf("apb_slave_agent_config[%0d]",i),apb_slave_agent_cfg_h[i])) begin
       `uvm_fatal("FATAL_SA_AGENT_CONFIG", $sformatf("Couldn't get the apb_slave_agent_config[%0d] from config_db",i))
     end
-    //`uvm_info(get_type_name(),$sformatf("\nSLAVE_AGENT_CONFIG[%0d]\n%s",i,apb_slave_agent_cfg_h[i].sprint()),UVM_LOW);
   end
   
   apb_master_agent_h = apb_master_agent::type_id::create("apb_master_agent",this);
@@ -89,7 +88,6 @@ function void apb_env::build_phase(uvm_phase phase);
   end
 
   foreach(apb_slave_agent_h[i]) begin
-    //`uvm_info(get_type_name(),$sformatf("SLAVE_AGNET_CONFIG[%0d]\n%p",i,apb_slave_agent_cfg_h[i]),UVM_LOW);
     apb_slave_agent_h[i].apb_slave_agent_cfg_h = apb_slave_agent_cfg_h[i];
   end
 
@@ -97,8 +95,8 @@ endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
 // Function: connect_phase
-// Connects the master agent monitor's analysis_port with scoreboard's analysis_fifo 
-// Connects the slave agent monitor's analysis_port with scoreboard's analysis_fifo 
+//  Connects the master agent monitor's analysis_port with scoreboard's analysis_fifo 
+//  Connects the slave agent monitor's analysis_port with scoreboard's analysis_fifo 
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
@@ -111,13 +109,15 @@ function void apb_env::connect_phase(uvm_phase phase);
     end
   end
   
-  apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_scoreboard_h.apb_master_analysis_fifo.analysis_export);
+  apb_master_agent_h.apb_master_mon_proxy_h.apb_master_analysis_port.connect(apb_scoreboard_h
+                                                                    .apb_master_analysis_fifo.analysis_export);
   
   foreach(apb_slave_agent_h[i]) begin
-    apb_slave_agent_h[i].apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h.apb_slave_analysis_fifo[i].analysis_export);
+    apb_slave_agent_h[i].apb_slave_mon_proxy_h.apb_slave_analysis_port.connect(apb_scoreboard_h
+                                                                      .apb_slave_analysis_fifo[i].analysis_export);
   end
   
-  endfunction : connect_phase
+endfunction : connect_phase
 
 `endif
 

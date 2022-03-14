@@ -3,18 +3,18 @@
 
 //--------------------------------------------------------------------------------------------
 // Module : hvl_top
-// Starts the testbench components
+//  Starts the testbench components
 //--------------------------------------------------------------------------------------------
 module hvl_top;
 
   //-------------------------------------------------------
-  // Package : Importing UVM Package and test Package
+  // Importing UVM Package and test Package
   //-------------------------------------------------------
   import uvm_pkg::*;
   import apb_base_test_pkg::*;
   
   //-------------------------------------------------------
-  // calling run_test for simulation
+  // Calling run_test for simulation
   //-------------------------------------------------------
   initial begin
     run_test("apb_base_test");
@@ -23,3 +23,4 @@ module hvl_top;
 endmodule : hvl_top
 
 `endif
+

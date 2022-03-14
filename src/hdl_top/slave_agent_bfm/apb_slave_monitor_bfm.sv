@@ -13,16 +13,16 @@ import apb_global_pkg::*;
 //--------------------------------------------------------------------------------------------
 interface apb_slave_monitor_bfm (input bit pclk,
                                  input bit preset_n,
-                                 input logic [NO_OF_SLAVES-1:0] psel,
+                                 input logic [NO_OF_SLAVES-1:0]psel,
                                  input bit [2:0]pprot,
                                  input bit pslverr,
                                  input bit pready,
                                  input logic penable,
                                  input logic pwrite,
-                                 input logic [ADDRESS_WIDTH-1:0] paddr,
-                                 input logic [DATA_WIDTH-1:0] pwdata,
-                                 input logic [(DATA_WIDTH/8)-1:0] pstrb, 
-                                 input logic [DATA_WIDTH-1:0] prdata
+                                 input logic [ADDRESS_WIDTH-1:0]paddr,
+                                 input logic [DATA_WIDTH-1:0]pwdata,
+                                 input logic [(DATA_WIDTH/8)-1:0]pstrb, 
+                                 input logic [DATA_WIDTH-1:0]prdata
                                );
   
   //-------------------------------------------------------
@@ -31,14 +31,17 @@ interface apb_slave_monitor_bfm (input bit pclk,
   import uvm_pkg::*;
   `include "uvm_macros.svh"
   
-  import apb_slave_pkg::apb_slave_monitor_proxy;
+  //-------------------------------------------------------
+  // Importing apb global package
+  //-------------------------------------------------------
+  import apb_slave_pkg::*;
 
-  // Variable: apb_slave_mon_proxy_h
-  // Declaring handle for apb_slave_monitor_proxy
+  //Variable: apb_slave_mon_proxy_h
+  //Declaring handle for apb_slave_monitor_proxy
   apb_slave_monitor_proxy apb_slave_mon_proxy_h;
   
-  // Variable: name
-  // Assigning the string used in infos
+  //Variable: name
+  //Assigning the string used in infos
   string name = "APB_SLAVE_MONITOR_BFM"; 
  
   initial begin
@@ -74,18 +77,18 @@ interface apb_slave_monitor_bfm (input bit pclk,
     end
 
     while(psel[apb_cfg_packet.slave_id] !==1 || penable !==1 || pready !==1) begin
-      `uvm_info(name, $sformatf("Inside while loop SAHA_DEBUG: SLAVE[%0d] penable =%0d, pready=%0d, psel=%0d ", apb_cfg_packet.slave_id, penable, pready, psel), UVM_HIGH)
+    `uvm_info(name, $sformatf("Inside while loop: SLAVE[%0d] penable =%0d, pready=%0d, psel=%0d ", 
+                              apb_cfg_packet.slave_id, penable, pready, psel), UVM_HIGH)
       @(negedge pclk);
     end
-    
-    `uvm_info(name, $sformatf("SAHA_DEBUG: penable =%0d, pready=%0d, psel=%0d ", penable, pready, psel), UVM_HIGH)
+    `uvm_info(name, $sformatf("After while loop: penable =%0d, pready=%0d, psel=%0d ", penable, pready, psel), UVM_HIGH)
 
-    apb_data_packet.pselx[0]= psel[apb_cfg_packet.slave_id];
-    apb_data_packet.pslverr = pslverr;
-    apb_data_packet.pprot   = pprot;
-    apb_data_packet.pwrite  = pwrite;
-    apb_data_packet.paddr   = paddr;
-    apb_data_packet.pstrb   = pstrb;
+    apb_data_packet.pselx[0] = psel[apb_cfg_packet.slave_id];
+    apb_data_packet.pslverr  = pslverr;
+    apb_data_packet.pprot    = pprot;
+    apb_data_packet.pwrite   = pwrite;
+    apb_data_packet.paddr    = paddr;
+    apb_data_packet.pstrb    = pstrb;
 
     if (pwrite == WRITE) begin
       apb_data_packet.pwdata = pwdata;
