@@ -28,7 +28,8 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
 
    PADDR_CP : coverpoint cfg.paddr {
      option.comment = " apb address";
-     bins APB_PADDR[] = {[0:2**ADDRESS_WIDTH]};   
+     bins APB_PADDR = {5};
+      bins APB_PADDR_1 = {20};  
    }
 
    //To check whether the apb has done both read and write operations
@@ -39,12 +40,12 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
 
    PWDATA_CP : coverpoint packet.pwdata {
      option.comment = "apb write data";
-     bins APB_WRITE_DATA[] = {[0:2**DATA_WIDTH]};  
-   }
+     bins APB_WRITE_DATA[] = {0,25,396}; 
+     }
 
   PRDATA_CP : coverpoint packet.prdata{
     option.comment = "apb read data";
-    bins APB_READ_DATA[] = {[0:2**DATA_WIDTH]};
+    bins APB_READ_DATA[] = {0,25,396};
   }
 
   //To check whether the slave is giving any slave error or not
@@ -70,6 +71,8 @@ class apb_master_coverage extends uvm_subscriber #(apb_master_tx);
   //Cross coverage b/w paddr(for different slaves) and prdata to check whether the apb avip has covered all possible cross cases
   PADDR_CP_X_PWDATA_CP : cross PADDR_CP , PWDATA_CP;
   PADDR_CP_X_PRDATA_CP : cross PADDR_CP , PRDATA_CP;
+  PSTRB_CP_X_PWDATA_CP : cross PSTRB_CP , PWDATA_CP;
+  PSTRB_CP_X_PRDATA_CP : cross PSTRB_CP , PRDATA_CP;
 
 endgroup: apb_master_covergroup
 
@@ -78,6 +81,7 @@ endgroup: apb_master_covergroup
   //-------------------------------------------------------
   extern function new(string name = "apb_master_coverage", uvm_component parent = null);
   extern function void write(apb_master_tx t);
+  extern virtual function void report_phase(uvm_phase phase);
 
 endclass : apb_master_coverage
 
@@ -89,7 +93,7 @@ endclass : apb_master_coverage
 //  name - apb_master_coverage
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function apb_master_coverage::new(string name = "apb_master_coverage", uvm_component parent = null);
+function  apb_master_coverage::new(string name = "apb_master_coverage", uvm_component parent = null);
   super.new(name, parent);
   apb_master_covergroup = new();
 endfunction : new
@@ -108,6 +112,14 @@ function void apb_master_coverage::write(apb_master_tx t);
   `uvm_info(get_type_name(),"After calling SAMPLE METHOD",UVM_HIGH);
 
 endfunction : write
+
+//--------------------------------------------------------------------------------------------
+// Function: report_phase
+// Used for reporting the coverage instance percentage values
+//--------------------------------------------------------------------------------------------
+function void apb_master_coverage::report_phase(uvm_phase phase);
+  `uvm_info(get_type_name(), $sformatf("APB Master Agent Coverage = %0.2f %%", apb_master_covergroup.get_coverage()), UVM_NONE);
+endfunction: report_phase
 
 `endif
 

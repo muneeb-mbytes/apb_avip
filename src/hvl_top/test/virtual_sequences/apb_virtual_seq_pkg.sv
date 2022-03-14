@@ -12,6 +12,7 @@ package apb_virtual_seq_pkg;
   //-------------------------------------------------------
   `include "uvm_macros.svh"
   import uvm_pkg::*;
+  import apb_global_pkg::*;
   import apb_env_pkg::*;
   import apb_master_pkg::*;
   import apb_slave_pkg::*;
@@ -27,7 +28,8 @@ package apb_virtual_seq_pkg;
   `include "apb_virtual_8b_write_read_seq.sv"
   `include "apb_virtual_16b_write_seq.sv"
   `include "apb_virtual_24b_write_seq.sv"
-  `include "apb_virtual_8b_read.seq.sv"
+  `include "apb_virtual_8b_read_seq.sv"
+  `include "apb_virtual_32b_write_seq.sv"
 endpackage : apb_virtual_seq_pkg
 
 `endif

@@ -7,7 +7,12 @@
 //--------------------------------------------------------------------------------------------
 class apb_master_8b_write_seq extends apb_master_base_seq;
   `uvm_object_utils(apb_master_8b_write_seq)
-
+  
+  //Variable : address
+  //Used to store the address to pass to the write and read sequence 
+  bit [ADDRESS_WIDTH-1:0]address;
+  
+  bit cont_write_read;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -35,12 +40,13 @@ task apb_master_8b_write_seq::body();
   req.apb_master_agent_cfg_h = p_sequencer.apb_master_agent_cfg_h;
   start_item(req);
   if(!req.randomize() with {req.pselx == SLAVE_0;
-                            req.paddr == 'h3;
+                            req.paddr == address;
                             req.transfer_size == BIT_8;
+                            req.cont_write_read == cont_write_read;
                             req.pwrite == WRITE;}) begin
     `uvm_fatal("APB","Rand failed");
   end
-  //req.print();
+  req.print();
   finish_item(req);
  /* 
   start_item(req);

@@ -33,17 +33,17 @@ class apb_slave_coverage extends uvm_subscriber#(apb_slave_tx);
 
   PADDR_CP : coverpoint cfg.paddr {
     option.comment = "address range";
-    bins addr[] = {[0:2**ADDRESS_WIDTH]};
+    bins addr[] = {0,2,1000};
   }
 
   PWDATA_CP : coverpoint packet.pwdata {
     option.comment = "write data range";
-    bins WDATA_BIT[] = {[0:2**DATA_WIDTH]};
+    bins WDATA_BIT[] = {[0:DATA_WIDTH]};
   }
   
   PRDATA_CP : coverpoint packet.prdata {
     option.comment = "read data range ";  
-    bins RDATA_BIT[]  = {[0:2**DATA_WIDTH]};
+    bins RDATA_BIT[]  = {[0:DATA_WIDTH]};
   }
 
   PSLVERR_CP : coverpoint slave_error_e'(packet.pslverr) {

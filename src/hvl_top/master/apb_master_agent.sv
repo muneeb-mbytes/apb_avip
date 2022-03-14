@@ -25,9 +25,13 @@ class apb_master_agent extends uvm_agent;
   //Declaring a handle for apb_master monitor proxy 
   apb_master_monitor_proxy apb_master_mon_proxy_h;
 
-  //Variable: master_coverage
-  //Decalring a handle for master_coverage
+  // Variable: apb_master_cov_h
+  // Decalring a handle for master_coverage
   apb_master_coverage apb_master_cov_h;
+
+  // Variable: apb_reg_adapter_h
+  // Declaring a handle for apb_master_adapter
+  apb_master_adapter apb_reg_adapter_h;
     
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -74,6 +78,8 @@ function void apb_master_agent::build_phase(uvm_phase phase);
   if(apb_master_agent_cfg_h.has_coverage) begin
     apb_master_cov_h = apb_master_coverage::type_id::create("apb_master_cov_h",this);
   end
+
+  apb_reg_adapter_h = apb_master_adapter::type_id::create("apb_reg_adapter_h"); 
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------

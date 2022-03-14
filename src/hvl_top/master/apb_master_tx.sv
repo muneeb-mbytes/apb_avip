@@ -49,9 +49,17 @@
   //Instantiation of apb master agent config
   apb_master_agent_config apb_master_agent_cfg_h;
 
-  //Variable: no_of_wait_states_detected
+  // Variable: no_of_wait_states_detected
+  // Used to keep track of the no of wait states
   int no_of_wait_states_detected;
-  
+
+  // Variable : cont_write_read
+  // Used to show the transfer as cont write and read
+  rand bit cont_write_read;
+ 
+  //Variable : address
+  bit [ADDRESS_WIDTH-1:0]address;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

@@ -35,7 +35,7 @@ package apb_global_pkg;
 
   //Parameter : SLAVE_MEMORY_GAP
   //Sets the memory gap size of the slave
-  parameter int SLAVE_MEMORY_GAP = 2;
+  parameter int SLAVE_MEMORY_GAP = 5;
 
   //Parameter : MEMORY_WIDTH
   //Sets the width it can store in each loaction
@@ -83,10 +83,12 @@ package apb_global_pkg;
   // Enum : apb_fsm_state_e
   //  Used to declare the type of fsm state
   //-------------------------------------------------------
-  typedef enum bit[2:0]{
+  typedef enum bit[2:0] {
+    NO_STATE,
     IDLE,
     SETUP,
-    ACCESS
+    ACCESS,
+    WAIT_STATE
   }apb_fsm_state_e; 
 
   //-------------------------------------------------------

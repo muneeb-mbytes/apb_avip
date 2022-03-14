@@ -11,11 +11,12 @@ module apb_slave_agent_bfm #(parameter int SLAVE_ID=0) (apb_if intf);
   // Importing uvm_pkg file
   //-------------------------------------------------------
   import uvm_pkg::*;
-  `include "uvm_macros.svh";
+  `include "uvm_macros.svh"
 
   initial begin
     `uvm_info("apb slave agent bfm",$sformatf("APB SLAVE AGENT BFM"),UVM_LOW);
   end
+  
   //-------------------------------------------------------
   // slave driver bfm instantiation
   //-------------------------------------------------------

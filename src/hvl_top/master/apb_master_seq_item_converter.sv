@@ -12,7 +12,7 @@ class apb_master_seq_item_converter extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "apb_master_seq_item_converter");
   extern static function void from_class(input apb_master_tx input_conv, output apb_transfer_char_s output_conv);
-  extern static function void to_class(input apb_transfer_char_s input_conv, output apb_master_tx output_conv_h);
+  extern static function void to_class(input apb_transfer_char_s input_conv, ref apb_master_tx output_conv_h);
   extern function void do_print(uvm_printer printer);
 
 endclass : apb_master_seq_item_converter
@@ -80,17 +80,13 @@ endfunction : from_class
 // Parameters:
 // name - apb_master_tx, apb_transfer_char_s
 //--------------------------------------------------------------------------------------------
-function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s input_conv, 
-                                                      output apb_master_tx output_conv_h);
-  output_conv_h = new();
+function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s input_conv, ref apb_master_tx output_conv_h);
 
   `uvm_info("apb_master_seq_item_conv",$sformatf("-------------------------------------------------------------------"),UVM_HIGH);
   
-  //output_conv_h.pprot = input_conv.pprot;
   $cast(output_conv_h.pprot,input_conv.pprot);
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pprot =  %b",output_conv_h.pprot),UVM_HIGH);
  
-  //output_conv_h.pselx = input_conv.pselx; 
   $cast(output_conv_h.pselx,input_conv.pselx);
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pselx =  %b",output_conv_h.pselx),UVM_HIGH);
 
@@ -106,7 +102,6 @@ function void apb_master_seq_item_converter::to_class(input apb_transfer_char_s 
   output_conv_h.pstrb = input_conv.pstrb;
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pwdta =  %b",output_conv_h.pstrb),UVM_HIGH);
  
-  //output_conv_h.pslverr = input_conv.pslverr;
   $cast(output_conv_h.pslverr,input_conv.pslverr);
   `uvm_info("apb_master_seq_item_conv_class",$sformatf("After randomize pslverr =  %b",output_conv_h.pslverr),UVM_HIGH);  
 
