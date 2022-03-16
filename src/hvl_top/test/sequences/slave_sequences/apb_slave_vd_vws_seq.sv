@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_slave_vd_vws
-// Extends the apb_slave_base_seq and randomises the req item
+//  Extends the apb_slave_base_seq and randomises the req item
 //--------------------------------------------------------------------------------------------
 class apb_slave_vd_vws_seq extends apb_slave_base_seq;
   `uvm_object_utils(apb_slave_vd_vws_seq)
@@ -27,7 +27,7 @@ endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Task : Body
-// Creates the req of type slave transaction and randomises the req.
+//  Creates the req of type slave transaction and randomises the req.
 //--------------------------------------------------------------------------------------------
 task apb_slave_vd_vws_seq::body();
   req = apb_slave_tx::type_id::create("req");
@@ -38,5 +38,6 @@ task apb_slave_vd_vws_seq::body();
     req.print();
   finish_item(req);
 endtask : body
+
 `endif
 

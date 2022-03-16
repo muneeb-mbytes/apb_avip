@@ -3,22 +3,26 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_8b_read_seq
-// Extends the apb_master_base_seq and randomises the req item
+//  Extends the apb_master_base_seq and randomises the req item
 //--------------------------------------------------------------------------------------------
 class apb_master_8b_read_seq extends apb_master_base_seq;
   `uvm_object_utils(apb_master_8b_read_seq)
 
-  //Variable : address
-  //Used to store the address to pass to the write and read sequence 
+  //Variable: address
+  //Used to store the address to pass to the write and read sequence
   bit [ADDRESS_WIDTH-1:0]address;
 
+  //Variable: cont_write_read
+  //Used to count the writes and reads 
   bit cont_write_read;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name ="apb_master_8b_read_seq");
   extern task body();
-  endclass : apb_master_8b_read_seq
+  
+endclass : apb_master_8b_read_seq
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
@@ -31,8 +35,8 @@ function apb_master_8b_read_seq::new(string name="apb_master_8b_read_seq");
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Task : body
-// Creates the req of type master transaction and randomises the req.
+// Task: body
+//  Creates the req of type master transaction and randomises the req.
 //--------------------------------------------------------------------------------------------
 task apb_master_8b_read_seq::body();
   super.body();
@@ -51,6 +55,5 @@ task apb_master_8b_read_seq::body();
  
 endtask : body
 
-
-
 `endif
+

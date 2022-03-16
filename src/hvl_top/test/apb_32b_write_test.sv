@@ -3,12 +3,12 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_32b_write_test
-// Extends the base test and starts the virtual sequence of 8 bit
+//  Extends the base test and starts the virtual sequence of 8 bit
 //--------------------------------------------------------------------------------------------
 class apb_32b_write_test extends apb_base_test;
   `uvm_component_utils(apb_32b_write_test)
   
-  //Variable : apb_virtual_32b_seq_h'
+  //Variable: apb_virtual_32b_seq_h
   //Instatiation of apb_virtual_32b_seq
   apb_virtual_32b_write_seq apb_virtual_32b_seq_h;
 
@@ -32,10 +32,9 @@ function apb_32b_write_test::new(string name = "apb_32b_write_test",
   super.new(name, parent);
 endfunction : new
 
-
 //--------------------------------------------------------------------------------------------
 // Task: run_phase
-// Creates the apb_virtual_32b_seq sequnce and starts the 32b virtual sequences
+//  Creates the apb_virtual_32b_seq sequence and starts the 32b virtual sequences
 //
 // Parameters:
 //  phase - uvm phase
@@ -51,3 +50,4 @@ task apb_32b_write_test::run_phase(uvm_phase phase);
 endtask : run_phase
 
 `endif
+

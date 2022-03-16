@@ -3,8 +3,7 @@
 
 //-----------------------------------------------------------------------------------------
 // Package: apb base_test
-// Description:
-// Includes all the files written to run the simulation
+//  Includes all the files written to run the simulation
 //--------------------------------------------------------------------------------------------
 package apb_base_test_pkg;
 
@@ -36,6 +35,8 @@ package apb_base_test_pkg;
   `include "apb_24b_write_test.sv"
   `include "apb_8b_read_test.sv"
   `include "apb_32b_write_test.sv"
+
 endpackage : apb_base_test_pkg
 
 `endif
+

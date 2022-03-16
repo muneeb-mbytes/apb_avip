@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class : slave_base_seq
-// Creating slave_base_seq extends from uvm_sequence
+//  Creating slave_base_seq extends from uvm_sequence
 //--------------------------------------------------------------------------------------------
 class apb_slave_base_seq extends uvm_sequence#(apb_slave_tx);
   `uvm_object_utils(apb_slave_base_seq)
@@ -12,6 +12,7 @@ class apb_slave_base_seq extends uvm_sequence#(apb_slave_tx);
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "apb_slave_base_seq");
+
 endclass : apb_slave_base_seq
 
 //--------------------------------------------------------------------------------------------
@@ -25,3 +26,4 @@ function apb_slave_base_seq::new(string name = "apb_slave_base_seq");
 endfunction : new
 
 `endif
+

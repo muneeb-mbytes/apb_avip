@@ -3,16 +3,16 @@
 
 //--------------------------------------------------------------------------------------------
 // Package : apb_master_seq_pkg
-// Includes all the master seq files declared
+//  Includes all the master seq files declared
 //--------------------------------------------------------------------------------------------
 package apb_master_seq_pkg;
 
   //-------------------------------------------------------
-  // Importing UVM Pkg
+  // Importing UVM Pkg and including globall and master packages
   //-------------------------------------------------------
+  import uvm_pkg::*;
   `include "uvm_macros.svh"
   import apb_global_pkg::*;
-  import uvm_pkg::*;
   import apb_master_pkg::*;
 
   //-------------------------------------------------------
@@ -26,6 +26,8 @@ package apb_master_seq_pkg;
   `include "apb_master_24b_write_seq.sv"
   `include "apb_master_32b_write_seq.sv"
   `include "apb_master_8b_read_seq.sv"
+
 endpackage : apb_master_seq_pkg
 
 `endif
+

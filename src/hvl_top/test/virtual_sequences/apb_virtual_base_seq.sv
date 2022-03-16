@@ -11,11 +11,11 @@ class apb_virtual_base_seq extends uvm_sequence;
   //Declaring p_sequencer
   `uvm_declare_p_sequencer(apb_virtual_sequencer)
   
-  //variable : apb_master_vsqr_h
+  //Variable : apb_master_seqr_h
   //Declaring handle to the virtual sequencer
   apb_master_sequencer apb_master_seqr_h;
 
-  //variable : apb_master_vsqr_h
+  //Variable : apb_master_seqr_h
   //Declaring handle to the virtual sequencer
   apb_slave_sequencer apb_slave_seqr_h;
 
@@ -24,6 +24,7 @@ class apb_virtual_base_seq extends uvm_sequence;
   //-------------------------------------------------------
   extern function new(string name = "apb_virtual_base_seq");
   extern task body();
+
 endclass : apb_virtual_base_seq
 
 //--------------------------------------------------------------------------------------------
@@ -49,7 +50,8 @@ task apb_virtual_base_seq::body();
   end
   apb_slave_seqr_h  = p_sequencer.apb_slave_seqr_h;
   apb_master_seqr_h = p_sequencer.apb_master_seqr_h;
-endtask
+
+endtask : body
 
 `endif
 

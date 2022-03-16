@@ -1,9 +1,9 @@
-`ifndef APB_MASTER_24b_WRITE_SEQ_INCLUDE_
-`define APB_MASTER_24b_WRITE_SEQ_INCLUDE_
+`ifndef APB_MASTER_24B_WRITE_SEQ_INCLUDE_
+`define APB_MASTER_24B_WRITE_SEQ_INCLUDE_
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_master_24b_write_seq
-// Extends the apb_master_base_seq and randomises the req item
+//   Extends the apb_master_base_seq and randomizes the req item
 //--------------------------------------------------------------------------------------------
 class apb_master_24b_write_seq extends apb_master_base_seq;
   `uvm_object_utils(apb_master_24b_write_seq)
@@ -13,7 +13,8 @@ class apb_master_24b_write_seq extends apb_master_base_seq;
   //-------------------------------------------------------
   extern function new(string name ="apb_master_24b_write_seq");
   extern task body();
-  endclass : apb_master_24b_write_seq
+  
+endclass : apb_master_24b_write_seq
 
 //--------------------------------------------------------------------------------------------
 // Construct: new
@@ -26,8 +27,8 @@ function apb_master_24b_write_seq::new(string name="apb_master_24b_write_seq");
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Task : body
-// Creates the req of type master transaction and randomises the req.
+// Task: body
+//  Creates the req of type master transaction and randomises the req.
 //--------------------------------------------------------------------------------------------
 task apb_master_24b_write_seq::body();
   super.body();
@@ -39,8 +40,8 @@ task apb_master_24b_write_seq::body();
                             req.pwrite == WRITE;}) begin
     `uvm_fatal("APB","Rand failed");
   end
-  //req.print();
   finish_item(req);
 endtask : body
 
 `endif
+

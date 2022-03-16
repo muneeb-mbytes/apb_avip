@@ -13,6 +13,7 @@ class apb_master_8b_write_read_seq extends apb_master_base_seq;
   //-------------------------------------------------------
   extern function new(string name = "apb_master_8b_write_read_seq");
   extern task body();
+
 endclass : apb_master_8b_write_read_seq
 
 //--------------------------------------------------------------------------------------------
@@ -26,8 +27,8 @@ function apb_master_8b_write_read_seq::new(string name = "apb_master_8b_write_re
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Task : body
-// Creates the req of type master transaction and randomises the req.
+// Task: body
+//  Creates the req of type master transaction and randomises the req.
 //--------------------------------------------------------------------------------------------
 task apb_master_8b_write_read_seq::body();
   super.body();
@@ -39,7 +40,6 @@ task apb_master_8b_write_read_seq::body();
                             req.pwrite == READ;}) begin
     `uvm_fatal("APB","Rand failed");
   end
-  //req.print();
   finish_item(req);
 
 endtask : body

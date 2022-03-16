@@ -2,7 +2,7 @@
 `define APB_MASTER_BASE_SEQ_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
-// Class : master_base_seq
+// Class : apb_master_base_seq
 // Creating master_base_seq extends from uvm_sequence
 //--------------------------------------------------------------------------------------------
 class apb_master_base_seq extends uvm_sequence#(apb_master_tx);
@@ -15,6 +15,7 @@ class apb_master_base_seq extends uvm_sequence#(apb_master_tx);
   //-------------------------------------------------------
   extern function new(string name = "apb_master_base_seq");
   extern task body();
+
 endclass : apb_master_base_seq
 
 //--------------------------------------------------------------------------------------------
@@ -28,11 +29,8 @@ function apb_master_base_seq::new(string name = "apb_master_base_seq");
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-//task:body
-//Creates the required ports
-//
-//Parameters:
-// phase - stores the current phase
+// Task: body
+//  Creates the required ports
 //--------------------------------------------------------------------------------------------
 task apb_master_base_seq::body();
 
@@ -41,5 +39,7 @@ task apb_master_base_seq::body();
     `uvm_error(get_full_name(),"Virtual sequencer pointer cast failed")
   end
             
-endtask:body
+endtask : body
+
 `endif
+

@@ -3,14 +3,19 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_virtual_16b_write_seq
-// <Description_here>
+//  Extended class from apb_virtul_base_seq
 //--------------------------------------------------------------------------------------------
 
 class apb_virtual_16b_write_seq extends apb_virtual_base_seq;
   `uvm_object_utils(apb_virtual_16b_write_seq)
 
-  apb_master_16b_write_seq apb_master_16b_write_seq_h;
-  apb_slave_16b_write_seq apb_slave_16b_write_seq_h;
+  //Variable: apb_master_16b_write_seq_h
+  //Instantiation of apb_master_16b_write_seq handle 
+  apb_master_16b_write_seq  apb_master_16b_write_seq_h;
+  
+  //Variable: apb_slave_16b_write_seq_h
+  //Instantiation of apb_slave_16b_write_seq handle 
+  apb_slave_16b_write_seq   apb_slave_16b_write_seq_h;
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -33,9 +38,9 @@ function apb_virtual_16b_write_seq::new(string name ="apb_virtual_16b_write_seq"
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
-// Construct - body
+// Task: body
+//  Creates the handles and starts the sequences
 //--------------------------------------------------------------------------------------------
-
 task apb_virtual_16b_write_seq::body();
   super.body();
   apb_master_16b_write_seq_h = apb_master_16b_write_seq::type_id::create("apb_master_16b_write_seq_h");
@@ -53,3 +58,4 @@ task apb_virtual_16b_write_seq::body();
 endtask : body
 
 `endif
+

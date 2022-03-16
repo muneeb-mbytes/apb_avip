@@ -3,19 +3,19 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_virtual_32b_write_seq
-// Creates and starts the master and slave vd_vws sequnences of variable data and variable 
-// wait states.
+//  Creates and starts the master and slave sequences
 //--------------------------------------------------------------------------------------------
 class apb_virtual_32b_write_seq extends apb_virtual_base_seq;
   `uvm_object_utils(apb_virtual_32b_write_seq)
 
-  //Variable : apb_master_32b_seq_h
-  //Instatiation of apb_master_32b_seq
-  apb_master_32b_write_seq apb_master_32b_seq_h;
+  //Variable: apb_master_32b_write_seq_h
+  //Instatiation of apb_master_32b_write_seq
+  apb_master_32b_write_seq apb_master_32b_write_seq_h;
 
-  //Variable : apb_slave_32b_seq_h
-  //Instantiation of apb_master_32b_seq
-  apb_slave_32b_seq apb_slave_32b_seq_h;
+  //Variable: apb_slave_32b_write_seq_h
+  //Instantiation of apb_slave_32b_write_seq
+  apb_slave_32b_write_seq apb_slave_32b_write_seq_h;
+  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -24,13 +24,13 @@ class apb_virtual_32b_write_seq extends apb_virtual_base_seq;
   extern task body();
 
 endclass : apb_virtual_32b_write_seq
+
 //--------------------------------------------------------------------------------------------
 // Construct: new
 //
 // Parameters:
 //  name - apb_virtual_32b_write_seq
 //--------------------------------------------------------------------------------------------
-
 function apb_virtual_32b_write_seq::new(string name ="apb_virtual_32b_write_seq");
   super.new(name);
 endfunction : new
@@ -41,17 +41,18 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 task apb_virtual_32b_write_seq::body();
   super.body();
-  apb_master_32b_seq_h=apb_master_32b_write_seq::type_id::create("apb_master_32b_seq_h");
-  apb_slave_32b_seq_h=apb_slave_32b_seq::type_id::create("apb_slave_32b_seq_h");
-   fork
+  apb_master_32b_write_seq_h=apb_master_32b_write_seq::type_id::create("apb_master_32b_write_seq_h");
+  apb_slave_32b_write_seq_h=apb_slave_32b_write_seq::type_id::create("apb_slave_32b_write_seq_h");
+  fork
     forever begin
-      apb_slave_32b_seq_h.start(p_sequencer.apb_slave_seqr_h);
+      apb_slave_32b_write_seq_h.start(p_sequencer.apb_slave_seqr_h);
     end
   join_none
 
   repeat(2) begin
-    apb_master_32b_seq_h.start(p_sequencer.apb_master_seqr_h);
+    apb_master_32b_write_seq_h.start(p_sequencer.apb_master_seqr_h);
   end
  endtask : body
 
 `endif
+

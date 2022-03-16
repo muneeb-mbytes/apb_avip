@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: apb_slave_8b_write_read_seq
-// Extends the apb_slave_base_seq and randomizes the req item
+//  Extends the apb_slave_base_seq and randomizes the req item
 //--------------------------------------------------------------------------------------------
 class apb_slave_8b_write_read_seq extends apb_slave_base_seq;
   `uvm_object_utils(apb_slave_8b_write_read_seq)
@@ -13,6 +13,7 @@ class apb_slave_8b_write_read_seq extends apb_slave_base_seq;
   //-------------------------------------------------------
   extern function new(string name = "apb_slave_8b_write_read_seq");
   extern task body();
+
 endclass : apb_slave_8b_write_read_seq
 
 //--------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@ endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Task : Body
-// Creates the req of type slave transaction and randomizes the req.
+//  Creates the req of type slave transaction and randomizes the req.
 //--------------------------------------------------------------------------------------------
 task apb_slave_8b_write_read_seq::body();
   req=apb_slave_tx::type_id::create("req");
