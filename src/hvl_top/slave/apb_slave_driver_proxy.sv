@@ -32,6 +32,7 @@ class apb_slave_driver_proxy extends uvm_driver#(apb_slave_tx);
   extern virtual task check_for_pslverr(inout apb_transfer_char_s struct_packet);
   extern virtual task task_write(inout apb_transfer_char_s struct_packet);
   extern virtual task task_read(inout apb_transfer_char_s struct_packet);
+  extern virtual task write_into_memory(bit [31:0]paddr_local);
 endclass : apb_slave_driver_proxy
   
 //--------------------------------------------------------------------------------------------
@@ -189,9 +190,11 @@ task apb_slave_driver_proxy::task_read(inout apb_transfer_char_s struct_packet);
       struct_packet.prdata[8*i+7 -: 8] = apb_slave_agent_cfg_h.slave_memory[struct_packet.paddr + i];
     end
     else begin
-      `uvm_error(get_type_name(), $sformatf("Selected address has no data"));
-      struct_packet.pslverr = ERROR;
-      struct_packet.prdata  = 'h0;
+      write_into_memory(struct_packet.paddr);
+      struct_packet.prdata[8*i+7 -: 8] = apb_slave_agent_cfg_h.slave_memory[struct_packet.paddr + i];
+      //`uvm_error(get_type_name(), $sformatf("Selected address has no data"));
+      //struct_packet.pslverr = ERROR;
+      //struct_packet.prdata  = 'h0;
     end
   end 
 
@@ -241,6 +244,26 @@ task apb_slave_driver_proxy::check_for_pslverr(inout apb_transfer_char_s struct_
   `uvm_info("DEBUG_NA-pslverr", $sformatf("AFTER PSLVERR_CHECK_4C struct :: %p", struct_packet), UVM_MEDIUM);
   end
 
-endtask : check_for_pslverr 
+endtask : check_for_pslverr
+
+//--------------------------------------------------------------------------------------------
+// Task : write_into_memory
+// Writing some dummy data to the memory model if no data is present 
+// in the required memory model address
+//--------------------------------------------------------------------------------------------
+task apb_slave_driver_proxy::write_into_memory(bit [31:0]paddr_local);
+
+  bit [7:0]random_data;
+
+  for(int i=paddr_local; i<paddr_local + 'd4; i++)begin
+    if(!std::randomize(random_data)) begin
+      `uvm_error("WRITE_INTO_MEMORY", $sformatf("Data has not randomised"));
+    end
+    random_data = random_data + i;
+    apb_slave_agent_cfg_h.slave_memory_task(i,random_data);
+    `uvm_info("DEBUG_NA-write into memory", $sformatf("memory[%0h]=%0h",i,random_data), UVM_DEBUG);
+  end
+
+endtask : write_into_memory
 
 `endif
