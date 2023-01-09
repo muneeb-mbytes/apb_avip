@@ -75,6 +75,7 @@ interface apb_slave_driver_bfm (input bit pclk,
     `uvm_info(name,$sformatf("PSEL=%0d",psel),UVM_HIGH)
     //`uvm_info(name,$sformatf("LOCAL_SLAVE_ID=%0d",slave_id),UVM_HIGH)
     
+    @(negedge pclk);
     // MSHA: while(psel == 1'bx) begin
     // MSHA:   `uvm_info(name,$sformatf("WAITING FOR SETUP STATE-INSIDE WHILE LOOP"),UVM_HIGH)
     // MSHA:   `uvm_info(name,$sformatf("PSEL=%0d",psel),UVM_HIGH)
@@ -118,6 +119,15 @@ interface apb_slave_driver_bfm (input bit pclk,
     @(posedge pclk);
     `uvm_info(name,$sformatf("WAITING FOR ACCESS STATE - no_of_wait_states=%0d",data_packet.no_of_wait_states),UVM_HIGH);
 
+
+    // This display checks whether the data from proxy is received or not
+    `uvm_info(name,$sformatf("INSIDE ACCESS - PRDATA=%0h",data_packet.prdata),UVM_HIGH);
+    
+    while(psel !=1'b1 && penable == 1'b0) begin
+      @(posedge pclk);
+      `uvm_info(name,$sformatf("INSIDE ACCESS - Waiting for penable to be high"),UVM_HIGH);
+    end
+
     repeat(data_packet.no_of_wait_states)begin
       `uvm_info(name,$sformatf("INSIDE ACCESS - DRIVING WAIT STATE"),UVM_HIGH);
       @(posedge pclk);
@@ -125,9 +135,6 @@ interface apb_slave_driver_bfm (input bit pclk,
     end
     pready<=1;
 
-    // This display checks whether the data from proxy is received or not
-    `uvm_info(name,$sformatf("INSIDE ACCESS - PRDATA=%0h",data_packet.prdata),UVM_HIGH);
-    
     if(data_packet.pwrite == READ) begin
       `uvm_info(name,$sformatf("INSIDE ACCESS - PRDATA=%0h",data_packet.prdata),UVM_HIGH);
       prdata <= data_packet.prdata;
